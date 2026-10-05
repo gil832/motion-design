@@ -1,0 +1,535 @@
+<title>Daily Board</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Figtree:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: one working column — day header with a status "battery", then My Day sections or the full board as status-pill tables. */
+:root {
+  --bg: #f4f5f9;
+  --surface: #ffffff;
+  --surface-2: #eceef5;
+  --ink: #1c1f30;
+  --muted: #646a85;
+  --line: #dfe2ec;
+  --accent: #3550d6;
+  --accent-ink: #ffffff;
+  --done: #00a46a;
+  --working: #f0a00c;
+  --stuck: #e2445c;
+  --todo: #c3c7d6;
+  --todo-ink: #3d4259;
+  --high: #6b3fd4;
+  --med: #4f7ce8;
+  --low: #8ec0f0;
+  --shadow: 0 1px 2px rgba(28,31,48,.06), 0 6px 20px rgba(28,31,48,.06);
+  --f-display: "Bricolage Grotesque", "Avenir Next", system-ui, sans-serif;
+  --f-body: "Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #12141d; --surface: #1b1e2b; --surface-2: #242838; --ink: #e9ebf5; --muted: #9399b3;
+    --line: #2e3346; --accent: #7d91ff; --accent-ink: #10132a; --todo: #4a4f66; --todo-ink: #e9ebf5;
+    --low: #4f86c2; --shadow: 0 1px 2px rgba(0,0,0,.3), 0 6px 20px rgba(0,0,0,.25); color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #12141d; --surface: #1b1e2b; --surface-2: #242838; --ink: #e9ebf5; --muted: #9399b3;
+  --line: #2e3346; --accent: #7d91ff; --accent-ink: #10132a; --todo: #4a4f66; --todo-ink: #e9ebf5;
+  --low: #4f86c2; --shadow: 0 1px 2px rgba(0,0,0,.3), 0 6px 20px rgba(0,0,0,.25); color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font: 15px/1.45 var(--f-body); }
+.wrap { max-width: 1040px; margin: 0 auto; padding-inline: 20px; padding-block: 24px 64px; display: flex; flex-direction: column; gap: 20px; }
+button, input, select { font: inherit; color: inherit; }
+button { cursor: pointer; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* header */
+.top { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 16px; }
+.brand { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.eyebrow { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+h1 { font: 700 clamp(28px, 5vw, 40px)/1.05 var(--f-display); margin: 0; text-wrap: balance; letter-spacing: -.01em; }
+.daynav { display: flex; align-items: center; gap: 6px; }
+.iconbtn { width: 36px; height: 36px; border-radius: 10px; border: 1px solid var(--line); background: var(--surface); display: grid; place-items: center; font-size: 18px; line-height: 1; }
+.iconbtn:hover { border-color: var(--accent); }
+.pillbtn { height: 36px; padding: 0 14px; border-radius: 10px; border: 1px solid var(--line); background: var(--surface); font-weight: 600; font-size: 14px; }
+.pillbtn[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+input[type="date"].datejump { height: 36px; border-radius: 10px; border: 1px solid var(--line); background: var(--surface); padding: 0 8px; font: 500 13px var(--f-mono); }
+
+/* summary */
+.summary { background: var(--surface); border-radius: 14px; box-shadow: var(--shadow); padding: 16px 18px; display: flex; flex-direction: column; gap: 10px; }
+.sumrow { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 16px; align-items: baseline; }
+.sumbig { font: 700 22px var(--f-display); }
+.sumbig small { font: 500 14px var(--f-body); color: var(--muted); margin-left: 6px; }
+.legend { display: flex; flex-wrap: wrap; gap: 12px; font-size: 13px; color: var(--muted); }
+.legend span { display: inline-flex; align-items: center; gap: 6px; font-variant-numeric: tabular-nums; }
+.legend i { width: 10px; height: 10px; border-radius: 3px; display: inline-block; }
+.battery { display: flex; height: 12px; border-radius: 6px; overflow: hidden; background: var(--surface-2); }
+.battery div { transition: width .3s ease; }
+
+/* tabs + tools */
+.bar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between; }
+.tabs { display: flex; gap: 6px; }
+.tools { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.search { height: 36px; border-radius: 10px; border: 1px solid var(--line); background: var(--surface); padding: 0 12px; width: 200px; max-width: 100%; }
+.check { display: inline-flex; align-items: center; gap: 6px; font-size: 14px; color: var(--muted); }
+
+/* groups */
+.group { display: flex; flex-direction: column; gap: 8px; }
+.ghead { display: flex; align-items: center; gap: 10px; }
+.ghead button.collapse { background: none; border: 0; padding: 2px 4px; color: var(--gc); font-size: 14px; transition: transform .2s; }
+.group.closed .ghead button.collapse { transform: rotate(-90deg); }
+.gname { font: 700 18px var(--f-display); color: var(--gc); }
+.gcount { font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.group.closed .tablewrap { display: none; }
+.tablewrap { overflow-x: auto; background: var(--surface); border-radius: 12px; box-shadow: var(--shadow); }
+table { width: 100%; border-collapse: collapse; min-width: 680px; }
+th { text-align: left; font-size: 12px; font-weight: 600; color: var(--muted); letter-spacing: .04em; text-transform: uppercase; padding: 10px 8px; border-bottom: 1px solid var(--line); }
+th.c { text-align: center; }
+td { border-bottom: 1px solid var(--line); padding: 0; height: 44px; vertical-align: middle; }
+tr:last-child td { border-bottom: 0; }
+td.edge { width: 6px; background: var(--gc); }
+td.title { padding-left: 10px; }
+.tinput { width: 100%; border: 1px solid transparent; background: transparent; padding: 6px 8px; border-radius: 6px; font-weight: 500; }
+.tinput:hover { border-color: var(--line); }
+.tinput:focus { border-color: var(--accent); background: var(--bg); outline: none; }
+tr.isdone .tinput { color: var(--muted); text-decoration: line-through; text-decoration-color: var(--muted); }
+td.cell { width: 130px; padding: 4px; }
+td.cell.narrow { width: 112px; }
+td.del { width: 40px; text-align: center; }
+.chip { width: 100%; height: 36px; border: 0; border-radius: 6px; color: #fff; font-weight: 600; font-size: 13px; display: grid; place-items: center; text-shadow: 0 1px 0 rgba(0,0,0,.08); }
+.chip.s-todo { background: var(--todo); color: var(--todo-ink); text-shadow: none; }
+.chip.s-working { background: var(--working); }
+.chip.s-stuck { background: var(--stuck); }
+.chip.s-done { background: var(--done); }
+.chip.p-high { background: var(--high); }
+.chip.p-medium { background: var(--med); }
+.chip.p-low { background: var(--low); color: #0e2a47; text-shadow: none; }
+.chip.p-none, .chip.r-none { background: var(--surface-2); color: var(--muted); text-shadow: none; }
+.chip.r-daily, .chip.r-weekdays { background: var(--surface-2); color: var(--ink); text-shadow: none; }
+.chip:hover { filter: brightness(1.05); box-shadow: inset 0 0 0 2px rgba(0,0,0,.08); }
+.dinput { width: 100%; height: 36px; border: 1px solid transparent; border-radius: 6px; background: transparent; font: 500 12px var(--f-mono); padding: 0 6px; }
+.dinput:hover { border-color: var(--line); }
+.dinput.overdue { color: var(--stuck); }
+.xbtn { border: 0; background: none; color: var(--muted); font-size: 18px; width: 30px; height: 30px; border-radius: 8px; opacity: .35; }
+tr:hover .xbtn, .xbtn:focus-visible { opacity: 1; }
+.xbtn:hover { background: var(--surface-2); color: var(--stuck); }
+.addrow td { height: 42px; }
+.addinput { width: 100%; border: 0; background: transparent; padding: 6px 8px; color: var(--muted); }
+.addinput:focus { color: var(--ink); outline: none; }
+.sub { font-size: 12px; color: var(--muted); padding-left: 8px; }
+
+.newgroup { align-self: flex-start; border: 1px dashed var(--line); background: transparent; border-radius: 10px; padding: 8px 14px; color: var(--muted); font-weight: 600; }
+.newgroup:hover { border-color: var(--accent); color: var(--accent); }
+
+.empty { background: var(--surface); border-radius: 12px; box-shadow: var(--shadow); padding: 28px 20px; text-align: center; color: var(--muted); display: flex; flex-direction: column; gap: 6px; align-items: center; }
+.empty strong { color: var(--ink); font: 700 18px var(--f-display); }
+
+.note { font-size: 13px; color: var(--muted); }
+.note.warn { color: var(--stuck); }
+
+/* popover */
+.menu { position: fixed; z-index: 20; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; box-shadow: var(--shadow); padding: 8px; display: flex; flex-direction: column; gap: 6px; width: 170px; }
+.menu .chip { height: 32px; }
+.toast { position: fixed; left: 50%; bottom: calc(20px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); background: var(--ink); color: var(--bg); padding: 10px 16px; border-radius: 10px; font-size: 14px; font-weight: 500; z-index: 30; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div class="brand">
+      <span class="eyebrow" id="dayLabel">Today</span>
+      <h1 id="dateTitle">Daily Board</h1>
+    </div>
+    <div class="daynav">
+      <button class="iconbtn" id="prevDay" aria-label="Previous day">‹</button>
+      <button class="pillbtn" id="todayBtn">Today</button>
+      <button class="iconbtn" id="nextDay" aria-label="Next day">›</button>
+      <input type="date" class="datejump" id="dateJump" aria-label="Jump to date">
+    </div>
+  </header>
+
+  <section class="summary" aria-label="Day progress">
+    <div class="sumrow">
+      <div class="sumbig" id="sumBig">0 of 0 done</div>
+      <div class="legend" id="legend"></div>
+    </div>
+    <div class="battery" id="battery" role="img" aria-label="Status breakdown"></div>
+  </section>
+
+  <div class="bar">
+    <div class="tabs" role="tablist">
+      <button class="pillbtn" id="tabDay" role="tab" aria-pressed="true">My Day</button>
+      <button class="pillbtn" id="tabBoard" role="tab" aria-pressed="false">All tasks</button>
+    </div>
+    <div class="tools">
+      <input class="search" id="search" type="search" placeholder="Search tasks" aria-label="Search tasks">
+      <label class="check"><input type="checkbox" id="hideDone"> Hide done</label>
+    </div>
+  </div>
+
+  <main id="view"></main>
+  <p class="note" id="storeNote">Connecting to your saved tasks…</p>
+</div>
+
+<script>
+(() => {
+  const STATUSES = [
+    { id: "todo", label: "Not started" },
+    { id: "working", label: "Working on it" },
+    { id: "stuck", label: "Stuck" },
+    { id: "done", label: "Done" },
+  ];
+  const PRIORITIES = [
+    { id: "high", label: "High" }, { id: "medium", label: "Medium" },
+    { id: "low", label: "Low" }, { id: "none", label: "No priority" },
+  ];
+  const REPEATS = [
+    { id: "none", label: "Once" }, { id: "daily", label: "Every day" }, { id: "weekdays", label: "Weekdays" },
+  ];
+  const GROUP_COLORS = ["#3550d6", "#00a46a", "#e2445c", "#f0a00c", "#6b3fd4", "#0aa0b8", "#d9488f"];
+  const label = (list, id) => (list.find(x => x.id === id) || list[0]).label;
+
+  // ---------- dates
+  const pad = n => String(n).padStart(2, "0");
+  const iso = d => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+  const parse = s => { const [y, m, d] = s.split("-").map(Number); return new Date(y, m - 1, d); };
+  const todayIso = () => iso(new Date());
+  const addDays = (s, n) => { const d = parse(s); d.setDate(d.getDate() + n); return iso(d); };
+  const fmtShort = s => parse(s).toLocaleDateString(undefined, { month: "short", day: "numeric" });
+
+  // ---------- state
+  let tasks = [];            // [{id, ...data}]
+  let day = todayIso();
+  let tab = "day";
+  let query = "";
+  let hideDone = false;
+  let closed = new Set();
+  let extraGroups = [];      // groups created in this visit before they hold a task
+  try {
+    const saved = JSON.parse(localStorage.getItem("dailyboard.prefs") || "{}");
+    tab = saved.tab === "board" ? "board" : "day";
+    hideDone = !!saved.hideDone;
+    closed = new Set(saved.closed || []);
+  } catch (e) {}
+  const savePrefs = () => {
+    try { localStorage.setItem("dailyboard.prefs", JSON.stringify({ tab, hideDone, closed: [...closed] })); } catch (e) {}
+  };
+
+  // ---------- store: shared db when available, this browser otherwise
+  const store = {
+    mode: "pending",
+    col: null,
+    async create(data) {
+      if (this.mode === "db") return this.col.add(data);
+      const id = "t" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+      tasks.push({ id, ...data }); this.persistLocal(); render();
+    },
+    async update(id, patch) {
+      if (this.mode === "db") return this.col.doc(id).update(patch);
+      const t = tasks.find(x => x.id === id); if (!t) return;
+      for (const [k, v] of Object.entries(patch)) {
+        if (v && typeof v === "object" && !Array.isArray(v) && t[k] && typeof t[k] === "object") t[k] = { ...t[k], ...v };
+        else t[k] = v;
+      }
+      this.persistLocal(); render();
+    },
+    async remove(id) {
+      if (this.mode === "db") return this.col.doc(id).delete();
+      tasks = tasks.filter(x => x.id !== id); this.persistLocal(); render();
+    },
+    persistLocal() { try { localStorage.setItem("dailyboard.tasks", JSON.stringify(tasks)); } catch (e) {} },
+  };
+
+  const note = document.getElementById("storeNote");
+  function useLocal(msg) {
+    store.mode = "local";
+    try { tasks = JSON.parse(localStorage.getItem("dailyboard.tasks") || "[]"); } catch (e) { tasks = []; }
+    note.textContent = msg;
+    render();
+  }
+
+  async function connect() {
+    const db = window.claude && window.claude.use ? await window.claude.use("db") : null;
+    if (!db) { useLocal("Saving in this browser only. Sign in to claude.ai to keep tasks across devices."); return; }
+    store.mode = "db";
+    store.col = db.collection("tasks");
+    note.textContent = "Saved to your board. Changes sync across your devices.";
+    store.col.onSnapshot(snap => {
+      tasks = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+      render();
+    }, err => {
+      note.textContent = "Lost the connection to your saved tasks. Reload the page to reconnect.";
+      note.classList.add("warn");
+    });
+  }
+
+  async function safe(p) {
+    try { await p; } catch (e) {
+      const msg = e && e.code === "quota_exceeded" ? "The board is full. Delete some finished tasks to add more."
+        : e && e.code === "invalid_argument" ? "You can view this board but not change it."
+        : "That change didn't save. Check your connection and try again.";
+      toast(msg);
+    }
+  }
+
+  // ---------- derived
+  function appliesOn(t, d) {
+    if (t.repeat === "daily") return !t.start || d >= t.start;
+    if (t.repeat === "weekdays") { const w = parse(d).getDay(); return w > 0 && w < 6 && (!t.start || d >= t.start); }
+    return false;
+  }
+  const statusOn = (t, d) => (t.repeat && t.repeat !== "none") ? ((t.log || {})[d] || "todo") : (t.status || "todo");
+  const matches = t => !query || (t.title || "").toLowerCase().includes(query) || (t.group || "").toLowerCase().includes(query);
+  const visible = (t, d) => matches(t) && !(hideDone && statusOn(t, d) === "done");
+  const byOrder = (a, b) => (a.order || 0) - (b.order || 0);
+
+  function dayBuckets(d) {
+    const rec = [], due = [], over = [];
+    for (const t of tasks) {
+      if (t.repeat && t.repeat !== "none") { if (appliesOn(t, d)) rec.push(t); }
+      else if (t.due === d) due.push(t);
+      else if (t.due && t.due < d && t.status !== "done" && d === todayIso()) over.push(t);
+    }
+    return { rec: rec.sort(byOrder), due: due.sort(byOrder), over: over.sort((a, b) => a.due.localeCompare(b.due)) };
+  }
+
+  function groups() {
+    const names = [];
+    for (const t of [...tasks].sort(byOrder)) { const g = t.group || "Tasks"; if (!names.includes(g)) names.push(g); }
+    for (const g of extraGroups) if (!names.includes(g)) names.push(g);
+    if (!names.length) names.push("Tasks");
+    return names;
+  }
+  const groupColor = g => { const i = groups().indexOf(g); return GROUP_COLORS[(i < 0 ? 0 : i) % GROUP_COLORS.length]; };
+
+  // ---------- render
+  const view = document.getElementById("view");
+  const el = (tag, attrs = {}, ...kids) => {
+    const n = document.createElement(tag);
+    for (const [k, v] of Object.entries(attrs)) {
+      if (k === "class") n.className = v;
+      else if (k === "style") n.setAttribute("style", v);
+      else if (k.startsWith("on")) n.addEventListener(k.slice(2), v);
+      else if (v === true) n.setAttribute(k, "");
+      else if (v !== false && v != null) n.setAttribute(k, v);
+    }
+    for (const c of kids.flat()) if (c != null) n.append(c);
+    return n;
+  };
+
+  function renderHeader() {
+    const t = todayIso();
+    const lbl = day === t ? "Today" : day === addDays(t, 1) ? "Tomorrow" : day === addDays(t, -1) ? "Yesterday" : parse(day).toLocaleDateString(undefined, { weekday: "long" });
+    document.getElementById("dayLabel").textContent = lbl;
+    document.getElementById("dateTitle").textContent = parse(day).toLocaleDateString(undefined, { weekday: "long", month: "long", day: "numeric" });
+    document.getElementById("dateJump").value = day;
+    document.getElementById("todayBtn").setAttribute("aria-pressed", String(day === t));
+    document.getElementById("tabDay").setAttribute("aria-pressed", String(tab === "day"));
+    document.getElementById("tabBoard").setAttribute("aria-pressed", String(tab === "board"));
+    document.getElementById("hideDone").checked = hideDone;
+
+    const { rec, due, over } = dayBuckets(day);
+    const items = [...rec, ...due, ...over];
+    const counts = { todo: 0, working: 0, stuck: 0, done: 0 };
+    for (const x of items) counts[statusOn(x, day)]++;
+    const total = items.length;
+    document.getElementById("sumBig").replaceChildren(
+      `${counts.done} of ${total} done`,
+      el("small", {}, total ? `${Math.round(counts.done / total * 100)}% of ${day === t ? "today" : "this day"}` : "Nothing scheduled")
+    );
+    const colors = { done: "var(--done)", working: "var(--working)", stuck: "var(--stuck)", todo: "var(--todo)" };
+    const order = ["done", "working", "stuck", "todo"];
+    document.getElementById("battery").replaceChildren(...order.filter(k => counts[k]).map(k =>
+      el("div", { style: `width:${counts[k] / total * 100}%;background:${colors[k]}`, title: `${label(STATUSES, k)}: ${counts[k]}` })));
+    document.getElementById("legend").replaceChildren(...order.map(k =>
+      el("span", {}, el("i", { style: `background:${colors[k]}` }), `${label(STATUSES, k)} ${counts[k]}`)));
+  }
+
+  function chip(kind, value, onPick, list) {
+    const cls = kind === "s" ? `s-${value}` : kind === "p" ? `p-${value || "none"}` : `r-${value || "none"}`;
+    return el("button", {
+      class: `chip ${cls}`, type: "button", "aria-haspopup": "menu",
+      onclick: e => openMenu(e.currentTarget, list, kind, onPick),
+    }, label(list, value || (kind === "s" ? "todo" : "none")));
+  }
+
+  function taskRow(t, d, opts = {}) {
+    const st = statusOn(t, d);
+    const isRec = t.repeat && t.repeat !== "none";
+    const title = el("input", {
+      class: "tinput", value: t.title || "", "aria-label": "Task name", id: `title-${t.id}-${opts.ctx || ""}`,
+      onchange: e => { const v = e.target.value.trim(); if (v && v !== t.title) safe(store.update(t.id, { title: v })); else e.target.value = t.title; },
+      onkeydown: e => { if (e.key === "Enter") e.target.blur(); },
+    });
+    const setStatus = s => isRec ? safe(store.update(t.id, { log: { [d]: s } })) : safe(store.update(t.id, { status: s }));
+    const dueOverdue = !isRec && t.due && t.due < todayIso() && t.status !== "done";
+    const dateCell = isRec
+      ? el("td", { class: "cell narrow" }, chip("r", t.repeat, r => safe(store.update(t.id, { repeat: r, ...(r === "none" ? { status: st, due: d } : {}) })), REPEATS))
+      : el("td", { class: "cell narrow" }, el("input", {
+          type: "date", class: "dinput" + (dueOverdue ? " overdue" : ""), value: t.due || "", "aria-label": "Due date", id: `due-${t.id}-${opts.ctx || ""}`,
+          onchange: e => safe(store.update(t.id, { due: e.target.value || null })),
+        }));
+    return el("tr", { class: st === "done" ? "isdone" : "" },
+      el("td", { class: "edge", style: `--gc:${groupColor(t.group || "Tasks")}` }),
+      el("td", { class: "title" }, title, opts.sub ? el("div", { class: "sub" }, opts.sub) : null),
+      el("td", { class: "cell" }, chip("s", st, setStatus, STATUSES)),
+      el("td", { class: "cell narrow" }, chip("p", t.priority || "none", p => safe(store.update(t.id, { priority: p })), PRIORITIES)),
+      dateCell,
+      opts.showRepeat ? el("td", { class: "cell narrow" }, chip("r", t.repeat || "none", r => {
+        const patch = { repeat: r };
+        if (r !== "none" && !t.start) patch.start = todayIso();
+        safe(store.update(t.id, patch));
+      }, REPEATS)) : null,
+      el("td", { class: "del" }, el("button", { class: "xbtn", type: "button", "aria-label": `Delete ${t.title}`, onclick: () => confirmDelete(t) }, "×")),
+    );
+  }
+
+  function table(head, rows, addRow) {
+    return el("div", { class: "tablewrap" }, el("table", {},
+      el("thead", {}, el("tr", {}, el("th", {}), ...head.map(h => el("th", { class: h.c ? "c" : "" }, h.t)))),
+      el("tbody", {}, rows, addRow)));
+  }
+
+  function addRow(placeholder, make, colspan, gc, id) {
+    const inp = el("input", {
+      class: "addinput", placeholder, "aria-label": placeholder, id,
+      onkeydown: e => {
+        if (e.key !== "Enter") return;
+        const v = e.target.value.trim(); if (!v) return;
+        e.target.value = "";
+        safe(store.create({ title: v, priority: "none", order: Date.now(), created: todayIso(), ...make() }));
+      },
+    });
+    return el("tr", { class: "addrow" }, el("td", { class: "edge", style: `--gc:${gc};opacity:.35` }), el("td", { colspan }, inp));
+  }
+
+  function section(key, name, color, count, body) {
+    const isClosed = closed.has(key);
+    return el("section", { class: "group" + (isClosed ? " closed" : ""), style: `--gc:${color}` },
+      el("div", { class: "ghead" },
+        el("button", { class: "collapse", type: "button", "aria-expanded": String(!isClosed), "aria-label": `Toggle ${name}`,
+          onclick: () => { closed.has(key) ? closed.delete(key) : closed.add(key); savePrefs(); render(); } }, "▾"),
+        el("span", { class: "gname" }, name),
+        el("span", { class: "gcount" }, `${count} ${count === 1 ? "task" : "tasks"}`)),
+      body);
+  }
+
+  function renderDay() {
+    const { rec, due, over } = dayBuckets(day);
+    const head = [{ t: "Task" }, { t: "Status", c: 1 }, { t: "Priority", c: 1 }, { t: "Due", c: 1 }, { t: "" }];
+    const recHead = [{ t: "Task" }, { t: "Status", c: 1 }, { t: "Priority", c: 1 }, { t: "Repeats", c: 1 }, { t: "" }];
+    const out = [];
+    if (!tasks.length) {
+      out.push(el("div", { class: "empty" }, el("strong", {}, "Your day is clear"),
+        "Type a task below and press Enter. Set it to repeat every day for routines, or give it a due date."));
+    }
+    const fRec = rec.filter(t => visible(t, day));
+    out.push(section("day-rec", "Every day", "var(--accent)", fRec.length,
+      table(recHead, fRec.map(t => taskRow(t, day, { ctx: "rec", sub: t.group })),
+        addRow("+ Add a daily routine", () => ({ repeat: "daily", start: day, log: {}, group: "Routines" }), 5, "var(--accent)", "add-rec"))));
+    const fDue = due.filter(t => visible(t, day));
+    out.push(section("day-due", day === todayIso() ? "Due today" : `Due ${fmtShort(day)}`, "var(--done)", fDue.length,
+      table(head, fDue.map(t => taskRow(t, day, { ctx: "due", sub: t.group })),
+        addRow("+ Add a task for this day", () => ({ repeat: "none", status: "todo", due: day, group: groups()[0] }), 5, "var(--done)", "add-due"))));
+    const fOver = over.filter(t => visible(t, day));
+    if (fOver.length) out.push(section("day-over", "Overdue", "var(--stuck)", fOver.length,
+      table(head, fOver.map(t => taskRow(t, day, { ctx: "over", sub: `${t.group || "Tasks"} · was due ${fmtShort(t.due)}` })))));
+    view.replaceChildren(el("div", { style: "display:flex;flex-direction:column;gap:22px" }, out));
+  }
+
+  function renderBoard() {
+    const head = [{ t: "Task" }, { t: "Status", c: 1 }, { t: "Priority", c: 1 }, { t: "Due", c: 1 }, { t: "Repeats", c: 1 }, { t: "" }];
+    const out = groups().map(g => {
+      const list = tasks.filter(t => (t.group || "Tasks") === g && visible(t, day)).sort(byOrder);
+      const color = groupColor(g);
+      return section("g-" + g, g, color, list.length,
+        table(head, list.map(t => taskRow(t, day, { ctx: "board" })),
+          addRow("+ Add task", () => ({ repeat: "none", status: "todo", due: null, group: g }), 6, color, "add-" + g.replace(/\W+/g, "-"))));
+    });
+    out.push(el("button", { class: "newgroup", type: "button", onclick: newGroup }, "+ New group"));
+    view.replaceChildren(el("div", { style: "display:flex;flex-direction:column;gap:22px" }, out));
+  }
+
+  function newGroup() {
+    const n = groups().length + 1;
+    let name = "New group";
+    while (groups().includes(name)) name = `New group ${n}`;
+    extraGroups.push(name);
+    render();
+    const inp = el("input", { class: "tinput", value: name, "aria-label": "Group name" });
+    const heads = view.querySelectorAll(".gname");
+    const target = heads[heads.length - 1];
+    target.replaceWith(inp);
+    inp.select();
+    const done = () => {
+      const v = inp.value.trim() || name;
+      extraGroups = extraGroups.map(g => g === name ? v : g);
+      render();
+    };
+    inp.addEventListener("blur", done);
+    inp.addEventListener("keydown", e => { if (e.key === "Enter") inp.blur(); });
+  }
+
+  function render() {
+    const active = document.activeElement;
+    const focusId = active && active.id;
+    renderHeader();
+    if (store.mode === "pending") { view.replaceChildren(el("div", { class: "empty" }, el("strong", {}, "Loading your tasks"), "Your daily routines and due tasks appear here.")); return; }
+    tab === "day" ? renderDay() : renderBoard();
+    if (focusId) { const n = document.getElementById(focusId); if (n && n !== active) n.focus(); }
+  }
+
+  // ---------- menus, toasts, confirm
+  let menu = null;
+  function closeMenu() { if (menu) { menu.remove(); menu = null; } }
+  function openMenu(anchor, list, kind, onPick) {
+    closeMenu();
+    menu = el("div", { class: "menu", role: "menu" }, list.map(o => {
+      const cls = kind === "s" ? `s-${o.id}` : kind === "p" ? `p-${o.id}` : `r-${o.id}`;
+      return el("button", { class: `chip ${cls}`, role: "menuitem", type: "button", onclick: () => { closeMenu(); onPick(o.id); } }, o.label);
+    }));
+    document.body.append(menu);
+    const r = anchor.getBoundingClientRect();
+    const mh = menu.offsetHeight, mw = menu.offsetWidth;
+    let top = r.bottom + 6; if (top + mh > innerHeight - 8) top = Math.max(8, r.top - mh - 6);
+    let left = r.left + r.width / 2 - mw / 2; left = Math.min(Math.max(8, left), innerWidth - mw - 8);
+    menu.style.top = top + "px"; menu.style.left = left + "px";
+    menu.querySelector("button").focus();
+  }
+  document.addEventListener("pointerdown", e => { if (menu && !menu.contains(e.target) && !e.target.closest(".chip")) closeMenu(); });
+  document.addEventListener("keydown", e => { if (e.key === "Escape") closeMenu(); });
+  addEventListener("scroll", closeMenu, true);
+
+  let toastTimer;
+  function toast(msg, action) {
+    document.querySelectorAll(".toast").forEach(n => n.remove());
+    const t = el("div", { class: "toast", role: "status" }, msg);
+    if (action) t.append(" ", el("button", { type: "button", style: "background:none;border:0;color:inherit;font-weight:700;text-decoration:underline", onclick: () => { t.remove(); action.run(); } }, action.label));
+    document.body.append(t);
+    clearTimeout(toastTimer); toastTimer = setTimeout(() => t.remove(), action ? 5000 : 3000);
+  }
+  function confirmDelete(t) {
+    const { id, ...data } = t;
+    safe(store.remove(id));
+    toast(`Deleted “${t.title}”`, { label: "Undo", run: () => safe(store.create(data)) });
+  }
+
+  // ---------- controls
+  const go = d => { day = d; render(); };
+  document.getElementById("prevDay").onclick = () => go(addDays(day, -1));
+  document.getElementById("nextDay").onclick = () => go(addDays(day, 1));
+  document.getElementById("todayBtn").onclick = () => go(todayIso());
+  document.getElementById("dateJump").onchange = e => { if (e.target.value) go(e.target.value); };
+  document.getElementById("tabDay").onclick = () => { tab = "day"; savePrefs(); render(); };
+  document.getElementById("tabBoard").onclick = () => { tab = "board"; savePrefs(); render(); };
+  document.getElementById("search").oninput = e => { query = e.target.value.trim().toLowerCase(); render(); };
+  document.getElementById("hideDone").onchange = e => { hideDone = e.target.checked; savePrefs(); render(); };
+  // roll over to the new day if the page stays open past midnight
+  let lastToday = todayIso();
+  setInterval(() => { const t = todayIso(); if (t !== lastToday) { if (day === lastToday) day = t; lastToday = t; render(); } }, 60000);
+
+  render();
+  connect().catch(() => useLocal("Saving in this browser only. Your tasks stay on this device."));
+})();
+</script>
