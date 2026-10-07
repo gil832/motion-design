@@ -417,9 +417,9 @@ def grid_els(t0, t1, highlight=None, header="Which program?"):
     names = [("1-Step", 0, 0), ("2-Step", 1, 0), ("Pay After You Pass", 0, 1), ("Instant", 1, 1)]
     cache = {}
 
-    def mk(name):
+    def mk(name, start):
         def f(lt):
-            lit = highlight(t0 + lt) if highlight else None
+            lit = highlight(start + lt) if highlight else None
             st = "dark"
             if lit is not None:
                 st = "lime" if name in lit else "dim"
@@ -443,7 +443,7 @@ def grid_els(t0, t1, highlight=None, header="Which program?"):
         return img
     els.append(El(t0, t1, 540, 175, head, pop="fade", bob=0))
     for i, (n, cx, cy) in enumerate(names):
-        els.append(El(t0 + 0.08 * (i + 1), t1, 312 + cx * 456, 330 + cy * 186, mk(n),
+        els.append(El(t0 + 0.08 * (i + 1), t1, 312 + cx * 456, 330 + cy * 186, mk(n, t0 + 0.08 * (i + 1)),
                       rot=-1.2 if cx == 0 else 1.2, dyn=True))
     return els
 
@@ -603,27 +603,18 @@ def punch(t):
     return z
 
 
-# Soft cut-out over the floor lamp (shade + pole), never where the presenter is.
-_lc = Image.new("L", (540, 960), 255)
-ImageDraw.Draw(_lc).rectangle((0, 0, 120, 470), fill=0)
-ImageDraw.Draw(_lc).rectangle((0, 470, 62, 900), fill=0)
-LAMP_CUT = np.asarray(_lc.filter(ImageFilter.GaussianBlur(6)), np.float32) / 255.0
-
-
-def clean_mask(m):
-    """Keep the largest blob (the presenter) -- drops the floor lamp etc."""
-    m = (m.astype(np.float32) * LAMP_CUT).astype(np.uint8)
-    b = m > 128
-    lab, n = ndimage.label(b)
-    if n > 1:
-        sizes = ndimage.sum(b, lab, range(1, n + 1))
-        keep = lab == (1 + int(np.argmax(sizes)))
-        keep = ndimage.binary_dilation(keep, iterations=6)
-        m = (m * keep).astype(np.uint8)
-    return m
-
-
 VIGNETTE = None
+BOTTOM = None
+BLACK = None
+
+
+def init_bottom():
+    global BOTTOM, BLACK
+    y = np.arange(H, dtype=np.float32)[:, None, None]
+    BOTTOM = np.clip((H - 30 - y) / 260, 0, 1) ** 1.5
+    yy, xx = np.mgrid[0:H, 0:W]
+    r = np.sqrt(((xx - W / 2) / W) ** 2 + ((yy - H * .45) / H) ** 2)
+    BLACK = (np.clip(0.075 - 0.07 * r, 0.02, 0.075)).astype(np.float32)[..., None] * np.ones(3, np.float32)
 
 
 def compose_base(frame, mask, t):
@@ -637,7 +628,7 @@ def compose_base(frame, mask, t):
     s = person_scale(t)
     d = dark_amount(t)
     img = Image.fromarray(frame)
-    m = Image.fromarray(clean_mask(mask)).resize((W, H), Image.BILINEAR)
+    m = Image.fromarray(mask).resize((W, H), Image.BICUBIC)
     # Zoom around the face, then shrink toward bottom-centre for dark mode.
     scale = z * s
     cy = 760
@@ -651,13 +642,19 @@ def compose_base(frame, mask, t):
     ma = np.asarray(m, np.float32)[..., None] / 255.0
     f = f * VIGNETTE ** 0.5
     if d > 0:
-        bg = f * (1 - 0.95 * d)
-        person = f * (1 - 0.15 * d)
-        out = person * ma + bg * (1 - ma)
-        # Lime rim glow around the presenter.
-        mb = np.asarray(m.filter(ImageFilter.GaussianBlur(22)), np.float32)[..., None] / 255.0
-        rim = np.clip(mb - ma, 0, 1) * 2.2 * d
-        out = out * (1 - rim * 0.5) + rim * (np.array(LIME, np.float32) / 255.0) * 0.5
+        # Fade the bottom of the (possibly shrunk) frame so there is no hard edge.
+        if BOTTOM is None:
+            init_bottom()
+        ma_raw = ma
+        ma = ma * (1 - d + d * BOTTOM)
+        bg = f * (1 - d) + BLACK * d
+        out = f * ma + bg * (1 - ma)
+        # Thin lime rim + faint wide bloom, outside the presenter only.
+        tight = np.asarray(m.filter(ImageFilter.GaussianBlur(7)), np.float32)[..., None] / 255.0
+        wide = np.asarray(m.filter(ImageFilter.GaussianBlur(30)), np.float32)[..., None] / 255.0
+        rim = (np.clip(tight - ma_raw, 0, 1) * 1.1 + np.clip(wide - ma_raw, 0, 1) * 0.35) * d * BOTTOM
+        rim = np.clip(rim, 0, 1)
+        out = out * (1 - rim * 0.6) + rim * (np.array(LIME, np.float32) / 255.0) * 0.6
     else:
         out = f
     return np.clip(out * 255, 0, 255).astype(np.uint8)

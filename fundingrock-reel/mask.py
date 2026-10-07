@@ -9,7 +9,8 @@ import sys
 
 import numpy as np
 from ai_edge_litert.interpreter import Interpreter
-from PIL import Image, ImageFilter
+from PIL import Image, ImageDraw, ImageFilter
+from scipy import ndimage
 
 W, H, FPS = 540, 960, 30
 src, model, out = sys.argv[1:4]
@@ -37,6 +38,34 @@ def matte(rgb):
     return m
 
 
+# Soft cut-out over the floor lamp (shade + pole), never where the presenter is.
+_lc = Image.new("L", (W, H), 255)
+ImageDraw.Draw(_lc).rectangle((0, 0, 120, 470), fill=0)
+ImageDraw.Draw(_lc).rectangle((0, 470, 62, 900), fill=0)
+LAMP_CUT = np.asarray(_lc.filter(ImageFilter.GaussianBlur(6)), np.float32) / 255.0
+
+
+def cleanup(m):
+    """Drop the lamp and other islands, keep the presenter, fill holes."""
+    m = m * LAMP_CUT
+    b = m > 0.5
+    lab, n = ndimage.label(b)
+    if n > 1:
+        sizes = ndimage.sum(b, lab, range(1, n + 1))
+        b = lab == (1 + int(np.argmax(sizes)))
+    b = ndimage.binary_fill_holes(b)
+    near = ndimage.binary_dilation(b, iterations=8)
+    return np.where(b, np.maximum(m, 0.9), m * near)
+
+
+def guided_filter(I, p, r, eps):
+    box = lambda x: ndimage.uniform_filter(x, 2 * r + 1, mode="nearest")  # noqa: E731
+    mI, mp = box(I), box(p)
+    a = (box(I * p) - mI * mp) / (box(I * I) - mI * mI + eps)
+    b = mp - a * mI
+    return box(a) * I + box(b)
+
+
 dec = subprocess.Popen(
     ["ffmpeg", "-v", "error", "-i", src, "-vf", f"fps={FPS},scale={W}:{H}",
      "-f", "rawvideo", "-pix_fmt", "rgb24", "-"], stdout=subprocess.PIPE)
@@ -51,12 +80,16 @@ while True:
     buf = dec.stdout.read(W * H * 3)
     if len(buf) < W * H * 3:
         break
-    m = matte(np.frombuffer(buf, np.uint8).reshape(H, W, 3))
+    rgb = np.frombuffer(buf, np.uint8).reshape(H, W, 3)
+    m = matte(rgb)
+    # Light temporal smoothing on the coarse matte to stop edge shimmer.
+    prev = m if prev is None else 0.6 * m + 0.4 * prev
+    m = cleanup(prev)
+    # Snap the blobby 256px matte to real image edges.
+    m = guided_filter(rgb.mean(-1) / 255.0, m, 6, 2e-3)
     m = np.clip((m - 0.3) / 0.4, 0, 1)
-    # Light temporal smoothing to stop edge shimmer.
-    prev = m if prev is None else 0.65 * m + 0.35 * prev
-    img = Image.fromarray((prev * 255).astype(np.uint8)).filter(ImageFilter.GaussianBlur(1.5))
-    enc.stdin.write(img.tobytes())
+    m = m * m * (3 - 2 * m)
+    enc.stdin.write((m * 255).astype(np.uint8).tobytes())
     n += 1
 enc.stdin.close()
 enc.wait()
