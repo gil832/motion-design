@@ -2,308 +2,355 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Host+Grotesk:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&family=Zen+Kaku+Gothic+New:wght@500;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Host+Grotesk:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@500;700&display=swap">
 <style>
-/* Layout: a review sheet — four full-bleed hero frames stacked, each with a slim spec strip above it. */
+/* Layout: review sheet. Each concept is the real homepage hero shell from Figma (ticker, nav, 50/50 split with a 1px divider, press bar) with the Black November content swapped in. */
 :root {
-  --ink: #0A0C0B;        /* page black, slight green bias */
-  --panel: #121614;      /* hero frame */
-  --line: #232B27;
-  --fg: #F1F4EF;
-  --muted: #86918B;
-  --teal: #16D6B4;       /* brand gradient start (Figma CTA) */
-  --lime: #C9F51E;       /* brand gradient end */
-  --grad: linear-gradient(100deg, var(--teal), var(--lime));
-  --display: "Host Grotesk", "Helvetica Neue", Arial, sans-serif;
-  --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+  --bg: #0E0E0E;         /* site background (Figma + live CSS) */
+  --card: #151515;
+  --line: #303030;       /* hairlines and card borders */
+  --fg: #FFFFFF;
+  --muted: #A0A0A0;
+  --lime: #D9FF00;       /* primary accent: buttons, highlights, halftone */
+  --teal: #00D8C3;
+  --purple: #8042FF;
+  --red: #FF2156;
+  --tp: #00B67A;         /* Trustpilot green */
+  --sans: "Host Grotesk", "Helvetica Neue", Arial, sans-serif;
   --jp: "Zen Kaku Gothic New", "Hiragino Sans", "Noto Sans JP", sans-serif;
   color-scheme: dark;
 }
 * { box-sizing: border-box; }
-body { background: var(--ink); color: var(--fg); font-family: var(--display); font-size: 15px; line-height: 1.5; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
-.wrap { max-width: 1280px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 40px 80px; display: grid; gap: 56px; }
-header.sheet { display: grid; gap: 10px; max-width: 760px; }
-header.sheet .eyebrow, .spec .eyebrow { font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
-header.sheet h1 { margin: 0; font-size: clamp(28px, 4vw, 44px); font-weight: 700; letter-spacing: -.02em; line-height: 1.05; text-wrap: balance; }
-header.sheet p { margin: 0; color: var(--muted); max-width: 62ch; }
+body { background: #080808; color: var(--fg); font-family: var(--sans); font-size: 15px; line-height: 1.4; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+.wrap { max-width: 1440px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 40px 80px; display: grid; gap: 64px; }
+button { font-family: inherit; }
+button:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline: 2px solid var(--lime); outline-offset: 3px; }
+
+/* review sheet chrome */
+.sheet { display: grid; gap: 10px; max-width: 780px; }
+.eyebrow { font-size: 12px; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.sheet h1 { margin: 0; font-size: clamp(28px, 4vw, 44px); font-weight: 500; letter-spacing: -.01em; line-height: 1.05; text-wrap: balance; }
+.sheet p { margin: 0; color: var(--muted); max-width: 64ch; }
 .jump { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
-.jump a { font-family: var(--mono); font-size: 12px; color: var(--fg); text-decoration: none; border: 1px solid var(--line); padding: 6px 12px; border-radius: 999px; }
-.jump a:hover, .jump a:focus-visible { border-color: var(--lime); color: var(--lime); outline: none; }
+.jump a { font-size: 13px; color: var(--fg); text-decoration: none; border: 1px solid var(--line); padding: 7px 12px; border-radius: 6px; }
+.jump a:hover { border-color: var(--lime); color: var(--lime); }
+.concept { display: grid; gap: 14px; scroll-margin-top: 20px; }
+.spec { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 24px; }
+.spec h2 { margin: 2px 0 0; font-size: 22px; font-weight: 500; }
+.spec .how { color: var(--muted); font-size: 13px; max-width: 62ch; }
 
-section.concept { display: grid; gap: 14px; scroll-margin-top: 20px; }
-.spec { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 24px; border-top: 1px solid var(--line); padding-top: 14px; }
-.spec h2 { margin: 0; font-size: 20px; font-weight: 600; letter-spacing: -.01em; }
-.spec .how { color: var(--muted); font-size: 13px; max-width: 60ch; }
+/* ---------- site shell (matches Figma Homepage frame) ---------- */
+.site { background: var(--bg); border: 1px solid #1d1d1d; border-radius: 14px; overflow: hidden; }
+.ticker { height: 30px; overflow: hidden; white-space: nowrap; background: var(--bg); border-bottom: 1px solid var(--line); display: flex; align-items: center; }
+.ticker div { display: inline-block; font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--lime); animation: marquee 40s linear infinite; }
+.ticker span { color: var(--muted); margin: 0 16px; }
+@keyframes marquee { to { transform: translateX(-50%) } }
+.nav { display: flex; align-items: center; justify-content: space-between; gap: 24px; height: 72px; padding: 0 48px; border-bottom: 1px solid var(--line); }
+.logo { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 15px; letter-spacing: .02em; }
+.logo i { width: 22px; height: 22px; background: var(--lime); clip-path: polygon(0 0, 100% 0, 100% 30%, 38% 30%, 38% 45%, 80% 45%, 80% 72%, 38% 72%, 38% 100%, 0 100%); }
+.nav ul { display: flex; gap: 28px; list-style: none; margin: 0; padding: 0; font-size: 13px; color: #d9d9d9; }
+.nav li.sale { color: var(--lime); display: flex; align-items: center; gap: 6px; }
+.nav li.sale::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--lime); animation: blink 1.4s infinite; }
+.nav .right { display: flex; align-items: center; gap: 18px; font-size: 13px; }
+.btn { appearance: none; border: 0; cursor: pointer; background: var(--lime); color: var(--bg); font: 500 15px/1 var(--sans); height: 46px; padding: 0 24px; border-radius: 6px; display: inline-flex; align-items: center; gap: 8px; transition: transform .2s, box-shadow .2s; }
+.btn:hover { transform: translateY(-1px); box-shadow: 0 8px 30px -8px rgba(217,255,0,.6); }
+.btn.sm { height: 36px; padding: 0 16px; font-size: 13px; }
+.btn.ghost { background: transparent; color: var(--fg); border: 1px solid var(--line); }
 
-/* ---------- shared hero chrome ---------- */
-.hero { position: relative; overflow: hidden; background: var(--panel); border: 1px solid var(--line); border-radius: 20px; isolation: isolate; }
-.hero-in { position: relative; z-index: 2; display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: 32px; align-items: center; padding: clamp(28px, 5vw, 64px); min-height: 560px; }
-.kicker { display: inline-flex; align-items: center; gap: 8px; font-family: var(--mono); font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--lime); }
-.kicker i { width: 7px; height: 7px; border-radius: 50%; background: var(--lime); box-shadow: 0 0 0 0 var(--lime); animation: ping 1.8s infinite; }
-@keyframes ping { 0% { box-shadow: 0 0 0 0 rgba(201,245,30,.6) } 100% { box-shadow: 0 0 0 10px rgba(201,245,30,0) } }
-.h-xl { margin: 14px 0 0; font-weight: 800; font-size: clamp(44px, 7.4vw, 96px); line-height: .9; letter-spacing: -.045em; text-wrap: balance; }
-.grad-text { background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
-.sub { margin: 18px 0 0; font-size: clamp(16px, 1.6vw, 19px); color: #C9D0CB; max-width: 40ch; }
-.cta-row { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 18px; margin-top: 28px; }
-.btn { appearance: none; border: 0; cursor: pointer; font: 700 15px/1 var(--display); letter-spacing: .02em; text-transform: uppercase; color: #06100C; background: var(--grad); padding: 17px 28px; border-radius: 999px; position: relative; overflow: hidden; transition: transform .2s; }
-.btn::after { content: ""; position: absolute; inset: 0; background: linear-gradient(100deg, transparent 30%, rgba(255,255,255,.55) 50%, transparent 70%); transform: translateX(-120%); animation: sheen 3.2s 1s infinite; }
-@keyframes sheen { 0%, 60% { transform: translateX(-120%) } 100% { transform: translateX(120%) } }
-.btn:hover { transform: translateY(-2px); }
-.btn:focus-visible, button:focus-visible { outline: 2px solid var(--lime); outline-offset: 3px; }
+.hero { position: relative; display: grid; grid-template-columns: 1fr 1fr; min-height: 650px; }
+.hero::after { content: ""; position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: var(--line); z-index: 3; }
+.copy { position: relative; z-index: 4; padding: 94px 48px 40px; display: flex; flex-direction: column; justify-content: space-between; gap: 48px; }
+.copy-main { display: grid; gap: 24px; }
+.tag { display: inline-flex; align-items: center; gap: 8px; width: fit-content; font-size: 13px; font-weight: 500; color: var(--lime); border: 1px solid var(--line); border-radius: 6px; padding: 6px 10px; }
+.tag i { width: 6px; height: 6px; border-radius: 50%; background: var(--lime); animation: blink 1.4s infinite; }
+@keyframes blink { 50% { opacity: .25 } }
+.h1 { margin: 0; font-weight: 500; font-size: clamp(40px, 5.2vw, 70px); line-height: 1; letter-spacing: -.01em; text-wrap: balance; }
+.h1 em { font-style: normal; color: var(--lime); }
+.lead { margin: 0; font-size: clamp(17px, 1.5vw, 20px); line-height: 1.3; max-width: 496px; }
+.lead b { color: var(--lime); font-weight: 700; }
+.row { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 16px; }
 .fine { font-size: 12px; color: var(--muted); }
-.code { font-family: var(--mono); font-size: 12px; border: 1px dashed #3A463F; padding: 6px 10px; border-radius: 8px; color: var(--fg); }
+.tp { display: flex; align-items: center; gap: 13px; font-size: 13px; flex-wrap: wrap; }
+.tp .stars { display: flex; gap: 2px; }
+.tp .stars span { width: 20px; height: 20px; background: var(--tp); display: grid; place-items: center; }
+.tp .stars svg { width: 14px; height: 14px; fill: #fff; }
+.tp .brand { display: flex; align-items: center; gap: 4px; font-weight: 700; }
+.tp .brand svg { width: 14px; height: 14px; fill: var(--tp); }
+.visual { position: relative; overflow: hidden; }
+.visual canvas.ht { position: absolute; inset: 0; width: 100%; height: 100%; }
+.visual::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 48%; background: linear-gradient(to bottom, rgba(14,14,14,0), var(--bg) 75%); pointer-events: none; z-index: 1; }
+.press { display: grid; grid-template-columns: repeat(6, 1fr); border-top: 1px solid var(--line); height: 87px; }
+.press span { display: grid; place-items: center; color: #c4c4c4; font-weight: 600; font-size: 15px; border-right: 1px solid var(--line); letter-spacing: .01em; }
+.press span:last-child { border-right: 0; }
+.press .serif { font-family: Georgia, "Times New Roman", serif; font-size: 20px; font-weight: 700; }
 
 /* ---------- 1 · Offer Stack ---------- */
-#c1 .hero { background: radial-gradient(80% 90% at 85% 40%, rgba(22,214,180,.14), transparent 60%), var(--panel); }
-.stage { position: relative; height: 440px; perspective: 1400px; }
+.stage { position: absolute; inset: 0; z-index: 2; perspective: 1400px; }
 .deck { position: absolute; inset: 0; transform-style: preserve-3d; transition: transform .25s ease-out; }
-.card { position: absolute; left: 50%; top: 50%; width: min(330px, 78%); height: 380px; margin: -190px 0 0 calc(min(330px, 78%) / -2); border-radius: 22px; padding: 26px; display: flex; flex-direction: column; cursor: pointer; transition: transform .7s cubic-bezier(.2,.8,.2,1), opacity .7s, filter .7s; box-shadow: 0 30px 60px -20px rgba(0,0,0,.7); border: 1px solid rgba(255,255,255,.08); }
-.card .tag { font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; }
-.card.sale { background: var(--grad); color: #06100C; }
-.card.sale .big { font-weight: 800; font-size: clamp(96px, 30vw, 124px); line-height: .8; letter-spacing: -.06em; margin-top: auto; }
-.card.sale .off { font-weight: 800; font-size: 44px; letter-spacing: -.03em; line-height: 1; }
-.card.sale .price { display: flex; align-items: baseline; gap: 12px; margin-top: 18px; padding-top: 14px; border-top: 1px solid rgba(6,16,12,.25); font-variant-numeric: tabular-nums; }
-.card.sale s { opacity: .55; font-size: 20px; }
-.card.sale b { font-size: 34px; letter-spacing: -.02em; }
-.card.bundle { background: #F1F4EF; color: #0A0C0B; }
-.card.bundle .row { display: flex; align-items: baseline; justify-content: space-between; border-top: 1px solid #D5DBD5; padding: 14px 0; }
-.card.bundle .row:first-of-type { margin-top: auto; }
-.card.bundle .row strong { font-size: 64px; font-weight: 800; letter-spacing: -.05em; line-height: .9; }
-.card.bundle .row span { font-size: 13px; text-align: right; color: #4A554F; }
-.card.bundle .row em { font-style: normal; background: #0A0C0B; color: var(--lime); font-weight: 700; padding: 3px 8px; border-radius: 6px; font-size: 13px; }
-.card.koku { background: radial-gradient(120% 80% at 30% 0%, #2A3330, #050606 70%); color: var(--fg); }
-.card.koku .kanji { font-family: var(--jp); font-weight: 700; font-size: 120px; line-height: 1; margin-top: auto; letter-spacing: -.04em; background: linear-gradient(160deg, #fff, #5F6B66 60%, #fff); -webkit-background-clip: text; background-clip: text; color: transparent; }
-.card.koku .name { font-weight: 800; font-size: 30px; letter-spacing: .02em; }
-.card.koku .deal { margin-top: 12px; font-size: 18px; color: var(--lime); font-weight: 600; }
-.dots { position: absolute; left: 50%; bottom: -6px; transform: translateX(-50%); display: flex; gap: 8px; z-index: 5; }
-.dots button { width: 28px; height: 4px; border: 0; border-radius: 4px; background: #34403A; cursor: pointer; padding: 0; transition: background .3s, width .3s; }
+.card { position: absolute; left: 50%; top: 46%; width: 300px; height: 360px; margin: -180px 0 0 -150px; border-radius: 12px; padding: 24px; display: flex; flex-direction: column; cursor: pointer; transition: transform .7s cubic-bezier(.2,.8,.2,1), filter .7s; box-shadow: 0 40px 60px -24px rgba(0,0,0,.8); }
+.card .k { font-size: 12px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; }
+.card.sale { background: var(--lime); color: var(--bg); }
+.card.sale .big { margin-top: auto; font-weight: 500; font-size: 128px; line-height: .82; letter-spacing: -.04em; }
+.card.sale .off { font-weight: 500; font-size: 40px; line-height: 1; letter-spacing: -.02em; }
+.card.sale .price { display: flex; align-items: baseline; gap: 10px; margin-top: 18px; padding-top: 14px; border-top: 1px solid rgba(14,14,14,.2); font-variant-numeric: tabular-nums; }
+.card.sale s { opacity: .5; font-size: 18px; }
+.card.sale b { font-size: 30px; font-weight: 600; }
+.card.bundle { background: var(--card); border: 1px solid var(--line); }
+.card.bundle .k { color: var(--teal); }
+.card.bundle .r { display: flex; align-items: baseline; justify-content: space-between; border-top: 1px solid var(--line); padding: 14px 0; }
+.card.bundle .r:first-of-type { margin-top: auto; }
+.card.bundle .r strong { font-size: 64px; font-weight: 500; letter-spacing: -.04em; line-height: .9; }
+.card.bundle .r span { font-size: 13px; text-align: right; color: var(--muted); display: grid; gap: 6px; justify-items: end; }
+.card.bundle .r em { font-style: normal; background: var(--teal); color: var(--bg); font-weight: 600; padding: 3px 8px; border-radius: 4px; }
+.card.koku { background: radial-gradient(120% 80% at 30% 0%, #262626, #050505 70%); border: 1px solid var(--line); }
+.card.koku .k { color: var(--purple); }
+.card.koku .kanji { margin-top: auto; font-family: var(--jp); font-weight: 700; font-size: 104px; line-height: 1; background: linear-gradient(160deg, #fff, #555 60%, #ddd); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.card.koku .name { font-weight: 600; font-size: 26px; letter-spacing: .04em; }
+.card.koku .deal { margin-top: 10px; font-size: 18px; color: var(--lime); font-weight: 500; }
+.dots { position: absolute; left: 50%; bottom: 64px; transform: translateX(-50%); display: flex; gap: 8px; z-index: 4; }
+.dots button { width: 28px; height: 4px; border: 0; border-radius: 2px; background: var(--line); cursor: pointer; padding: 0; transition: background .3s, width .3s; }
 .dots button[aria-pressed="true"] { background: var(--lime); width: 44px; }
 
 /* ---------- 2 · Bundle Builder ---------- */
-#c2 .hero { background: linear-gradient(180deg, rgba(201,245,30,.06), transparent 40%), var(--panel); }
-.builder { display: grid; gap: 18px; }
-.stepper { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
-.stepper .lbl { font-family: var(--mono); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
-.seg { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; padding: 4px; gap: 4px; background: #0D100E; }
-.seg button { appearance: none; border: 0; background: transparent; color: var(--fg); font: 600 14px/1 var(--display); padding: 10px 16px; border-radius: 999px; cursor: pointer; font-variant-numeric: tabular-nums; }
-.seg button[aria-pressed="true"] { background: var(--fg); color: var(--ink); }
-.tickets { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; min-height: 172px; }
-.ticket { position: relative; border-radius: 14px; padding: 12px; min-height: 172px; display: flex; flex-direction: column; justify-content: space-between; border: 1px dashed #2E3833; color: #4D5852; font-size: 12px; transition: border-color .3s; }
-.ticket .t-top { font-family: var(--mono); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; }
-.ticket .t-price { font-variant-numeric: tabular-nums; }
-.ticket.paid { border: 1px solid #3A4740; background: #1A201D; color: var(--fg); animation: dropIn .55s cubic-bezier(.2,1.4,.4,1) both; }
-.ticket.paid s { color: var(--muted); font-size: 12px; display: block; }
-.ticket.paid b { font-size: 22px; letter-spacing: -.02em; }
-.ticket.free { border: 0; background: var(--grad); color: #06100C; animation: dropIn .6s cubic-bezier(.2,1.4,.4,1) both; box-shadow: 0 0 40px -6px rgba(201,245,30,.55); }
-.ticket.free b { font-size: 26px; font-weight: 800; letter-spacing: -.03em; }
-.ticket.free::before { content: ""; position: absolute; inset: 0; border-radius: inherit; background: linear-gradient(100deg, transparent 35%, rgba(255,255,255,.7) 50%, transparent 65%); transform: translateX(-100%); animation: sheen 2.4s .6s infinite; }
-@keyframes dropIn { from { opacity: 0; transform: translateY(-26px) scale(.9) rotate(-4deg) } to { opacity: 1; transform: none } }
-.summary { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
-.summary div { background: #0E1210; padding: 14px 16px; }
-.summary small { display: block; font-family: var(--mono); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
-.summary strong { font-size: 26px; letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
-.summary .save strong { color: var(--lime); }
-.nudge { min-height: 22px; font-size: 14px; color: var(--fg); }
-.nudge b { color: var(--lime); }
-.offer-chips { display: flex; gap: 8px; margin-top: 22px; flex-wrap: wrap; }
-.chip { font: 700 13px/1 var(--display); padding: 9px 12px; border-radius: 8px; border: 1px solid var(--line); color: var(--fg); }
-.chip.on { background: var(--grad); color: #06100C; border-color: transparent; }
+.builder { position: absolute; inset: 0; z-index: 2; display: grid; align-content: center; gap: 16px; padding: 48px; }
+.panel { background: rgba(21,21,21,.86); backdrop-filter: blur(6px); border: 1px solid var(--line); border-radius: 12px; padding: 20px; display: grid; gap: 16px; }
+.panel-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; font-size: 14px; }
+.seg { display: inline-flex; gap: 4px; background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 4px; }
+.seg button { appearance: none; border: 0; background: transparent; color: var(--fg); font-size: 14px; font-weight: 500; padding: 8px 16px; border-radius: 5px; cursor: pointer; }
+.seg button[aria-pressed="true"] { background: var(--lime); color: var(--bg); }
+.tickets { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; }
+.ticket { position: relative; overflow: hidden; border-radius: 8px; min-height: 150px; padding: 10px; display: flex; flex-direction: column; justify-content: space-between; border: 1px dashed var(--line); color: #555; font-size: 12px; }
+.ticket .t { font-size: 10px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; }
+.ticket.paid { border: 1px solid var(--line); background: var(--bg); color: var(--fg); animation: drop .55s cubic-bezier(.2,1.4,.4,1) both; }
+.ticket.paid s { display: block; color: var(--muted); }
+.ticket.paid b { font-size: 22px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.ticket.free { border: 0; background: var(--lime); color: var(--bg); animation: drop .6s cubic-bezier(.2,1.4,.4,1) both; box-shadow: 0 0 36px -8px rgba(217,255,0,.7); }
+.ticket.free b { font-size: 22px; font-weight: 600; }
+.ticket.free::after { content: ""; position: absolute; inset: 0; background: linear-gradient(100deg, transparent 35%, rgba(255,255,255,.6) 50%, transparent 65%); transform: translateX(-100%); animation: sheen 2.6s .6s infinite; }
+@keyframes sheen { 0%, 55% { transform: translateX(-100%) } 100% { transform: translateX(100%) } }
+@keyframes drop { from { opacity: 0; transform: translateY(-24px) scale(.92) rotate(-3deg) } to { opacity: 1; transform: none } }
+.nudge { font-size: 14px; min-height: 20px; }
+.nudge b { color: var(--lime); font-weight: 600; }
+.sum { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid var(--line); padding-top: 14px; }
+.sum div + div { border-left: 1px solid var(--line); padding-left: 14px; }
+.sum small { display: block; font-size: 12px; color: var(--muted); }
+.sum strong { font-size: 26px; font-weight: 500; font-variant-numeric: tabular-nums; }
+.sum .save strong { color: var(--lime); }
 
 /* ---------- 3 · Kokuyō ---------- */
-#c3 .hero { background: #050606; }
-#c3 canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; }
-#c3 .hero-in { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
-.k-copy { grid-column: 1; }
-.k-eyebrow { font-family: var(--mono); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
-.k-title { margin: 14px 0 0; font-weight: 800; font-size: clamp(48px, 7vw, 92px); letter-spacing: -.03em; line-height: .92; }
-.k-title span { display: block; font-family: var(--jp); font-weight: 700; font-size: .62em; letter-spacing: .04em; color: #9AA59F; margin-top: 8px; }
-.k-deal { margin: 22px 0 0; font-size: clamp(22px, 2.6vw, 32px); font-weight: 600; letter-spacing: -.01em; }
-.k-deal em { font-style: normal; color: var(--lime); }
-.live { margin-top: 26px; display: grid; gap: 10px; max-width: 440px; }
+.visual canvas.shard { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 2; }
+.k-cap { position: absolute; right: 24px; bottom: 20px; z-index: 3; font-size: 11px; letter-spacing: .12em; color: #5a5a5a; }
+.kanji-h { display: block; font-family: var(--jp); font-weight: 700; font-size: .6em; color: #8a8a8a; margin-top: 6px; letter-spacing: .04em; }
+.live { display: grid; gap: 10px; max-width: 460px; }
 .live-top { display: flex; justify-content: space-between; font-size: 13px; font-variant-numeric: tabular-nums; }
-.live-top .dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: #FF4D4D; margin-right: 6px; animation: blink 1.2s infinite; }
-@keyframes blink { 50% { opacity: .25 } }
-.bar { height: 6px; background: #1C2220; border-radius: 6px; overflow: hidden; }
-.bar i { display: block; height: 100%; width: 0; background: var(--grad); border-radius: inherit; transition: width 1.6s cubic-bezier(.2,.8,.2,1); }
-.clock { display: flex; gap: 8px; font-variant-numeric: tabular-nums; }
-.clock div { flex: 1; background: rgba(255,255,255,.04); border: 1px solid #1E2522; border-radius: 10px; padding: 8px 0; text-align: center; }
-.clock b { display: block; font-size: 22px; font-weight: 700; }
-.clock small { font-family: var(--mono); font-size: 9px; letter-spacing: .14em; color: var(--muted); text-transform: uppercase; }
-.k-caption { position: absolute; z-index: 2; right: clamp(20px, 4vw, 48px); bottom: 22px; font-family: var(--mono); font-size: 11px; letter-spacing: .14em; color: #59645F; }
+.live-top .dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--red); margin-right: 6px; animation: blink 1.2s infinite; }
+.bar { height: 6px; background: var(--card); border: 1px solid var(--line); border-radius: 4px; overflow: hidden; }
+.bar i { display: block; height: 100%; width: 0; background: var(--lime); transition: width 1.6s cubic-bezier(.2,.8,.2,1); }
+.clock { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; font-variant-numeric: tabular-nums; }
+.clock div { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 8px 0; text-align: center; }
+.clock b { display: block; font-size: 22px; font-weight: 500; }
+.clock small { font-size: 10px; letter-spacing: .1em; color: var(--muted); text-transform: uppercase; }
 
 /* ---------- 4 · Kinetic 30% ---------- */
-#c4 .hero { background: radial-gradient(70% 60% at 70% 55%, rgba(201,245,30,.08), transparent 70%), #0B0E0C; }
-.ticker { position: relative; z-index: 3; border-bottom: 1px solid var(--line); overflow: hidden; white-space: nowrap; background: #0E1210; }
-.ticker div { display: inline-block; padding: 10px 0; font-family: var(--mono); font-size: 12px; letter-spacing: .14em; color: var(--fg); animation: marquee 28s linear infinite; }
-.ticker span { color: var(--lime); margin: 0 18px; }
-@keyframes marquee { to { transform: translateX(-50%) } }
-#c4 .hero-in { grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); min-height: 520px; }
-.particles { position: relative; height: 420px; }
-.particles canvas { position: absolute; inset: 0; width: 100%; height: 100%; touch-action: pan-y; }
-.p-label { position: absolute; left: 0; right: 0; bottom: 8px; text-align: center; font-weight: 800; font-size: clamp(22px, 3vw, 34px); letter-spacing: .3em; padding-left: .3em; pointer-events: none; }
-.timer4 { margin-top: 26px; }
-.timer4 small { font-family: var(--mono); font-size: 11px; letter-spacing: .14em; color: var(--muted); text-transform: uppercase; }
-.timer4 .t { font-size: clamp(28px, 3.4vw, 40px); font-weight: 700; letter-spacing: -.01em; font-variant-numeric: tabular-nums; }
-.timer4 .t i { font-style: normal; color: var(--muted); font-weight: 400; font-size: .55em; margin: 0 2px 0 1px; }
-.badges4 { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 18px; }
+.p-off { position: absolute; z-index: 2; left: 0; right: 0; top: 64%; text-align: center; font-size: clamp(22px, 2.6vw, 34px); font-weight: 500; letter-spacing: .4em; padding-left: .4em; color: var(--lime); pointer-events: none; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { font-size: 13px; font-weight: 500; padding: 7px 10px; border-radius: 6px; border: 1px solid var(--line); }
+.chip.on { background: var(--lime); color: var(--bg); border-color: var(--lime); }
+.timer small { font-size: 12px; color: var(--muted); letter-spacing: .08em; text-transform: uppercase; }
+.timer .t { font-size: clamp(26px, 2.8vw, 36px); font-weight: 500; font-variant-numeric: tabular-nums; }
+.timer .t i { font-style: normal; color: var(--muted); font-size: .5em; margin-left: 2px; }
 
-/* notes */
-.notes { border: 1px solid var(--line); border-radius: 16px; padding: 22px 24px; display: grid; gap: 8px; max-width: 820px; }
-.notes h3 { margin: 0 0 4px; font-size: 16px; }
-.notes ul { margin: 0; padding-left: 18px; color: #C2CAC5; display: grid; gap: 6px; }
+.notes { border: 1px solid var(--line); border-radius: 12px; padding: 22px 24px; display: grid; gap: 10px; max-width: 860px; background: var(--bg); }
+.notes h3 { margin: 0; font-size: 16px; font-weight: 600; }
+.notes ul { margin: 0; padding-left: 18px; color: #c4c4c4; display: grid; gap: 6px; }
+.notes code { color: var(--lime); }
 
+@media (max-width: 1100px) { .nav ul { display: none; } }
 @media (max-width: 860px) {
-  .hero-in, #c3 .hero-in, #c4 .hero-in { grid-template-columns: minmax(0, 1fr); min-height: 0; }
-  .stage { height: 420px; }
-  .tickets { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 6px; min-height: 120px; }
-  .ticket { min-height: 120px; padding: 8px; }
-  .ticket.paid b { font-size: 16px; } .ticket.free b { font-size: 16px; }
-  .ticket .t-top { font-size: 8px; }
-  #c3 .hero-in { padding-top: 300px; }
-  .particles { height: 260px; order: -1; }
+  .nav { padding: 0 16px; height: 60px; } .nav .right .login { display: none; }
+  .hero { grid-template-columns: minmax(0, 1fr); min-height: 0; }
+  .hero::after { display: none; }
+  .copy { padding: 40px 20px 32px; order: 2; }
+  .visual { min-height: 420px; order: 1; border-bottom: 1px solid var(--line); }
+  .v-builder { min-height: 470px; }
+  .builder { padding: 16px; }
+  .ticket { min-height: 110px; padding: 6px; } .ticket b { font-size: 15px !important; } .ticket .t { font-size: 8px; }
+  .press { grid-template-columns: repeat(3, 1fr); height: auto; } .press span { height: 56px; border-bottom: 1px solid var(--line); font-size: 13px; }
+  .card { width: 250px; height: 310px; margin: -155px 0 0 -125px; } .card.sale .big { font-size: 104px; } .card.koku .kanji { font-size: 84px; }
+  .dots { bottom: 20px; }
 }
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { animation: none !important; transition: none !important; }
-}
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
 </style>
 
 <div class="wrap">
   <header class="sheet">
     <div class="eyebrow">FundingRock · Black November · homepage hero</div>
-    <h1>Four interactive hero directions for the sale, bundles and Kokuyō</h1>
-    <p>Copy comes from the Black Friday doc's Main Hero and Kokuyō sections. Styling follows the site file: dark frames, the teal-to-lime CTA gradient and Host Grotesk. Every hero is live, so move your cursor over it and click.</p>
-    <nav class="jump" aria-label="Concepts">
-      <a href="#c1">1 · Offer Stack</a><a href="#c2">2 · Bundle Builder</a><a href="#c3">3 · Kokuyō Obsidian</a><a href="#c4">4 · Kinetic 30%</a>
-    </nav>
+    <h1>Black November in our homepage hero</h1>
+    <p>Each concept sits inside the real homepage hero from the Figma file: ticker, nav, the 50/50 split with its hairline, the Trustpilot row and the press bar. Type, colors and buttons follow the hero spec. The lime halftone triangles from behind the hero photo are the interactive layer, so move your cursor over the right half.</p>
+    <nav class="jump" aria-label="Concepts"><a href="#c1">1 · Offer Stack</a><a href="#c2">2 · Bundle Builder</a><a href="#c3">3 · Kokuyō</a><a href="#c4">4 · Kinetic 30%</a></nav>
   </header>
 
   <!-- 1 -->
   <section class="concept" id="c1">
     <div class="spec"><div><div class="eyebrow">Concept 1</div><h2>Offer Stack</h2></div>
-      <div class="how">Three offer cards in a 3D deck that tilts with the cursor and rotates every few seconds. Click a card or a bar to bring it to the front. Covers the sale, bundles and Kokuyō in one hero.</div></div>
-    <div class="hero">
-      <div class="hero-in">
-        <div>
-          <div class="kicker"><i></i>Black November Sale</div>
-          <h3 class="h-xl"><span class="grad-text">30% OFF</span><br>everything.</h3>
-          <p class="sub">Bonus challenge with every purchase. Bundle up and get free challenges on top.</p>
-          <div class="cta-row"><button class="btn" type="button">Join Now</button><span class="fine">Offer ends 30/11. Terms apply.</span></div>
-        </div>
-        <div class="stage" id="stage1">
-          <div class="deck" id="deck1">
-            <article class="card sale" data-i="0" tabindex="0" aria-label="30% off card">
-              <div class="tag">Sitewide · Auto-applied</div>
-              <div class="big">30%</div><div class="off">OFF</div>
-              <div class="price"><s>$350</s><b id="p1">$245</b></div>
-            </article>
-            <article class="card bundle" data-i="1" tabindex="0" aria-label="Bundle and save card">
-              <div class="tag">Bundle &amp; Save</div>
-              <div class="row"><strong>2+1</strong><span>Buy 2<br><em>1 FREE</em></span></div>
-              <div class="row"><strong>3+2</strong><span>Buy 3<br><em>2 FREE</em></span></div>
-            </article>
-            <article class="card koku" data-i="2" tabindex="0" aria-label="Kokuyō card">
-              <div class="tag" style="color:var(--lime)">New · Limited release</div>
-              <div class="kanji">黒曜</div>
-              <div class="name">KOKUYŌ</div>
-              <div class="deal">$200K. Just $200.</div>
-            </article>
+      <div class="how">A 3D deck of the three offers replaces the photo. The deck tilts with the cursor and rotates on its own; click a card or a bar to bring it forward. Triangles swell under the cursor.</div></div>
+    <div class="site">
+      <div class="ticker" aria-hidden="true"><div></div></div>
+      <div class="nav-slot"></div>
+      <div class="hero">
+        <div class="copy">
+          <div class="copy-main">
+            <span class="tag"><i></i>Black November Sale</span>
+            <h3 class="h1">30% Off<br>Every Challenge</h3>
+            <p class="lead">Get a <b>bonus challenge</b> with every purchase.<br>Bundle up and get up to <b>2 free</b>.</p>
+            <div class="row"><button class="btn" type="button">Join Now</button><span class="fine">Offer ends 30/11. Terms apply.</span></div>
           </div>
-          <div class="dots" id="dots1">
-            <button type="button" aria-label="Show 30% off" aria-pressed="true"></button>
-            <button type="button" aria-label="Show bundles" aria-pressed="false"></button>
-            <button type="button" aria-label="Show Kokuyō" aria-pressed="false"></button>
+          <div class="tp-slot"></div>
+        </div>
+        <div class="visual" id="v1">
+          <canvas class="ht" aria-hidden="true"></canvas>
+          <div class="stage" id="stage1">
+            <div class="deck" id="deck1">
+              <article class="card sale" data-i="0" tabindex="0" aria-label="30% off">
+                <div class="k">Sitewide · Auto-applied</div>
+                <div class="big">30%</div><div class="off">Off</div>
+                <div class="price"><s>$350</s><b id="p1">$245</b></div>
+              </article>
+              <article class="card bundle" data-i="1" tabindex="0" aria-label="Bundle and save">
+                <div class="k">Bundle &amp; Save</div>
+                <div class="r"><strong>2+1</strong><span>Buy 2<em>1 Free</em></span></div>
+                <div class="r"><strong>3+2</strong><span>Buy 3<em>2 Free</em></span></div>
+              </article>
+              <article class="card koku" data-i="2" tabindex="0" aria-label="Kokuyō">
+                <div class="k">New · Limited release</div>
+                <div class="kanji">黒曜</div>
+                <div class="name">KOKUYŌ</div>
+                <div class="deal">$200K. Just $200.</div>
+              </article>
+            </div>
+            <div class="dots" id="dots1">
+              <button type="button" aria-label="Show 30% off" aria-pressed="true"></button>
+              <button type="button" aria-label="Show bundles" aria-pressed="false"></button>
+              <button type="button" aria-label="Show Kokuyō" aria-pressed="false"></button>
+            </div>
           </div>
         </div>
       </div>
+      <div class="press-slot"></div>
     </div>
   </section>
 
   <!-- 2 -->
   <section class="concept" id="c2">
     <div class="spec"><div><div class="eyebrow">Concept 2</div><h2>Bundle Builder</h2></div>
-      <div class="how">The hero is the bundle mechanic. Pick how many challenges you buy: paid tickets drop in, free ones land with a glow, and the totals update. Nudge copy from the doc tells you how close the next free challenge is.</div></div>
-    <div class="hero">
-      <div class="hero-in">
-        <div>
-          <div class="kicker"><i></i>Black November · Bundle &amp; Save</div>
-          <h3 class="h-xl">Buy more.<br><span class="grad-text">Get more.</span></h3>
-          <p class="sub">30% off every challenge, plus free challenges when you bundle. No pass required. No waiting.</p>
-          <div class="offer-chips" id="chips2"><span class="chip on">30% OFF</span><span class="chip" data-n="2">2+1 FREE</span><span class="chip" data-n="3">3+2 FREE</span></div>
-          <div class="cta-row"><button class="btn" type="button">Join Now</button><span class="fine">Example pricing: $350 challenge.</span></div>
+      <div class="how">The right half becomes the bundle mechanic. Pick 1, 2 or 3 challenges: paid tickets drop in, free ones land in lime, and the totals update. The nudge line uses the cart copy from the doc.</div></div>
+    <div class="site">
+      <div class="ticker" aria-hidden="true"><div></div></div>
+      <div class="nav-slot"></div>
+      <div class="hero">
+        <div class="copy">
+          <div class="copy-main">
+            <span class="tag"><i></i>Black November · Bundle &amp; Save</span>
+            <h3 class="h1">Buy More.<br>Get <em>More.</em></h3>
+            <p class="lead">Save <b>30%</b> on every challenge and get <b>free challenges</b> when you bundle. No pass required. No waiting.</p>
+            <div class="row"><button class="btn" type="button">Join Now</button><span class="fine">Example price: $350 challenge.</span></div>
+          </div>
+          <div class="tp-slot"></div>
         </div>
-        <div class="builder">
-          <div class="stepper"><span class="lbl" id="lbl2">Challenges you buy</span>
-            <div class="seg" role="group" aria-labelledby="lbl2" id="seg2">
-              <button type="button" id="b2-1" data-n="1" aria-pressed="false">1</button>
-              <button type="button" id="b2-2" data-n="2" aria-pressed="false">2</button>
-              <button type="button" id="b2-3" data-n="3" aria-pressed="true">3</button>
-            </div></div>
-          <div class="tickets" id="tickets2" aria-live="polite"></div>
-          <div class="nudge" id="nudge2"></div>
-          <div class="summary">
-            <div><small>You pay for</small><strong id="pay2">3</strong></div>
-            <div><small>You get</small><strong id="get2">5</strong></div>
-            <div class="save"><small>You save</small><strong id="save2">$0</strong></div>
+        <div class="visual v-builder" id="v2">
+          <canvas class="ht" aria-hidden="true"></canvas>
+          <div class="builder">
+            <div class="panel">
+              <div class="panel-top"><span id="lbl2">Challenges you buy</span>
+                <div class="seg" role="group" aria-labelledby="lbl2" id="seg2">
+                  <button type="button" id="b2-1" data-n="1" aria-pressed="false">1</button>
+                  <button type="button" id="b2-2" data-n="2" aria-pressed="false">2</button>
+                  <button type="button" id="b2-3" data-n="3" aria-pressed="true">3</button>
+                </div></div>
+              <div class="tickets" id="tickets2" aria-live="polite"></div>
+              <div class="nudge" id="nudge2"></div>
+              <div class="sum">
+                <div><small>You pay for</small><strong id="pay2">3</strong></div>
+                <div><small>You get</small><strong id="get2">5</strong></div>
+                <div class="save"><small>You save</small><strong id="save2">$0</strong></div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
+      <div class="press-slot"></div>
     </div>
   </section>
 
   <!-- 3 -->
   <section class="concept" id="c3">
-    <div class="spec"><div><div class="eyebrow">Concept 3</div><h2>Kokuyō Obsidian</h2></div>
-      <div class="how">A faceted obsidian shard, drawn live. The cursor is the light source, so the facets catch teal and lime as you move. The live claim bar and countdown sit under the offer.</div></div>
-    <div class="hero" id="hero3">
-      <canvas id="cv3" aria-hidden="true"></canvas>
-      <div class="hero-in">
-        <div class="k-copy">
-          <div class="k-eyebrow">New · Black November exclusive · Limited release</div>
-          <h3 class="k-title">KOKUYŌ<span>黒曜</span></h3>
-          <p class="k-deal">$200K. <em>Just $200.</em></p>
-          <div class="live">
-            <div class="live-top"><span><span class="dot"></span>LIVE: <b id="claimed3">741</b> / 1,000 claimed</span><span>Only <b id="left3">259</b> left</span></div>
-            <div class="bar"><i id="bar3"></i></div>
-            <div class="clock" id="clock3" aria-label="Time until Kokuyō closes">
-              <div><b>--</b><small>Days</small></div><div><b>--</b><small>Hrs</small></div><div><b>--</b><small>Min</small></div><div><b>--</b><small>Sec</small></div>
+    <div class="spec"><div><div class="eyebrow">Concept 3</div><h2>Kokuyō</h2></div>
+      <div class="how">A faceted obsidian shard takes the photo's place, lit by the cursor so the facets catch lime and teal. The halftone sits behind it, and the live claim bar and countdown sit under the offer.</div></div>
+    <div class="site">
+      <div class="ticker" aria-hidden="true"><div></div></div>
+      <div class="nav-slot"></div>
+      <div class="hero">
+        <div class="copy">
+          <div class="copy-main">
+            <span class="tag"><i></i>New · Black November Exclusive</span>
+            <h3 class="h1">Kokuyō<span class="kanji-h">黒曜</span></h3>
+            <p class="lead"><b>$200K</b> account. Just <b>$200</b>.<br>No evaluation. Direct Prime access.</p>
+            <div class="live">
+              <div class="live-top"><span><span class="dot"></span>Live: <b id="claimed3">741</b> / 1,000 claimed</span><span>Only <b id="left3">259</b> left</span></div>
+              <div class="bar"><i id="bar3"></i></div>
+              <div class="clock" id="clock3" aria-label="Time until Kokuyō closes">
+                <div><b>--</b><small>Days</small></div><div><b>--</b><small>Hrs</small></div><div><b>--</b><small>Min</small></div><div><b>--</b><small>Sec</small></div>
+              </div>
             </div>
+            <div class="row"><button class="btn" type="button">Explore Kokuyō →</button><span class="fine">1 per trader · Simulated Prime Account</span></div>
           </div>
-          <div class="cta-row"><button class="btn" type="button">Explore Kokuyō →</button><span class="fine">1 per trader · Simulated Prime Account</span></div>
+          <div class="tp-slot"></div>
+        </div>
+        <div class="visual" id="v3">
+          <canvas class="ht" aria-hidden="true"></canvas>
+          <canvas class="shard" id="cv3" aria-hidden="true"></canvas>
+          <div class="k-cap">黒曜石 OBSIDIAN</div>
         </div>
       </div>
-      <div class="k-caption">黒曜石 OBSIDIAN</div>
+      <div class="press-slot"></div>
     </div>
   </section>
 
   <!-- 4 -->
   <section class="concept" id="c4">
     <div class="spec"><div><div class="eyebrow">Concept 4</div><h2>Kinetic 30%</h2></div>
-      <div class="how">The "30%" is built from about 1,500 particles that assemble on load, scatter away from the cursor and spring back. A ticker and a synced countdown carry the urgency.</div></div>
-    <div class="hero">
-      <div class="ticker" aria-hidden="true"><div id="tick4"></div></div>
-      <div class="hero-in">
-        <div>
-          <div class="kicker"><i></i>Black Friday starts early</div>
-          <h3 class="h-xl" style="font-size:clamp(40px,5.6vw,76px)">Black<br>November<br><span class="grad-text">Sale.</span></h3>
-          <p class="sub">Bonus challenge with every purchase.</p>
-          <div class="badges4"><span class="chip on">30% OFF</span><span class="chip">2+1 FREE</span><span class="chip">3+2 FREE</span><span class="chip">NEW · KOKUYŌ 黒曜</span></div>
-          <div class="timer4"><small>Black Friday Edition ends in</small><div class="t" id="t4">--</div></div>
-          <div class="cta-row"><button class="btn" type="button">Join Now</button></div>
+      <div class="how">The halftone triangles themselves form "30%". They assemble on load, scatter away from the cursor and spring back; a click bursts them. The countdown is synced to 30/11.</div></div>
+    <div class="site">
+      <div class="ticker" aria-hidden="true"><div></div></div>
+      <div class="nav-slot"></div>
+      <div class="hero">
+        <div class="copy">
+          <div class="copy-main">
+            <span class="tag"><i></i>Black Friday Starts Early</span>
+            <h3 class="h1">Black November<br><em>Sale</em></h3>
+            <p class="lead">Save <b>30%</b> on every challenge.<br>Bonus challenge with every purchase.</p>
+            <div class="chips"><span class="chip on">30% Off</span><span class="chip">2+1 Free</span><span class="chip">3+2 Free</span><span class="chip">New · Kokuyō 黒曜</span></div>
+            <div class="timer"><small>Black Friday Edition ends in</small><div class="t" id="t4">--</div></div>
+            <div class="row"><button class="btn" type="button">Join Now</button></div>
+          </div>
+          <div class="tp-slot"></div>
         </div>
-        <div class="particles" id="pwrap4">
-          <canvas id="cv4" aria-label="30% OFF"></canvas>
-          <div class="p-label grad-text">OFF</div>
+        <div class="visual" id="v4">
+          <canvas class="ht" id="cv4" aria-label="30% off"></canvas>
+          <div class="p-off">OFF</div>
         </div>
       </div>
+      <div class="press-slot"></div>
     </div>
   </section>
 
   <aside class="notes">
-    <h3>Copy conflicts in the doc to settle before build</h3>
+    <h3>Notes</h3>
     <ul>
-      <li>Bundles: the Main Hero and LP say <b>2+1 / 3+2</b>, while the 23/11 launch section says <b>Buy 2 get 1 / Buy 4 get 2</b>. These heroes use 2+1 / 3+2.</li>
-      <li>Kokuyō cap: the banner says <b>10,000 traders</b>, while the final Kokuyō LP copy says <b>1,000</b>. These heroes use 1,000.</li>
-      <li>The countdown targets 30/11 at 23:59 Israel time. The 741 claimed count is the doc's placeholder and still needs a live feed.</li>
+      <li>Matched to the Figma hero (node <code>1:26337</code>): Host Grotesk Medium 70/100 at -1% tracking, 20/130 subline with a bold lime highlight, 46px lime button with 6px radius, <code>#0E0E0E</code> and <code>#303030</code> hairlines.</li>
+      <li>The hero photo couldn't be exported from this session, so the halftone triangles are redrawn live in code. To bring the photo back into concept 1 or 3, place it under the triangle layer.</li>
+      <li>Copy conflicts still open in the doc: bundles are 2+1 / 3+2 in the Main Hero but Buy 2 get 1 / Buy 4 get 2 in the 23/11 launch section. The Kokuyō cap is 10,000 on the banner but 1,000 on the final landing page. These heroes use 2+1 / 3+2 and 1,000.</li>
+      <li>The countdown targets 30/11 at 23:59 Israel time. The claimed count of 741 is the doc's placeholder and ticks up as a demo.</li>
     </ul>
   </aside>
 </div>
@@ -311,9 +358,60 @@ section.concept { display: grid; gap: 14px; scroll-margin-top: 20px; }
 <script>
 (() => {
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const dpr = Math.min(2, devicePixelRatio || 1);
+  const LIME = [217, 255, 0], TEAL = [0, 216, 195];
   const END = Date.UTC(2026, 10, 30, 21, 59, 0); // 30/11 23:59 Israel (UTC+2)
   const pad = n => String(n).padStart(2, '0');
   const parts = () => { let s = Math.max(0, Math.floor((END - Date.now()) / 1000)); const d = Math.floor(s / 86400); s %= 86400; return [d, Math.floor(s / 3600), Math.floor(s % 3600 / 60), s % 60]; };
+
+  /* ---------- shared site chrome ---------- */
+  const tickerText = ['30% Off + Free Bonus Challenges + Apple Reward', 'Shop Now', 'Buy 2 Get 1 Free', 'Buy 3 Get 2 Free', 'New · Kokuyō 黒曜 · $200K for $200', 'Ends 30/11'];
+  const tline = tickerText.map(s => s + '<span>/</span>').join('');
+  document.querySelectorAll('.ticker div').forEach(d => d.innerHTML = tline.repeat(4));
+  const navHTML = `<div class="nav"><div class="logo"><i></i>FUNDINGROCK</div>
+    <ul><li>How it Works</li><li>About</li><li>Contact Us</li><li>Affiliates</li><li>FAQ</li><li class="sale">Black November</li></ul>
+    <div class="right"><span class="login">Login</span><button class="btn sm" type="button">Get Funded</button></div></div>`;
+  const star = '<svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.9 7.1.6-5.4 4.7 1.6 7L12 17.3 5.8 21.2l1.6-7L2 9.5l7.1-.6z"/></svg>';
+  const tpHTML = `<div class="tp"><span>Excellent</span><span class="stars">${('<span>' + star + '</span>').repeat(5)}</span><span><b>15,763</b> reviews on</span><span class="brand">${star}Trustpilot</span></div>`;
+  const pressHTML = `<div class="press"><span class="serif">Forbes</span><span>Investing.com</span><span>Bloomberg</span><span>MARKETS INSIDER</span><span>yahoo!finance</span><span>BENZINGA</span></div>`;
+  document.querySelectorAll('.nav-slot').forEach(s => s.outerHTML = navHTML);
+  document.querySelectorAll('.tp-slot').forEach(s => s.outerHTML = tpHTML);
+  document.querySelectorAll('.press-slot').forEach(s => s.outerHTML = pressHTML);
+
+  /* ---------- halftone triangle field (the hero's brand texture) ---------- */
+  // density(x, y) returns 0..1; cells grow toward the cursor
+  const fields = [];
+  function halftone(visual, density, opts = {}) {
+    const cv = visual.querySelector('canvas.ht'), g = cv.getContext('2d');
+    const f = { cv, g, density, step: opts.step || 16, color: opts.color || LIME, mx: -999, my: -999, tx: -999, ty: -999, on: true, W: 0, H: 0 };
+    const size = () => { const r = visual.getBoundingClientRect(); f.W = r.width; f.H = r.height; cv.width = f.W * dpr; cv.height = f.H * dpr; g.setTransform(dpr, 0, 0, dpr, 0, 0); f.drawn = false; };
+    visual.addEventListener('pointermove', e => { const r = visual.getBoundingClientRect(); f.tx = e.clientX - r.left; f.ty = e.clientY - r.top; });
+    visual.addEventListener('pointerleave', () => { f.tx = f.ty = -999; });
+    size(); addEventListener('resize', size);
+    f.draw = t => {
+      f.mx += (f.tx - f.mx) * .12; f.my += (f.ty - f.my) * .12;
+      if (f.tx < -900) { f.mx = f.tx; f.my = f.ty; }
+      g.clearRect(0, 0, f.W, f.H);
+      const s = f.step, [r, gr, b] = f.color;
+      for (let y = s / 2; y < f.H; y += s) for (let x = s / 2; x < f.W; x += s) {
+        let d = density(x / f.W, y / f.H);
+        d += Math.sin(t / 900 + x * .012 + y * .008) * .06;
+        const dx = x - f.mx, dy = y - f.my; d += Math.exp(-(dx * dx + dy * dy) / 12000) * .9;
+        if (d < .08) continue;
+        const h = Math.min(1, d) * s * .62;
+        g.fillStyle = `rgba(${r},${gr},${b},${Math.min(1, .25 + d)})`;
+        g.beginPath(); g.moveTo(x, y - h * .55); g.lineTo(x + h * .55, y + h * .45); g.lineTo(x - h * .55, y + h * .45); g.closePath(); g.fill();
+      }
+    };
+    fields.push(f);
+    new IntersectionObserver(es => es.forEach(e => f.on = e.isIntersecting)).observe(visual);
+    return f;
+  }
+  // like the photo backdrop: dense at the right edge, fading left and down, plus a cluster at bottom-left
+  const sweep = (u, v) => Math.max(0, Math.min(1, (u - .42) * 2.4)) * (1 - Math.pow(v, 2.2) * .9) + Math.max(0, .5 - u * 2.2) * Math.max(0, (v - .62) * 2.6) * .8;
+  halftone(document.getElementById('v1'), sweep);
+  halftone(document.getElementById('v2'), (u, v) => sweep(u, v) * .55);
+  halftone(document.getElementById('v3'), (u, v) => sweep(u, v) * .7, { color: TEAL });
 
   /* ---------- 1 · Offer Stack ---------- */
   const deck = document.getElementById('deck1'), stage = document.getElementById('stage1');
@@ -321,54 +419,51 @@ section.concept { display: grid; gap: 14px; scroll-margin-top: 20px; }
   let front = 0, timer1;
   function layout() {
     cards.forEach((c, i) => {
-      const k = (i - front + cards.length) % cards.length; // 0 front, 1 behind-right, 2 behind-left
-      const x = [0, 70, -70][k], y = [0, -18, -30][k], z = [0, -120, -200][k], r = [0, 8, -9][k];
-      c.style.transform = `translate3d(${x}px,${y}px,${z}px) rotate(${r}deg)`;
-      c.style.zIndex = 10 - k; c.style.filter = k ? 'brightness(.55) saturate(.8)' : 'none';
+      const k = (i - front + 3) % 3; // 0 front, 1 back-right, 2 back-left
+      c.style.transform = `translate3d(${[0, 70, -70][k]}px,${[0, -18, -30][k]}px,${[0, -120, -200][k]}px) rotate(${[0, 8, -9][k]}deg)`;
+      c.style.zIndex = 10 - k; c.style.filter = k ? 'brightness(.5)' : 'none';
     });
     dots.forEach((d, i) => d.setAttribute('aria-pressed', i === front));
   }
-  const go = i => { front = i; layout(); restart(); };
   const restart = () => { clearInterval(timer1); if (!reduce) timer1 = setInterval(() => { front = (front + 1) % 3; layout(); }, 3800); };
+  const go = i => { front = i; layout(); restart(); };
   cards.forEach(c => { c.addEventListener('click', () => go(+c.dataset.i)); c.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(+c.dataset.i); } }); });
   dots.forEach((d, i) => d.addEventListener('click', () => go(i)));
   stage.addEventListener('pointermove', e => { const r = stage.getBoundingClientRect(); const px = (e.clientX - r.left) / r.width - .5, py = (e.clientY - r.top) / r.height - .5; deck.style.transform = `rotateY(${px * 18}deg) rotateX(${-py * 14}deg)`; });
   stage.addEventListener('pointerleave', () => deck.style.transform = '');
   layout(); restart();
-  // price drop count from 350 to 245 when card 0 is visible
   const p1 = document.getElementById('p1');
-  const countDown = () => { if (reduce) return; const t0 = performance.now(); const step = t => { const k = Math.min(1, (t - t0) / 1100), e = 1 - Math.pow(1 - k, 3); p1.textContent = '$' + Math.round(350 - 105 * e); if (k < 1) requestAnimationFrame(step); }; requestAnimationFrame(step); };
-  new IntersectionObserver(es => es.forEach(e => e.isIntersecting && countDown()), { threshold: .5 }).observe(stage);
+  new IntersectionObserver(es => es.forEach(e => {
+    if (!e.isIntersecting || reduce) return;
+    const t0 = performance.now(); const step = t => { const k = Math.min(1, (t - t0) / 1100); p1.textContent = '$' + Math.round(350 - 105 * (1 - Math.pow(1 - k, 3))); if (k < 1) requestAnimationFrame(step); }; requestAnimationFrame(step);
+  }), { threshold: .5 }).observe(stage);
 
   /* ---------- 2 · Bundle Builder ---------- */
   const PRICE = 350, SALE = 245;
   const freeFor = n => n >= 3 ? 2 : n === 2 ? 1 : 0;
-  const tk = document.getElementById('tickets2'), seg = [...document.querySelectorAll('#seg2 button')], chips = [...document.querySelectorAll('#chips2 .chip[data-n]')];
-  const money = n => '$' + n.toLocaleString('en-US');
+  const tk = document.getElementById('tickets2'), seg = [...document.querySelectorAll('#seg2 button')];
   function setN(n) {
     const f = freeFor(n), total = n + f;
     seg.forEach(b => b.setAttribute('aria-pressed', +b.dataset.n === n));
-    chips.forEach(c => c.classList.toggle('on', +c.dataset.n === n));
     tk.innerHTML = '';
     for (let i = 0; i < 5; i++) {
       const el = document.createElement('div');
-      if (i < n) { el.className = 'ticket paid'; el.style.animationDelay = i * 90 + 'ms'; el.innerHTML = `<span class="t-top">Challenge ${i + 1}</span><span class="t-price"><s>$${PRICE}</s><b>$${SALE}</b></span>`; }
-      else if (i < total) { el.className = 'ticket free'; el.style.animationDelay = (n * 90 + 200 + (i - n) * 140) + 'ms'; el.innerHTML = `<span class="t-top">Bonus</span><b>FREE</b>`; }
-      else { el.className = 'ticket'; el.innerHTML = `<span class="t-top">Slot ${i + 1}</span><span>+</span>`; }
+      if (i < n) { el.className = 'ticket paid'; el.style.animationDelay = i * 90 + 'ms'; el.innerHTML = `<span class="t">Challenge ${i + 1}</span><span><s>$${PRICE}</s><b>$${SALE}</b></span>`; }
+      else if (i < total) { el.className = 'ticket free'; el.style.animationDelay = (n * 90 + 200 + (i - n) * 140) + 'ms'; el.innerHTML = `<span class="t">Bonus</span><b>Free</b>`; }
+      else { el.className = 'ticket'; el.innerHTML = `<span class="t">Slot ${i + 1}</span><span>+</span>`; }
       tk.appendChild(el);
     }
     document.getElementById('pay2').textContent = n;
     document.getElementById('get2').textContent = total;
-    document.getElementById('save2').textContent = money(total * PRICE - n * SALE);
-    document.getElementById('nudge2').innerHTML = n === 1 ? 'Add 1 more challenge to unlock a <b>FREE challenge</b>.' : n === 2 ? '1 free challenge unlocked. Add 1 more to unlock <b>2 FREE</b>.' : '<b>2 free challenges unlocked.</b> Biggest bundle of the sale.';
+    document.getElementById('save2').textContent = '$' + (total * PRICE - n * SALE).toLocaleString('en-US');
+    document.getElementById('nudge2').innerHTML = n === 1 ? 'Add 1 more challenge to unlock a <b>free challenge</b>.' : n === 2 ? '1 free challenge unlocked. Add 1 more to unlock <b>2 free</b>.' : '<b>2 free challenges unlocked.</b> The biggest bundle of the sale.';
   }
   seg.forEach(b => b.addEventListener('click', () => setN(+b.dataset.n)));
   setN(3);
 
   /* ---------- 3 · Kokuyō obsidian shard ---------- */
-  const cv3 = document.getElementById('cv3'), hero3 = document.getElementById('hero3'), g3 = cv3.getContext('2d');
-  let W3, H3, dpr = Math.min(2, devicePixelRatio || 1);
-  // seeded random so the shard is the same every load
+  const v3 = document.getElementById('v3'), cv3 = document.getElementById('cv3'), g3 = cv3.getContext('2d');
+  let W3, H3;
   let seed = 7; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
   const N = 13, outer = [], mid = [];
   for (let i = 0; i < N; i++) {
@@ -377,26 +472,19 @@ section.concept { display: grid; gap: 14px; scroll-margin-top: 20px; }
     const am = a + (rnd() - .5) * .3, rm = .42 + rnd() * .14;
     mid.push([Math.cos(am) * rm * .72, Math.sin(am) * rm, .5 + rnd() * .2]);
   }
-  const apex = [0.04, -0.06, .95];
-  const tris = [];
+  const apex = [.04, -.06, .95], tris = [];
   for (let i = 0; i < N; i++) { const j = (i + 1) % N; tris.push([apex, mid[i], mid[j]], [mid[i], outer[i], outer[j]], [mid[i], outer[j], mid[j]]); }
-  let mx = .3, my = .35, tx = .3, ty = .35;
-  hero3.addEventListener('pointermove', e => { const r = hero3.getBoundingClientRect(); tx = (e.clientX - r.left) / r.width; ty = (e.clientY - r.top) / r.height; });
-  function size3() { const r = hero3.getBoundingClientRect(); W3 = r.width; H3 = r.height; cv3.width = W3 * dpr; cv3.height = H3 * dpr; g3.setTransform(dpr, 0, 0, dpr, 0, 0); }
-  const rot = (p, ax, ay) => { let [x, y, z] = p; let c = Math.cos(ay), s = Math.sin(ay); [x, z] = [x * c + z * s, -x * s + z * c]; c = Math.cos(ax); s = Math.sin(ax); [y, z] = [y * c - z * s, y * s + z * c]; return [x, y, z]; };
+  let mx = .4, my = .35, tx = .4, ty = .35;
+  v3.addEventListener('pointermove', e => { const r = v3.getBoundingClientRect(); tx = (e.clientX - r.left) / r.width; ty = (e.clientY - r.top) / r.height; });
+  const size3 = () => { const r = v3.getBoundingClientRect(); W3 = r.width; H3 = r.height; cv3.width = W3 * dpr; cv3.height = H3 * dpr; g3.setTransform(dpr, 0, 0, dpr, 0, 0); if (typeof shard !== 'undefined') shard.drawn = false; };
+  const rot = ([x, y, z], ax, ay) => { let c = Math.cos(ay), s = Math.sin(ay); [x, z] = [x * c + z * s, -x * s + z * c]; c = Math.cos(ax); s = Math.sin(ax); [y, z] = [y * c - z * s, y * s + z * c]; return [x, y, z]; };
   const norm = v => { const l = Math.hypot(...v) || 1; return v.map(n => n / l); };
-  const teal = [22, 214, 180], lime = [201, 245, 30];
-  function draw3(t) {
+  const shard = { on: true, custom: true, draw(t) {
     mx += (tx - mx) * .06; my += (ty - my) * .06;
     g3.clearRect(0, 0, W3, H3);
-    const narrow = matchMedia('(max-width: 860px)').matches;
-    const cx = narrow ? W3 / 2 : W3 * .72, cy = narrow ? 160 : H3 / 2, S = narrow ? 120 : Math.min(H3 * .4, W3 * .2);
+    const cx = W3 / 2, cy = H3 * .45, S = Math.min(H3 * .36, W3 * .36);
     const ay = (mx - .5) * .9 + Math.sin(t / 2600) * .25, ax = (my - .5) * -.7 + Math.cos(t / 3100) * .12;
-    // glow behind shard follows light
-    const gl = g3.createRadialGradient(cx, cy, 0, cx, cy, S * 1.8);
-    gl.addColorStop(0, 'rgba(22,214,180,.16)'); gl.addColorStop(1, 'rgba(22,214,180,0)');
-    g3.fillStyle = gl; g3.fillRect(0, 0, W3, H3);
-    const L = norm([(mx - .5) * 2.4, (my - .5) * 2.4, 1]);
+    const L = norm([(mx - .5) * 2.4, (my - .5) * 2.4, 1]), Hh = norm([L[0], L[1], L[2] + 1]);
     const faces = tris.map(tr => {
       const p = tr.map(v => rot([v[0], v[1], v[2] * .55], ax, ay));
       const u = p[1].map((n, k) => n - p[0][k]), w = p[2].map((n, k) => n - p[0][k]);
@@ -405,71 +493,73 @@ section.concept { display: grid; gap: 14px; scroll-margin-top: 20px; }
       return { p, n, z: (p[0][2] + p[1][2] + p[2][2]) / 3 };
     }).sort((a, b) => a.z - b.z);
     for (const f of faces) {
-      const H = norm([L[0], L[1], L[2] + 1]);
       const diff = Math.max(0, f.n[0] * L[0] + f.n[1] * L[1] + f.n[2] * L[2]);
-      const spec = Math.pow(Math.max(0, f.n[0] * H[0] + f.n[1] * H[1] + f.n[2] * H[2]), 22);
-      const mixk = (f.n[0] + 1) / 2, tint = teal.map((c, k) => c + (lime[k] - c) * mixk);
-      const base = 6 + diff * 26;
-      const col = tint.map(c => Math.min(255, base + c * spec * 1.1 + 255 * Math.pow(spec, 4) * .5));
-      g3.beginPath();
-      f.p.forEach(([x, y], i) => i ? g3.lineTo(cx + x * S, cy + y * S) : g3.moveTo(cx + x * S, cy + y * S));
-      g3.closePath();
+      const spec = Math.pow(Math.max(0, f.n[0] * Hh[0] + f.n[1] * Hh[1] + f.n[2] * Hh[2]), 22);
+      const mk = (f.n[0] + 1) / 2, tint = TEAL.map((c, k) => c + (LIME[k] - c) * mk);
+      const col = tint.map(c => Math.min(255, 8 + diff * 22 + c * spec * 1.1 + 255 * Math.pow(spec, 4) * .5));
+      g3.beginPath(); f.p.forEach(([x, y], i) => i ? g3.lineTo(cx + x * S, cy + y * S) : g3.moveTo(cx + x * S, cy + y * S)); g3.closePath();
       g3.fillStyle = `rgb(${col.map(Math.round).join(',')})`; g3.fill();
       g3.strokeStyle = `rgba(255,255,255,${.04 + spec * .35})`; g3.lineWidth = .8; g3.stroke();
     }
-    if (!reduce) requestAnimationFrame(draw3);
-  }
-  size3(); addEventListener('resize', size3); requestAnimationFrame(draw3);
-  // live count + clock
+  } };
+  size3(); addEventListener('resize', size3);
+  new IntersectionObserver(es => es.forEach(e => shard.on = e.isIntersecting)).observe(v3);
   let claimed = 741;
   const setClaim = () => { document.getElementById('claimed3').textContent = claimed; document.getElementById('left3').textContent = 1000 - claimed; document.getElementById('bar3').style.width = claimed / 10 + '%'; };
-  requestAnimationFrame(() => setClaim());
+  requestAnimationFrame(setClaim);
   if (!reduce) setInterval(() => { if (claimed < 990 && Math.random() < .35) { claimed++; setClaim(); } }, 2500);
-  const clockB = [...document.querySelectorAll('#clock3 b')];
 
-  /* ---------- 4 · Kinetic 30% particles ---------- */
-  const tick = ['BLACK NOVEMBER SALE', '30% OFF SITEWIDE', 'BUY 2 GET 1 FREE', 'BUY 3 GET 2 FREE', 'NEW · KOKUYŌ 黒曜', 'ENDS 30/11'];
-  const tline = tick.map(s => s + '<span>✦</span>').join('');
-  document.getElementById('tick4').innerHTML = tline + tline + tline + tline;
-  const cv4 = document.getElementById('cv4'), wrap4 = document.getElementById('pwrap4'), g4 = cv4.getContext('2d');
-  let P = [], W4, H4, pm = { x: -9999, y: -9999 };
+  /* ---------- 4 · Kinetic 30% (halftone particles) ---------- */
+  const v4 = document.getElementById('v4'), cv4 = document.getElementById('cv4'), g4 = cv4.getContext('2d');
+  let P = [], W4, H4; const pm = { x: -9999, y: -9999 };
   function build4() {
-    const r = wrap4.getBoundingClientRect(); W4 = r.width; H4 = r.height;
+    const r = v4.getBoundingClientRect(); W4 = r.width; H4 = r.height;
     cv4.width = W4 * dpr; cv4.height = H4 * dpr; g4.setTransform(dpr, 0, 0, dpr, 0, 0);
     const off = document.createElement('canvas'); off.width = W4; off.height = H4; const o = off.getContext('2d');
-    const fs = Math.min(H4 * .7, W4 * .34);
-    o.font = `800 ${fs}px "Host Grotesk", Arial, sans-serif`; o.textAlign = 'center'; o.textBaseline = 'middle';
-    o.fillStyle = '#fff'; o.fillText('30%', W4 / 2, H4 * .44);
-    const data = o.getImageData(0, 0, W4, H4).data, step = Math.max(5, Math.round(fs / 34));
+    const fs = Math.min(H4 * .5, W4 * .34);
+    o.font = `500 ${fs}px "Host Grotesk", Arial, sans-serif`; o.textAlign = 'center'; o.textBaseline = 'middle';
+    o.fillStyle = '#fff'; o.fillText('30%', W4 / 2, H4 * .4);
+    const data = o.getImageData(0, 0, W4, H4).data, step = Math.max(6, Math.round(fs / 30));
     const old = P; P = [];
     for (let y = 0; y < H4; y += step) for (let x = 0; x < W4; x += step) if (data[(y * W4 + x) * 4 + 3] > 128) {
       const prev = old[P.length];
-      P.push({ hx: x, hy: y, x: prev ? prev.x : (reduce ? x : Math.random() * W4), y: prev ? prev.y : (reduce ? y : H4 + Math.random() * 200), vx: 0, vy: 0, r: step * .36, c: x / W4 });
+      P.push({ hx: x, hy: y, x: prev ? prev.x : x, y: prev ? prev.y : y, vx: 0, vy: 0, s: step * .78, a: 0 });
     }
   }
-  wrap4.addEventListener('pointermove', e => { const r = cv4.getBoundingClientRect(); pm.x = e.clientX - r.left; pm.y = e.clientY - r.top; });
-  wrap4.addEventListener('pointerleave', () => { pm.x = pm.y = -9999; });
-  wrap4.addEventListener('pointerdown', () => { for (const p of P) { p.vx += (Math.random() - .5) * 30; p.vy += (Math.random() - .5) * 30; } });
-  function draw4() {
+  v4.addEventListener('pointermove', e => { const r = v4.getBoundingClientRect(); pm.x = e.clientX - r.left; pm.y = e.clientY - r.top; });
+  v4.addEventListener('pointerleave', () => { pm.x = pm.y = -9999; });
+  v4.addEventListener('pointerdown', () => { for (const p of P) { p.vx += (Math.random() - .5) * 30; p.vy += (Math.random() - .5) * 30; } });
+  const kinetic = { on: true, custom: true, draw() {
     g4.clearRect(0, 0, W4, H4);
-    const R = 70;
     for (const p of P) {
       const dx = p.x - pm.x, dy = p.y - pm.y, d2 = dx * dx + dy * dy;
-      if (d2 < R * R) { const d = Math.sqrt(d2) || 1, f = (R - d) / R * 6; p.vx += dx / d * f; p.vy += dy / d * f; }
+      if (d2 < 6400) { const d = Math.sqrt(d2) || 1, f = (80 - d) / 80 * 6; p.vx += dx / d * f; p.vy += dy / d * f; }
       p.vx += (p.hx - p.x) * .045; p.vy += (p.hy - p.y) * .045;
       p.vx *= .84; p.vy *= .84; p.x += p.vx; p.y += p.vy;
       const sp = Math.min(1, Math.hypot(p.vx, p.vy) / 8);
-      const c = teal.map((v, k) => Math.round(v + (lime[k] - v) * p.c));
-      g4.fillStyle = `rgb(${c.map(v => Math.round(v + (255 - v) * sp)).join(',')})`;
-      g4.fillRect(p.x - p.r, p.y - p.r, p.r * 2, p.r * 2);
+      p.a += (Math.atan2(p.vy, p.vx) * sp - p.a) * .2; // triangles turn into their motion, then settle upright
+      const h = p.s * (1 - sp * .35);
+      g4.save(); g4.translate(p.x, p.y); g4.rotate(p.a);
+      g4.fillStyle = sp > .2 ? `rgb(${TEAL.map((c, k) => Math.round(LIME[k] + (c - LIME[k]) * sp)).join(',')})` : 'rgb(217,255,0)';
+      g4.beginPath(); g4.moveTo(0, -h * .55); g4.lineTo(h * .55, h * .45); g4.lineTo(-h * .55, h * .45); g4.closePath(); g4.fill();
+      g4.restore();
     }
-    if (!reduce) requestAnimationFrame(draw4);
-  }
-  (document.fonts ? document.fonts.ready : Promise.resolve()).then(() => { build4(); requestAnimationFrame(draw4); });
-  let rt; addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { build4(); if (reduce) draw4(); }, 150); });
+  } };
+  // rests as a finished "30%"; the assemble-from-below plays the first time the hero scrolls into view
+  new IntersectionObserver(es => es.forEach(e => {
+    kinetic.on = e.isIntersecting;
+    if (e.isIntersecting && !kinetic.played && !reduce && P.length) { kinetic.played = true; for (const p of P) { p.x = Math.random() * W4; p.y = H4 + Math.random() * 200; } }
+  }), { threshold: .3 }).observe(v4);
+  let rt; addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { build4(); kinetic.drawn = false; if (reduce) kinetic.draw(); }, 150); });
 
-  /* ---------- shared clock ---------- */
-  const t4 = document.getElementById('t4');
+  /* ---------- main loop + clocks ---------- */
+  fields.push(shard, kinetic);
+  function frame(t) {
+    for (const f of fields) if ((f.on && !reduce) || !f.drawn) { f.draw(t); f.drawn = true; } // first frame always paints, then only on-screen heroes animate
+    requestAnimationFrame(frame);
+  }
+  (document.fonts ? document.fonts.ready : Promise.resolve()).then(() => { build4(); requestAnimationFrame(frame); });
+  const clockB = [...document.querySelectorAll('#clock3 b')], t4 = document.getElementById('t4');
   const tickClock = () => {
     const [d, h, m, s] = parts();
     [d, h, m, s].forEach((v, i) => clockB[i].textContent = pad(v));
