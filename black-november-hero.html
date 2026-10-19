@@ -46,8 +46,8 @@ button:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline: 2px s
 .ticker span { color: var(--muted); margin: 0 16px; }
 @keyframes marquee { to { transform: translateX(-50%) } }
 .nav { display: flex; align-items: center; justify-content: space-between; gap: 24px; height: 72px; padding: 0 48px; border-bottom: 1px solid var(--line); }
-.logo { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 15px; letter-spacing: .02em; }
-.logo i { width: 22px; height: 22px; background: var(--lime); clip-path: polygon(0 0, 100% 0, 100% 30%, 38% 30%, 38% 45%, 80% 45%, 80% 72%, 38% 72%, 38% 100%, 0 100%); }
+.logo { display: flex; align-items: center; }
+.logo svg { display: block; height: 22px; width: auto; }
 .nav ul { display: flex; gap: 28px; list-style: none; margin: 0; padding: 0; font-size: 13px; color: #d9d9d9; }
 .nav li.sale { color: var(--lime); display: flex; align-items: center; gap: 6px; }
 .nav li.sale::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--lime); animation: blink 1.4s infinite; }
@@ -87,7 +87,7 @@ button:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline: 2px s
 /* ---------- 1 · Offer Stack ---------- */
 .stage { position: absolute; inset: 0; z-index: 2; perspective: 1400px; }
 .deck { position: absolute; inset: 0; transform-style: preserve-3d; transition: transform .25s ease-out; }
-.card { position: absolute; left: 50%; top: 46%; width: 300px; height: 360px; margin: -180px 0 0 -150px; border-radius: 12px; padding: 24px; display: flex; flex-direction: column; cursor: pointer; transition: transform .7s cubic-bezier(.2,.8,.2,1), filter .7s; box-shadow: 0 40px 60px -24px rgba(0,0,0,.8); }
+.card { overflow: hidden; position: absolute; left: 50%; top: 46%; width: 300px; height: 360px; margin: -180px 0 0 -150px; border-radius: 12px; padding: 24px; display: flex; flex-direction: column; cursor: pointer; transition: transform .7s cubic-bezier(.2,.8,.2,1), filter .7s; box-shadow: 0 40px 60px -24px rgba(0,0,0,.8); }
 .card .k { font-size: 12px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; }
 .card.sale { background: var(--lime); color: var(--bg); }
 .card.sale .big { margin-top: auto; font-weight: 500; font-size: 128px; line-height: .82; letter-spacing: -.04em; }
@@ -165,6 +165,36 @@ button:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline: 2px s
 .notes ul { margin: 0; padding-left: 18px; color: #c4c4c4; display: grid; gap: 6px; }
 .notes code { color: var(--lime); }
 
+/* ---------- premium + celebration layer ---------- */
+@property --ang { syntax: '<angle>'; inherits: false; initial-value: 0deg; }
+.hero { background: radial-gradient(70% 60% at 22% -10%, rgba(217,255,0,.09), transparent 60%), radial-gradient(45% 55% at 75% 45%, rgba(255,255,255,.045), transparent 70%), var(--bg); }
+.h1 { background: linear-gradient(100deg, #fff 44%, #F4FFB8 50%, #fff 56%) 100% 0 / 260% 100%; -webkit-background-clip: text; background-clip: text; color: transparent; animation: shine 7s 1.2s infinite; }
+.h1 em { background: linear-gradient(100deg, var(--lime) 44%, #fff 50%, var(--lime) 56%) 100% 0 / 260% 100%; -webkit-background-clip: text; background-clip: text; color: transparent; animation: inherit; }
+@keyframes shine { 0% { background-position: 100% 0 } 30%, 100% { background-position: 0 0 } }
+.tag { border: 1px solid transparent; background: linear-gradient(var(--bg), var(--bg)) padding-box, conic-gradient(from var(--ang), var(--line) 0 55%, var(--lime) 72%, var(--line) 88%) border-box; animation: spin 4s linear infinite; }
+@keyframes spin { to { --ang: 360deg } }
+.btn { position: relative; overflow: hidden; background: linear-gradient(180deg, #E8FF5C, var(--lime) 55%, #C6EA00); box-shadow: inset 0 1px 0 rgba(255,255,255,.55); }
+.btn::after { content: ""; position: absolute; inset: 0; background: linear-gradient(100deg, transparent 35%, rgba(255,255,255,.75) 50%, transparent 65%); transform: translateX(-120%); animation: sheen 4s 1.5s infinite; pointer-events: none; }
+.copy .btn { animation: halo 2.8s infinite; }
+@keyframes halo { 0% { box-shadow: inset 0 1px 0 rgba(255,255,255,.55), 0 0 0 0 rgba(217,255,0,.45) } 70%, 100% { box-shadow: inset 0 1px 0 rgba(255,255,255,.55), 0 0 0 16px rgba(217,255,0,0) } }
+.rays { position: absolute; left: 50%; top: 46%; width: 180%; aspect-ratio: 1; translate: -50% -50%; z-index: 0; pointer-events: none; background: repeating-conic-gradient(rgba(217,255,0,.075) 0deg 3deg, transparent 3deg 15deg); -webkit-mask: radial-gradient(circle, #000 0 8%, transparent 42%); mask: radial-gradient(circle, #000 0 8%, transparent 42%); animation: turn 80s linear infinite; }
+@keyframes turn { to { rotate: 360deg } }
+.grain { position: absolute; inset: 0; z-index: 5; pointer-events: none; opacity: .07; mix-blend-mode: overlay; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+.confetti { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 6; pointer-events: none; }
+.seal { position: absolute; z-index: 4; right: 28px; top: 28px; width: 118px; height: 118px; pointer-events: none; }
+.seal .ring { width: 100%; height: 100%; animation: turn 22s linear infinite; }
+.seal .ring text { font: 600 9.4px var(--sans); letter-spacing: .24em; fill: #d9d9d9; }
+.seal .mark { position: absolute; left: 50%; top: 50%; width: 36px; translate: -50% -50%; fill: var(--lime); filter: drop-shadow(0 0 12px rgba(217,255,0,.55)); }
+.card .fr { position: absolute; right: 22px; top: 20px; width: 22px; height: auto; }
+.card.sale .fr { fill: var(--bg); } .card.bundle .fr, .card.koku .fr { fill: var(--lime); }
+.card.sale::after { content: ""; position: absolute; inset: 0; background: linear-gradient(115deg, transparent 30%, rgba(255,255,255,.6) 45%, transparent 58%) 120% 0 / 260% 100%; mix-blend-mode: soft-light; animation: foil 5s infinite; pointer-events: none; }
+@keyframes foil { 0% { background-position: 120% 0 } 45%, 100% { background-position: -40% 0 } }
+.card.bundle { border: 1px solid transparent; background: linear-gradient(var(--card), var(--card)) padding-box, linear-gradient(140deg, #6a6a6a, #222 40%, #4a4a4a 70%, #1a1a1a) border-box; }
+.card.koku { border: 1px solid transparent; background: radial-gradient(120% 80% at 30% 0%, #262626, #050505 70%) padding-box, linear-gradient(140deg, var(--purple), #222 45%, #666) border-box; }
+.panel { border: 1px solid transparent; background: linear-gradient(rgba(21,21,21,.92), rgba(21,21,21,.92)) padding-box, linear-gradient(140deg, #5a5a5a, #262626 40%, rgba(217,255,0,.5)) border-box; box-shadow: 0 40px 80px -30px rgba(0,0,0,.9); }
+.p-off { transition: opacity .5s; }
+.p-off.hide { opacity: 0; }
+
 @media (max-width: 1100px) { .nav ul { display: none; } }
 @media (max-width: 860px) {
   .nav { padding: 0 16px; height: 60px; } .nav .right .login { display: none; }
@@ -178,6 +208,7 @@ button:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline: 2px s
   .press { grid-template-columns: repeat(3, 1fr); height: auto; } .press span { height: 56px; border-bottom: 1px solid var(--line); font-size: 13px; }
   .card { width: 250px; height: 310px; margin: -155px 0 0 -125px; } .card.sale .big { font-size: 104px; } .card.koku .kanji { font-size: 84px; }
   .dots { bottom: 20px; }
+  .seal { width: 84px; height: 84px; right: 14px; top: 14px; } .seal .mark { width: 26px; }
 }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
 </style>
@@ -186,21 +217,21 @@ button:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline: 2px s
   <header class="sheet">
     <div class="eyebrow">FundingRock · Black November · homepage hero</div>
     <h1>Black November in our homepage hero</h1>
-    <p>Each concept sits inside the real homepage hero from the Figma file: ticker, nav, the 50/50 split with its hairline, the Trustpilot row and the press bar. Type, colors and buttons follow the hero spec. The lime halftone triangles from behind the hero photo are the interactive layer, so move your cursor over the right half.</p>
+    <p>Each concept sits inside the real homepage hero (ticker, nav with our logo, the 50/50 split, Trustpilot row and press bar) and follows its type, colors and buttons. The celebration layer is shared: confetti of FR marks and triangles bursts when a hero comes into view and when you hover or click the CTA, with light rays, a rotating seal and a foil sheen for the premium feel.</p>
     <nav class="jump" aria-label="Concepts"><a href="#c1">1 · Offer Stack</a><a href="#c2">2 · Bundle Builder</a><a href="#c3">3 · Kokuyō</a><a href="#c4">4 · Kinetic 30%</a></nav>
   </header>
 
   <!-- 1 -->
   <section class="concept" id="c1">
     <div class="spec"><div><div class="eyebrow">Concept 1</div><h2>Offer Stack</h2></div>
-      <div class="how">A 3D deck of the three offers replaces the photo. The deck tilts with the cursor and rotates on its own; click a card or a bar to bring it forward. Triangles swell under the cursor.</div></div>
+      <div class="how">A 3D deck of the three offers replaces the photo. The deck tilts with the cursor and rotates on its own; click a card or a bar to bring it forward. The 30% card has a moving foil sheen.</div></div>
     <div class="site">
       <div class="ticker" aria-hidden="true"><div></div></div>
       <div class="nav-slot"></div>
       <div class="hero">
         <div class="copy">
           <div class="copy-main">
-            <span class="tag"><i></i>Black November Sale</span>
+            <span class="tag"><i></i>Black November · Our Biggest Offer Yet</span>
             <h3 class="h1">30% Off<br>Every Challenge</h3>
             <p class="lead">Get a <b>bonus challenge</b> with every purchase.<br>Bundle up and get up to <b>2 free</b>.</p>
             <div class="row"><button class="btn" type="button">Join Now</button><span class="fine">Offer ends 30/11. Terms apply.</span></div>
@@ -243,7 +274,7 @@ button:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline: 2px s
   <!-- 2 -->
   <section class="concept" id="c2">
     <div class="spec"><div><div class="eyebrow">Concept 2</div><h2>Bundle Builder</h2></div>
-      <div class="how">The right half becomes the bundle mechanic. Pick 1, 2 or 3 challenges: paid tickets drop in, free ones land in lime, and the totals update. The nudge line uses the cart copy from the doc.</div></div>
+      <div class="how">The right half becomes the bundle mechanic. Pick 1, 2 or 3 challenges: paid tickets drop in, free ones land in lime with a confetti pop, and the totals update. The nudge line uses the cart copy from the doc.</div></div>
     <div class="site">
       <div class="ticker" aria-hidden="true"><div></div></div>
       <div class="nav-slot"></div>
@@ -319,14 +350,14 @@ button:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline: 2px s
   <!-- 4 -->
   <section class="concept" id="c4">
     <div class="spec"><div><div class="eyebrow">Concept 4</div><h2>Kinetic 30%</h2></div>
-      <div class="how">The halftone triangles themselves form "30%". They assemble on load, scatter away from the cursor and spring back; a click bursts them. The countdown is synced to 30/11.</div></div>
+      <div class="how">The halftone triangles form "30%", then morph into the FR mark and back, with a confetti pop on each change. They scatter from the cursor and spring back; a click triggers the morph. The countdown is synced to 30/11.</div></div>
     <div class="site">
       <div class="ticker" aria-hidden="true"><div></div></div>
       <div class="nav-slot"></div>
       <div class="hero">
         <div class="copy">
           <div class="copy-main">
-            <span class="tag"><i></i>Black Friday Starts Early</span>
+            <span class="tag"><i></i>Black Friday Starts Early · 2026 Edition</span>
             <h3 class="h1">Black November<br><em>Sale</em></h3>
             <p class="lead">Save <b>30%</b> on every challenge.<br>Bonus challenge with every purchase.</p>
             <div class="chips"><span class="chip on">30% Off</span><span class="chip">2+1 Free</span><span class="chip">3+2 Free</span><span class="chip">New · Kokuyō 黒曜</span></div>
@@ -348,6 +379,7 @@ button:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline: 2px s
     <h3>Notes</h3>
     <ul>
       <li>Matched to the Figma hero (node <code>1:26337</code>): Host Grotesk Medium 70/100 at -1% tracking, 20/130 subline with a bold lime highlight, 46px lime button with 6px radius, <code>#0E0E0E</code> and <code>#303030</code> hairlines.</li>
+      <li>The logo is the real SVG from fundingrock.com (also saved as <code>assets/fundingrock-logo.svg</code>). The FR mark from it drives the confetti, the seal, the card marks and the concept 4 morph.</li>
       <li>The hero photo couldn't be exported from this session, so the halftone triangles are redrawn live in code. To bring the photo back into concept 1 or 3, place it under the triangle layer.</li>
       <li>Copy conflicts still open in the doc: bundles are 2+1 / 3+2 in the Main Hero but Buy 2 get 1 / Buy 4 get 2 in the 23/11 launch section. The Kokuyō cap is 10,000 on the banner but 1,000 on the final landing page. These heroes use 2+1 / 3+2 and 1,000.</li>
       <li>The countdown targets 30/11 at 23:59 Israel time. The claimed count of 741 is the doc's placeholder and ticks up as a demo.</li>
@@ -364,11 +396,17 @@ button:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline: 2px s
   const pad = n => String(n).padStart(2, '0');
   const parts = () => { let s = Math.max(0, Math.floor((END - Date.now()) / 1000)); const d = Math.floor(s / 86400); s %= 86400; return [d, Math.floor(s / 3600), Math.floor(s % 3600 / 60), s % 60]; };
 
+  /* ---------- brand assets (fundingrock.com logo SVG) ---------- */
+  const LOGO = `<svg fill="none" height="24" viewBox="0 0 182 24" width="182" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><clipPath id="a"><path d="m0 0h28.36v24h-28.36z"/></clipPath><g fill="#fff"><path d="m169.472 4.59299h2.421v7.60121l6.759-7.60121h2.948l-5.411 6.14831 5.811 8.5908h-2.927l-4.611-6.7379-2.569 2.8847v3.8532h-2.421z"/><path d="m154.9 8.04615c.589-1.13701 1.411-2.0003 2.485-2.63198 1.073-.63168 2.337-.94751 3.769-.94751 1.094 0 2.105.21055 2.989.63167.885.42112 1.622 1.03174 2.19 1.81081.548.77906.906 1.68447 1.074 2.69515h-2.421c-.253-.92646-.716-1.66341-1.39-2.21087-.695-.52639-1.537-.80012-2.548-.80012-.926 0-1.726.23161-2.4.69484-.695.46323-1.221 1.09491-1.579 1.89503-.379.80012-.548 1.72663-.548 2.77933 0 1.0528.169 1.9793.548 2.7794.358.8212.884 1.4529 1.579 1.9161.674.4632 1.474.6738 2.4.6738 1.011 0 1.853-.2527 2.527-.8001.674-.5264 1.137-1.2634 1.39-2.2109h2.421c-.168 1.0528-.526 1.9582-1.074 2.7162-.547.7791-1.263 1.3686-2.148 1.7898-.884.4211-1.895.6316-3.01.6316-1.432 0-2.696-.2947-3.769-.9264-1.074-.6106-1.896-1.4739-2.485-2.6109-.59-1.1371-.863-2.4425-.863-3.9586 0-1.4739.273-2.77933.863-3.91635z"/><path d="m151.575 15.8158c-.61 1.137-1.453 2.0424-2.548 2.6741-1.094.6527-2.316.9685-3.705.9685-1.39 0-2.632-.3158-3.727-.9685-1.095-.6317-1.937-1.5371-2.527-2.6741-.611-1.137-.905-2.4215-.905-3.8533s.294-2.71616.905-3.85318c.59-1.13701 1.432-2.02136 2.527-2.67409 1.095-.63168 2.337-.96857 3.727-.96857 1.389 0 2.611.33689 3.705.96857 1.095.65273 1.938 1.53708 2.548 2.67409.59 1.13702.906 2.42138.906 3.85318s-.316 2.7163-.906 3.8533zm-10.338-1.0739c.379.8212.926 1.4529 1.642 1.9161s1.516.6738 2.443.6738c.905 0 1.705-.2106 2.421-.6738s1.263-1.0949 1.663-1.9161c.379-.8212.59-1.7476.59-2.7794 0-1.0106-.211-1.9371-.59-2.75827-.4-.82118-.947-1.45286-1.663-1.91609s-1.516-.69484-2.421-.69484c-.927 0-1.727.23161-2.443.69484s-1.263 1.09491-1.642 1.91609c-.4.82117-.59 1.74767-.59 2.75827 0 1.0318.19 1.9582.59 2.7794z"/><path d="m131.588 4.59299c1.011 0 1.916.21056 2.695.58956.758.37901 1.369.92646 1.79 1.64236s.653 1.53708.653 2.46354c0 .98965-.274 1.85295-.779 2.58985-.527.758-1.222 1.2844-2.085 1.5792l3.116 5.8746h-2.695l-2.8-5.3482h-3.285v5.3482h-2.421v-14.73911zm-3.39 7.28531h3.201c.863 0 1.558-.2316 2.063-.6948.505-.4633.779-1.0949.779-1.89505 0-.77907-.274-1.41075-.779-1.87398-.505-.46322-1.2-.71589-2.063-.71589h-3.201z"/><path d="m110.321 8.04615c.589-1.13701 1.411-2.0003 2.505-2.63198 1.074-.63168 2.338-.94751 3.791-.94751 1.684 0 3.095.46323 4.232 1.38968 1.116.92646 1.811 2.18982 2.063 3.74795h-2.4c-.253-.92646-.716-1.66341-1.411-2.21087-.695-.52639-1.537-.80012-2.548-.80012-.926 0-1.747.23161-2.442.69484s-1.221 1.09491-1.6 1.89503-.569 1.72663-.569 2.77933c0 1.0528.169 2.0004.548 2.8005s.905 1.4318 1.6 1.895 1.516.6738 2.442.6738c1.179 0 2.148-.3158 2.948-.9686.8-.6317 1.221-1.5371 1.285-2.6951v-.358h-4.085v-2.0424h6.401v8.0644h-1.832l-.253-2.1056c-.421.6317-1.032 1.1581-1.811 1.5792-.779.4422-1.705.6527-2.758.6527-1.369 0-2.569-.2947-3.622-.9264-1.052-.6317-1.874-1.516-2.463-2.6531-.59-1.137-.884-2.4424-.884-3.9164 0-1.4739.273-2.77933.863-3.91635z"/><path d="m95.5706 19.3321v-14.73911h2.2108l7.1796 10.44371v-10.44371h2.38v14.73911h-2.211l-7.1801-10.44371v10.44371z"/><path d="m90.4504 4.59299h2.4215v14.73911h-2.4215z"/><path d="m76.2007 4.59299h4.6954c1.495 0 2.8005.31583 3.9375.92646 1.116.63167 1.9792 1.49496 2.5899 2.58987.5895 1.11596.9054 2.40038.9054 3.85318 0 1.4529-.3159 2.7373-.9054 3.8533-.6107 1.1159-1.4739 1.9792-2.5899 2.5898-1.137.6317-2.4425.9265-3.9375.9265h-4.6954zm4.6954 12.63351c1.5792 0 2.8005-.4632 3.6638-1.4107.8422-.9475 1.2844-2.232 1.2844-3.8533 0-1.6002-.4422-2.88461-1.2844-3.83213-.8633-.94751-2.0846-1.43179-3.6638-1.43179h-2.274v10.52792z"/><path d="m61.7454 19.3321v-14.73911h2.2108l7.1801 10.44371v-10.44371h2.3793v14.73911h-2.2109l-7.18-10.44371v10.44371z"/><path d="m49.9358 4.59299v8.54871c0 1.3897.2738 2.4425.8212 3.1373.5475.6948 1.3897 1.0317 2.5478 1.0317 1.158 0 2.0213-.3369 2.5688-1.0317.5474-.6948.8422-1.7476.8422-3.1373v-8.54871h2.4214v8.42231c0 2.1056-.5053 3.7059-1.4949 4.8008s-2.4425 1.6423-4.3375 1.6423c-1.8951 0-3.3479-.5474-4.3165-1.6423-.9896-1.0949-1.4739-2.6952-1.4739-4.8008v-8.42231z"/><path d="m36.3303 4.59299h9.412v2.1477h-6.9906v4.27431h5.7694v2.0846h-5.7694v6.2325h-2.4214z"/></g><g clip-path="url(#a)" fill="#d9ff00"><path d="m12.11 0c.76 0 1.14.92.6 1.46l-9.58 9.57h8.98c.76 0 1.14.92.6 1.46l-11.25 11.25c-.54.54-1.46.16-1.46-.6v-22.29c0-.47.38-.85.85-.85h11.25z"/><path d="m21.8201 0c3.61 0 6.54 2.93 6.54 6.54s-2.93 6.54-6.54 6.54h-3.5l9.47 9.46c.54.54.16 1.46-.6 1.46h-11.25c-.47 0-.85-.38-.85-.85v-22.3c0-.47.38-.85.85-.85h5.89z"/></g></svg>`;
+  const MARK_D = ['m12.11 0c.76 0 1.14.92.6 1.46l-9.58 9.57h8.98c.76 0 1.14.92.6 1.46l-11.25 11.25c-.54.54-1.46.16-1.46-.6v-22.29c0-.47.38-.85.85-.85h11.25z', 'm21.8201 0c3.61 0 6.54 2.93 6.54 6.54s-2.93 6.54-6.54 6.54h-3.5l9.47 9.46c.54.54.16 1.46-.6 1.46h-11.25c-.47 0-.85-.38-.85-.85v-22.3c0-.47.38-.85.85-.85h5.89z'];
+  const MARK = MARK_D.map(d => new Path2D(d)); // 28.36 × 24 units
+  const markSVG = cls => `<svg class="${cls}" viewBox="0 0 28.36 24" aria-hidden="true">${MARK_D.map(d => `<path d="${d}"/>`).join('')}</svg>`;
+
   /* ---------- shared site chrome ---------- */
   const tickerText = ['30% Off + Free Bonus Challenges + Apple Reward', 'Shop Now', 'Buy 2 Get 1 Free', 'Buy 3 Get 2 Free', 'New · Kokuyō 黒曜 · $200K for $200', 'Ends 30/11'];
   const tline = tickerText.map(s => s + '<span>/</span>').join('');
   document.querySelectorAll('.ticker div').forEach(d => d.innerHTML = tline.repeat(4));
-  const navHTML = `<div class="nav"><div class="logo"><i></i>FUNDINGROCK</div>
+  const navHTML = `<div class="nav"><div class="logo" role="img" aria-label="FundingRock">${LOGO}</div>
     <ul><li>How it Works</li><li>About</li><li>Contact Us</li><li>Affiliates</li><li>FAQ</li><li class="sale">Black November</li></ul>
     <div class="right"><span class="login">Login</span><button class="btn sm" type="button">Get Funded</button></div></div>`;
   const star = '<svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.9 7.1.6-5.4 4.7 1.6 7L12 17.3 5.8 21.2l1.6-7L2 9.5l7.1-.6z"/></svg>';
@@ -377,6 +415,10 @@ button:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline: 2px s
   document.querySelectorAll('.nav-slot').forEach(s => s.outerHTML = navHTML);
   document.querySelectorAll('.tp-slot').forEach(s => s.outerHTML = tpHTML);
   document.querySelectorAll('.press-slot').forEach(s => s.outerHTML = pressHTML);
+  document.querySelectorAll('.card').forEach(c => c.insertAdjacentHTML('beforeend', markSVG('fr')));
+  document.querySelectorAll('.visual').forEach(v => v.insertAdjacentHTML('afterbegin', '<div class="rays"></div>'));
+  const sealHTML = `<div class="seal" aria-hidden="true"><svg class="ring" viewBox="0 0 120 120"><defs><path id="sealp" d="M60 60m-46 0a46 46 0 1 1 92 0a46 46 0 1 1 -92 0"/></defs><circle cx="60" cy="60" r="57" fill="#0E0E0E" fill-opacity=".88" stroke="#303030"/><circle cx="60" cy="60" r="34" fill="#0E0E0E" stroke="#303030"/><text><textPath href="#sealp">BLACK NOVEMBER · 30% OFF · 2026 EDITION ·</textPath></text></svg>${markSVG('mark')}</div>`;
+  ['v1', 'v3', 'v4'].forEach(id => document.getElementById(id).insertAdjacentHTML('beforeend', sealHTML));
 
   /* ---------- halftone triangle field (the hero's brand texture) ---------- */
   // density(x, y) returns 0..1; cells grow toward the cursor
@@ -413,6 +455,42 @@ button:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline: 2px s
   halftone(document.getElementById('v2'), (u, v) => sweep(u, v) * .55);
   halftone(document.getElementById('v3'), (u, v) => sweep(u, v) * .7, { color: TEAL });
 
+  /* ---------- confetti: FR marks, triangles and ribbon strips ---------- */
+  const PALETTE = ['#D9FF00', '#D9FF00', '#FFFFFF', '#00D8C3', '#BFBFBF'];
+  const confettis = new Map();
+  document.querySelectorAll('.hero').forEach(hero => {
+    hero.insertAdjacentHTML('beforeend', '<div class="grain"></div><canvas class="confetti" aria-hidden="true"></canvas>');
+    const cv = hero.querySelector('canvas.confetti'), g = cv.getContext('2d');
+    const c = { on: false, drawn: true, bits: [], W: 0, H: 0, last: 0, popped: false };
+    const size = () => { const r = hero.getBoundingClientRect(); c.W = r.width; c.H = r.height; cv.width = c.W * dpr; cv.height = c.H * dpr; g.setTransform(dpr, 0, 0, dpr, 0, 0); };
+    size(); addEventListener('resize', size);
+    const piece = (x, y, vx, vy) => ({ x, y, vx, vy, r: Math.random() * 6, vr: (Math.random() - .5) * .3, f: Math.random() * 6, vf: .08 + Math.random() * .12,
+      kind: Math.random() < .3 ? 'mark' : Math.random() < .6 ? 'tri' : 'strip', s: 7 + Math.random() * 8, col: PALETTE[Math.random() * PALETTE.length | 0] });
+    c.burst = (x, y, n = 60, spread = 1, side = 0) => { if (reduce) return; for (let i = 0; i < n; i++) { const a = -Math.PI / 2 + side + (Math.random() - .5) * 2.2 * spread, v = 6 + Math.random() * 9; c.bits.push(piece(x, y, Math.cos(a) * v, Math.sin(a) * v)); } };
+    c.cannons = () => { c.burst(0, c.H, 70, .35, .55); c.burst(c.W, c.H, 70, .35, -.55); }; // two corner cannons aimed inward
+    c.draw = t => {
+      g.clearRect(0, 0, c.W, c.H);
+      if (!reduce && t - c.last > 420 && c.bits.length < 220) { c.last = t; c.bits.push(piece(Math.random() * c.W, -20, (Math.random() - .5) * .6, 1 + Math.random())); } // slow ambient fall
+      c.bits = c.bits.filter(b => b.y < c.H + 30);
+      for (const b of c.bits) {
+        b.vy += .16; b.vx *= .985; b.vy *= .985; b.vy = Math.min(b.vy, 3.2 + b.s * .08);
+        b.x += b.vx + Math.sin(t / 500 + b.f) * .35; b.y += b.vy; b.r += b.vr; b.f += b.vf;
+        g.save(); g.translate(b.x, b.y); g.rotate(b.r); g.scale(1, Math.cos(b.f)); // the flip gives the 3D tumble
+        g.fillStyle = b.col; g.globalAlpha = .95;
+        if (b.kind === 'mark') { const k = b.s / 24; g.scale(k, k); g.translate(-14.18, -12); MARK.forEach(m => g.fill(m)); }
+        else if (b.kind === 'tri') { g.beginPath(); g.moveTo(0, -b.s * .55); g.lineTo(b.s * .55, b.s * .45); g.lineTo(-b.s * .55, b.s * .45); g.fill(); }
+        else g.fillRect(-b.s * .2, -b.s * .7, b.s * .4, b.s * 1.4);
+        g.restore();
+      }
+    };
+    new IntersectionObserver(es => es.forEach(e => { c.on = e.isIntersecting; if (e.isIntersecting && !c.popped) { c.popped = true; setTimeout(c.cannons, 250); } }), { threshold: .45 }).observe(hero);
+    const btn = hero.querySelector('.copy .btn'), at = el => { const a = el.getBoundingClientRect(), h = hero.getBoundingClientRect(); return [a.left - h.left + a.width / 2, a.top - h.top + a.height / 2]; };
+    let hov = 0;
+    btn.addEventListener('pointerenter', () => { if (performance.now() - hov > 1500) { hov = performance.now(); c.burst(...at(btn), 26, .6); } });
+    btn.addEventListener('click', () => c.burst(...at(btn), 90, 1));
+    c.at = at; confettis.set(hero.closest('.concept').id, c); fields.push(c);
+  });
+
   /* ---------- 1 · Offer Stack ---------- */
   const deck = document.getElementById('deck1'), stage = document.getElementById('stage1');
   const cards = [...deck.querySelectorAll('.card')], dots = [...document.querySelectorAll('#dots1 button')];
@@ -442,8 +520,11 @@ button:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline: 2px s
   const PRICE = 350, SALE = 245;
   const freeFor = n => n >= 3 ? 2 : n === 2 ? 1 : 0;
   const tk = document.getElementById('tickets2'), seg = [...document.querySelectorAll('#seg2 button')];
+  let lastFree = freeFor(3);
   function setN(n) {
     const f = freeFor(n), total = n + f;
+    if (f > lastFree) { const c2 = confettis.get('c2'); setTimeout(() => c2.burst(...c2.at(tk), 40 * f, .8), 500); }
+    lastFree = f;
     seg.forEach(b => b.setAttribute('aria-pressed', +b.dataset.n === n));
     tk.innerHTML = '';
     for (let i = 0; i < 5; i++) {
@@ -519,16 +600,30 @@ button:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline: 2px s
     const fs = Math.min(H4 * .5, W4 * .34);
     o.font = `500 ${fs}px "Host Grotesk", Arial, sans-serif`; o.textAlign = 'center'; o.textBaseline = 'middle';
     o.fillStyle = '#fff'; o.fillText('30%', W4 / 2, H4 * .4);
-    const data = o.getImageData(0, 0, W4, H4).data, step = Math.max(6, Math.round(fs / 30));
+    const step = Math.max(6, Math.round(fs / 30));
+    const sample = () => { const data = o.getImageData(0, 0, W4, H4).data, pts = []; for (let y = 0; y < H4; y += step) for (let x = 0; x < W4; x += step) if (data[(y * W4 + x) * 4 + 3] > 128) pts.push([x, y]); return pts; };
+    const A = sample();
+    o.clearRect(0, 0, W4, H4); o.save();
+    const sc = Math.min(H4 * .52 / 24, W4 * .5 / 28.36); o.translate(W4 / 2 - 14.18 * sc, H4 * .42 - 12 * sc); o.scale(sc, sc); MARK.forEach(m => o.fill(m)); o.restore();
+    const B = sample();
+    const pick = (arr, i) => arr[i < arr.length ? i : (i * 7919) % arr.length];
     const old = P; P = [];
-    for (let y = 0; y < H4; y += step) for (let x = 0; x < W4; x += step) if (data[(y * W4 + x) * 4 + 3] > 128) {
-      const prev = old[P.length];
-      P.push({ hx: x, hy: y, x: prev ? prev.x : x, y: prev ? prev.y : y, vx: 0, vy: 0, s: step * .78, a: 0 });
+    for (let i = 0; i < Math.max(A.length, B.length); i++) {
+      const prev = old[i], ta = pick(A, i), tb = pick(B, i), [hx, hy] = shape ? tb : ta;
+      P.push({ ta, tb, hx, hy, x: prev ? prev.x : hx, y: prev ? prev.y : hy, vx: 0, vy: 0, s: step * .78, a: 0 });
     }
+  }
+  let shape = 0, morphT;
+  const pOff = v4.querySelector('.p-off');
+  function morph() {
+    shape ^= 1; pOff.classList.toggle('hide', shape === 1);
+    for (const p of P) { [p.hx, p.hy] = shape ? p.tb : p.ta; p.vx += (Math.random() - .5) * 14; p.vy -= Math.random() * 10; }
+    const c4 = confettis.get('c4'); c4.burst(c4.W * .75, c4.H * .45, 50, 1.2);
+    clearInterval(morphT); if (!reduce) morphT = setInterval(() => kinetic.on && morph(), 5000);
   }
   v4.addEventListener('pointermove', e => { const r = v4.getBoundingClientRect(); pm.x = e.clientX - r.left; pm.y = e.clientY - r.top; });
   v4.addEventListener('pointerleave', () => { pm.x = pm.y = -9999; });
-  v4.addEventListener('pointerdown', () => { for (const p of P) { p.vx += (Math.random() - .5) * 30; p.vy += (Math.random() - .5) * 30; } });
+  v4.addEventListener('pointerdown', morph);
   const kinetic = { on: true, custom: true, draw() {
     g4.clearRect(0, 0, W4, H4);
     for (const p of P) {
@@ -558,7 +653,7 @@ button:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline: 2px s
     for (const f of fields) if ((f.on && !reduce) || !f.drawn) { f.draw(t); f.drawn = true; } // first frame always paints, then only on-screen heroes animate
     requestAnimationFrame(frame);
   }
-  (document.fonts ? document.fonts.ready : Promise.resolve()).then(() => { build4(); requestAnimationFrame(frame); });
+  (document.fonts ? document.fonts.ready : Promise.resolve()).then(() => { build4(); requestAnimationFrame(frame); if (!reduce) morphT = setInterval(() => kinetic.on && morph(), 5000); });
   const clockB = [...document.querySelectorAll('#clock3 b')], t4 = document.getElementById('t4');
   const tickClock = () => {
     const [d, h, m, s] = parts();
