@@ -123,9 +123,12 @@ main, footer { overflow-x: clip; }
 .scene .ring::after { content: ""; position: absolute; left: 50%; top: -4px; width: 8px; height: 8px; border-radius: 50%; background: var(--lime); box-shadow: 0 0 14px var(--lime); }
 @keyframes breathe { 50% { transform: translate(-50%, -50%) scale(1.08); opacity: .75; } }
 @keyframes spin { to { transform: translate(-50%, -50%) rotate(360deg); } }
-.rig { position: absolute; inset: 6% 2% 6% 6%; transform-style: preserve-3d; will-change: transform; }
+.rig { position: absolute; left: -4%; bottom: 3%; width: 64%; height: 52%; z-index: 2; transform-style: preserve-3d; will-change: transform; }
+.person { position: absolute; right: -2%; bottom: 0; height: 104%; width: auto; max-width: none; z-index: 1; pointer-events: none; transform: translate3d(var(--px, 0px), 0, 0); transition: transform .9s var(--ease); -webkit-mask-image: linear-gradient(180deg, #000 78%, transparent 99%); mask-image: linear-gradient(180deg, #000 78%, transparent 99%); filter: drop-shadow(0 30px 60px rgba(0,0,0,.6)); animation: fade 1.2s .2s var(--ease) both; }
+.scene .halo { left: 66% !important; top: 40% !important; }
+.scene .ring { left: 66% !important; top: 40% !important; width: 62% !important; }
 .card3 { position: absolute; inset: 0; border-radius: 30px; overflow: hidden; transform: translateZ(0); }
-.card3 .hd { position: absolute; left: 26px; top: 22px; right: 26px; display: flex; justify-content: space-between; font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--mute); }
+.card3 .hd { position: absolute; left: 20px; top: 18px; right: 20px; display: flex; justify-content: space-between; font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--mute); }
 .card3 .hd b { color: #fff; font-weight: 500; letter-spacing: .04em; text-transform: none; font-size: 14px; }
 .card3 svg { position: absolute; inset: 0; width: 100%; height: 100%; }
 .card3 svg text { font-family: var(--font); }
@@ -133,9 +136,9 @@ main, footer { overflow-x: clip; }
 .fchip b { display: block; font-size: 30px; line-height: 1.05; color: #fff; font-weight: 600; letter-spacing: -.04em; }
 .fchip.loss b { color: var(--red); }
 .fchip.cap b { color: var(--lime); }
-.fchip.loss { left: -7%; bottom: 8%; transform: translateZ(90px); }
-.fchip.cap { right: -5%; top: 30%; transform: translateZ(130px); }
-.fchip.nd { right: 6%; bottom: -5%; transform: translateZ(60px); font-size: 14px; color: #fff; padding: 12px 16px; display: flex; align-items: center; gap: 10px; }
+.fchip.loss { left: -6%; bottom: -10%; transform: translateZ(90px); }
+.fchip.cap { right: -44%; top: -20%; transform: translateZ(130px); }
+.fchip.nd { right: -52%; bottom: 18%; transform: translateZ(60px); font-size: 14px; color: #fff; padding: 12px 16px; display: flex; align-items: center; gap: 10px; }
 .fchip.nd i { width: 8px; height: 8px; border-radius: 50%; background: var(--lime); position: relative; }
 .fchip.nd i::after { content: ""; position: absolute; inset: 0; border-radius: 50%; background: var(--lime); animation: ping 1.6s ease-out infinite; }
 @keyframes ping { from { transform: scale(1); opacity: .8; } to { transform: scale(3); opacity: 0; } }
@@ -452,10 +455,14 @@ main, footer { overflow-x: clip; }
   .hero-grid { grid-template-columns: 1fr; gap: 8px; }
   .hero h1 { font-size: clamp(40px, 11.6vw, 72px); }
   .scene { height: 400px; margin: 10px -8px 0; }
-  .rig { inset: 8% 6% 10% 6%; }
+  .scene { height: 470px; }
+  .rig { left: 0; bottom: 4%; width: 70%; height: 46%; }
+  .person { right: -8%; height: 100%; }
+  .fchip.nd { display: none; }
+  .fchip.cap { right: -36%; top: -26%; }
   .fchip { padding: 10px 14px; font-size: 12px; }
   .fchip b { font-size: 22px; }
-  .fchip.loss { left: -2%; } .fchip.cap { right: -2%; }
+  .fchip.loss { left: 3%; bottom: -12%; }
 }
 @media (max-width: 600px) {
   .paths { grid-template-columns: 1fr; }
@@ -518,9 +525,10 @@ main, footer { overflow-x: clip; }
         <div class="scene" id="scene" aria-hidden="true">
           <div class="halo"></div>
           <div class="ring"></div>
+          <img class="person" id="person" src="assets/person.webp" alt="" width="757" height="1100">
           <div class="rig" id="rig">
             <div class="card3 glass">
-              <div class="hd"><span>A bad week</span><b>Same trades, two accounts</b></div>
+              <div class="hd"><span>A bad week</span><b>Same trades</b></div>
               <svg id="dropSvg" viewBox="0 0 520 400" preserveAspectRatio="none"></svg>
             </div>
             <div class="fchip liquid loss"><span class="bump" id="lossB"><b class="tnum" id="lossN">−$0</b></span>From your savings</div>
@@ -892,7 +900,7 @@ main, footer { overflow-x: clip; }
   if (reduce) heroAt(.82);
 
   /* 3D tilt of the hero rig: follows the pointer, drifts on its own */
-  var rig = $("#rig"), scene = $("#scene"), tilt = { x: 0, y: 0 }, aim = { x: 0, y: 0, on: false }, sceneVis = true;
+  var rig = $("#rig"), person = $("#person"), scene = $("#scene"), tilt = { x: 0, y: 0 }, aim = { x: 0, y: 0, on: false }, sceneVis = true;
   if (finePtr) {
     scene.addEventListener("pointermove", function (e) { var r = scene.getBoundingClientRect(); aim.x = (e.clientX - r.left) / r.width - .5; aim.y = (e.clientY - r.top) / r.height - .5; aim.on = true; });
     scene.addEventListener("pointerleave", function () { aim.on = false; });
@@ -903,6 +911,7 @@ main, footer { overflow-x: clip; }
     heroAt(cl(cyc / .78));
     var gx = aim.on ? aim.x : Math.sin(k * .45) * .22, gy = aim.on ? aim.y : Math.cos(k * .35) * .14;
     tilt.x += (gx - tilt.x) * .06; tilt.y += (gy - tilt.y) * .06;
+    person.style.setProperty("--px", (tilt.x * -18).toFixed(1) + "px");
     rig.style.transform = "rotateY(" + (-12 + tilt.x * 24).toFixed(2) + "deg) rotateX(" + (6 - tilt.y * 16).toFixed(2) + "deg)";
   }
 
