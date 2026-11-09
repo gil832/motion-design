@@ -298,17 +298,46 @@ main, footer { overflow-x: clip; }
 @media (max-width: 900px) { .ways { grid-template-columns: 1fr; } }
 
 /* ---------- how it works ---------- */
-.steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
-.nc { position: relative; overflow: hidden; border-radius: 30px; padding: 30px; min-height: 360px; display: flex; flex-direction: column; border: 1px solid rgba(143,243,232,.2); background: linear-gradient(170deg, rgba(10,44,50,.9), rgba(4,16,20,.96) 60%); transition: transform .5s var(--ease), border-color .4s, box-shadow .5s; }
-.nc:hover { transform: translateY(-6px); border-color: rgba(143,243,232,.4); box-shadow: 0 30px 60px -34px rgba(0,216,195,.7); }
-.nc .tag { font-size: 12px; letter-spacing: .18em; text-transform: uppercase; color: var(--iris); }
-.nc .bign { margin-top: auto; font-weight: 600; font-size: clamp(70px, 7vw, 116px); letter-spacing: -0.06em; line-height: .9; }
-.nc:nth-child(1) .bign { color: transparent; -webkit-text-stroke: 1.5px rgba(143,243,232,.6); }
-.nc:nth-child(2) .bign { color: var(--lime); }
-.nc:nth-child(3) .bign { background: linear-gradient(90deg, #a8fff4, #00d8c3 48%, #d9ff00); -webkit-background-clip: text; background-clip: text; color: transparent; padding-bottom: .06em; }
-.nc h3 { margin: 18px 0 8px; font-size: 24px; letter-spacing: -.03em; font-weight: 600; }
-.nc p { margin: 0; color: var(--mute); font-size: 16px; }
-@media (max-width: 860px) { .steps { grid-template-columns: 1fr; } .nc { min-height: 0; } .nc .bign { margin-top: 24px; } }
+
+/* how it works: two steps */
+.hw { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); gap: 18px; align-items: stretch; }
+.hs { padding: clamp(24px, 3vw, 38px); display: flex; flex-direction: column; }
+.hs-t { display: flex; gap: 18px; align-items: flex-start; }
+.hn { flex: none; width: 52px; height: 52px; border-radius: 16px; display: grid; place-items: center; font-size: 26px; font-weight: 700; color: #0a0a0a; background: var(--lime); box-shadow: 0 10px 30px -10px rgba(217,255,0,.7); }
+.hs h3 { margin: 2px 0 6px; font-size: clamp(24px, 2.4vw, 32px); letter-spacing: -.04em; line-height: 1.05; font-weight: 600; }
+.hs p { margin: 0; color: var(--mute); font-size: 16px; max-width: 40ch; }
+.hs p b { color: #fff; font-weight: 600; }
+.lad-v { margin-top: 30px; font-size: 16px; color: var(--mute); }
+.lad-v span { font-size: clamp(34px, 3.4vw, 46px); font-weight: 600; letter-spacing: -.05em; color: #fff; margin-right: 4px; }
+.lad-v i { font-style: normal; margin: 0 6px; color: var(--dim); }
+.lad-v b { color: var(--lime); font-size: 20px; font-weight: 600; }
+.lad { margin-top: 16px; flex: 1; min-height: 190px; display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; align-items: end; }
+.lb { appearance: none; border: 0; padding: 0; background: none; color: var(--mute); cursor: pointer; display: flex; flex-direction: column; justify-content: flex-end; height: 100%; font: inherit; }
+.lb i { display: block; height: var(--h); border-radius: 10px 10px 4px 4px; background: linear-gradient(180deg, rgba(143,243,232,.28), rgba(143,243,232,.06)); border: 1px solid rgba(143,243,232,.22); transition: background .35s, border-color .35s, box-shadow .35s, transform .45s var(--pop); transform-origin: bottom; }
+.lb b { display: block; margin-top: 8px; font-size: 13px; font-weight: 600; color: #fff; }
+.lb small { display: block; font-size: 12px; }
+.lb.on i { background: linear-gradient(180deg, var(--lime), #6d8a00); border-color: var(--lime); box-shadow: 0 0 30px -4px rgba(217,255,0,.6); transform: scaleY(1.04); }
+.lb.on small { color: var(--lime); }
+.hw-ar { align-self: center; width: 46px; height: 46px; border-radius: 50%; display: grid; place-items: center; color: var(--lime); border: 1px solid rgba(217,255,0,.4); background: rgba(217,255,0,.06); }
+.hw-ar svg { width: 20px; height: 20px; }
+.r2 { margin-top: 30px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.r2 > div { padding: 14px 16px; border-radius: 16px; border: 1px solid rgba(143,243,232,.18); background: rgba(255,255,255,.03); }
+.r2 span { display: block; font-size: 13px; color: var(--mute); }
+.r2 b { display: block; margin-top: 2px; font-size: 30px; font-weight: 600; letter-spacing: -.04em; }
+.split { margin-top: auto; padding-top: 26px; }
+.sp-h { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; font-size: 14px; color: var(--mute); margin-bottom: 10px; }
+.sp-h b { color: #fff; }
+.sp-m { color: var(--lime); font-weight: 600; }
+.sp-bar { display: flex; height: 64px; border-radius: 16px; overflow: hidden; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.08); }
+.sp-bar i, .sp-bar s { position: relative; display: flex; align-items: center; text-decoration: none; transition: flex-basis 1s var(--ease); min-width: 0; }
+.sp-bar i { flex: 0 1 0%; background: linear-gradient(90deg, #a9c900, var(--lime)); color: #0a0a0a; }
+.sp-bar s { flex: 1 0 auto; min-width: 58px; justify-content: center; color: var(--mute); }
+.sp-bar em { font-style: normal; font-weight: 700; font-size: 17px; padding: 0 16px; white-space: nowrap; }
+.sp-bar s em { font-weight: 500; font-size: 14px; padding: 0 8px; }
+.hw-foot { list-style: none; margin: 26px 0 0; padding: 0; display: flex; justify-content: center; flex-wrap: wrap; gap: 10px 26px; font-size: 15px; color: var(--mute); }
+.hw-foot li { display: inline-flex; align-items: center; gap: 9px; }
+.hw-foot li::before { content: ""; width: 13px; height: 7px; border-left: 2px solid var(--lime); border-bottom: 2px solid var(--lime); transform: rotate(-45deg) translateY(-2px); }
+@media (max-width: 900px) { .hw { grid-template-columns: 1fr; } .hw-ar { justify-self: center; transform: rotate(90deg); } .lad { min-height: 160px; gap: 6px; } .lb b { font-size: 12px; } .lb small { font-size: 11px; } }
 
 /* rules table */
 .rules { max-width: 1000px; margin: 0 auto; overflow: hidden; }
@@ -654,8 +683,24 @@ main, footer { overflow-x: clip; }
   <!-- how it works -->
   <section class="sec" id="how" style="padding-top:0">
     <div class="wrap">
-      <div class="sh rv"><span class="eyebrow">How it works</span><h2>Three moves. <span class="grad">No deposit in any of them.</span></h2></div>
-      <div class="steps" id="steps"></div>
+      <div class="sh rv"><span class="eyebrow">How it works</span><h2>Two steps. <span class="grad">That's all.</span></h2></div>
+      <div class="hw">
+        <article class="hs glass rv" data-spot="460,.14">
+          <div class="hs-t"><span class="hn">1</span><div><h3>Pick an account size</h3><p>From <b>$5,000</b> to <b>$200,000</b> in simulated capital. Pay one fee, once.</p></div></div>
+          <div class="lad-v"><span class="tnum" id="ladA">$50K</span> account <i>·</i> <b class="tnum" id="ladF">$350</b> fee</div>
+          <div class="lad" id="lad" role="group" aria-label="Account sizes and fees"></div>
+        </article>
+        <div class="hw-ar" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+        <article class="hs glass rv" data-spot="460,.14">
+          <div class="hs-t"><span class="hn">2</span><div><h3>Trade, then share the profit</h3><p>Stay inside two rules. In profit? Request a Reward and keep <b>80%</b>, or <b>95%</b> with the add-on.</p></div></div>
+          <div class="r2"><div><span>Daily loss limit</span><b>4%</b></div><div><span>Max loss (trailing)</span><b>8%</b></div></div>
+          <div class="split" id="split">
+            <div class="sp-h"><span>Example: <b>$1,000</b> profit</span><span class="sp-m" id="spMode">80% Reward Share</span></div>
+            <div class="sp-bar"><i id="spYou"><em class="tnum" id="spYouV">You $800</em></i><s id="spUs"><em class="tnum" id="spUsV">$200</em></s></div>
+          </div>
+        </article>
+      </div>
+      <ul class="hw-foot rv"><li>No profit target</li><li>No minimum days</li><li>Rewards processed within 48h</li><li>Minimum Reward $100</li></ul>
     </div>
   </section>
 
@@ -784,11 +829,20 @@ main, footer { overflow-x: clip; }
 
   var nav = $("#nav"), mbar = $("#mbar");
 
-  /* how it works */
-  var STEPS = [["Choose", "1", "Pick a size, pay once", "From $5K to $200K simulated. One fee. That's the most you can lose."],
-               ["Trade", "0%", "No target to hit", "Trade your way from day one. Stay inside 4% daily and 8% trailing."],
-               ["Get paid", "48h", "Request a Reward", "In profit? Request it. Minimum $100. 80% Reward Share, 95% with the add-on."]];
-  $("#steps").innerHTML = STEPS.map(function (t) { return '<article class="nc rv" data-spot="420,.16"><span class="tag">' + t[0] + '</span><span class="bign">' + t[1] + "</span><h3>" + t[2] + "</h3><p>" + t[3] + "</p></article>"; }).join("");
+  /* how it works: step 1 cycles through the sizes, step 2 splits an example profit */
+  var LAD = [[5000, 70, 22], [10000, 120, 32], [25000, 200, 46], [50000, 350, 62], [100000, 600, 80], [200000, 1100, 100]], ladI = 3, ladUser = false;
+  $("#lad").innerHTML = LAD.map(function (l, i) { return '<button type="button" class="lb' + (i === ladI ? " on" : "") + '" style="--h:' + l[2] + '%" aria-label="$' + (l[0] / 1000) + 'K account, $' + l[1] + ' fee"><i></i><b>$' + (l[0] / 1000) + "K</b><small>$" + l[1].toLocaleString("en-US") + "</small></button>"; }).join("");
+  var lbs = $$("#lad .lb");
+  function ladAt(i) { ladI = i; lbs.forEach(function (b, j) { b.classList.toggle("on", j === i); }); $("#ladA").textContent = "$" + (LAD[i][0] / 1000) + "K"; $("#ladF").textContent = "$" + LAD[i][1].toLocaleString("en-US"); }
+  lbs.forEach(function (b, i) { b.addEventListener("click", function () { ladUser = true; ladAt(i); }); b.addEventListener("mouseenter", function () { ladUser = true; ladAt(i); }); });
+  var hwVis = false, sp95 = false;
+  function split(p) { $("#spYou").style.flexBasis = p + "%"; $("#spYouV").textContent = "You $" + (p * 10).toLocaleString("en-US"); $("#spUsV").textContent = "$" + ((100 - p) * 10); $("#spMode").textContent = p === 95 ? "95% with the add-on" : "80% Reward Share"; }
+  new IntersectionObserver(function (es) { hwVis = es[0].isIntersecting; if (hwVis) split(sp95 ? 95 : 80); }, { threshold: .3 }).observe($(".hw"));
+  if (reduce) split(80);
+  else {
+    setInterval(function () { if (hwVis && !ladUser) ladAt((ladI + 1) % LAD.length); }, 1500);
+    setInterval(function () { if (hwVis) { sp95 = !sp95; split(sp95 ? 95 : 80); } }, 3200);
+  }
 
   /* ---------- hero: the drop. Two balances fall together. One stops at the cap. ---------- */
   var NS = "http://www.w3.org/2000/svg", svg = $("#dropSvg");
