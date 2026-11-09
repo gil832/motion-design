@@ -233,6 +233,42 @@ main, footer { overflow-x: clip; }
   .d-say { margin-top: 12px; } .d-say small { display: none; }
 }
 
+/* ---------- broker vs FundingRock ---------- */
+.cmp-ctl { display: flex; justify-content: center; align-items: center; gap: 14px; flex-wrap: wrap; margin-bottom: 26px; }
+.cmp-ctl > span { font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--dim); }
+.cmp { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); gap: 18px; align-items: stretch; }
+.cc { position: relative; border-radius: 28px; padding: clamp(24px, 3vw, 38px); display: flex; flex-direction: column; overflow: hidden; }
+.cc.bad { background: linear-gradient(165deg, rgba(70,8,24,.75), rgba(14,6,10,.95) 60%); border: 1px solid rgba(255,33,86,.35); }
+.cc.good { background: linear-gradient(165deg, rgba(10,44,50,.95), rgba(5,18,22,.96) 60%); border: 1px solid rgba(217,255,0,.45); box-shadow: 0 30px 80px -40px rgba(217,255,0,.35); }
+.cc header b { display: block; font-size: 22px; font-weight: 600; letter-spacing: -.03em; }
+.cc header span { font-size: 14px; color: var(--mute); }
+.cc-k { margin-top: 26px; font-size: 13px; letter-spacing: .14em; text-transform: uppercase; color: var(--mute); }
+.cc-n { font-size: clamp(54px, 6.4vw, 92px); font-weight: 600; letter-spacing: -.06em; line-height: .95; margin-top: 6px; }
+.bad .cc-n { color: var(--red); }
+.good .cc-n { color: var(--lime); }
+.cc-bar { position: relative; margin-top: 22px; height: 120px; border-radius: 18px; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08); overflow: hidden; display: flex; align-items: stretch; }
+.cc-bar i { display: flex; align-items: center; width: 0; border-radius: 16px; transition: width 1.3s var(--ease); }
+.bad .cc-bar i { background: repeating-linear-gradient(90deg, #ff2156 0 6px, #e0164a 6px 12px); box-shadow: 0 0 40px rgba(255,33,86,.45); }
+.bad .cc-bar em { font-style: normal; font-weight: 700; font-size: 15px; color: #fff; padding: 0 18px; white-space: nowrap; opacity: 0; transition: opacity .4s .9s; }
+.cmp.in .bad .cc-bar em { opacity: 1; }
+.good .cc-bar i { background: var(--lime); box-shadow: 0 0 24px rgba(217,255,0,.8); min-width: 0; }
+.cc-tag { position: absolute; left: 22px; top: 50%; transform: translateY(-50%); font-weight: 700; font-size: 15px; color: var(--lime); white-space: nowrap; }
+.cc-r { margin: 22px 0 0; display: grid; gap: 1px; border-radius: 16px; overflow: hidden; border: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.08); }
+.cc-r > div { display: grid; grid-template-columns: 9.5em 1fr; gap: 12px; padding: 13px 16px; background: rgba(3,9,12,.72); }
+.cc-r dt { font-size: 14px; color: var(--mute); }
+.cc-r dd { margin: 0; font-size: 15px; font-weight: 600; }
+.cc-r dd.r, .cmp-out .r { color: #ff6b8a; }
+.cc-r dd.g, .cmp-out .g { color: var(--lime); }
+.cc-vs { align-self: center; width: 58px; height: 58px; border-radius: 50%; display: grid; place-items: center; font-weight: 700; font-size: 15px; letter-spacing: .06em; background: radial-gradient(circle at 30% 25%, #14424a, #04161b 70%); border: 1px solid rgba(143,243,232,.35); box-shadow: 0 0 30px rgba(0,216,195,.25); }
+.cmp-out { margin-top: 18px; display: grid; grid-template-columns: auto 1fr; gap: clamp(20px, 4vw, 56px); align-items: center; padding: clamp(22px, 3vw, 34px) clamp(24px, 3.4vw, 44px); border-radius: 28px; background: linear-gradient(90deg, rgba(217,255,0,.12), rgba(0,216,195,.06)); border: 1px solid rgba(217,255,0,.3); }
+.co-x b { display: block; font-size: clamp(56px, 7vw, 100px); font-weight: 600; letter-spacing: -.06em; line-height: .9; color: var(--lime); }
+.co-x span { display: block; margin-top: 6px; font-size: 15px; color: var(--mute); }
+.co-k { display: block; font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--dim); margin-bottom: 8px; }
+.co-ex p { margin: 4px 0 0; font-size: clamp(17px, 1.7vw, 21px); color: #fff; }
+.co-ex p b { font-weight: 600; }
+.cmp-note { margin: 14px 0 0; text-align: center; font-size: 13px; color: var(--dim); }
+@media (max-width: 900px) { .cmp { grid-template-columns: 1fr; } .cc-vs { justify-self: center; margin: -8px 0; position: relative; z-index: 2; } .cmp-out { grid-template-columns: 1fr; } .cc-r > div { grid-template-columns: 1fr; gap: 2px; } }
+
 /* ---------- the odds ---------- */
 .odds { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
 .od { padding: clamp(26px, 3.4vw, 44px); display: grid; grid-template-columns: auto 1fr; gap: 28px; align-items: center; overflow: hidden; }
@@ -520,7 +556,7 @@ main, footer { overflow-x: clip; }
   <div class="wrap">
     <a class="nav-l" href="https://fundingrock.com/" target="_blank" rel="noopener" aria-label="FundingRock home"><img src="assets/logo.svg" alt="FundingRock" width="182" height="24"><span class="sep"></span><b>Simulated trading</b></a>
     <nav class="nav-r" aria-label="Page">
-      <a class="l" href="#drop">The cap</a>
+      <a class="l" href="#drop">Compare</a>
       <a class="l" href="#ways">Pricing</a>
       <a class="l" href="#how">How it works</a>
       <a class="l" href="#rewards">Rewards</a>
@@ -541,7 +577,7 @@ main, footer { overflow-x: clip; }
           <p class="lede">Trade with <b>up to $200K in simulated capital</b>. One fee <b>from $70</b>, no target, and no risk to your personal savings in the market.</p>
           <div class="cta">
             <a class="buy lg" href="#ways" id="heroCta">Get my $50K Instant for $350 <span class="ar" aria-hidden="true">→</span></a>
-            <a class="ghost" href="#drop">See what a bad week costs <span class="ar" aria-hidden="true">→</span></a>
+            <a class="ghost" href="#drop">Compare with a broker <span class="ar" aria-hidden="true">→</span></a>
           </div>
           <p class="under" id="heroUnder">Simulated trading. Only your fee is at risk. 14-day refund if you haven't placed a trade.</p>
           <ul class="ticks"><li>No deposits</li><li>Up to $200K simulated</li><li>Rewards processed within 48h</li></ul>
@@ -574,42 +610,48 @@ main, footer { overflow-x: clip; }
   </section>
 
   <!-- 2. pain point comparison: scroll drives a bad stretch, the cap line holds -->
-  <section id="drop" class="sec" style="padding-bottom:0">
-    <div class="dpin" id="dpin">
-      <div class="dstick">
-        <div class="wrap">
-          <div class="d-top">
-            <div>
-              <div class="acts" aria-hidden="true"><span class="act on" id="actA">1 · When it goes wrong</span><span class="act" id="actB">2 · When it goes right</span></div>
-              <h2>A <span class="pc tnum" id="dPc">0%</span> <span id="dWord">bad</span> stretch.<br><span class="grad" id="dLine2">Two very different bills.</span></h2>
-            </div>
-            <div class="d-ctl">
-              <span>Your own broker account</span>
-              <div class="chips" role="group" aria-label="Your account size" id="bkSizes"></div>
-            </div>
-          </div>
-          <div class="meter" id="meter" aria-hidden="true"><i id="dMeter"></i><em style="left:20%">8%</em><em style="left:50%">20%</em><em style="left:100%">40%</em></div>
-          <div class="tanks" id="tanks">
-            <div class="tk3 bk">
-              <div class="nm"><b>Broker's account</b><span id="bkName">$5,000 of your own savings</span></div>
-              <div class="v tnum" id="bkV">−$0</div>
-              <div class="tube"><div class="fill" id="bkF"></div><span class="nocap">No cap</span></div>
-            </div>
-            <div class="tk3 fr">
-              <div class="nm"><b>FundingRock Instant account</b><span id="frSub">$50K simulated · $350 one-time fee</span></div>
-              <div class="v tnum" id="frV">−$350</div>
-              <div class="tube"><div class="fill" id="frF"></div><span class="lock" id="frL"><svg viewBox="0 0 12 12" fill="currentColor" aria-hidden="true"><path d="M3.5 5V3.6a2.5 2.5 0 015 0V5h.6c.5 0 .9.4.9.9v4.2c0 .5-.4.9-.9.9H2.9a.9.9 0 01-.9-.9V5.9c0-.5.4-.9.9-.9zm1.2 0h2.6V3.6a1.3 1.3 0 00-2.6 0z"/></svg><span id="frLt">Capped</span></span></div>
-            </div>
-            <div class="capline" id="capLine"><span>FundingRock cap · $350</span></div>
-            <div class="vs" aria-hidden="true">VS</div>
-          </div>
-          <div class="d-say">
-            <p id="dSay">Scroll to let the market drop. Watch which account has a floor.</p>
-            <span class="scrollcue" id="cue"><i></i>Scroll</span>
-            <small>Simulated trading. Only your fee is at risk. Example for illustration.</small>
-          </div>
+  <section id="drop" class="sec">
+    <div class="wrap">
+      <div class="sh rv">
+        <span class="eyebrow">Broker vs FundingRock</span>
+        <h2>Trade <span class="tnum" id="cA">$50K</span>. <span class="grad">Without having <span class="tnum" id="cA2">$50K</span>.</span></h2>
+        <p>A broker account costs you the whole balance, and all of it is at risk. With FundingRock you risk one small fee, and you can still earn from the profit.</p>
+      </div>
+      <div class="cmp-ctl rv"><span>Account size</span><div class="chips" role="group" aria-label="Account size" id="cSizes"></div></div>
+      <div class="cmp rv" id="cmp">
+        <article class="cc bad">
+          <header><b>Broker's account</b><span>Your own money</span></header>
+          <div class="cc-k">You put in</div>
+          <div class="cc-n tnum" id="cBk">$50,000</div>
+          <div class="cc-bar"><i id="cBkBar"><em>Your whole budget at risk</em></i></div>
+          <dl class="cc-r">
+            <div><dt>At risk</dt><dd class="r tnum" id="cBkRisk">$50,000</dd></div>
+            <div><dt>If it goes wrong</dt><dd class="r">Your savings are gone</dd></div>
+            <div><dt>If it goes right</dt><dd>You keep 100%, of your own money</dd></div>
+          </dl>
+        </article>
+        <div class="cc-vs" aria-hidden="true">VS</div>
+        <article class="cc good">
+          <header><b>FundingRock Instant</b><span>Simulated account</span></header>
+          <div class="cc-k">You pay</div>
+          <div class="cc-n tnum" id="cFr">$350</div>
+          <div class="cc-bar"><i id="cFrBar"></i><span class="cc-tag" id="cFrTag">Only $350 at risk</span></div>
+          <dl class="cc-r">
+            <div><dt>At risk</dt><dd class="g tnum" id="cFrRisk">$350, one time</dd></div>
+            <div><dt>If it goes wrong</dt><dd>The account ends. You lose the fee, nothing more</dd></div>
+            <div><dt>If it goes right</dt><dd class="g">80% Reward Share, 95% with the add-on</dd></div>
+          </dl>
+        </article>
+      </div>
+      <div class="cmp-out rv">
+        <div class="co-x"><b class="tnum" id="cX">143×</b><span>less money on the line</span></div>
+        <div class="co-ex">
+          <span class="co-k">Example: a +10% month</span>
+          <p><span class="r">Broker:</span> <b class="tnum" id="cExBk">+$5,000</b>, after putting in <b class="tnum" id="cExBkIn">$50,000</b> of your own money.</p>
+          <p><span class="g">FundingRock:</span> <b class="g tnum" id="cExFr">$4,000 Reward</b>, after paying a <b class="tnum" id="cExFrIn">$350</b> fee.</p>
         </div>
       </div>
+      <p class="cmp-note">Simulated trading. Rewards are not guaranteed. Example for illustration.</p>
     </div>
   </section>
 
@@ -932,76 +974,24 @@ main, footer { overflow-x: clip; }
   }
   spotify($$("[data-spot]"));
 
-  /* ---------- the pain comparison: scroll drives the drop ---------- */
-  var BK = [2000, 5000, 10000, 25000], bk = 5000, FEE = 350, DMAX = .4;
-  $("#bkSizes").innerHTML = BK.map(function (v) { return '<button type="button" class="chip" aria-pressed="' + (v === bk) + '" data-v="' + v + '">$' + (v / 1000) + "K</button>"; }).join("");
-  var tanks = $("#tanks"), dpin = $("#dpin"), broke = false, lastD = -1;
-  function scaleMax() { return Math.max(bk * DMAX, 600); }
-  function tubeH() { return $(".tk3.bk .tube").clientHeight; }
-  function placeCap() {
-    var tube = $(".tk3.fr .tube"), tr = tube.getBoundingClientRect(), r = tanks.getBoundingClientRect(), m = scaleMax();
-    var y = tr.bottom - r.top - tr.height * (FEE / m);
-    $("#capLine").style.top = y.toFixed(1) + "px";
-    $("#frF").style.height = (FEE / m * 100).toFixed(2) + "%";
-    var frTop = tr.height * (1 - FEE / m); $("#frL").style.top = Math.max(18, frTop - 22) + "px";
+  /* ---------- broker vs FundingRock: same account size, very different money on the line ---------- */
+  var CS = [[5000, 70], [10000, 120], [25000, 200], [50000, 350], [100000, 600], [200000, 1100]], cI = 3, cmp = $("#cmp"), cIn = false, cShown = [50000, 350];
+  $("#cSizes").innerHTML = CS.map(function (c, i) { return '<button type="button" class="chip" aria-pressed="' + (i === cI) + '">$' + (c[0] / 1000) + "K</button>"; }).join("");
+  function cRender(anim) {
+    var a = CS[cI][0], f = CS[cI][1], K = "$" + (a / 1000) + "K";
+    $("#cA").textContent = K; $("#cA2").textContent = K;
+    var from = cShown; cShown = [a, f];
+    tween(anim ? from[0] : a, a, 700, function (v) { $("#cBk").textContent = fmt(v); });
+    tween(anim ? from[1] : f, f, 700, function (v) { $("#cFr").textContent = fmt(v); });
+    $("#cBkRisk").textContent = fmt(a); $("#cFrRisk").textContent = fmt(f) + ", one time"; $("#cFrTag").textContent = "Only " + fmt(f) + " at risk";
+    $("#cX").textContent = Math.round(a / f) + "×";
+    $("#cExBk").textContent = "+" + fmt(a * .1); $("#cExBkIn").textContent = fmt(a);
+    $("#cExFr").textContent = fmt(a * .1 * .8) + " Reward"; $("#cExFrIn").textContent = fmt(f);
+    if (cIn) { $("#cBkBar").style.width = "100%"; $("#cFrBar").style.width = Math.max(f / a * 100, 1.2).toFixed(2) + "%"; }
   }
-  var GMAX = .10, ACCT = 50000, SHARE = .8, mode = "";
-  function setMode(m) {
-    if (m === mode) return; mode = m;
-    var good = m === "good";
-    tanks.classList.toggle("good", good); $("#meter").classList.toggle("good", good); $("#dPc").classList.toggle("g", good);
-    $("#actA").classList.toggle("on", !good); $("#actB").classList.toggle("on", good);
-    $("#dWord").textContent = good ? "good" : "bad";
-    $("#dLine2").textContent = good ? "Two very different paydays." : "Two very different bills.";
-    $("#frSub").textContent = good ? "$50K simulated · 80% Reward Share" : "$50K simulated · $350 one-time fee";
-    $("#frLt").textContent = good ? "Your Reward" : "Capped";
-    if (good) { broke = false; tanks.classList.remove("broke"); } else { $("#frV").textContent = "−$350"; placeCap(); }
-    lastD = -1;
-  }
-  function goodAt(g) {
-    setMode("good");
-    g = Math.round(g * 1000) / 1000;
-    var gain = bk * g, profit = ACCT * g, rew = profit * SHARE, m = Math.max(bk * GMAX, ACCT * GMAX * SHARE);
-    $("#bkF").style.height = (gain / m * 100).toFixed(2) + "%";
-    $("#frF").style.height = (rew / m * 100).toFixed(2) + "%";
-    var th = $(".tk3.fr .tube").clientHeight; $("#frL").style.top = Math.max(18, th * (1 - rew / m) - 22) + "px";
-    $("#bkV").textContent = "+" + fmt(gain); $("#frV").textContent = "+" + fmt(rew);
-    $("#dPc").textContent = "+" + (g * 100).toFixed(g < .1 ? 1 : 0).replace(/\.0$/, "") + "%";
-    $("#dMeter").style.width = (g / GMAX * 100).toFixed(2) + "%";
-    var say;
-    if (g < .003) say = "Now the other side. Scroll to let the market climb.";
-    else if (g < .085) say = "+" + (g * 100).toFixed(1).replace(/\.0$/, "") + "% on your own " + fmt(bk) + ": <b>+" + fmt(gain) + "</b>. The same trades on a $50K Instant account: a <b>" + fmt(rew) + " Reward</b>.";
-    else say = "Same skill, bigger account. <b>" + fmt(rew) + "</b> Reward on $50K, against <b>+" + fmt(gain) + "</b> on your own " + fmt(bk) + ". Your fee: $350, paid once.";
-    if (say !== lastD) { lastD = say; $("#dSay").innerHTML = say; }
-    $("#cue").style.opacity = 0;
-  }
-  function dropAt(d) {
-    setMode("bad");
-    var loss = bk * d, m = scaleMax();
-    $("#bkF").style.height = (loss / m * 100).toFixed(2) + "%";
-    $("#bkV").textContent = "−" + fmt(loss);
-    $("#dPc").textContent = Math.round(d * 100) + "%";
-    $("#dMeter").style.width = (d / DMAX * 100).toFixed(2) + "%";
-    var nb = loss > FEE;
-    if (nb !== broke) { broke = nb; tanks.classList.toggle("broke", nb); }
-    var cross = Math.ceil(FEE / bk * 100), say;
-    if (d < .005) say = "Scroll to let the market drop. Watch which account has a floor.";
-    else if (!nb) say = "A " + Math.round(d * 100) + "% drop on your own " + fmt(bk) + ": <b class=\"r\">−" + fmt(loss) + "</b>. Still under the fee. The market doesn't stop here.";
-    else if (d < .2) say = "Past " + cross + "%, the broker's account costs you more than the fee. <b class=\"r\">And it has no floor.</b>";
-    else say = "<b class=\"r\">−" + fmt(loss) + "</b> out of your savings. On your FundingRock Instant account, the most you lose is <b>$350</b>.";
-    if (say !== lastD) { lastD = say; $("#dSay").innerHTML = say; }
-    $("#cue").style.opacity = d > .02 ? 0 : 1;
-  }
-  $$("#bkSizes .chip").forEach(function (b) {
-    b.addEventListener("click", function () {
-      bk = +b.getAttribute("data-v");
-      $$("#bkSizes .chip").forEach(function (c) { c.setAttribute("aria-pressed", c === b); });
-      $("#bkName").textContent = fmt(bk) + " of your own savings";
-      placeCap(); onScroll();
-    });
-  });
-  addEventListener("resize", placeCap);
-  function dropProgress() { var r = dpin.getBoundingClientRect(), span = r.height - (innerHeight - 66); return cl((-r.top + 40) / (span * .85)); }
+  $$("#cSizes .chip").forEach(function (b, i) { b.addEventListener("click", function () { cI = i; $$("#cSizes .chip").forEach(function (c, j) { c.setAttribute("aria-pressed", j === i); }); cRender(true); }); });
+  new IntersectionObserver(function (es) { if (es[0].isIntersecting && !cIn) { cIn = true; cmp.classList.add("in"); cRender(false); } }, { threshold: .35 }).observe(cmp);
+  cRender(false);
 
   /* ---------- the odds ---------- */
   var dots = $("#dots"); dots.innerHTML = new Array(101).join("<i></i>");
@@ -1108,7 +1098,6 @@ main, footer { overflow-x: clip; }
   function onScroll() {
     nav.classList.toggle("on", scrollY > 10);
     mbar.classList.toggle("on", scrollY > innerHeight * .9 && $("#end").getBoundingClientRect().top > innerHeight * .6);
-    if (reduce) dropAt(.3); else { var kq = dropProgress(); if (kq < .5) dropAt(Math.min(1, kq / .46) * DMAX); else goodAt(Math.min(1, (kq - .5) / .46) * GMAX); }
     if (!reduce) { var pr = talkPh.getBoundingClientRect(), c = (pr.top + pr.height / 2 - innerHeight / 2) / innerHeight; talkPh.style.setProperty("--py", (c * 40).toFixed(1) + "px"); }
     ticking = false;
   }
@@ -1120,8 +1109,7 @@ main, footer { overflow-x: clip; }
     $$(".rv").forEach(function (e) { if (e.getBoundingClientRect().top > innerHeight) { e.classList.add("pre"); io.observe(e); } });
   }
 
-  placeCap(); onScroll();
-  if (document.fonts) document.fonts.ready.then(placeCap);
+  onScroll();
   if (!reduce) (function loop(now) { if (sceneVis) heroFrame(now); requestAnimationFrame(loop); })(performance.now());
 })();
 </script>
