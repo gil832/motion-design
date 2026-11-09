@@ -177,26 +177,28 @@ main, footer { overflow-x: clip; }
 .meter { position: relative; margin-top: 22px; height: 6px; border-radius: 99px; background: rgba(255,255,255,.07); }
 .meter i { position: absolute; left: 0; top: 0; bottom: 0; width: 0; border-radius: inherit; background: linear-gradient(90deg, #ff8aa3, var(--red)); box-shadow: 0 0 18px rgba(255,33,86,.6); }
 .meter em { position: absolute; top: 14px; font-style: normal; font-size: 12px; color: var(--dim); transform: translateX(-50%); }
-.tanks { position: relative; margin-top: 44px; display: grid; grid-template-columns: 1.15fr 1fr 1fr; gap: clamp(12px, 2vw, 24px); height: clamp(250px, 44vh, 440px); }
+.tanks { position: relative; margin-top: 44px; display: grid; grid-template-columns: 1fr 1fr; gap: clamp(48px, 7vw, 110px); height: clamp(250px, 44vh, 440px); }
 .tk3 { position: relative; display: flex; flex-direction: column; min-width: 0; }
 .tk3 .nm { font-size: 14px; color: var(--mute); line-height: 1.3; min-height: 2.6em; }
-.tk3 .nm b { display: block; color: #fff; font-weight: 600; font-size: 16px; }
-.tk3 .v { font-size: clamp(30px, 3.6vw, 52px); font-weight: 600; letter-spacing: -.05em; line-height: 1; margin: 8px 0 12px; }
+.tk3 .nm b { display: block; color: #fff; font-weight: 600; font-size: 19px; letter-spacing: -.02em; }
+.vs { position: absolute; left: 50%; top: 52%; transform: translate(-50%, -50%); z-index: 5; width: 58px; height: 58px; border-radius: 50%; display: grid; place-items: center; font-weight: 700; font-size: 15px; letter-spacing: .06em; color: #fff; background: radial-gradient(circle at 30% 25%, #14424a, #04161b 70%); border: 1px solid rgba(143,243,232,.35); box-shadow: 0 0 0 8px var(--bg), 0 20px 40px -12px rgba(0,0,0,.9), 0 0 30px rgba(0,216,195,.25); }
+.tk3.fr .tube { border-color: rgba(217,255,0,.28); }
+.tk3 .v { font-size: clamp(34px, 4.6vw, 68px); font-weight: 600; letter-spacing: -.05em; line-height: 1; margin: 8px 0 12px; }
 .tk3.bk .v { color: var(--red); }
-.tk3.fr .v, .tk3.pp .v { color: var(--lime); }
+.tk3.fr .v { color: var(--lime); }
 .tube { position: relative; flex: 1; border-radius: 22px; overflow: hidden; background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.015)); border: 1px solid rgba(143,243,232,.16); box-shadow: inset 0 1px 0 rgba(255,255,255,.07), inset 0 -30px 60px -30px rgba(0,0,0,.6); }
 .tube::after { content: ""; position: absolute; left: 10%; top: 0; bottom: 0; width: 12%; background: linear-gradient(90deg, rgba(255,255,255,.07), transparent); pointer-events: none; }
 .fill { position: absolute; left: 0; right: 0; bottom: 0; height: 0; }
 .fill::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 3px; background: linear-gradient(90deg, transparent, rgba(255,255,255,.9) 30%, transparent 60%) 0 0 / 200% 100%; animation: surf 2.4s linear infinite; }
 @keyframes surf { from { background-position: 100% 0; } to { background-position: -100% 0; } }
 .bk .fill { background: linear-gradient(180deg, #ff4d74, #7a0f2a); box-shadow: 0 -10px 40px rgba(255,33,86,.45); }
-.fr .fill, .pp .fill { background: linear-gradient(180deg, var(--lime), #5e7a00); box-shadow: 0 -8px 30px rgba(217,255,0,.35); }
-.fr .fill::before, .pp .fill::before { display: none; }
+.fr .fill { background: linear-gradient(180deg, var(--lime), #5e7a00); box-shadow: 0 -8px 30px rgba(217,255,0,.35); }
+.fr .fill::before { display: none; }
 .lock { position: absolute; left: 50%; transform: translate(-50%, -50%); z-index: 2; display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 999px; background: #0a0a0a; border: 1px solid var(--lime); color: var(--lime); font-size: 12px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; white-space: nowrap; }
 .lock svg { width: 12px; height: 12px; }
 /* the cap line: a lime plane across all three tubes at the Instant fee */
 .capline { position: absolute; left: -10px; right: -10px; height: 0; border-top: 2px dashed var(--lime); z-index: 3; pointer-events: none; filter: drop-shadow(0 0 8px rgba(217,255,0,.8)); transition: border-color .3s; }
-.capline span { position: absolute; right: 0; top: -30px; font-size: 12px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--lime); background: var(--bg); padding: 2px 8px; border-radius: 6px; }
+.capline span { position: absolute; left: 10px; top: -30px; font-size: 12px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--lime); background: var(--bg); padding: 2px 8px; border-radius: 6px; }
 .tanks.broke .capline { border-top-color: var(--red); filter: drop-shadow(0 0 10px rgba(255,33,86,.9)); }
 .tanks.broke .capline span { color: var(--red); }
 .tanks.broke .bk .tube { animation: shake .5s; border-color: rgba(255,33,86,.5); }
@@ -215,9 +217,10 @@ main, footer { overflow-x: clip; }
   .dpin { height: 260vh; }
   .d-ctl { align-items: flex-start; }
   .d-top { gap: 14px; }
-  .tanks { margin-top: 34px; gap: 10px; height: clamp(200px, 36svh, 320px); }
-  .tk3 .nm { font-size: 12px; min-height: 3.9em; } .tk3 .nm b { font-size: 14px; }
-  .tk3 .v { font-size: 26px; }
+  .tanks { margin-top: 34px; gap: 40px; height: clamp(200px, 36svh, 320px); }
+  .tk3 .nm { font-size: 12px; min-height: 5.4em; } .tk3 .nm b { font-size: 14px; }
+  .vs { width: 40px; height: 40px; font-size: 12px; box-shadow: 0 0 0 5px var(--bg); }
+  .tk3 .v { font-size: 30px; }
   .lock { font-size: 10px; padding: 5px 8px; letter-spacing: .06em; }
   .capline span { font-size: 10px; top: -24px; }
   .nocap { font-size: 10px; padding: 5px 8px; }
@@ -545,7 +548,7 @@ main, footer { overflow-x: clip; }
           <div class="d-top">
             <div>
               <span class="eyebrow r">The pain, in dollars</span>
-              <h2>A <span class="pc tnum" id="dPc">0%</span> bad stretch.<br><span class="grad">Three very different bills.</span></h2>
+              <h2>A <span class="pc tnum" id="dPc">0%</span> bad stretch.<br><span class="grad">Two very different bills.</span></h2>
             </div>
             <div class="d-ctl">
               <span>Your own broker account</span>
@@ -555,21 +558,17 @@ main, footer { overflow-x: clip; }
           <div class="meter" aria-hidden="true"><i id="dMeter"></i><em style="left:20%">8%</em><em style="left:50%">20%</em><em style="left:100%">40%</em></div>
           <div class="tanks" id="tanks">
             <div class="tk3 bk">
-              <div class="nm"><b>Your own money</b><span id="bkName">$5,000 broker account</span></div>
+              <div class="nm"><b>Broker's account</b><span id="bkName">$5,000 of your own savings</span></div>
               <div class="v tnum" id="bkV">−$0</div>
               <div class="tube"><div class="fill" id="bkF"></div><span class="nocap">No cap</span></div>
             </div>
             <div class="tk3 fr">
-              <div class="nm"><b>$50K Instant</b>One-time fee</div>
+              <div class="nm"><b>FundingRock Instant account</b>$50K simulated · $350 one-time fee</div>
               <div class="v tnum">−$350</div>
               <div class="tube"><div class="fill" id="frF"></div><span class="lock" id="frL"><svg viewBox="0 0 12 12" fill="currentColor" aria-hidden="true"><path d="M3.5 5V3.6a2.5 2.5 0 015 0V5h.6c.5 0 .9.4.9.9v4.2c0 .5-.4.9-.9.9H2.9a.9.9 0 01-.9-.9V5.9c0-.5.4-.9.9-.9zm1.2 0h2.6V3.6a1.3 1.3 0 00-2.6 0z"/></svg>Capped</span></div>
             </div>
-            <div class="tk3 pp">
-              <div class="nm"><b>$50K Pay After You Pass</b>Before you pass</div>
-              <div class="v tnum">−$5</div>
-              <div class="tube"><div class="fill" id="ppF"></div><span class="lock" id="ppL"><svg viewBox="0 0 12 12" fill="currentColor" aria-hidden="true"><path d="M3.5 5V3.6a2.5 2.5 0 015 0V5h.6c.5 0 .9.4.9.9v4.2c0 .5-.4.9-.9.9H2.9a.9.9 0 01-.9-.9V5.9c0-.5.4-.9.9-.9zm1.2 0h2.6V3.6a1.3 1.3 0 00-2.6 0z"/></svg>Capped</span></div>
-            </div>
-            <div class="capline" id="capLine"><span>The cap · $350</span></div>
+            <div class="capline" id="capLine"><span>FundingRock cap · $350</span></div>
+            <div class="vs" aria-hidden="true">VS</div>
           </div>
           <div class="d-say">
             <p id="dSay">Scroll to let the market drop. Watch which account has a floor.</p>
@@ -920,7 +919,7 @@ main, footer { overflow-x: clip; }
   spotify($$("[data-spot]"));
 
   /* ---------- the pain comparison: scroll drives the drop ---------- */
-  var BK = [2000, 5000, 10000, 25000], bk = 5000, FEE = 350, PP = 5, DMAX = .4;
+  var BK = [2000, 5000, 10000, 25000], bk = 5000, FEE = 350, DMAX = .4;
   $("#bkSizes").innerHTML = BK.map(function (v) { return '<button type="button" class="chip" aria-pressed="' + (v === bk) + '" data-v="' + v + '">$' + (v / 1000) + "K</button>"; }).join("");
   var tanks = $("#tanks"), dpin = $("#dpin"), broke = false, lastD = -1;
   function scaleMax() { return Math.max(bk * DMAX, 600); }
@@ -930,9 +929,7 @@ main, footer { overflow-x: clip; }
     var y = tr.bottom - r.top - tr.height * (FEE / m);
     $("#capLine").style.top = y.toFixed(1) + "px";
     $("#frF").style.height = (FEE / m * 100).toFixed(2) + "%";
-    $("#ppF").style.height = Math.max(PP / m * 100, .6).toFixed(2) + "%";
     var frTop = tr.height * (1 - FEE / m); $("#frL").style.top = Math.max(18, frTop - 22) + "px";
-    $("#ppL").style.top = (tr.height - Math.max(PP / m * tr.height, 2) - 22) + "px";
   }
   function dropAt(d) {
     var loss = bk * d, m = scaleMax();
@@ -945,8 +942,8 @@ main, footer { overflow-x: clip; }
     var cross = Math.ceil(FEE / bk * 100), say;
     if (d < .005) say = "Scroll to let the market drop. Watch which account has a floor.";
     else if (!nb) say = "A " + Math.round(d * 100) + "% drop on your own " + fmt(bk) + ": <b class=\"r\">−" + fmt(loss) + "</b>. Still under the fee. The market doesn't stop here.";
-    else if (d < .2) say = "Past " + cross + "%, your own money costs more than the fee. <b class=\"r\">And it has no floor.</b>";
-    else say = "<b class=\"r\">−" + fmt(loss) + "</b> out of your savings. On FundingRock, the most you lose is <b>$350</b>. Or <b>$5</b> before you pass.";
+    else if (d < .2) say = "Past " + cross + "%, the broker's account costs you more than the fee. <b class=\"r\">And it has no floor.</b>";
+    else say = "<b class=\"r\">−" + fmt(loss) + "</b> out of your savings. On your FundingRock Instant account, the most you lose is <b>$350</b>.";
     if (say !== lastD) { lastD = say; $("#dSay").innerHTML = say; }
     $("#cue").style.opacity = d > .02 ? 0 : 1;
   }
@@ -954,7 +951,7 @@ main, footer { overflow-x: clip; }
     b.addEventListener("click", function () {
       bk = +b.getAttribute("data-v");
       $$("#bkSizes .chip").forEach(function (c) { c.setAttribute("aria-pressed", c === b); });
-      $("#bkName").textContent = fmt(bk) + " broker account";
+      $("#bkName").textContent = fmt(bk) + " of your own savings";
       placeCap(); onScroll();
     });
   });
