@@ -156,7 +156,19 @@ main, footer { overflow-x: clip; }
 .press img:hover { opacity: 1; }
 
 /* ---------- pain comparison: the cap line, scroll-driven ---------- */
-.dpin { position: relative; height: 300vh; }
+.dpin { position: relative; height: 440vh; }
+.acts { display: flex; flex-wrap: wrap; gap: 8px; }
+.act { font-size: 12px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; padding: 7px 12px; border-radius: 999px; border: 1px solid rgba(255,255,255,.14); color: var(--dim); transition: background .4s, color .4s, border-color .4s; }
+#actA.on { background: rgba(255,33,86,.14); border-color: rgba(255,33,86,.6); color: #ff8aa3; }
+#actB.on { background: rgba(217,255,0,.12); border-color: rgba(217,255,0,.6); color: var(--lime); }
+.tanks.good .capline, .tanks.good .nocap { opacity: 0 !important; }
+.tanks.good .bk .fill { background: linear-gradient(180deg, #8ff3e8, #0b6f68); box-shadow: 0 -10px 40px rgba(0,216,195,.35); }
+.tanks.good .tk3.bk .v { color: var(--iris); }
+.tanks.good .fr .fill { box-shadow: 0 -10px 50px rgba(217,255,0,.55); }
+.tanks .fill { transition: background .4s; }
+.meter.good i { background: linear-gradient(90deg, #a8fff4, var(--lime)); box-shadow: 0 0 18px rgba(217,255,0,.5); }
+.meter.good em { opacity: 0; }
+.d-top h2 .pc.g { color: var(--lime); }
 .dstick { position: sticky; top: 66px; height: calc(100vh - 66px); height: calc(100svh - 66px); display: flex; flex-direction: column; justify-content: center; padding-block: 16px; }
 .d-top { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap; }
 .d-top h2 { margin: 12px 0 0; font-size: clamp(34px, 4.6vw, 66px); letter-spacing: -0.05em; line-height: .98; font-weight: 600; }
@@ -207,7 +219,7 @@ main, footer { overflow-x: clip; }
 .scrollcue i { width: 1px; height: 20px; background: linear-gradient(var(--iris), transparent); animation: cue 1.6s ease-in-out infinite; }
 @keyframes cue { 0% { transform: scaleY(0); transform-origin: top; } 50% { transform: scaleY(1); transform-origin: top; } 51% { transform-origin: bottom; } 100% { transform: scaleY(0); transform-origin: bottom; } }
 @media (max-width: 760px) {
-  .dpin { height: 260vh; }
+  .dpin { height: 380vh; }
   .d-ctl { align-items: flex-start; }
   .d-top { gap: 14px; }
   .tanks { margin-top: 34px; gap: 40px; height: clamp(200px, 36svh, 320px); }
@@ -568,15 +580,15 @@ main, footer { overflow-x: clip; }
         <div class="wrap">
           <div class="d-top">
             <div>
-              <span class="eyebrow r">The pain, in dollars</span>
-              <h2>A <span class="pc tnum" id="dPc">0%</span> bad stretch.<br><span class="grad">Two very different bills.</span></h2>
+              <div class="acts" aria-hidden="true"><span class="act on" id="actA">1 · When it goes wrong</span><span class="act" id="actB">2 · When it goes right</span></div>
+              <h2>A <span class="pc tnum" id="dPc">0%</span> <span id="dWord">bad</span> stretch.<br><span class="grad" id="dLine2">Two very different bills.</span></h2>
             </div>
             <div class="d-ctl">
               <span>Your own broker account</span>
               <div class="chips" role="group" aria-label="Your account size" id="bkSizes"></div>
             </div>
           </div>
-          <div class="meter" aria-hidden="true"><i id="dMeter"></i><em style="left:20%">8%</em><em style="left:50%">20%</em><em style="left:100%">40%</em></div>
+          <div class="meter" id="meter" aria-hidden="true"><i id="dMeter"></i><em style="left:20%">8%</em><em style="left:50%">20%</em><em style="left:100%">40%</em></div>
           <div class="tanks" id="tanks">
             <div class="tk3 bk">
               <div class="nm"><b>Broker's account</b><span id="bkName">$5,000 of your own savings</span></div>
@@ -584,9 +596,9 @@ main, footer { overflow-x: clip; }
               <div class="tube"><div class="fill" id="bkF"></div><span class="nocap">No cap</span></div>
             </div>
             <div class="tk3 fr">
-              <div class="nm"><b>FundingRock Instant account</b>$50K simulated · $350 one-time fee</div>
-              <div class="v tnum">−$350</div>
-              <div class="tube"><div class="fill" id="frF"></div><span class="lock" id="frL"><svg viewBox="0 0 12 12" fill="currentColor" aria-hidden="true"><path d="M3.5 5V3.6a2.5 2.5 0 015 0V5h.6c.5 0 .9.4.9.9v4.2c0 .5-.4.9-.9.9H2.9a.9.9 0 01-.9-.9V5.9c0-.5.4-.9.9-.9zm1.2 0h2.6V3.6a1.3 1.3 0 00-2.6 0z"/></svg>Capped</span></div>
+              <div class="nm"><b>FundingRock Instant account</b><span id="frSub">$50K simulated · $350 one-time fee</span></div>
+              <div class="v tnum" id="frV">−$350</div>
+              <div class="tube"><div class="fill" id="frF"></div><span class="lock" id="frL"><svg viewBox="0 0 12 12" fill="currentColor" aria-hidden="true"><path d="M3.5 5V3.6a2.5 2.5 0 015 0V5h.6c.5 0 .9.4.9.9v4.2c0 .5-.4.9-.9.9H2.9a.9.9 0 01-.9-.9V5.9c0-.5.4-.9.9-.9zm1.2 0h2.6V3.6a1.3 1.3 0 00-2.6 0z"/></svg><span id="frLt">Capped</span></span></div>
             </div>
             <div class="capline" id="capLine"><span>FundingRock cap · $350</span></div>
             <div class="vs" aria-hidden="true">VS</div>
@@ -933,7 +945,38 @@ main, footer { overflow-x: clip; }
     $("#frF").style.height = (FEE / m * 100).toFixed(2) + "%";
     var frTop = tr.height * (1 - FEE / m); $("#frL").style.top = Math.max(18, frTop - 22) + "px";
   }
+  var GMAX = .10, ACCT = 50000, SHARE = .8, mode = "";
+  function setMode(m) {
+    if (m === mode) return; mode = m;
+    var good = m === "good";
+    tanks.classList.toggle("good", good); $("#meter").classList.toggle("good", good); $("#dPc").classList.toggle("g", good);
+    $("#actA").classList.toggle("on", !good); $("#actB").classList.toggle("on", good);
+    $("#dWord").textContent = good ? "good" : "bad";
+    $("#dLine2").textContent = good ? "Two very different paydays." : "Two very different bills.";
+    $("#frSub").textContent = good ? "$50K simulated · 80% Reward Share" : "$50K simulated · $350 one-time fee";
+    $("#frLt").textContent = good ? "Your Reward" : "Capped";
+    if (good) { broke = false; tanks.classList.remove("broke"); } else { $("#frV").textContent = "−$350"; placeCap(); }
+    lastD = -1;
+  }
+  function goodAt(g) {
+    setMode("good");
+    g = Math.round(g * 1000) / 1000;
+    var gain = bk * g, profit = ACCT * g, rew = profit * SHARE, m = Math.max(bk * GMAX, ACCT * GMAX * SHARE);
+    $("#bkF").style.height = (gain / m * 100).toFixed(2) + "%";
+    $("#frF").style.height = (rew / m * 100).toFixed(2) + "%";
+    var th = $(".tk3.fr .tube").clientHeight; $("#frL").style.top = Math.max(18, th * (1 - rew / m) - 22) + "px";
+    $("#bkV").textContent = "+" + fmt(gain); $("#frV").textContent = "+" + fmt(rew);
+    $("#dPc").textContent = "+" + (g * 100).toFixed(g < .1 ? 1 : 0).replace(/\.0$/, "") + "%";
+    $("#dMeter").style.width = (g / GMAX * 100).toFixed(2) + "%";
+    var say;
+    if (g < .003) say = "Now the other side. Scroll to let the market climb.";
+    else if (g < .085) say = "+" + (g * 100).toFixed(1).replace(/\.0$/, "") + "% on your own " + fmt(bk) + ": <b>+" + fmt(gain) + "</b>. The same trades on a $50K Instant account: a <b>" + fmt(rew) + " Reward</b>.";
+    else say = "Same skill, bigger account. <b>" + fmt(rew) + "</b> Reward on $50K, against <b>+" + fmt(gain) + "</b> on your own " + fmt(bk) + ". Your fee: $350, paid once.";
+    if (say !== lastD) { lastD = say; $("#dSay").innerHTML = say; }
+    $("#cue").style.opacity = 0;
+  }
   function dropAt(d) {
+    setMode("bad");
     var loss = bk * d, m = scaleMax();
     $("#bkF").style.height = (loss / m * 100).toFixed(2) + "%";
     $("#bkV").textContent = "−" + fmt(loss);
@@ -1065,7 +1108,7 @@ main, footer { overflow-x: clip; }
   function onScroll() {
     nav.classList.toggle("on", scrollY > 10);
     mbar.classList.toggle("on", scrollY > innerHeight * .9 && $("#end").getBoundingClientRect().top > innerHeight * .6);
-    dropAt(reduce ? .3 : dropProgress() * DMAX);
+    if (reduce) dropAt(.3); else { var kq = dropProgress(); if (kq < .5) dropAt(Math.min(1, kq / .46) * DMAX); else goodAt(Math.min(1, (kq - .5) / .46) * GMAX); }
     if (!reduce) { var pr = talkPh.getBoundingClientRect(), c = (pr.top + pr.height / 2 - innerHeight / 2) / innerHeight; talkPh.style.setProperty("--py", (c * 40).toFixed(1) + "px"); }
     ticking = false;
   }
