@@ -234,8 +234,17 @@ main, footer { overflow-x: clip; }
 }
 
 /* ---------- broker vs FundingRock ---------- */
-.cmp-ctl { display: flex; justify-content: center; align-items: center; gap: 14px; flex-wrap: wrap; margin-bottom: 26px; }
-.cmp-ctl > span { font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--dim); }
+.cmp-ctl { margin-bottom: 26px; }
+.cmp-ctl > span { display: block; text-align: center; font-size: 13px; letter-spacing: .16em; text-transform: uppercase; color: var(--dim); margin-bottom: 14px; }
+.acc { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; }
+.ac { appearance: none; cursor: pointer; text-align: left; padding: 22px 22px 20px; border-radius: 22px; border: 1px solid rgba(143,243,232,.22); background: linear-gradient(170deg, rgba(10,44,50,.8), rgba(4,16,20,.92)); color: #fff; font: inherit; transition: transform .3s var(--ease), border-color .3s, background .3s, box-shadow .3s; }
+.ac:hover { transform: translateY(-3px); border-color: rgba(143,243,232,.5); }
+.ac b { display: block; font-size: clamp(30px, 3vw, 44px); font-weight: 600; letter-spacing: -.05em; line-height: 1; }
+.ac small { display: block; margin-top: 10px; font-size: 15px; color: var(--mute); }
+.ac small em { font-style: normal; color: #fff; font-weight: 600; }
+.ac[aria-pressed="true"] { background: var(--lime); border-color: var(--lime); color: #0a0a0a; box-shadow: 0 20px 50px -20px rgba(217,255,0,.6); }
+.ac[aria-pressed="true"] small, .ac[aria-pressed="true"] small em { color: #0a0a0a; }
+@media (max-width: 900px) { .acc { grid-template-columns: repeat(3, 1fr); gap: 10px; } .ac { padding: 16px; border-radius: 18px; } .ac b { font-size: 28px; } .ac small { font-size: 13px; } }
 .cmp { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); gap: 18px; align-items: stretch; }
 .cc { position: relative; border-radius: 28px; padding: clamp(24px, 3vw, 38px); display: flex; flex-direction: column; overflow: hidden; }
 .cc.bad { background: linear-gradient(165deg, rgba(70,8,24,.75), rgba(14,6,10,.95) 60%); border: 1px solid rgba(255,33,86,.35); }
@@ -614,15 +623,15 @@ main, footer { overflow-x: clip; }
     <div class="wrap">
       <div class="sh rv">
         <span class="eyebrow">Broker vs FundingRock</span>
-        <h2>Trade <span class="tnum" id="cA">$50K</span>. <span class="grad">Without having <span class="tnum" id="cA2">$50K</span>.</span></h2>
+        <h2>Trade <span class="tnum" id="cA">$5K</span>. <span class="grad">Without having <span class="tnum" id="cA2">$5K</span>.</span></h2>
         <p>A broker account costs you the whole balance, and all of it is at risk. With FundingRock you risk one small fee, and you can still earn from the profit.</p>
       </div>
-      <div class="cmp-ctl rv"><span>Account size</span><div class="chips" role="group" aria-label="Account size" id="cSizes"></div></div>
+      <div class="cmp-ctl rv"><span>Pick an account size</span><div class="acc" role="group" aria-label="Account size" id="cSizes"></div></div>
       <div class="cmp rv" id="cmp">
         <article class="cc bad">
           <header><b>Broker's account</b><span>Your own money</span></header>
           <div class="cc-k">You put in</div>
-          <div class="cc-n tnum" id="cBk">$50,000</div>
+          <div class="cc-n tnum" id="cBk">$5,000</div>
           <div class="cc-bar"><i id="cBkBar"><em>Your whole budget at risk</em></i></div>
           <dl class="cc-r">
             <div><dt>At risk</dt><dd class="r tnum" id="cBkRisk">$50,000</dd></div>
@@ -634,7 +643,7 @@ main, footer { overflow-x: clip; }
         <article class="cc good">
           <header><b>FundingRock Instant</b><span>Simulated account</span></header>
           <div class="cc-k">You pay</div>
-          <div class="cc-n tnum" id="cFr">$350</div>
+          <div class="cc-n tnum" id="cFr">$70</div>
           <div class="cc-bar"><i id="cFrBar"></i><span class="cc-tag" id="cFrTag">Only $350 at risk</span></div>
           <dl class="cc-r">
             <div><dt>At risk</dt><dd class="g tnum" id="cFrRisk">$350, one time</dd></div>
@@ -975,8 +984,8 @@ main, footer { overflow-x: clip; }
   spotify($$("[data-spot]"));
 
   /* ---------- broker vs FundingRock: same account size, very different money on the line ---------- */
-  var CS = [[5000, 70], [10000, 120], [25000, 200], [50000, 350], [100000, 600], [200000, 1100]], cI = 3, cmp = $("#cmp"), cIn = false, cShown = [50000, 350];
-  $("#cSizes").innerHTML = CS.map(function (c, i) { return '<button type="button" class="chip" aria-pressed="' + (i === cI) + '">$' + (c[0] / 1000) + "K</button>"; }).join("");
+  var CS = [[5000, 70], [10000, 120], [25000, 200], [50000, 350], [100000, 600], [200000, 1100]], cI = 0, cmp = $("#cmp"), cIn = false, cShown = [5000, 70];
+  $("#cSizes").innerHTML = CS.map(function (c, i) { return '<button type="button" class="ac" aria-pressed="' + (i === cI) + '"><b>$' + (c[0] / 1000) + "K</b><small>Fee <em>$" + c[1].toLocaleString("en-US") + "</em></small></button>"; }).join("");
   function cRender(anim) {
     var a = CS[cI][0], f = CS[cI][1], K = "$" + (a / 1000) + "K";
     $("#cA").textContent = K; $("#cA2").textContent = K;
@@ -989,7 +998,7 @@ main, footer { overflow-x: clip; }
     $("#cExFr").textContent = fmt(a * .1 * .8) + " Reward"; $("#cExFrIn").textContent = fmt(f);
     if (cIn) { $("#cBkBar").style.width = "100%"; $("#cFrBar").style.width = Math.max(f / a * 100, 1.2).toFixed(2) + "%"; }
   }
-  $$("#cSizes .chip").forEach(function (b, i) { b.addEventListener("click", function () { cI = i; $$("#cSizes .chip").forEach(function (c, j) { c.setAttribute("aria-pressed", j === i); }); cRender(true); }); });
+  $$("#cSizes .ac").forEach(function (b, i) { b.addEventListener("click", function () { cI = i; $$("#cSizes .ac").forEach(function (c, j) { c.setAttribute("aria-pressed", j === i); }); cRender(true); }); });
   new IntersectionObserver(function (es) { if (es[0].isIntersecting && !cIn) { cIn = true; cmp.classList.add("in"); cRender(false); } }, { threshold: .35 }).observe(cmp);
   cRender(false);
 
