@@ -1,0 +1,1097 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Your savings aren't a training budget | FundingRock</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Host+Grotesk:wght@300..800&display=swap">
+<style>
+@font-face { font-family: "Host Grotesk"; src: url("hg.woff2") format("woff2"); font-weight: 300 800; font-display: swap; }
+/* Non-prop traders. Same night system as the 1-Step (cyan) and Kokuyō pages. One idea runs through it:
+   your own money has no floor, a FundingRock account has a cap. Red is what you lose from savings, lime is the cap and the action. */
+:root {
+  --bg: #03090c;
+  --line: rgba(255,255,255,.09);
+  --fg: #ffffff;
+  --mute: #a6c4c6;
+  --dim: #6a8a8d;
+  --lime: #d9ff00;
+  --cyan: #00d8c3;
+  --iris: #8ff3e8;
+  --red: #ff2156;
+  --tp: #00b67a;
+  --font: "Host Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --ease: cubic-bezier(.2,.7,.2,1);
+  --pop: cubic-bezier(.34,1.4,.5,1);
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+body { margin: 0; background: var(--bg); color: var(--fg); font-family: var(--font); font-size: 17px; line-height: 1.5; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+a { color: inherit; text-decoration: none; }
+img { max-width: 100%; }
+button { font-family: inherit; }
+.wrap { max-width: 1240px; margin: 0 auto; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); position: relative; }
+@media (min-width: 761px) { .wrap { padding-left: 48px; padding-right: 48px; } }
+.tnum { font-variant-numeric: tabular-nums; }
+:focus-visible { outline: 2px solid var(--lime); outline-offset: 3px; border-radius: 8px; }
+main, footer { overflow-x: clip; }
+
+/* night background */
+.bgfx { position: fixed; inset: 0; z-index: -2; pointer-events: none; background: radial-gradient(1100px 760px at 78% 8%, rgba(0,118,122,.55), transparent 65%), radial-gradient(800px 600px at 0% 60%, rgba(0,216,195,.16), transparent 70%), radial-gradient(700px 500px at 100% 90%, rgba(255,33,86,.07), transparent 70%), var(--bg); }
+.gridbg { position: fixed; inset: 0; z-index: -1; pointer-events: none; background-image: linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px); background-size: 64px 64px; -webkit-mask-image: radial-gradient(ellipse at 70% 10%, #000 15%, transparent 65%); mask-image: radial-gradient(ellipse at 70% 10%, #000 15%, transparent 65%); }
+.grad { padding-bottom: .1em; background: linear-gradient(90deg, #a8fff4, #00d8c3 48%, #d9ff00); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.redt { color: var(--red); }
+
+/* type */
+.eyebrow { display: inline-flex; gap: 10px; align-items: center; font-size: 13px; font-weight: 500; letter-spacing: .18em; text-transform: uppercase; color: var(--iris); }
+.eyebrow::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--lime); box-shadow: 0 0 12px var(--lime); }
+.eyebrow.r::before { background: var(--red); box-shadow: 0 0 12px var(--red); }
+.sec { padding-block: clamp(80px, 11vw, 140px); position: relative; }
+.sh { text-align: center; max-width: 1000px; margin: 0 auto clamp(40px, 5vw, 64px); }
+.sh h2 { font-size: clamp(40px, 6vw, 84px); letter-spacing: -0.05em; line-height: .96; font-weight: 600; margin: 16px 0 18px; text-wrap: balance; }
+.sh p { color: var(--mute); font-size: 19px; margin: 0 auto; max-width: 50ch; }
+
+/* glass */
+.glass { position: relative; background: linear-gradient(160deg, rgba(10,44,50,.92), rgba(5,18,22,.96) 55%), #051216; border-radius: 28px; border: 1px solid rgba(143,243,232,.22); box-shadow: 0 40px 100px -40px rgba(0,0,0,.9), inset 0 1px 0 rgba(255,255,255,.07); }
+.liquid { position: relative; border-radius: 22px; background: linear-gradient(180deg, rgba(255,255,255,.075) 0%, rgba(255,255,255,.02) 38%, rgba(255,255,255,0) 60%), rgba(6,10,12,.62); -webkit-backdrop-filter: blur(26px) saturate(170%); backdrop-filter: blur(26px) saturate(170%); border: 1px solid rgba(255,255,255,.12); box-shadow: inset 0 1px 0 rgba(255,255,255,.22), 0 30px 80px -30px rgba(0,0,0,.95); }
+
+/* buttons */
+.buy { position: relative; overflow: hidden; isolation: isolate; display: inline-flex; align-items: center; justify-content: center; gap: 10px; background: var(--lime); color: #0a0a0a; font-weight: 600; font-size: 14px; padding: 10px 18px; border-radius: 999px; white-space: nowrap; box-shadow: inset 0 1px 0 rgba(255,255,255,.6); transition: transform .3s var(--ease), box-shadow .3s var(--ease); border: 0; cursor: pointer; }
+.buy::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(105deg, transparent 35%, rgba(255,255,255,.75) 50%, transparent 65%); transform: translateX(-120%); animation: plrun 4.2s var(--ease) infinite; }
+.buy:hover { transform: translateY(-1px); box-shadow: inset 0 1px 0 rgba(255,255,255,.6), 0 14px 34px -12px rgba(217,255,0,.55); }
+.buy:active { transform: scale(.97); }
+.buy .ar, .ghost .ar { transition: transform .3s var(--ease); }
+.buy:hover .ar, .ghost:hover .ar { transform: translateX(3px); }
+.buy.lg { font-size: 16px; padding: 17px 30px; }
+.ghost { display: inline-flex; align-items: center; gap: 10px; font-size: 15px; padding: 16px 26px; border-radius: 999px; border: 1px solid rgba(255,255,255,.4); transition: border-color .25s, background .25s; }
+.ghost:hover { border-color: #fff; background: rgba(255,255,255,.06); }
+@keyframes plrun { 0% { transform: translateX(-120%); } 60%, 100% { transform: translateX(120%); } }
+.under { margin: 12px 0 0; font-size: 13px; color: var(--dim); }
+
+/* nav */
+.nav { position: sticky; top: 0; z-index: 50; background: rgba(3,10,14,.6); -webkit-backdrop-filter: saturate(170%) blur(20px); backdrop-filter: saturate(170%) blur(20px); border-bottom: 1px solid transparent; transition: background .3s, border-color .3s; }
+.nav.on { background: rgba(3,10,14,.85); border-bottom-color: var(--line); }
+.nav .wrap { height: 66px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.nav-l { display: flex; align-items: center; gap: 14px; }
+.nav-l img { height: 20px; width: auto; display: block; }
+.nav-l .sep { width: 1px; height: 18px; background: var(--line); }
+.nav-l b { font-weight: 500; font-size: 14px; color: var(--mute); }
+.nav-r { display: flex; align-items: center; gap: 26px; font-size: 14px; color: var(--mute); }
+.nav-r a.l { transition: color .2s; }
+.nav-r a.l:hover { color: var(--lime); }
+@media (max-width: 960px) { .nav-r a.l { display: none; } }
+@media (max-width: 520px) { .nav .buy { padding: 9px 14px; font-size: 13px; } .nav-l .sep, .nav-l b { display: none; } }
+
+/* ---------- hero ---------- */
+.hero { position: relative; padding-block: clamp(30px, 4vw, 60px) clamp(40px, 5vw, 72px); }
+.hero-grid { display: grid; grid-template-columns: minmax(0, 1.08fr) minmax(0, .92fr); gap: 32px; align-items: center; }
+.hero h1 { font-size: clamp(46px, 5.6vw, 84px); line-height: .98; letter-spacing: -0.05em; margin: 20px 0 0; font-weight: 600; }
+.hero h1 .ln { display: block; overflow: hidden; white-space: nowrap; padding-bottom: .2em; margin-bottom: -.14em; }
+.hero h1 .ln > span { display: inline-block; padding-bottom: .16em; margin-bottom: -.16em; animation: up 1.1s var(--ease) both; }
+.hero h1 .ln:nth-child(2) > span { animation-delay: .12s; }
+.hero h1 .ln:nth-child(3) > span { animation-delay: .24s; }
+.hero h1 s { text-decoration: none; position: relative; color: var(--mute); }
+.hero h1 s::after { content: ""; position: absolute; left: -2%; right: -2%; top: 52%; height: .07em; background: var(--red); transform-origin: 0 50%; transform: scaleX(0); animation: strike .7s 1.05s var(--ease) forwards; box-shadow: 0 0 18px rgba(255,33,86,.7); }
+@keyframes strike { to { transform: scaleX(1); } }
+@keyframes up { from { transform: translateY(105%); } to { transform: none; } }
+@keyframes fade { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+.hero .lede { font-size: 19px; line-height: 1.6; color: var(--mute); max-width: 40ch; margin: 24px 0 0; animation: fade 1s .35s var(--ease) both; }
+.hero .lede b { color: #fff; font-weight: 500; }
+.who-q { margin: 30px 0 0; font-size: 13px; letter-spacing: .16em; text-transform: uppercase; color: var(--dim); animation: fade 1s .42s var(--ease) both; }
+.paths { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 12px; max-width: 540px; animation: fade 1s .45s var(--ease) both; }
+.pth { appearance: none; display: flex; align-items: center; gap: 12px; text-align: left; padding: 14px 16px; border-radius: 18px; border: 1px solid rgba(143,243,232,.22); background: rgba(255,255,255,.03); color: #fff; font-size: 15px; font-weight: 500; line-height: 1.25; cursor: pointer; transition: border-color .25s, background .25s, transform .3s var(--ease); }
+.pth:hover { transform: translateY(-2px); border-color: rgba(143,243,232,.5); }
+.pth .tk { flex: none; width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid var(--dim); display: grid; place-items: center; transition: background .25s, border-color .25s; }
+.pth .tk::after { content: ""; width: 8px; height: 8px; border-radius: 50%; background: #0a0a0a; transform: scale(0); transition: transform .3s var(--pop); }
+.pth small { display: block; font-size: 13px; color: var(--mute); font-weight: 400; margin-top: 2px; }
+.pth[aria-pressed="true"] { background: rgba(217,255,0,.1); border-color: var(--lime); }
+.pth[aria-pressed="true"] .tk { background: var(--lime); border-color: var(--lime); }
+.pth[aria-pressed="true"] .tk::after { transform: scale(1); }
+.cta { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; margin-top: 22px; animation: fade 1s .5s var(--ease) both; }
+.hero .under { animation: fade 1s .55s var(--ease) both; }
+.ticks { display: flex; flex-wrap: wrap; gap: 8px 20px; margin: 22px 0 0; padding: 0; list-style: none; font-size: 14px; color: var(--mute); animation: fade 1s .6s var(--ease) both; }
+.ticks li { display: inline-flex; align-items: center; gap: 8px; }
+.ticks li::before { content: ""; width: 14px; height: 8px; border-left: 2px solid var(--lime); border-bottom: 2px solid var(--lime); transform: rotate(-45deg) translateY(-2px); }
+
+/* the drop: a tilted chart card, two balances fall together, only one stops */
+.scene { position: relative; height: clamp(460px, 44vw, 600px); perspective: 1400px; }
+.scene .halo { position: absolute; left: 52%; top: 50%; width: 82%; aspect-ratio: 1; transform: translate(-50%, -50%); border-radius: 50%; background: radial-gradient(circle, rgba(0,216,195,.42), rgba(255,33,86,.08) 48%, transparent 68%); filter: blur(10px); animation: breathe 7s ease-in-out infinite; }
+.scene .ring { position: absolute; left: 52%; top: 50%; width: 70%; aspect-ratio: 1; transform: translate(-50%, -50%); border-radius: 50%; border: 1px dashed rgba(143,243,232,.22); animation: spin 60s linear infinite; }
+.scene .ring::after { content: ""; position: absolute; left: 50%; top: -4px; width: 8px; height: 8px; border-radius: 50%; background: var(--lime); box-shadow: 0 0 14px var(--lime); }
+@keyframes breathe { 50% { transform: translate(-50%, -50%) scale(1.08); opacity: .75; } }
+@keyframes spin { to { transform: translate(-50%, -50%) rotate(360deg); } }
+.rig { position: absolute; inset: 6% 2% 6% 6%; transform-style: preserve-3d; will-change: transform; }
+.card3 { position: absolute; inset: 0; border-radius: 30px; overflow: hidden; transform: translateZ(0); }
+.card3 .hd { position: absolute; left: 26px; top: 22px; right: 26px; display: flex; justify-content: space-between; font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--mute); }
+.card3 .hd b { color: #fff; font-weight: 500; letter-spacing: .04em; text-transform: none; font-size: 14px; }
+.card3 svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.card3 svg text { font-family: var(--font); }
+.fchip { position: absolute; padding: 14px 18px; font-size: 13px; color: var(--mute); white-space: nowrap; will-change: transform; }
+.fchip b { display: block; font-size: 30px; line-height: 1.05; color: #fff; font-weight: 600; letter-spacing: -.04em; }
+.fchip.loss b { color: var(--red); }
+.fchip.cap b { color: var(--lime); }
+.fchip.loss { left: -7%; bottom: 8%; transform: translateZ(90px); }
+.fchip.cap { right: -5%; top: 30%; transform: translateZ(130px); }
+.fchip.nd { right: 6%; bottom: -5%; transform: translateZ(60px); font-size: 14px; color: #fff; padding: 12px 16px; display: flex; align-items: center; gap: 10px; }
+.fchip.nd i { width: 8px; height: 8px; border-radius: 50%; background: var(--lime); position: relative; }
+.fchip.nd i::after { content: ""; position: absolute; inset: 0; border-radius: 50%; background: var(--lime); animation: ping 1.6s ease-out infinite; }
+@keyframes ping { from { transform: scale(1); opacity: .8; } to { transform: scale(3); opacity: 0; } }
+.fchip .bump { display: block; transform-origin: 0 50%; }
+.fchip .bump.go { animation: bump .45s var(--pop); }
+@keyframes bump { 40% { transform: scale(1.12); } }
+
+/* trust row */
+.trust { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 22px; font-size: 14px; color: var(--mute); animation: fade 1s .65s var(--ease) both; }
+.stars { display: inline-flex; gap: 3px; }
+.stars i { width: 20px; height: 20px; background: var(--tp); display: grid; place-items: center; }
+.stars i svg { width: 13px; height: 13px; }
+.trust b { color: #fff; font-weight: 600; }
+
+/* press */
+.press { padding-block: 10px 0; }
+.press-k { display: block; text-align: center; font-size: 12px; letter-spacing: .2em; text-transform: uppercase; color: var(--dim); margin-bottom: 18px; }
+.mq { overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); }
+.mq-tr { display: flex; width: max-content; animation: mq 40s linear infinite; }
+.mq:hover .mq-tr { animation-play-state: paused; }
+.mq-tr.rev { animation-direction: reverse; }
+@keyframes mq { to { transform: translateX(-50%); } }
+.press .mq-tr > div { padding-inline: clamp(26px, 4vw, 54px); display: grid; place-items: center; }
+.press img { height: 26px; width: auto; opacity: .6; transition: opacity .25s; }
+.press img:hover { opacity: 1; }
+
+/* ---------- pain comparison: the cap line, scroll-driven ---------- */
+.dpin { position: relative; height: 300vh; }
+.dstick { position: sticky; top: 66px; height: calc(100vh - 66px); height: calc(100svh - 66px); display: flex; flex-direction: column; justify-content: center; padding-block: 16px; }
+.d-top { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap; }
+.d-top h2 { margin: 12px 0 0; font-size: clamp(34px, 4.6vw, 66px); letter-spacing: -0.05em; line-height: .98; font-weight: 600; }
+.d-top h2 .pc { display: inline-block; min-width: 2.6ch; color: var(--red); }
+.d-ctl { display: flex; flex-direction: column; gap: 8px; align-items: flex-end; }
+.d-ctl span { font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--dim); }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { appearance: none; border: 1px solid rgba(143,243,232,.25); background: rgba(255,255,255,.03); color: var(--mute); font-size: 14px; font-weight: 500; padding: 9px 15px; border-radius: 999px; cursor: pointer; transition: transform .25s var(--ease), background .25s, color .25s, box-shadow .25s, border-color .25s; }
+.chip:hover { transform: translateY(-2px); color: #fff; box-shadow: 0 10px 24px -10px rgba(0,216,195,.9); }
+.chip[aria-pressed="true"] { background: #fff; color: #0a0a0a; border-color: #fff; }
+.meter { position: relative; margin-top: 22px; height: 6px; border-radius: 99px; background: rgba(255,255,255,.07); }
+.meter i { position: absolute; left: 0; top: 0; bottom: 0; width: 0; border-radius: inherit; background: linear-gradient(90deg, #ff8aa3, var(--red)); box-shadow: 0 0 18px rgba(255,33,86,.6); }
+.meter em { position: absolute; top: 14px; font-style: normal; font-size: 12px; color: var(--dim); transform: translateX(-50%); }
+.tanks { position: relative; margin-top: 44px; display: grid; grid-template-columns: 1.15fr 1fr 1fr; gap: clamp(12px, 2vw, 24px); height: clamp(250px, 44vh, 440px); }
+.tk3 { position: relative; display: flex; flex-direction: column; min-width: 0; }
+.tk3 .nm { font-size: 14px; color: var(--mute); line-height: 1.3; min-height: 2.6em; }
+.tk3 .nm b { display: block; color: #fff; font-weight: 600; font-size: 16px; }
+.tk3 .v { font-size: clamp(30px, 3.6vw, 52px); font-weight: 600; letter-spacing: -.05em; line-height: 1; margin: 8px 0 12px; }
+.tk3.bk .v { color: var(--red); }
+.tk3.fr .v, .tk3.pp .v { color: var(--lime); }
+.tube { position: relative; flex: 1; border-radius: 22px; overflow: hidden; background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.015)); border: 1px solid rgba(143,243,232,.16); box-shadow: inset 0 1px 0 rgba(255,255,255,.07), inset 0 -30px 60px -30px rgba(0,0,0,.6); }
+.tube::after { content: ""; position: absolute; left: 10%; top: 0; bottom: 0; width: 12%; background: linear-gradient(90deg, rgba(255,255,255,.07), transparent); pointer-events: none; }
+.fill { position: absolute; left: 0; right: 0; bottom: 0; height: 0; }
+.fill::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 3px; background: linear-gradient(90deg, transparent, rgba(255,255,255,.9) 30%, transparent 60%) 0 0 / 200% 100%; animation: surf 2.4s linear infinite; }
+@keyframes surf { from { background-position: 100% 0; } to { background-position: -100% 0; } }
+.bk .fill { background: linear-gradient(180deg, #ff4d74, #7a0f2a); box-shadow: 0 -10px 40px rgba(255,33,86,.45); }
+.fr .fill, .pp .fill { background: linear-gradient(180deg, var(--lime), #5e7a00); box-shadow: 0 -8px 30px rgba(217,255,0,.35); }
+.fr .fill::before, .pp .fill::before { display: none; }
+.lock { position: absolute; left: 50%; transform: translate(-50%, -50%); z-index: 2; display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 999px; background: #0a0a0a; border: 1px solid var(--lime); color: var(--lime); font-size: 12px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; white-space: nowrap; }
+.lock svg { width: 12px; height: 12px; }
+/* the cap line: a lime plane across all three tubes at the Instant fee */
+.capline { position: absolute; left: -10px; right: -10px; height: 0; border-top: 2px dashed var(--lime); z-index: 3; pointer-events: none; filter: drop-shadow(0 0 8px rgba(217,255,0,.8)); transition: border-color .3s; }
+.capline span { position: absolute; right: 0; top: -30px; font-size: 12px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--lime); background: var(--bg); padding: 2px 8px; border-radius: 6px; }
+.tanks.broke .capline { border-top-color: var(--red); filter: drop-shadow(0 0 10px rgba(255,33,86,.9)); }
+.tanks.broke .capline span { color: var(--red); }
+.tanks.broke .bk .tube { animation: shake .5s; border-color: rgba(255,33,86,.5); }
+@keyframes shake { 20% { transform: translateX(-3px); } 40% { transform: translateX(3px); } 60% { transform: translateX(-2px); } 80% { transform: translateX(1px); } }
+.nocap { position: absolute; left: 50%; top: 14px; transform: translateX(-50%) scale(.6); opacity: 0; z-index: 4; padding: 6px 12px; border-radius: 999px; background: var(--red); color: #fff; font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; white-space: nowrap; transition: opacity .3s, transform .45s var(--pop); }
+.tanks.broke .nocap { opacity: 1; transform: translateX(-50%); }
+.d-say { margin-top: 18px; display: flex; justify-content: space-between; gap: 18px; flex-wrap: wrap; align-items: center; }
+.d-say p { margin: 0; font-size: clamp(17px, 1.6vw, 21px); color: #fff; font-weight: 500; letter-spacing: -.01em; max-width: 52ch; min-height: 2.6em; }
+.d-say p b { color: var(--lime); font-weight: 600; }
+.d-say p b.r { color: var(--red); }
+.d-say small { color: var(--dim); font-size: 13px; }
+.scrollcue { font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--dim); display: inline-flex; gap: 8px; align-items: center; transition: opacity .4s; }
+.scrollcue i { width: 1px; height: 20px; background: linear-gradient(var(--iris), transparent); animation: cue 1.6s ease-in-out infinite; }
+@keyframes cue { 0% { transform: scaleY(0); transform-origin: top; } 50% { transform: scaleY(1); transform-origin: top; } 51% { transform-origin: bottom; } 100% { transform: scaleY(0); transform-origin: bottom; } }
+@media (max-width: 760px) {
+  .dpin { height: 260vh; }
+  .d-ctl { align-items: flex-start; }
+  .d-top { gap: 14px; }
+  .tanks { margin-top: 34px; gap: 10px; height: clamp(200px, 36svh, 320px); }
+  .tk3 .nm { font-size: 12px; min-height: 3.9em; } .tk3 .nm b { font-size: 14px; }
+  .tk3 .v { font-size: 26px; }
+  .lock { font-size: 10px; padding: 5px 8px; letter-spacing: .06em; }
+  .capline span { font-size: 10px; top: -24px; }
+  .nocap { font-size: 10px; padding: 5px 8px; }
+  .meter { margin-top: 16px; }
+  .d-say { margin-top: 12px; } .d-say small { display: none; }
+}
+
+/* ---------- the odds ---------- */
+.odds { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.od { padding: clamp(26px, 3.4vw, 44px); display: grid; grid-template-columns: auto 1fr; gap: 28px; align-items: center; overflow: hidden; }
+.od .big { white-space: nowrap; font-size: clamp(40px, 4.2vw, 62px); font-weight: 600; letter-spacing: -0.055em; line-height: .95; }
+.od p { margin: 10px 0 0; font-size: 18px; color: #fff; max-width: 24ch; }
+.od cite { display: block; margin-top: 14px; font-style: normal; font-size: 12.5px; color: var(--dim); }
+.ringv { width: clamp(120px, 12vw, 170px); aspect-ratio: 1; }
+.ringv circle { fill: none; stroke-width: 12; }
+.dots { display: grid; grid-template-columns: repeat(10, 1fr); gap: 5px; width: clamp(120px, 12vw, 170px); }
+.dots i { aspect-ratio: 1; border-radius: 50%; background: rgba(255,255,255,.12); transition: background .3s, box-shadow .3s, transform .4s var(--pop); }
+.dots i.x { background: rgba(255,33,86,.75); }
+.dots i.k { background: var(--lime); box-shadow: 0 0 12px var(--lime); transform: scale(1.35); }
+.odds-say { text-align: center; margin: clamp(40px, 5vw, 64px) auto 0; font-size: clamp(28px, 3.6vw, 48px); font-weight: 600; letter-spacing: -.045em; line-height: 1.05; max-width: 22ch; text-wrap: balance; }
+@media (max-width: 900px) { .odds { grid-template-columns: 1fr; } }
+@media (max-width: 480px) { .od { grid-template-columns: 1fr; gap: 18px; } }
+
+/* ---------- talk: explained in texts, for people who have never traded ---------- */
+.talk-g { display: grid; grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr); gap: clamp(24px, 4vw, 64px); align-items: center; }
+.talk-ph { position: relative; height: clamp(460px, 48vw, 640px); }
+.talk-ph::before { content: ""; position: absolute; left: 50%; top: 52%; width: 92%; aspect-ratio: 1; transform: translate(-50%, -50%); border-radius: 50%; background: radial-gradient(circle, rgba(0,216,195,.42), rgba(217,255,0,.08) 46%, transparent 68%); filter: blur(8px); animation: breathe 7s ease-in-out infinite; }
+.talk-ph::after { content: ""; position: absolute; left: 50%; top: 52%; width: 74%; aspect-ratio: 1; transform: translate(-50%, -50%); border-radius: 50%; border: 1px solid rgba(143,243,232,.22); }
+.talk-ph img { position: absolute; left: 50%; bottom: 0; height: 100%; width: auto; max-width: none; transform: translateX(-50%) translate3d(var(--px, 0px), var(--py, 0px), 0); transition: transform .9s var(--ease); -webkit-mask-image: linear-gradient(180deg, #000 72%, transparent); mask-image: linear-gradient(180deg, #000 72%, transparent); z-index: 1; }
+.live { position: absolute; z-index: 2; left: 4%; top: 10%; display: inline-flex; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 999px; font-size: 13px; color: #fff; }
+.live i { width: 8px; height: 8px; border-radius: 50%; background: var(--lime); position: relative; }
+.live i::after { content: ""; position: absolute; inset: 0; border-radius: 50%; background: var(--lime); animation: ping 1.6s ease-out infinite; }
+.thread { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.thread .eyebrow { margin-bottom: 10px; }
+.th-h { margin: 0 0 18px; font-size: clamp(36px, 4.4vw, 60px); letter-spacing: -0.05em; line-height: .98; font-weight: 600; text-wrap: balance; }
+.bub { margin: 0; align-self: flex-start; max-width: 32ch; padding: 15px 20px; border-radius: 24px 24px 24px 8px; font-size: clamp(18px, 1.8vw, 22px); line-height: 1.3; letter-spacing: -.02em; font-weight: 500; background: linear-gradient(160deg, rgba(10,44,50,.95), rgba(5,18,22,.96)); border: 1px solid rgba(143,243,232,.22); box-shadow: 0 20px 50px -30px rgba(0,0,0,.9), inset 0 1px 0 rgba(255,255,255,.07); transform-origin: 0 100%; transition: opacity .5s var(--ease), transform .6s var(--pop); }
+.bub em { font-style: normal; color: var(--lime); }
+.bub.me { align-self: flex-end; border-radius: 24px 24px 8px 24px; background: #fff; color: #0a0a0a; border-color: #fff; transform-origin: 100% 100%; font-size: clamp(16px, 1.5vw, 19px); }
+.bub.cta-b { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
+.bub .buy { font-size: 15px; padding: 12px 20px; }
+.bub.wait { opacity: 0; transform: translateY(14px) scale(.86); }
+.typing { align-self: flex-start; display: inline-flex; gap: 5px; padding: 0 18px; border-radius: 20px 20px 20px 6px; background: rgba(10,44,50,.9); border: 1px solid rgba(143,243,232,.18); opacity: 0; transform: scale(.8); transform-origin: 0 100%; transition: opacity .25s, transform .3s var(--pop); height: 0; overflow: hidden; }
+.typing.on { opacity: 1; transform: none; height: auto; padding-block: 14px; }
+.typing i { width: 7px; height: 7px; border-radius: 50%; background: var(--iris); animation: dot 1s ease-in-out infinite; }
+.typing i:nth-child(2) { animation-delay: .15s; } .typing i:nth-child(3) { animation-delay: .3s; }
+@keyframes dot { 0%, 100% { opacity: .3; transform: none; } 50% { opacity: 1; transform: translateY(-3px); } }
+@media (max-width: 900px) { .talk-g { grid-template-columns: 1fr; } .talk-ph { height: 380px; } .bub { font-size: 18px; } }
+
+/* ---------- pick your way in ---------- */
+.ways { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; align-items: stretch; }
+.way { padding: clamp(24px, 3vw, 38px); display: flex; flex-direction: column; transition: border-color .4s, box-shadow .5s, transform .5s var(--ease), opacity .4s; }
+.way.on { border-color: rgba(217,255,0,.55); box-shadow: 0 40px 100px -40px rgba(0,0,0,.9), 0 0 0 1px rgba(217,255,0,.25), 0 30px 80px -40px rgba(217,255,0,.35); }
+.way .for { display: inline-flex; align-self: flex-start; align-items: center; gap: 8px; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--iris); border: 1px solid rgba(143,243,232,.25); border-radius: 999px; padding: 6px 12px; }
+.way.on .for { color: #0a0a0a; background: var(--lime); border-color: var(--lime); }
+.way h3 { margin: 18px 0 6px; font-size: clamp(28px, 2.8vw, 38px); letter-spacing: -.045em; line-height: 1; font-weight: 600; }
+.way > p { margin: 0; color: var(--mute); font-size: 16px; max-width: 44ch; }
+.way .chips { margin-top: 22px; }
+.way .chip { font-size: 13px; padding: 8px 13px; }
+.fee { margin-top: 22px; display: flex; align-items: flex-end; gap: 12px; flex-wrap: wrap; }
+.fee .n { font-size: clamp(64px, 6.4vw, 96px); font-weight: 600; letter-spacing: -0.06em; line-height: .86; }
+.fee .s { color: var(--mute); font-size: 14px; padding-bottom: 6px; }
+.fee .s b { display: block; color: #fff; font-weight: 500; }
+.fee .then { font-size: 15px; color: var(--mute); padding-bottom: 8px; }
+.fee .then b { color: #fff; font-weight: 600; }
+.obj { margin: 22px 0 0; display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: rgba(143,243,232,.14); border-radius: 16px; overflow: hidden; border: 1px solid rgba(143,243,232,.14); }
+.obj > div { background: #08171c; padding: 14px 16px; }
+.obj dt { font-size: 13px; color: var(--mute); }
+.obj dd { margin: 4px 0 0; font-size: 20px; font-weight: 600; letter-spacing: -.03em; }
+.obj dd small { font-size: 13px; color: var(--mute); font-weight: 400; letter-spacing: 0; margin-left: 6px; }
+.way .go { margin-top: auto; padding-top: 24px; }
+.way .go .buy { width: 100%; }
+.pay { display: flex; gap: 6px; align-items: center; margin-top: 12px; flex-wrap: wrap; }
+.pay img { height: 22px; width: auto; border-radius: 4px; }
+.pay span { font-size: 12.5px; color: var(--dim); margin-left: 4px; }
+@media (max-width: 900px) { .ways { grid-template-columns: 1fr; } }
+
+/* ---------- how it works ---------- */
+.tabs { display: inline-flex; padding: 4px; border-radius: 999px; border: 1px solid rgba(143,243,232,.2); background: rgba(255,255,255,.03); margin: 0 auto 30px; }
+.tabs button { appearance: none; border: 0; background: transparent; color: var(--mute); font-size: 14px; font-weight: 500; padding: 10px 18px; border-radius: 999px; cursor: pointer; transition: background .25s, color .25s; }
+.tabs button[aria-selected="true"] { background: #fff; color: #0a0a0a; }
+.tabs-c { text-align: center; }
+.steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.nc { position: relative; overflow: hidden; border-radius: 30px; padding: 30px; min-height: 360px; display: flex; flex-direction: column; border: 1px solid rgba(143,243,232,.2); background: linear-gradient(170deg, rgba(10,44,50,.9), rgba(4,16,20,.96) 60%); transition: transform .5s var(--ease), border-color .4s, box-shadow .5s; }
+.nc:hover { transform: translateY(-6px); border-color: rgba(143,243,232,.4); box-shadow: 0 30px 60px -34px rgba(0,216,195,.7); }
+.nc .tag { font-size: 12px; letter-spacing: .18em; text-transform: uppercase; color: var(--iris); }
+.nc .bign { margin-top: auto; font-weight: 600; font-size: clamp(70px, 7vw, 116px); letter-spacing: -0.06em; line-height: .9; }
+.nc:nth-child(1) .bign { color: transparent; -webkit-text-stroke: 1.5px rgba(143,243,232,.6); }
+.nc:nth-child(2) .bign { color: var(--lime); }
+.nc:nth-child(3) .bign { background: linear-gradient(90deg, #a8fff4, #00d8c3 48%, #d9ff00); -webkit-background-clip: text; background-clip: text; color: transparent; padding-bottom: .06em; }
+.nc h3 { margin: 18px 0 8px; font-size: 24px; letter-spacing: -.03em; font-weight: 600; }
+.nc p { margin: 0; color: var(--mute); font-size: 16px; }
+.steps.swap .nc { animation: swap .6s var(--ease) both; }
+.steps.swap .nc:nth-child(2) { animation-delay: .06s; } .steps.swap .nc:nth-child(3) { animation-delay: .12s; }
+@keyframes swap { from { opacity: 0; transform: translateY(18px) scale(.98); } to { opacity: 1; transform: none; } }
+@media (max-width: 860px) { .steps { grid-template-columns: 1fr; } .nc { min-height: 0; } .nc .bign { margin-top: 24px; } }
+
+/* rules table */
+.rules { max-width: 1000px; margin: 0 auto; overflow: hidden; }
+.tx { overflow-x: auto; }
+.rt { width: 100%; border-collapse: collapse; font-size: 16px; min-width: 560px; }
+.rt th, .rt td { padding: 17px 22px; text-align: left; border-bottom: 1px solid rgba(255,255,255,.07); vertical-align: top; }
+.rt thead th { font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--mute); font-weight: 500; }
+.rt thead th.lit { color: var(--lime); }
+.rt td { font-weight: 600; letter-spacing: -.01em; }
+.rt td small { display: block; font-weight: 400; color: var(--mute); font-size: 13.5px; margin-top: 3px; letter-spacing: 0; }
+.rt td:first-child { color: var(--mute); font-weight: 400; }
+.rt td.bad { color: #ff8aa3; }
+.rt td.lit { background: rgba(0,216,195,.08); }
+.rt tbody tr { transition: background .2s; }
+.rt tbody tr:hover { background: rgba(255,255,255,.03); }
+.rt tr.end td { border-bottom: 0; font-size: 18px; }
+.rt tr.end td.bad { color: var(--red); }
+.rt tr.end td.lit { color: var(--lime); }
+@media (max-width: 600px) { .rt th, .rt td { padding: 14px 12px; font-size: 14px; } }
+
+/* traders */
+.ugc .mq-tr { gap: 16px; padding-right: 16px; animation-duration: 60s; }
+.ug { position: relative; display: block; width: 260px; height: 340px; border-radius: 26px; overflow: hidden; border: 1px solid rgba(143,243,232,.18); background: #08171c; flex: none; }
+.ug img { width: 100%; height: 100%; object-fit: cover; transition: transform .7s var(--ease); filter: saturate(.9); }
+.ug::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 40%, rgba(3,10,14,.92)); }
+.ug:hover img { transform: scale(1.05); }
+.ug .pl { position: absolute; z-index: 2; left: 16px; top: 16px; width: 42px; height: 42px; border-radius: 50%; background: rgba(3,12,15,.55); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); box-shadow: inset 0 0 0 1px rgba(255,255,255,.25); transition: transform .4s var(--pop), background .3s; }
+.ug .pl::before { content: ""; position: absolute; left: 16px; top: 13px; border-left: 13px solid #fff; border-top: 8px solid transparent; border-bottom: 8px solid transparent; }
+.ug:hover .pl { transform: scale(1.1); background: var(--lime); }
+.ug:hover .pl::before { border-left-color: #0a0a0a; }
+.ug .tx2 { position: absolute; z-index: 2; left: 18px; right: 18px; bottom: 18px; }
+.ug b { display: block; font-size: 18px; font-weight: 600; white-space: nowrap; }
+.ug small { display: block; color: var(--mute); font-size: 14px; line-height: 1.4; margin-top: 4px; min-height: 2.8em; }
+
+/* Reward certificates: the card from the certificates Figma file (Kokuyō), lime variant */
+.certs .rows { display: grid; gap: 16px; }
+.mrow { display: flex; overflow: hidden; }
+.mrow .tr { display: flex; gap: 16px; padding-right: 16px; width: max-content; flex: none; animation: mq var(--dur, 120s) linear infinite; }
+.mrow.rev .tr { animation-direction: reverse; }
+.mrow:hover .tr { animation-play-state: paused; }
+.mask-x { -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+.rc { --u: 1px; position: relative; flex: none; width: calc(280 * var(--u)); height: calc(216.166 * var(--u)); border-radius: calc(5.803 * var(--u)); border: 1px solid transparent; overflow: hidden; color: #fff; text-align: center; background: linear-gradient(#0e0e0e, #0e0e0e) padding-box, linear-gradient(225deg, #d9ff00 0%, #303030 52%) border-box; }
+.rc .dt { position: absolute; left: calc(2.03 * var(--u)); top: calc(2.96 * var(--u)); width: calc(272.555 * var(--u)); height: calc(109.326 * var(--u)); max-width: none; }
+.rc .mk { position: absolute; left: 50%; top: calc(15.41 * var(--u)); width: calc(20.572 * var(--u)); height: calc(17.409 * var(--u)); transform: translateX(calc(-50% + .13 * var(--u))); }
+.rc .ti { position: absolute; left: 0; right: 0; top: calc(52.1 * var(--u)); margin: 0; font-weight: 700; font-size: calc(13.057 * var(--u)); line-height: 1.4; white-space: nowrap; }
+.rc .who { position: absolute; left: calc(8 * var(--u)); top: calc(86.2 * var(--u)); width: calc(260 * var(--u)); display: flex; flex-direction: column; align-items: center; gap: calc(3.1 * var(--u)); white-space: nowrap; }
+.rc .nm { margin: 0; color: #d9ff00; font-weight: 400; font-size: calc(13.057 * var(--u)); line-height: 1.4; text-transform: capitalize; }
+.rc .am { margin: 0; font-weight: 700; font-size: calc(23.212 * var(--u)); line-height: 1; font-variant-numeric: tabular-nums; }
+.rc .ft { position: absolute; left: calc(9.61 * var(--u)); top: calc(155.4 * var(--u)); width: calc(256.788 * var(--u)); display: flex; gap: calc(5.803 * var(--u)); text-align: left; }
+.rc .bx { flex: 1 1 0; min-width: 0; height: calc(47.876 * var(--u)); padding: calc(7.254 * var(--u)) calc(11.606 * var(--u)); border-radius: calc(4.352 * var(--u)); background: rgba(217,255,0,.12); display: flex; align-items: center; gap: calc(2.902 * var(--u)); font-size: calc(9.43 * var(--u)); line-height: 1.4; }
+.rc .bx p { margin: 0; flex: 1 1 0; min-width: 0; }
+.rc .bx b { display: block; font-weight: 500; }
+.rc .bx span { display: block; font-weight: 300; }
+.rc .bx.ceo span { color: rgba(255,255,255,.7); }
+.rc .sg { flex: none; width: calc(24.663 * var(--u)); height: calc(20.674 * var(--u)); }
+.rw-band { display: grid; grid-template-columns: repeat(4, 1fr); margin-top: clamp(36px, 5vw, 56px); }
+.rw-band > div { padding: 24px 28px; position: relative; }
+.rw-band > div + div::before { content: ""; position: absolute; left: 0; top: 22px; bottom: 22px; width: 1px; background: rgba(255,255,255,.1); }
+.rw-band .v { font-size: clamp(32px, 3.6vw, 48px); font-weight: 600; letter-spacing: -0.045em; line-height: 1; }
+.rw-band .v em { font-style: normal; color: var(--lime); }
+.rw-band .k { margin-top: 8px; color: var(--mute); font-size: 14px; }
+@media (max-width: 860px) { .rw-band { grid-template-columns: 1fr 1fr; } .rw-band > div:nth-child(3)::before { display: none; } .rw-band > div:nth-child(n+3) { border-top: 1px solid rgba(255,255,255,.08); } }
+@media (max-width: 640px) { .rc { --u: .86px; } .certs .rows { gap: 12px; } .mrow .tr { gap: 12px; padding-right: 12px; } }
+
+/* reviews */
+.rvw .mq-tr { gap: 16px; padding-right: 16px; animation-duration: 70s; }
+.rvw .mq + .mq { margin-top: 16px; }
+.rv-c { flex: none; width: 340px; padding: 22px; border-radius: 22px; background: #f2f3ee; color: #0a0a0a; transition: transform .35s var(--ease), box-shadow .35s; }
+.rv-c:hover { transform: translateY(-3px); box-shadow: 0 22px 44px -28px rgba(0,0,0,.9); }
+.rv-c .stars i { width: 18px; height: 18px; }
+.rv-c h3 { margin: 14px 0 6px; font-size: 17px; font-weight: 600; letter-spacing: -.01em; }
+.rv-c p { margin: 0; font-size: 15px; color: #3b3b3b; line-height: 1.5; }
+.rv-c footer { margin-top: 14px; font-size: 13px; color: #6b6b6b; }
+.rv-c footer b { color: #0a0a0a; font-weight: 600; }
+.tpsum { display: flex; justify-content: center; align-items: center; gap: 12px; margin-top: 22px; flex-wrap: wrap; font-size: 15px; color: var(--mute); }
+
+/* faq */
+.faq { max-width: 860px; margin: 0 auto; display: grid; gap: 10px; }
+.faq details { border-radius: 20px; border: 1px solid rgba(143,243,232,.16); background: rgba(8,28,32,.5); transition: border-color .3s, background .3s; }
+.faq details[open] { border-color: rgba(143,243,232,.35); background: rgba(10,44,50,.6); }
+.faq summary { list-style: none; cursor: pointer; padding: 22px 24px; font-size: 18px; font-weight: 600; letter-spacing: -.02em; display: flex; justify-content: space-between; gap: 16px; align-items: center; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary i { flex: none; width: 30px; height: 30px; border-radius: 50%; border: 1px solid rgba(255,255,255,.2); position: relative; transition: transform .4s var(--pop), background .3s, border-color .3s; }
+.faq summary i::before, .faq summary i::after { content: ""; position: absolute; left: 50%; top: 50%; width: 11px; height: 1.5px; background: currentColor; transform: translate(-50%, -50%); }
+.faq summary i::after { transform: translate(-50%, -50%) rotate(90deg); }
+.faq details[open] summary i { transform: rotate(45deg); background: var(--lime); border-color: var(--lime); color: #0a0a0a; }
+.faq .a { padding: 0 24px 22px; color: var(--mute); font-size: 16px; max-width: 68ch; animation: rIn .4s var(--ease); }
+@keyframes rIn { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
+
+/* final */
+.end { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); align-items: end; overflow: hidden; min-height: 520px; }
+.end-c { padding: clamp(30px, 5vw, 64px); align-self: center; position: relative; z-index: 2; }
+.end h2 { font-size: clamp(42px, 5.6vw, 80px); letter-spacing: -0.05em; line-height: .96; font-weight: 600; margin: 16px 0 18px; text-wrap: balance; }
+.end p { color: var(--mute); font-size: 18px; margin: 0 0 30px; max-width: 40ch; }
+.end .alt { display: inline-flex; margin-top: 16px; color: #fff; font-size: 15px; font-weight: 500; text-decoration: underline; text-decoration-color: var(--dim); text-underline-offset: 4px; }
+.end .alt:hover { text-decoration-color: var(--lime); }
+.end-ph { position: relative; height: 100%; min-height: 420px; }
+.end-ph img { position: absolute; right: 0; bottom: 0; height: 108%; width: auto; max-width: none; -webkit-mask-image: linear-gradient(180deg, #000 70%, transparent); mask-image: linear-gradient(180deg, #000 70%, transparent); }
+.end-ph .tag { position: absolute; left: 0; top: 18%; z-index: 2; padding: 14px 18px; font-size: 13px; color: var(--mute); animation: bob 6s ease-in-out infinite; }
+.end-ph .tag b { display: block; color: var(--lime); font-size: 26px; font-weight: 600; letter-spacing: -.04em; }
+@keyframes bob { 0%,100% { translate: 0 0; } 50% { translate: 0 -10px; } }
+@media (max-width: 860px) { .end { grid-template-columns: 1fr; } .end-ph { min-height: 360px; } .end-ph img { right: 50%; transform: translateX(50%); height: 100%; } .end-ph .tag { left: 16px; } }
+
+/* footer */
+.ft { padding-block: 60px 40px; border-top: 1px solid var(--line); margin-top: clamp(60px, 8vw, 110px); color: var(--mute); font-size: 14px; }
+.ft-g { display: grid; grid-template-columns: 1.4fr repeat(3, 1fr); gap: 32px; }
+.ft-g > div > img { height: 22px; width: auto; }
+.ft-g h4 { margin: 0 0 14px; color: #fff; font-size: 14px; font-weight: 600; }
+.ft-g a { display: block; padding: 4px 0; transition: color .2s; }
+.ft-g a:hover { color: var(--lime); }
+.ft-g p { margin: 16px 0 0; max-width: 34ch; }
+.ft .pay { margin-top: 18px; }
+.ft-b { margin-top: 40px; padding-top: 22px; border-top: 1px solid var(--line); font-size: 12.5px; color: var(--dim); line-height: 1.6; }
+.ft-b p { margin: 0 0 10px; }
+@media (max-width: 760px) { .ft-g { grid-template-columns: 1fr 1fr; } .ft-g > div:first-child { grid-column: 1 / -1; } }
+
+/* sticky mobile buy bar */
+.mbar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 55; display: none; align-items: center; justify-content: space-between; gap: 12px; padding: 12px max(16px, env(safe-area-inset-left, 0px)) calc(12px + env(safe-area-inset-bottom, 0px)); background: rgba(3,10,14,.88); -webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px); border-top: 1px solid var(--line); transform: translateY(110%); transition: transform .45s var(--ease); }
+.mbar.on { transform: none; }
+.mbar b { display: block; font-size: 15px; } .mbar small { color: var(--mute); font-size: 12.5px; }
+@media (max-width: 760px) { .mbar { display: flex; } }
+
+/* cursor spotlight */
+.spot { position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity .5s; z-index: 0; border-radius: inherit; background: radial-gradient(var(--sz) circle at var(--x, 50%) var(--y, 50%), rgba(0,216,195,var(--st)), transparent 62%); }
+[data-spot] { position: relative; }
+[data-spot] > *:not(.spot) { position: relative; z-index: 1; }
+
+/* reveal */
+.rv { transition: opacity 1.1s var(--ease), transform 1.1s var(--ease); }
+.rv.pre { opacity: 0; transform: translateY(36px); }
+
+/* phones */
+@media (max-width: 900px) {
+  .hero-grid { grid-template-columns: 1fr; gap: 8px; }
+  .hero h1 { font-size: clamp(40px, 11.6vw, 72px); }
+  .scene { height: 400px; margin: 10px -8px 0; }
+  .rig { inset: 8% 6% 10% 6%; }
+  .fchip { padding: 10px 14px; font-size: 12px; }
+  .fchip b { font-size: 22px; }
+  .fchip.loss { left: -2%; } .fchip.cap { right: -2%; }
+}
+@media (max-width: 600px) {
+  .paths { grid-template-columns: 1fr; }
+  .sh p { font-size: 17px; }
+  .hero .lede { font-size: 17px; }
+  .cta .buy { width: 100%; }
+  .ug { width: 220px; height: 300px; }
+  .rv-c { width: 290px; }
+  .obj dd { font-size: 18px; }
+  .ft { padding-bottom: 110px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; scroll-behavior: auto !important; }
+  .mq-tr, .mrow .tr { animation: none !important; }
+  .rv.pre { opacity: 1; transform: none; }
+  .bub.wait { opacity: 1; transform: none; }
+}
+</style>
+</head>
+<body>
+<div class="bgfx" aria-hidden="true"></div>
+<div class="gridbg" aria-hidden="true"></div>
+
+<header class="nav" id="nav">
+  <div class="wrap">
+    <a class="nav-l" href="https://fundingrock.com/" target="_blank" rel="noopener" aria-label="FundingRock home"><img src="assets/logo.svg" alt="FundingRock" width="182" height="24"><span class="sep"></span><b>Simulated trading</b></a>
+    <nav class="nav-r" aria-label="Page">
+      <a class="l" href="#drop">The cap</a>
+      <a class="l" href="#ways">Pricing</a>
+      <a class="l" href="#how">How it works</a>
+      <a class="l" href="#rewards">Rewards</a>
+      <a class="l" href="#faq">FAQ</a>
+      <a class="buy" href="#ways" data-cta="nav">Start for $5</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <!-- 1. pain point hero -->
+  <section class="hero" data-spot="680,.10" id="top">
+    <div class="wrap">
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <span class="eyebrow r">For traders who aren't prop traders</span>
+          <h1><span class="ln"><span>Your <s>savings</s></span></span><span class="ln"><span>aren't a</span></span><span class="ln"><span class="grad">training budget.</span></span></h1>
+          <p class="lede">Trade a <b>simulated account up to $200K</b>. If it goes wrong, you lose the fee. <b>Not your savings.</b></p>
+          <p class="who-q">Which one is you?</p>
+          <div class="paths" role="group" aria-label="Pick your path">
+            <button type="button" class="pth" data-path="own" aria-pressed="false"><span class="tk" aria-hidden="true"></span><span>I've traded my own money<small>Instant · one fee, no target</small></span></button>
+            <button type="button" class="pth" data-path="new" aria-pressed="true"><span class="tk" aria-hidden="true"></span><span>I'm new to trading<small>Pay After You Pass · $5 start</small></span></button>
+          </div>
+          <div class="cta">
+            <a class="buy lg" href="#ways" id="heroCta">Start for $5 <span class="ar" aria-hidden="true">→</span></a>
+            <a class="ghost" href="#drop">See what a bad week costs <span class="ar" aria-hidden="true">→</span></a>
+          </div>
+          <p class="under" id="heroUnder">Simulated trading. The most you can lose today is $5.</p>
+          <ul class="ticks"><li>No deposits</li><li>Up to $200K simulated</li><li>Rewards processed within 48h</li></ul>
+        </div>
+
+        <div class="scene" id="scene" aria-hidden="true">
+          <div class="halo"></div>
+          <div class="ring"></div>
+          <div class="rig" id="rig">
+            <div class="card3 glass">
+              <div class="hd"><span>A bad week</span><b>Same trades, two accounts</b></div>
+              <svg id="dropSvg" viewBox="0 0 520 400" preserveAspectRatio="none"></svg>
+            </div>
+            <div class="fchip liquid loss"><span class="bump" id="lossB"><b class="tnum" id="lossN">−$0</b></span>From your savings</div>
+            <div class="fchip liquid cap"><b class="tnum">−$5</b>The cap · Pay After You Pass</div>
+            <div class="fchip liquid nd"><i></i>No deposit. Ever.</div>
+          </div>
+        </div>
+      </div>
+      <div class="trust">
+        <a href="https://www.trustpilot.com/review/fundingrock.com" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:12px"><span class="stars" id="heroStars" aria-label="Trustpilot stars"></span><span><b>3.8 / 5</b> on Trustpilot · 215 reviews</span></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="press" aria-label="As featured in">
+    <span class="press-k">As featured in</span>
+    <div class="mq"><div class="mq-tr" id="pressTr"></div></div>
+  </section>
+
+  <!-- 2. pain point comparison: scroll drives a bad stretch, the cap line holds -->
+  <section id="drop" class="sec" style="padding-bottom:0">
+    <div class="dpin" id="dpin">
+      <div class="dstick">
+        <div class="wrap">
+          <div class="d-top">
+            <div>
+              <span class="eyebrow r">The pain, in dollars</span>
+              <h2>A <span class="pc tnum" id="dPc">0%</span> bad stretch.<br><span class="grad">Three very different bills.</span></h2>
+            </div>
+            <div class="d-ctl">
+              <span>Your own broker account</span>
+              <div class="chips" role="group" aria-label="Your account size" id="bkSizes"></div>
+            </div>
+          </div>
+          <div class="meter" aria-hidden="true"><i id="dMeter"></i><em style="left:20%">8%</em><em style="left:50%">20%</em><em style="left:100%">40%</em></div>
+          <div class="tanks" id="tanks">
+            <div class="tk3 bk">
+              <div class="nm"><b>Your own money</b><span id="bkName">$5,000 broker account</span></div>
+              <div class="v tnum" id="bkV">−$0</div>
+              <div class="tube"><div class="fill" id="bkF"></div><span class="nocap">No cap</span></div>
+            </div>
+            <div class="tk3 fr">
+              <div class="nm"><b>$50K Instant</b>One-time fee</div>
+              <div class="v tnum">−$350</div>
+              <div class="tube"><div class="fill" id="frF"></div><span class="lock" id="frL"><svg viewBox="0 0 12 12" fill="currentColor" aria-hidden="true"><path d="M3.5 5V3.6a2.5 2.5 0 015 0V5h.6c.5 0 .9.4.9.9v4.2c0 .5-.4.9-.9.9H2.9a.9.9 0 01-.9-.9V5.9c0-.5.4-.9.9-.9zm1.2 0h2.6V3.6a1.3 1.3 0 00-2.6 0z"/></svg>Capped</span></div>
+            </div>
+            <div class="tk3 pp">
+              <div class="nm"><b>$50K Pay After You Pass</b>Before you pass</div>
+              <div class="v tnum">−$5</div>
+              <div class="tube"><div class="fill" id="ppF"></div><span class="lock" id="ppL"><svg viewBox="0 0 12 12" fill="currentColor" aria-hidden="true"><path d="M3.5 5V3.6a2.5 2.5 0 015 0V5h.6c.5 0 .9.4.9.9v4.2c0 .5-.4.9-.9.9H2.9a.9.9 0 01-.9-.9V5.9c0-.5.4-.9.9-.9zm1.2 0h2.6V3.6a1.3 1.3 0 00-2.6 0z"/></svg>Capped</span></div>
+            </div>
+            <div class="capline" id="capLine"><span>The cap · $350</span></div>
+          </div>
+          <div class="d-say">
+            <p id="dSay">Scroll to let the market drop. Watch which account has a floor.</p>
+            <span class="scrollcue" id="cue"><i></i>Scroll</span>
+            <small>Simulated trading. Only your fee is at risk. Example for illustration.</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- the odds -->
+  <section class="sec" id="odds">
+    <div class="wrap">
+      <div class="sh rv"><span class="eyebrow r">The odds with your own money</span><h2>The market keeps <span class="grad">most deposits.</span></h2></div>
+      <div class="odds">
+        <div class="od glass rv" data-spot="420,.14">
+          <svg class="ringv" id="ringV" viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="50" stroke="rgba(255,255,255,.08)"/><circle id="ringB" cx="60" cy="60" r="50" stroke="rgba(255,33,86,.38)" stroke-linecap="round" transform="rotate(-90 60 60)" stroke-dasharray="0 400"/><circle id="ringA" cx="60" cy="60" r="50" stroke="#ff2156" stroke-linecap="round" transform="rotate(-90 60 60)" stroke-dasharray="0 400"/></svg>
+          <div><div class="big tnum redt" id="oddA">74 to 89%</div><p>of retail CFD accounts lose money.</p><cite>ESMA, 2018. EU retail CFD accounts.</cite></div>
+        </div>
+        <div class="od glass rv" data-spot="420,.14">
+          <div class="dots" id="dots" aria-hidden="true"></div>
+          <div><div class="big tnum"><span class="grad">&lt;1%</span></div><p>of day traders reliably profit after fees.</p><cite>Barber, Lee, Liu, Odean. Journal of Financial Markets, 2014.</cite></div>
+        </div>
+      </div>
+      <p class="odds-say rv">We can't change those odds. <span class="grad">We can cap what you lose.</span></p>
+    </div>
+  </section>
+
+  <!-- explained in texts, for people who have never traded -->
+  <section class="sec talk" id="talk" style="padding-top:0">
+    <div class="wrap">
+      <div class="talk-g">
+        <div class="talk-ph" id="talkPh">
+          <img src="assets/hero.webp" alt="A FundingRock trader holding his phone" loading="lazy" width="719" height="650">
+          <span class="live liquid"><i></i>Never traded? Start here</span>
+        </div>
+        <div class="thread" id="thread">
+          <span class="eyebrow">New to trading</span>
+          <h2 class="th-h">The whole thing, <span class="grad">in a few texts.</span></h2>
+          <p class="bub me">I've never traded. Is this for me?</p>
+          <p class="bub">Yes. You get a <em>$50K simulated account</em>. No deposit.</p>
+          <p class="bub me">Whose money am I trading?</p>
+          <p class="bub">Nobody's. It's simulated. Your trades <em>never touch a real market.</em></p>
+          <p class="bub me">So what can I lose?</p>
+          <p class="bub"><em>$5.</em> That's it, until you pass.</p>
+          <p class="bub">Hit 3%, pay the $300 activation fee, then earn <em>Rewards</em> on your Prime account.</p>
+          <div class="bub cta-b"><span>Learn the rules for $5.</span><a class="buy" href="#ways" data-path-go="new">Start for $5 <span class="ar" aria-hidden="true">→</span></a></div>
+          <span class="typing" id="typing" aria-hidden="true"><i></i><i></i><i></i></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- pick your way in -->
+  <section class="sec" id="ways" style="padding-top:0">
+    <div class="wrap">
+      <div class="sh rv"><span class="eyebrow">Pick your way in</span><h2>One fee. <span class="grad">That's the most you lose.</span></h2><p>Two ways in, depending on where you're coming from. The whole cost is shown up front.</p></div>
+      <div class="ways">
+        <article class="way glass rv" id="wayOwn" data-spot="520,.14">
+          <span class="for">If you've traded your own money</span>
+          <h3>Instant. No challenge.</h3>
+          <p>Trade your way from day one. No profit target. Request a Reward when you're in profit.</p>
+          <div class="chips" role="group" aria-label="Instant account size" id="inSizes"></div>
+          <div class="fee"><span class="n tnum" id="inFee">$350</span><span class="s"><b>One-time fee</b>Your only risk</span></div>
+          <dl class="obj">
+            <div><dt>Daily loss limit</dt><dd class="tnum" id="inD">4%<small>$2,000</small></dd></div>
+            <div><dt>Max loss (trailing)</dt><dd class="tnum" id="inM">8%<small>$4,000</small></dd></div>
+            <div><dt>Profit target</dt><dd>None</dd></div>
+            <div><dt>Reward Share</dt><dd>80%<small>95% add-on</small></dd></div>
+          </dl>
+          <div class="go">
+            <a class="buy lg" id="inBuy" href="https://checkout.fundingrock.com/onboarding" target="_blank" rel="noopener">Get my $50K Instant for $350 <span class="ar" aria-hidden="true">→</span></a>
+            <p class="under">One-time fee. 14-day refund if you haven't placed a trade.</p>
+            <div class="pay"><img src="assets/foot/pay-visa.svg" alt="Visa"><img src="assets/foot/pay-mastercard.svg" alt="Mastercard"><img src="assets/foot/pay-bitcoin.svg" alt="Bitcoin"><img src="assets/foot/pay-usdt.svg" alt="USDT"><span>Card, Apple Pay, Google Pay, crypto</span></div>
+          </div>
+        </article>
+        <article class="way glass rv on" id="wayNew" data-spot="520,.14">
+          <span class="for">If you're new to trading</span>
+          <h3>Pay After You Pass.</h3>
+          <p>Learn the rules on a simulated account. Pay $5 to start. Pay the activation fee only if you pass.</p>
+          <div class="chips" role="group" aria-label="Pay After You Pass account size" id="ppSizes"></div>
+          <div class="fee"><span class="n tnum">$5</span><span class="then">today, then <b class="tnum" id="ppAct">$300</b><br>only if you pass</span></div>
+          <dl class="obj">
+            <div><dt>Profit target</dt><dd class="tnum" id="ppT">3%<small>$1,500</small></dd></div>
+            <div><dt>Max loss (trailing)</dt><dd class="tnum" id="ppM">8%<small>$4,000</small></dd></div>
+            <div><dt>Daily limit</dt><dd>None</dd></div>
+            <div><dt>Time limit</dt><dd>None</dd></div>
+          </dl>
+          <div class="go">
+            <a class="buy lg" id="ppBuy" href="https://checkout.fundingrock.com/onboarding" target="_blank" rel="noopener">Start my $50K for $5 <span class="ar" aria-hidden="true">→</span></a>
+            <p class="under">The most you can lose today is $5. 14-day refund on the $5 if you haven't placed a trade.</p>
+            <div class="pay"><img src="assets/foot/pay-visa.svg" alt="Visa"><img src="assets/foot/pay-mastercard.svg" alt="Mastercard"><img src="assets/foot/pay-bitcoin.svg" alt="Bitcoin"><img src="assets/foot/pay-usdt.svg" alt="USDT"><span>Card, Apple Pay, Google Pay, crypto</span></div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- how it works -->
+  <section class="sec" id="how" style="padding-top:0">
+    <div class="wrap">
+      <div class="sh rv"><span class="eyebrow">How it works</span><h2>Three moves. <span class="grad">No deposit in any of them.</span></h2></div>
+      <div class="tabs-c rv"><div class="tabs" role="tablist" aria-label="Path"><button type="button" role="tab" data-path="new" aria-selected="true">New to trading</button><button type="button" role="tab" data-path="own" aria-selected="false">Traded my own money</button></div></div>
+      <div class="steps" id="steps"></div>
+    </div>
+  </section>
+
+  <!-- what's different from your broker -->
+  <section class="sec" id="rules" style="padding-top:0">
+    <div class="wrap">
+      <div class="sh rv"><span class="eyebrow">Read this before you buy</span><h2>What's different <span class="grad">from your broker.</span></h2><p>These are the rules that end accounts. Shown in dollars for the $50K Instant.</p></div>
+      <div class="rules glass rv">
+        <div class="tx">
+        <table class="rt">
+          <thead><tr><th scope="col">Rule</th><th scope="col">Your broker</th><th scope="col" class="lit">FundingRock Instant</th></tr></thead>
+          <tbody>
+            <tr><td>Daily loss limit</td><td>You set it, or not</td><td class="lit">4% = $2,000</td></tr>
+            <tr><td>Max loss</td><td class="bad">Your whole balance</td><td class="lit">8% trailing = $4,000</td></tr>
+            <tr><td>How max loss moves</td><td>It doesn't</td><td class="lit">Trails your highest balance<small>Locks at your start balance after your first Reward request.</small></td></tr>
+            <tr><td>Profit target</td><td>None</td><td class="lit">None</td></tr>
+            <tr><td>Consistency rule</td><td>None</td><td class="lit">15% when you request a Reward<small>No single day can be more than 15% of your total profit.</small></td></tr>
+            <tr><td>Holding over the weekend</td><td>Yes</td><td class="lit">Add-on, +$53<small>15% of the fee.</small></td></tr>
+            <tr><td>Your share of profit</td><td>100%</td><td class="lit">80% Reward Share<small>95% with add-on.</small></td></tr>
+            <tr class="end"><td>Most you can lose</td><td class="bad">Everything you deposit</td><td class="lit">The fee: $350</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- certificates -->
+  <section class="sec certs" id="rewards" style="padding-top:0">
+    <div class="sh wrap rv"><span class="eyebrow">Reward certificates</span><h2>Real traders. <span class="grad">Real Rewards.</span></h2><p>In profit? Request a Reward. We process it within 48 hours on weekdays, paid via Riseworks or crypto.</p></div>
+    <div class="rows rv">
+      <div class="mrow mask-x" id="certA" style="--dur:150s"></div>
+      <div class="mrow mask-x rev" id="certB" style="--dur:170s"></div>
+    </div>
+    <div class="wrap">
+      <div class="rw-band liquid rv">
+        <div><div class="v tnum"><em>$6.3M+</em></div><div class="k">Rewards approved</div></div>
+        <div><div class="v tnum">42K+</div><div class="k">Traders</div></div>
+        <div><div class="v tnum">120+</div><div class="k">Countries</div></div>
+        <div><div class="v tnum">48h</div><div class="k">Rewards processed</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec ugc" id="traders" style="padding-top:0">
+    <div class="wrap"><div class="sh rv"><span class="eyebrow">Traders like you</span><h2>Hear it <span class="grad">from them.</span></h2></div></div>
+    <div class="mq"><div class="mq-tr" id="ugcTr"></div></div>
+  </section>
+
+  <section class="sec rvw" id="reviews" style="padding-top:0">
+    <div class="wrap"><div class="sh rv"><span class="eyebrow">Reviews</span><h2>Don't take <span class="grad">our word for it.</span></h2></div></div>
+    <div class="mq"><div class="mq-tr" id="rvA"></div></div>
+    <div class="mq"><div class="mq-tr rev" id="rvB"></div></div>
+    <div class="tpsum"><span class="stars" id="tpStars"></span><a href="https://www.trustpilot.com/review/fundingrock.com" target="_blank" rel="noopener">3.8 / 5 from 215 reviews. Read them on Trustpilot →</a></div>
+  </section>
+
+  <section class="sec" id="faq" style="padding-top:0">
+    <div class="wrap">
+      <div class="sh rv"><span class="eyebrow">Straight answers</span><h2>Questions, <span class="grad">answered.</span></h2></div>
+      <div class="faq">
+        <details><summary>Why pay a fee to trade a simulated account?<i aria-hidden="true"></i></summary><div class="a">The fee is your entry. You trade a simulated account with set rules. Stay in profit and inside the rules, and you can request Rewards. Break a rule and the account ends. The fee is the most you can lose.</div></details>
+        <details><summary>Where do Rewards come from?<i aria-hidden="true"></i></summary><div class="a">FundingRock pays them from its own funds, based on your simulated results. You never deposit money, and your trades never go to a real market.</div></details>
+        <details><summary>Is FundingRock legit?<i aria-hidden="true"></i></summary><div class="a">FundingRock is a trade name of Mindwave Training Limited, a company registered in Cyprus (HE 471803). You trade on TradeLocker or cTrader. Rewards are paid via Riseworks or crypto. On Trustpilot we have 3.8 out of 5 from 215 reviews.</div></details>
+        <details><summary>What if I lose?<i aria-hidden="true"></i></summary><div class="a">If you break a rule, the account ends and the fee is gone. You owe nothing more. With Pay After You Pass, the most you can lose before you pass is $5. If you haven't placed a trade, you can get a full refund within 14 days.</div></details>
+        <details><summary>I've never traded. Can I still start?<i aria-hidden="true"></i></summary><div class="a">Yes. Pay After You Pass is built for that. You pay $5 for a $50K simulated account, learn the rules with no daily limit and no time limit, and pay the activation fee only if you hit 3%.</div></details>
+        <details><summary>Can I use my own strategy?<i aria-hidden="true"></i></summary><div class="a">Yes. News trading and EAs (bots) are allowed. Instant has no profit target and no minimum days. Holding trades over the weekend on Instant is an add-on.</div></details>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="end" style="padding-top:0">
+    <div class="wrap">
+      <div class="end glass rv" data-spot="600,.16">
+        <div class="end-c">
+          <span class="eyebrow">Discipline or nothing</span>
+          <h2>Cap what <span class="grad">you can lose.</span></h2>
+          <p id="endP">Start a $50K simulated account for $5. Pay the activation fee only if you pass.</p>
+          <a class="buy lg" id="endBuy" href="https://checkout.fundingrock.com/onboarding" target="_blank" rel="noopener">Start for $5 <span class="ar" aria-hidden="true">→</span></a><br>
+          <a class="alt" id="endAlt" href="#wayOwn" data-path-go="own">Traded before? Get the $50K Instant for $350 →</a>
+        </div>
+        <div class="end-ph">
+          <img src="assets/prove.webp" alt="" loading="lazy" width="904" height="1200">
+          <div class="tag liquid"><b>$0</b>Deposited. Ever.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div class="mbar" id="mbar" aria-hidden="true"><div><b id="mbT">$50K for $5</b><small id="mbS">Pay $300 only if you pass</small></div><a class="buy" id="mbBuy" href="#ways" tabindex="-1">Start <span class="ar" aria-hidden="true">→</span></a></div>
+
+<footer class="ft">
+  <div class="wrap">
+    <div class="ft-g">
+      <div><img src="assets/logo.svg" alt="FundingRock" width="182" height="24"><p>401/2 Ayias Elenis 36, Nicosia 1061, Cyprus<br>support@fundingrock.com</p>
+        <div class="pay"><img src="assets/foot/pay-visa.svg" alt="Visa"><img src="assets/foot/pay-mastercard.svg" alt="Mastercard"><img src="assets/foot/pay-discover.svg" alt="Discover"><img src="assets/foot/pay-bitcoin.svg" alt="Bitcoin"><img src="assets/foot/pay-usdt.svg" alt="USDT"><img src="assets/foot/pay-rise.svg" alt="Riseworks"></div></div>
+      <div><h4>Programs</h4><a href="https://fundingrock.com/instant/" target="_blank" rel="noopener">Instant</a><a href="https://fundingrock.com/pay-after-you-pass/" target="_blank" rel="noopener">Pay After You Pass</a><a href="https://fundingrock.com/1-step/" target="_blank" rel="noopener">1-Step Challenge</a><a href="https://fundingrock.com/2-step/" target="_blank" rel="noopener">2-Step Challenge</a></div>
+      <div><h4>Company</h4><a href="https://fundingrock.com/about-us/" target="_blank" rel="noopener">About us</a><a href="https://fundingrock.com/affiliates/" target="_blank" rel="noopener">Affiliates</a><a href="https://fundingrock.com/contact-us/" target="_blank" rel="noopener">Contact us</a></div>
+      <div><h4>Legal</h4><a href="https://fundingrock.com/terms/" target="_blank" rel="noopener">Terms</a><a href="https://fundingrock.com/privacy/" target="_blank" rel="noopener">Privacy</a><a href="https://fundingrock.com/risk-disclosure/" target="_blank" rel="noopener">Risk disclosure</a></div>
+    </div>
+    <div class="ft-b">
+      <p>FundingRock (fundingrock.com) is a trade name of Mindwave Training Limited (HE 471803), 401/2 Ayias Elenis 36, Nicosia 1061, Cyprus. All accounts are simulated. No real funds are traded and we take no deposits. Rewards are based on simulated performance and are not guaranteed. FundingRock is not a broker and does not give financial advice. Past performance does not indicate future results.</p>
+      <p>Sources: European Securities and Markets Authority (ESMA), product intervention measures on CFDs, 2018: 74 to 89% of retail CFD accounts lose money. Barber, B., Lee, Y., Liu, Y., Odean, T. "The cross-section of speculator skill: Evidence from day trading." Journal of Financial Markets 18 (2014), pages 1 to 24 (Taiwan data).</p>
+    </div>
+  </div>
+</footer>
+
+<script src="js/certs.js"></script>
+<script>
+(function () {
+  var $ = function (s, r) { return (r || document).querySelector(s); };
+  var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
+  var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var finePtr = matchMedia("(hover: hover) and (pointer: fine)").matches;
+  var fmt = function (n) { return "$" + Math.round(n).toLocaleString("en-US"); };
+  var cl = function (v) { return Math.max(0, Math.min(1, v)); };
+  function tween(from, to, ms, fn) {
+    if (reduce) return fn(to);
+    var st = performance.now();
+    (function f(n) { var p = Math.min(1, (n - st) / ms), e = 1 - Math.pow(1 - p, 4); fn(from + (to - from) * e); if (p < 1) requestAnimationFrame(f); })(st);
+  }
+
+  /* stars */
+  var STAR = '<svg viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M12 2l2.9 6.9L22 9.6l-5.5 4.7L18.2 22 12 18.1 5.8 22l1.7-7.7L2 9.6l7.1-.7z"/></svg>';
+  var five = new Array(6).join("<i>" + STAR + "</i>");
+  ["#heroStars", "#tpStars"].forEach(function (s) { $(s).innerHTML = five; });
+
+  var nav = $("#nav"), mbar = $("#mbar");
+
+  /* ---------- paths: one choice drives the hero CTA, the price cards, the steps and the closing CTA ---------- */
+  var path = "new";
+  var STEPS = {
+    new: [["Start", "$5", "Start for $5", "Get a $50K simulated account. No deposit."],
+          ["Trade", "3%", "Hit 3%", "Make $1,500 without falling $4,000 (8%) below your highest balance. No daily limit. No time limit."],
+          ["Unlock", "Prime", "Pay only if you pass", "Pass, then pay the $300 activation fee. Trade your Prime account and earn Rewards."]],
+    own: [["Choose", "1", "Pick a size, pay once", "From $5K to $200K simulated. One fee. That's the most you can lose."],
+          ["Trade", "0%", "No target to hit", "Trade your way from day one. Stay inside 4% daily and 8% trailing."],
+          ["Get paid", "48h", "Request a Reward", "In profit? Request it. Minimum $100. 80% Reward Share, 95% with the add-on."]]
+  };
+  function renderSteps(anim) {
+    var s = $("#steps");
+    s.innerHTML = STEPS[path].map(function (t) { return '<article class="nc" data-spot="420,.16"><span class="tag">' + t[0] + '</span><span class="bign">' + t[1] + "</span><h3>" + t[2] + "</h3><p>" + t[3] + "</p></article>"; }).join("");
+    if (anim && !reduce) { s.classList.remove("swap"); void s.offsetWidth; s.classList.add("swap"); }
+    spotify($$(".nc", s));
+  }
+  function setPath(p, anim) {
+    path = p;
+    $$(".pth").forEach(function (b) { b.setAttribute("aria-pressed", b.getAttribute("data-path") === p); });
+    $$(".tabs button").forEach(function (b) { b.setAttribute("aria-selected", b.getAttribute("data-path") === p); });
+    $("#wayOwn").classList.toggle("on", p === "own"); $("#wayNew").classList.toggle("on", p === "new");
+    var own = p === "own";
+    $("#heroCta").innerHTML = (own ? "Get my $50K Instant for $350" : "Start my $50K for $5") + ' <span class="ar" aria-hidden="true">→</span>';
+    $("#heroCta").setAttribute("href", own ? "#wayOwn" : "#wayNew");
+    $("#heroUnder").textContent = own ? "Simulated trading. Only your fee is at risk. 14-day refund if you haven't placed a trade." : "Simulated trading. The most you can lose today is $5.";
+    $(".fchip.cap").innerHTML = own ? '<b class="tnum">−$350</b>The cap · $50K Instant' : '<b class="tnum">−$5</b>The cap · Pay After You Pass';
+    capV = own ? 350 : 5;
+    $(".nav .buy").textContent = own ? "Get Instant" : "Start for $5";
+    $(".nav .buy").setAttribute("href", own ? "#wayOwn" : "#wayNew");
+    $("#endP").textContent = own ? "Trade a $50K simulated account. If it goes wrong, the $350 fee is the cap." : "Start a $50K simulated account for $5. Pay the activation fee only if you pass.";
+    $("#endBuy").innerHTML = (own ? "Get my $50K Instant for $350" : "Start for $5") + ' <span class="ar" aria-hidden="true">→</span>';
+    $("#endAlt").textContent = own ? "Not sure yet? Try the rules first for $5 →" : "Traded before? Get the $50K Instant for $350 →";
+    $("#endAlt").setAttribute("href", own ? "#wayNew" : "#wayOwn"); $("#endAlt").setAttribute("data-path-go", own ? "new" : "own");
+    $("#mbT").textContent = own ? "$50K Instant · $350" : "$50K for $5"; $("#mbS").textContent = own ? "One-time fee. No target." : "Pay $300 only if you pass";
+    $("#mbBuy").setAttribute("href", own ? "#wayOwn" : "#wayNew");
+    renderSteps(anim);
+  }
+  $$(".pth, .tabs button").forEach(function (b) { b.addEventListener("click", function () { setPath(b.getAttribute("data-path"), true); }); });
+  document.addEventListener("click", function (e) { var a = e.target.closest("[data-path-go]"); if (a) setPath(a.getAttribute("data-path-go"), true); });
+
+  /* ---------- hero: the drop. Two balances fall together. One stops at the cap. ---------- */
+  var NS = "http://www.w3.org/2000/svg", svg = $("#dropSvg");
+  function el(tag, at, par) { var e = document.createElementNS(NS, tag); for (var k in at) e.setAttribute(k, at[k]); (par || svg).appendChild(e); return e; }
+  var W = 520, H = 400, X0 = 26, X1 = 494, Y0 = 92, CAPY = 236, BOT = 430, capV = 5;
+  var defs = el("defs", {});
+  defs.innerHTML = '<linearGradient id="gR" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#ff2156" stop-opacity=".35"/><stop offset="1" stop-color="#ff2156" stop-opacity="0"/></linearGradient><linearGradient id="gL" x1="0" x2="1"><stop offset="0" stop-color="#8ff3e8"/><stop offset="1" stop-color="#d9ff00"/></linearGradient><filter id="glow"><feGaussianBlur stdDeviation="4"/></filter>';
+  [140, 188, 284, 332, 380].forEach(function (y) { el("line", { x1: X0, x2: X1, y1: y, y2: y, stroke: "rgba(255,255,255,.05)" }); });
+  el("line", { x1: X0, x2: X1, y1: Y0, y2: Y0, stroke: "rgba(255,255,255,.25)", "stroke-dasharray": "3 5" });
+  var st = el("text", { x: X0, y: Y0 - 10, fill: "#a6c4c6", "font-size": 12 }); st.textContent = "Start";
+  /* the cap plane */
+  var capGlow = el("rect", { x: X0, y: CAPY - 3, width: X1 - X0, height: 6, fill: "#d9ff00", opacity: .5, filter: "url(#glow)" });
+  el("line", { x1: X0, x2: X1, y1: CAPY, y2: CAPY, stroke: "#d9ff00", "stroke-width": 2 });
+  var ct = el("text", { x: X1, y: CAPY + 22, fill: "#d9ff00", "font-size": 13, "font-weight": 600, "text-anchor": "end" }); ct.textContent = "FundingRock: the account ends here";
+  var rArea = el("path", { fill: "url(#gR)" });
+  var rLine = el("path", { fill: "none", stroke: "#ff2156", "stroke-width": 3, "stroke-linejoin": "round", "stroke-linecap": "round" });
+  var gLine = el("path", { fill: "none", stroke: "url(#gL)", "stroke-width": 3.5, "stroke-linejoin": "round", "stroke-linecap": "round" });
+  var gDot = el("circle", { r: 7, fill: "#d9ff00", stroke: "#03090c", "stroke-width": 3 });
+  var rDot = el("circle", { r: 6, fill: "#ff2156", stroke: "#03090c", "stroke-width": 3 });
+  var stopT = el("text", { "font-size": 13, "font-weight": 600, fill: "#fff", opacity: 0 }); stopT.textContent = "Stopped. Savings untouched.";
+  var noT = el("text", { "font-size": 13, "font-weight": 600, fill: "#ff2156", opacity: 0, "text-anchor": "end" }); noT.textContent = "No floor";
+  /* a seeded, mostly falling path */
+  var seed = 11; function rnd() { seed = (seed * 16807) % 2147483647; return seed / 2147483647; }
+  var N = 70, PY = [Y0];
+  for (var i = 1; i < N; i++) { var t = i / (N - 1); PY.push(Y0 + Math.pow(t, 1.25) * (BOT - Y0 - 10) + (rnd() - .5) * 26 + Math.sin(i * .7) * 6); }
+  PY[0] = Y0;
+  var PX = PY.map(function (_, i) { return X0 + i / (N - 1) * (X1 - X0); });
+  var capAt = PY.findIndex(function (y) { return y >= CAPY; });
+  var lossB = $("#lossB"), lossN = $("#lossN"), lastLoss = -1, CYC = 7600, t0 = performance.now(), stopped = false;
+  function dPath(n, clampY) { var s = ""; for (var i = 0; i <= n; i++) { var y = clampY && i >= capAt ? CAPY : PY[i]; s += (i ? "L" : "M") + PX[i].toFixed(1) + " " + y.toFixed(1); } return s; }
+  function heroAt(p) {
+    var f = p * (N - 1), n = Math.min(N - 1, Math.floor(f)), fr = f - n;
+    var ry = n < N - 1 ? PY[n] + (PY[n + 1] - PY[n]) * fr : PY[N - 1], rx = n < N - 1 ? PX[n] + (PX[n + 1] - PX[n]) * fr : PX[N - 1];
+    var dr = dPath(n) + "L" + rx.toFixed(1) + " " + ry.toFixed(1);
+    rLine.setAttribute("d", dr); rArea.setAttribute("d", dr + "L" + rx.toFixed(1) + " " + H + "L" + X0 + " " + H + "Z");
+    var past = n >= capAt;
+    gLine.setAttribute("d", past ? dPath(n, true) + "L" + rx.toFixed(1) + " " + CAPY : dr);
+    gDot.setAttribute("cx", (past ? rx : rx).toFixed(1)); gDot.setAttribute("cy", (past ? CAPY : ry).toFixed(1));
+    rDot.setAttribute("cx", rx.toFixed(1)); rDot.setAttribute("cy", Math.min(ry, H - 4).toFixed(1)); rDot.setAttribute("opacity", past ? 1 : 0);
+    stopT.setAttribute("x", Math.min(PX[capAt] + 4, X1 - 190)); stopT.setAttribute("y", CAPY - 14); stopT.setAttribute("opacity", past ? 1 : 0);
+    noT.setAttribute("x", Math.min(rx - 12, X1 - 4)); noT.setAttribute("y", Math.min(ry, H - 20) + 4); noT.setAttribute("opacity", past && ry > CAPY + 50 ? 1 : 0);
+    if (past && !stopped) { stopped = true; if (!reduce) capGlow.animate([{ opacity: 1, height: 14, y: CAPY - 7 }, { opacity: .5, height: 6, y: CAPY - 3 }], { duration: 700 }); }
+    if (!past) stopped = false;
+    /* $5,000 of savings: the red line's depth below the start, in dollars */
+    var loss = Math.round(cl((ry - Y0) / (BOT - Y0)) * 2400 / 10) * 10;
+    if (loss !== lastLoss) { lastLoss = loss; lossN.textContent = "−" + fmt(loss); if (loss >= 400 && loss % 400 === 0) { lossB.classList.remove("go"); void lossB.offsetWidth; lossB.classList.add("go"); } }
+  }
+  if (reduce) heroAt(.82);
+
+  /* 3D tilt of the hero rig: follows the pointer, drifts on its own */
+  var rig = $("#rig"), scene = $("#scene"), tilt = { x: 0, y: 0 }, aim = { x: 0, y: 0, on: false }, sceneVis = true;
+  if (finePtr) {
+    scene.addEventListener("pointermove", function (e) { var r = scene.getBoundingClientRect(); aim.x = (e.clientX - r.left) / r.width - .5; aim.y = (e.clientY - r.top) / r.height - .5; aim.on = true; });
+    scene.addEventListener("pointerleave", function () { aim.on = false; });
+  }
+  new IntersectionObserver(function (es) { sceneVis = es[0].isIntersecting; }).observe(scene);
+  function heroFrame(now) {
+    var k = (now - t0) / 1000, cyc = ((now - t0) % CYC) / CYC;
+    heroAt(cl(cyc / .78));
+    var gx = aim.on ? aim.x : Math.sin(k * .45) * .22, gy = aim.on ? aim.y : Math.cos(k * .35) * .14;
+    tilt.x += (gx - tilt.x) * .06; tilt.y += (gy - tilt.y) * .06;
+    rig.style.transform = "rotateY(" + (-12 + tilt.x * 24).toFixed(2) + "deg) rotateX(" + (6 - tilt.y * 16).toFixed(2) + "deg)";
+  }
+
+  /* cursor spotlight */
+  function spotify(list) {
+    if (!finePtr) return;
+    list.forEach(function (host) {
+      var a = host.getAttribute("data-spot").split(","), sp = document.createElement("div");
+      sp.className = "spot"; sp.style.setProperty("--sz", a[0] + "px"); sp.style.setProperty("--st", a[1]); host.insertBefore(sp, host.firstChild);
+      host.addEventListener("mousemove", function (e) { var r = host.getBoundingClientRect(); sp.style.setProperty("--x", (e.clientX - r.left) + "px"); sp.style.setProperty("--y", (e.clientY - r.top) + "px"); sp.style.opacity = 1; });
+      host.addEventListener("mouseleave", function () { sp.style.opacity = 0; });
+    });
+  }
+  spotify($$("[data-spot]"));
+
+  /* ---------- the pain comparison: scroll drives the drop ---------- */
+  var BK = [2000, 5000, 10000, 25000], bk = 5000, FEE = 350, PP = 5, DMAX = .4;
+  $("#bkSizes").innerHTML = BK.map(function (v) { return '<button type="button" class="chip" aria-pressed="' + (v === bk) + '" data-v="' + v + '">$' + (v / 1000) + "K</button>"; }).join("");
+  var tanks = $("#tanks"), dpin = $("#dpin"), broke = false, lastD = -1;
+  function scaleMax() { return Math.max(bk * DMAX, 600); }
+  function tubeH() { return $(".tk3.bk .tube").clientHeight; }
+  function placeCap() {
+    var tube = $(".tk3.fr .tube"), tr = tube.getBoundingClientRect(), r = tanks.getBoundingClientRect(), m = scaleMax();
+    var y = tr.bottom - r.top - tr.height * (FEE / m);
+    $("#capLine").style.top = y.toFixed(1) + "px";
+    $("#frF").style.height = (FEE / m * 100).toFixed(2) + "%";
+    $("#ppF").style.height = Math.max(PP / m * 100, .6).toFixed(2) + "%";
+    var frTop = tr.height * (1 - FEE / m); $("#frL").style.top = Math.max(18, frTop - 22) + "px";
+    $("#ppL").style.top = (tr.height - Math.max(PP / m * tr.height, 2) - 22) + "px";
+  }
+  function dropAt(d) {
+    var loss = bk * d, m = scaleMax();
+    $("#bkF").style.height = (loss / m * 100).toFixed(2) + "%";
+    $("#bkV").textContent = "−" + fmt(loss);
+    $("#dPc").textContent = Math.round(d * 100) + "%";
+    $("#dMeter").style.width = (d / DMAX * 100).toFixed(2) + "%";
+    var nb = loss > FEE;
+    if (nb !== broke) { broke = nb; tanks.classList.toggle("broke", nb); }
+    var cross = Math.ceil(FEE / bk * 100), say;
+    if (d < .005) say = "Scroll to let the market drop. Watch which account has a floor.";
+    else if (!nb) say = "A " + Math.round(d * 100) + "% drop on your own " + fmt(bk) + ": <b class=\"r\">−" + fmt(loss) + "</b>. Still under the fee. The market doesn't stop here.";
+    else if (d < .2) say = "Past " + cross + "%, your own money costs more than the fee. <b class=\"r\">And it has no floor.</b>";
+    else say = "<b class=\"r\">−" + fmt(loss) + "</b> out of your savings. On FundingRock, the most you lose is <b>$350</b>. Or <b>$5</b> before you pass.";
+    if (say !== lastD) { lastD = say; $("#dSay").innerHTML = say; }
+    $("#cue").style.opacity = d > .02 ? 0 : 1;
+  }
+  $$("#bkSizes .chip").forEach(function (b) {
+    b.addEventListener("click", function () {
+      bk = +b.getAttribute("data-v");
+      $$("#bkSizes .chip").forEach(function (c) { c.setAttribute("aria-pressed", c === b); });
+      $("#bkName").textContent = fmt(bk) + " broker account";
+      placeCap(); onScroll();
+    });
+  });
+  addEventListener("resize", placeCap);
+  function dropProgress() { var r = dpin.getBoundingClientRect(), span = r.height - (innerHeight - 66); return cl((-r.top + 40) / (span * .85)); }
+
+  /* ---------- the odds ---------- */
+  var dots = $("#dots"); dots.innerHTML = new Array(101).join("<i></i>");
+  var D = $$("i", dots), oddsDone = false;
+  var C = 2 * Math.PI * 50;
+  function runOdds() {
+    if (oddsDone) return; oddsDone = true;
+    tween(0, 1, 1600, function (v) { $("#ringB").setAttribute("stroke-dasharray", (C * .89 * v).toFixed(1) + " 400"); $("#ringA").setAttribute("stroke-dasharray", (C * .74 * v).toFixed(1) + " 400"); });
+    var keep = 57;
+    D.forEach(function (d, i) { if (i === keep) return; if (reduce) d.classList.add("x"); else setTimeout(function () { d.classList.add("x"); }, 200 + i * 14 + Math.random() * 200); });
+    setTimeout(function () { D[keep].classList.add("k"); }, reduce ? 0 : 1800);
+  }
+  new IntersectionObserver(function (es) { if (es[0].isIntersecting) runOdds(); }, { threshold: .35 }).observe($("#odds .odds"));
+
+  /* ---------- prices ---------- */
+  var IN = [[5000, 70], [10000, 120], [25000, 200], [50000, 350], [100000, 600], [200000, 1100]], inI = 3, inShown = 350;
+  var PA = [[10000, 100], [25000, 180], [50000, 300], [100000, 500], [200000, 999]], ppI = 2, ppShown = 300;
+  var K = function (a) { return "$" + (a / 1000) + "K"; };
+  $("#inSizes").innerHTML = IN.map(function (s, i) { return '<button type="button" class="chip" aria-pressed="' + (i === inI) + '">' + K(s[0]) + "</button>"; }).join("");
+  $("#ppSizes").innerHTML = PA.map(function (s, i) { return '<button type="button" class="chip" aria-pressed="' + (i === ppI) + '">' + K(s[0]) + "</button>"; }).join("");
+  function pickIn(i) {
+    inI = i; var s = IN[i];
+    $$("#inSizes .chip").forEach(function (b, j) { b.setAttribute("aria-pressed", j === i); });
+    tween(inShown, s[1], 650, function (v) { $("#inFee").textContent = fmt(v); }); inShown = s[1];
+    $("#inD").innerHTML = "4%<small>" + fmt(s[0] * .04) + "</small>"; $("#inM").innerHTML = "8%<small>" + fmt(s[0] * .08) + "</small>";
+    $("#inBuy").innerHTML = "Get my " + K(s[0]) + " Instant for " + fmt(s[1]) + ' <span class="ar" aria-hidden="true">→</span>';
+  }
+  function pickPp(i) {
+    ppI = i; var s = PA[i];
+    $$("#ppSizes .chip").forEach(function (b, j) { b.setAttribute("aria-pressed", j === i); });
+    tween(ppShown, s[1], 650, function (v) { $("#ppAct").textContent = fmt(v); }); ppShown = s[1];
+    $("#ppT").innerHTML = "3%<small>" + fmt(s[0] * .03) + "</small>"; $("#ppM").innerHTML = "8%<small>" + fmt(s[0] * .08) + "</small>";
+    $("#ppBuy").innerHTML = "Start my " + K(s[0]) + " for $5" + ' <span class="ar" aria-hidden="true">→</span>';
+  }
+  $$("#inSizes .chip").forEach(function (b, i) { b.addEventListener("click", function () { pickIn(i); }); });
+  $$("#ppSizes .chip").forEach(function (b, i) { b.addEventListener("click", function () { pickPp(i); }); });
+
+  /* ---------- press, traders, certificates, reviews ---------- */
+  var PR = [["forbes", "Forbes"], ["investing", "Investing.com"], ["bloomberg", "Bloomberg"], ["marketsinsiders", "Markets Insider"], ["yahoofinance", "Yahoo Finance"], ["benzinga", "Benzinga"]];
+  function dup(html) { return html + html.replace(/alt="[^"]*"/g, 'alt=""').replace(/<a /g, '<a tabindex="-1" aria-hidden="true" '); }
+  var ph = PR.map(function (p) { return '<div><img src="assets/press/t-' + p[0] + '.png" alt="' + p[1] + '"></div>'; }).join("");
+  $("#pressTr").innerHTML = dup(ph + ph);
+
+  var TR = [["ben", "Ben", "From risking his own money to his first Reward", "Z-L3DxpLRPk"], ["andrea", "Andrea", "From not believing prop trading exists to sharing it with friends", "dleWQCKUP7A"], ["brian", "Brian", "If someone like me can do it, you can too", "OaEGmOkxmzg"], ["anthony", "Anthony", "$25K Prime Account in a few weeks", "60H6FV155bk"], ["noam", "Noam F.", "Passed Phase 1 in under a week", "3TPTFMuXuMU"], ["jem", "Jem", "Responsive support and fast Rewards", "-l9catVK6RQ"], ["david", "David S.", "Passed his evaluation and ready to trade", "2q64-CFi94E"], ["trink", "Trink L.", "The confidence I needed to keep going", "Vcs_cRdC1wE"], ["dean", "Dean", "One step away from Prime", "7yiKot0ubpc"], ["guy", "Guy F.", "Can't wait for the next Reward", "keu7qCKlGMk"]];
+  $("#ugcTr").innerHTML = dup(TR.map(function (t) {
+    return '<a class="ug" href="https://www.youtube.com/watch?v=' + t[3] + '" target="_blank" rel="noopener" aria-label="Watch ' + t[1] + ' on YouTube"><img src="assets/traders/' + t[0] + '.webp" alt="' + t[1] + '" loading="lazy" draggable="false"><span class="pl" aria-hidden="true"></span><span class="tx2"><b>' + t[1] + "</b><small>" + t[2] + "</small></span></a>";
+  }).join(""));
+
+  /* Reward certificates: the card from the certificates Figma file, two rows running opposite ways */
+  var KC = window.KCERTS || [];
+  function cert(c) {
+    return '<div class="rc"><img class="dt" src="assets/cert-dots.png" alt=""><img class="mk" src="assets/mark.svg" alt="">' +
+      '<p class="ti">REWARD CERTIFICATE</p><div class="who"><p class="nm">' + c[0] + '</p><p class="am">' + c[1] + "</p></div>" +
+      '<div class="ft"><div class="bx"><p><b>' + c[2] + '</b><span>Date</span></p></div><div class="bx ceo"><p><b>Meir Hefetz,</b><span>CEO</span></p><img class="sg" src="assets/cert-sign.png" alt="Signature"></div></div></div>';
+  }
+  function spread(list, n, s) {
+    var out = [], step = list.length / n, i;
+    function r() { s = s * 16807 % 2147483647; return s / 2147483647; }
+    for (i = 0; i < n; i++) out.push(list[Math.min(list.length - 1, Math.floor((i + r()) * step))]);
+    for (i = out.length - 1; i > 0; i--) { var j = Math.floor(r() * (i + 1)), t = out[i]; out[i] = out[j]; out[j] = t; }
+    return out;
+  }
+  function track(id, html, label) { $(id).innerHTML = '<div class="tr" role="list" aria-label="' + label + '">' + html + '</div><div class="tr" aria-hidden="true">' + html + "</div>"; }
+  track("#certA", spread(KC, 24, 11).map(cert).join(""), "Recent Reward certificates");
+  track("#certB", spread(KC, 24, 29).map(cert).join(""), "More Reward certificates");
+
+  var RV = [["Abel Bedassa", "Jan 14, 2026", "Reliable and trader friendly", "Fundingrock has been very reliable. Their support team is responsive and professional. Rewards have been smooth and on time."],
+    ["Jaša Kereži", "Jan 25, 2026", "Amazing experience", "The spreads are tight and the payout process is smooth and hassle-free, which makes trading with them a great experience."],
+    ["G Mishra", "Jan 21, 2026", "Best part: No complex rules", "The best part of this firm is no rules except daily and overall loss limit. It gives a trader freehand to prove skills."],
+    ["Tewodros Hailye", "June 2025", "3 Rewards received", "I have received 3 payouts from Funding Rock, all in under 24 hours. It's a genuine firm with minimum rules."],
+    ["Alan Haynes", "Sep 28, 2026", "This is the real test guys", "Joined Fundingrock last month and opened a pay after you pass challenge. Completed the challenge stage in a couple of days…"],
+    ["Kabeer khadav", "Aug 12, 2026", "Best for beginners", "Right now the best Prop firm for beginner's. The best pricing, offer, rules and support team."],
+    ["sokor", "Sep 8, 2025", "Lowest spreads on XAUUSD", "Very simple rules, great spreads. I noticed almost near zero spreads on XAUUSD. Lowest spreads I've seen."],
+    ["eaglestrade", "Sep 7, 2026", "I enjoyed trading with fundingrock", "I enjoyed trading with fundingrock and passed my evaluation on first trial."]];
+  function rv(r) { return '<article class="rv-c"><span class="stars">' + five + "</span><h3>" + r[2] + "</h3><p>" + r[3] + '</p><footer><b>' + r[0] + "</b> · " + r[1] + "</footer></article>"; }
+  $("#rvA").innerHTML = dup(RV.slice(0, 4).map(rv).join("") + RV.slice(0, 4).map(rv).join(""));
+  $("#rvB").innerHTML = dup(RV.slice(4).map(rv).join("") + RV.slice(4).map(rv).join(""));
+
+  $$(".mq-tr, .mrow .tr").forEach(function (tr) {
+    new IntersectionObserver(function (es) { tr.style.animationPlayState = es[0].isIntersecting ? "" : "paused"; }).observe(tr.parentNode);
+  });
+
+  /* ---------- talk thread: each message plays in as it scrolls into view ---------- */
+  var thread = $("#thread"), bubs = $$(".bub", thread), typing = $("#typing"), talkPh = $("#talkPh");
+  var queue = [], busy = false, lastY = scrollY, dirDown = true;
+  addEventListener("scroll", function () { var y = scrollY; if (y !== lastY) dirDown = y > lastY; lastY = y; }, { passive: true });
+  function pump() {
+    if (busy || !queue.length) return;
+    queue.sort(function (x, y) { return dirDown ? x - y : y - x; });
+    var i = queue.shift(), b = bubs[i];
+    if (!b.classList.contains("wait")) return pump();
+    busy = true;
+    var incoming = !b.classList.contains("me");
+    if (incoming) { thread.insertBefore(typing, b); typing.classList.add("on"); }
+    setTimeout(function () { typing.classList.remove("on"); b.classList.remove("wait"); busy = false; setTimeout(pump, 110); }, incoming ? 480 : 160);
+  }
+  if (!reduce && "IntersectionObserver" in window) {
+    bubs.forEach(function (b) { b.classList.add("wait"); b.style.transition = "none"; });
+    void thread.offsetHeight; bubs.forEach(function (b) { b.style.transition = ""; });
+    var inIO = new IntersectionObserver(function (es) { es.forEach(function (e) {
+      var i = bubs.indexOf(e.target);
+      if (e.isIntersecting && e.target.classList.contains("wait") && queue.indexOf(i) < 0) queue.push(i);
+    }); pump(); }, { rootMargin: "-6% 0px -10% 0px" });
+    var outIO = new IntersectionObserver(function (es) { es.forEach(function (e) {
+      if (!e.isIntersecting) { var b = e.target, i = bubs.indexOf(b); b.style.transition = "none"; b.classList.add("wait"); void b.offsetHeight; b.style.transition = ""; var q = queue.indexOf(i); if (q > -1) queue.splice(q, 1); }
+    }); });
+    bubs.forEach(function (b) { inIO.observe(b); outIO.observe(b); });
+  }
+  if (finePtr) $("#talk").addEventListener("mousemove", function (e) { talkPh.style.setProperty("--px", ((e.clientX / innerWidth - .5) * -24).toFixed(1) + "px"); });
+
+  /* ---------- one scroll loop ---------- */
+  var ticking = false;
+  function onScroll() {
+    nav.classList.toggle("on", scrollY > 10);
+    mbar.classList.toggle("on", scrollY > innerHeight * .9 && $("#end").getBoundingClientRect().top > innerHeight * .6);
+    dropAt(reduce ? .3 : dropProgress() * DMAX);
+    if (!reduce) { var pr = talkPh.getBoundingClientRect(), c = (pr.top + pr.height / 2 - innerHeight / 2) / innerHeight; talkPh.style.setProperty("--py", (c * 40).toFixed(1) + "px"); }
+    ticking = false;
+  }
+  addEventListener("scroll", function () { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
+
+  /* reveal: only what starts below the fold */
+  if (!reduce && "IntersectionObserver" in window) {
+    var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.remove("pre"); io.unobserve(e.target); } }); }, { rootMargin: "0px 0px -8% 0px" });
+    $$(".rv").forEach(function (e) { if (e.getBoundingClientRect().top > innerHeight) { e.classList.add("pre"); io.observe(e); } });
+  }
+
+  setPath("new", false);
+  placeCap(); onScroll();
+  if (document.fonts) document.fonts.ready.then(placeCap);
+  if (!reduce) (function loop(now) { if (sceneVis) heroFrame(now); requestAnimationFrame(loop); })(performance.now());
+})();
+</script>
+</body>
+</html>
