@@ -100,17 +100,7 @@ main, footer { overflow-x: clip; }
 @keyframes fade { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
 .hero .lede { font-size: 19px; line-height: 1.6; color: var(--mute); max-width: 40ch; margin: 24px 0 0; animation: fade 1s .35s var(--ease) both; }
 .hero .lede b { color: #fff; font-weight: 500; }
-.who-q { margin: 30px 0 0; font-size: 13px; letter-spacing: .16em; text-transform: uppercase; color: var(--dim); animation: fade 1s .42s var(--ease) both; }
-.paths { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 12px; max-width: 540px; animation: fade 1s .45s var(--ease) both; }
-.pth { appearance: none; display: flex; align-items: center; gap: 12px; text-align: left; padding: 14px 16px; border-radius: 18px; border: 1px solid rgba(143,243,232,.22); background: rgba(255,255,255,.03); color: #fff; font-size: 15px; font-weight: 500; line-height: 1.25; cursor: pointer; transition: border-color .25s, background .25s, transform .3s var(--ease); }
-.pth:hover { transform: translateY(-2px); border-color: rgba(143,243,232,.5); }
-.pth .tk { flex: none; width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid var(--dim); display: grid; place-items: center; transition: background .25s, border-color .25s; }
-.pth .tk::after { content: ""; width: 8px; height: 8px; border-radius: 50%; background: #0a0a0a; transform: scale(0); transition: transform .3s var(--pop); }
-.pth small { display: block; font-size: 13px; color: var(--mute); font-weight: 400; margin-top: 2px; }
-.pth[aria-pressed="true"] { background: rgba(217,255,0,.1); border-color: var(--lime); }
-.pth[aria-pressed="true"] .tk { background: var(--lime); border-color: var(--lime); }
-.pth[aria-pressed="true"] .tk::after { transform: scale(1); }
-.cta { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; margin-top: 22px; animation: fade 1s .5s var(--ease) both; }
+.cta { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; margin-top: 30px; animation: fade 1s .5s var(--ease) both; }
 .hero .under { animation: fade 1s .55s var(--ease) both; }
 .ticks { display: flex; flex-wrap: wrap; gap: 8px 20px; margin: 22px 0 0; padding: 0; list-style: none; font-size: 14px; color: var(--mute); animation: fade 1s .6s var(--ease) both; }
 .ticks li { display: inline-flex; align-items: center; gap: 8px; }
@@ -275,6 +265,13 @@ main, footer { overflow-x: clip; }
 /* ---------- pick your way in ---------- */
 .ways { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; align-items: stretch; }
 .way { padding: clamp(24px, 3vw, 38px); display: flex; flex-direction: column; transition: border-color .4s, box-shadow .5s, transform .5s var(--ease), opacity .4s; }
+.way.solo { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(24px, 4vw, 56px); max-width: 1080px; margin: 0 auto; }
+.solo-l, .solo-r { display: flex; flex-direction: column; min-width: 0; }
+.solo-r .obj { margin-top: 0; }
+.gets { list-style: none; margin: 22px 0 0; padding: 0; display: grid; gap: 12px; font-size: 15.5px; color: #fff; }
+.gets li { display: flex; gap: 12px; align-items: flex-start; }
+.gets li::before { content: ""; flex: none; width: 14px; height: 8px; margin-top: 6px; border-left: 2px solid var(--lime); border-bottom: 2px solid var(--lime); transform: rotate(-45deg); }
+@media (max-width: 860px) { .way.solo { grid-template-columns: 1fr; } }
 .way.on { border-color: rgba(217,255,0,.55); box-shadow: 0 40px 100px -40px rgba(0,0,0,.9), 0 0 0 1px rgba(217,255,0,.25), 0 30px 80px -40px rgba(217,255,0,.35); }
 .way .for { display: inline-flex; align-self: flex-start; align-items: center; gap: 8px; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--iris); border: 1px solid rgba(143,243,232,.25); border-radius: 999px; padding: 6px 12px; }
 .way.on .for { color: #0a0a0a; background: var(--lime); border-color: var(--lime); }
@@ -301,10 +298,6 @@ main, footer { overflow-x: clip; }
 @media (max-width: 900px) { .ways { grid-template-columns: 1fr; } }
 
 /* ---------- how it works ---------- */
-.tabs { display: inline-flex; padding: 4px; border-radius: 999px; border: 1px solid rgba(143,243,232,.2); background: rgba(255,255,255,.03); margin: 0 auto 30px; }
-.tabs button { appearance: none; border: 0; background: transparent; color: var(--mute); font-size: 14px; font-weight: 500; padding: 10px 18px; border-radius: 999px; cursor: pointer; transition: background .25s, color .25s; }
-.tabs button[aria-selected="true"] { background: #fff; color: #0a0a0a; }
-.tabs-c { text-align: center; }
 .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
 .nc { position: relative; overflow: hidden; border-radius: 30px; padding: 30px; min-height: 360px; display: flex; flex-direction: column; border: 1px solid rgba(143,243,232,.2); background: linear-gradient(170deg, rgba(10,44,50,.9), rgba(4,16,20,.96) 60%); transition: transform .5s var(--ease), border-color .4s, box-shadow .5s; }
 .nc:hover { transform: translateY(-6px); border-color: rgba(143,243,232,.4); box-shadow: 0 30px 60px -34px rgba(0,216,195,.7); }
@@ -315,9 +308,6 @@ main, footer { overflow-x: clip; }
 .nc:nth-child(3) .bign { background: linear-gradient(90deg, #a8fff4, #00d8c3 48%, #d9ff00); -webkit-background-clip: text; background-clip: text; color: transparent; padding-bottom: .06em; }
 .nc h3 { margin: 18px 0 8px; font-size: 24px; letter-spacing: -.03em; font-weight: 600; }
 .nc p { margin: 0; color: var(--mute); font-size: 16px; }
-.steps.swap .nc { animation: swap .6s var(--ease) both; }
-.steps.swap .nc:nth-child(2) { animation-delay: .06s; } .steps.swap .nc:nth-child(3) { animation-delay: .12s; }
-@keyframes swap { from { opacity: 0; transform: translateY(18px) scale(.98); } to { opacity: 1; transform: none; } }
 @media (max-width: 860px) { .steps { grid-template-columns: 1fr; } .nc { min-height: 0; } .nc .bign { margin-top: 24px; } }
 
 /* rules table */
@@ -465,7 +455,6 @@ main, footer { overflow-x: clip; }
   .fchip.loss { left: 3%; bottom: -12%; }
 }
 @media (max-width: 600px) {
-  .paths { grid-template-columns: 1fr; }
   .sh p { font-size: 17px; }
   .hero .lede { font-size: 17px; }
   .cta .buy { width: 100%; }
@@ -495,7 +484,7 @@ main, footer { overflow-x: clip; }
       <a class="l" href="#how">How it works</a>
       <a class="l" href="#rewards">Rewards</a>
       <a class="l" href="#faq">FAQ</a>
-      <a class="buy" href="#ways" data-cta="nav">Start for $5</a>
+      <a class="buy" href="#ways">Get Instant</a>
     </nav>
   </div>
 </header>
@@ -508,17 +497,12 @@ main, footer { overflow-x: clip; }
         <div class="hero-copy">
           <span class="eyebrow r">For traders who aren't prop traders</span>
           <h1><span class="ln"><span>You don't need</span></span><span class="ln"><span>a <s>fortune</s> to</span></span><span class="ln"><span class="grad">start trading.</span></span></h1>
-          <p class="lede">Trade with <b>up to $200K in simulated capital</b>. Start for just <b>$5</b>, without risking your personal savings in the market.</p>
-          <p class="who-q">Which one is you?</p>
-          <div class="paths" role="group" aria-label="Pick your path">
-            <button type="button" class="pth" data-path="own" aria-pressed="false"><span class="tk" aria-hidden="true"></span><span>I've traded my own money<small>Instant · one fee, no target</small></span></button>
-            <button type="button" class="pth" data-path="new" aria-pressed="true"><span class="tk" aria-hidden="true"></span><span>I'm new to trading<small>Pay After You Pass · $5 start</small></span></button>
-          </div>
+          <p class="lede">Trade with <b>up to $200K in simulated capital</b>. One fee <b>from $70</b>, no target, and no risk to your personal savings in the market.</p>
           <div class="cta">
-            <a class="buy lg" href="#ways" id="heroCta">Start for $5 <span class="ar" aria-hidden="true">→</span></a>
+            <a class="buy lg" href="#ways" id="heroCta">Get my $50K Instant for $350 <span class="ar" aria-hidden="true">→</span></a>
             <a class="ghost" href="#drop">See what a bad week costs <span class="ar" aria-hidden="true">→</span></a>
           </div>
-          <p class="under" id="heroUnder">Simulated trading. The most you can lose today is $5.</p>
+          <p class="under" id="heroUnder">Simulated trading. Only your fee is at risk. 14-day refund if you haven't placed a trade.</p>
           <ul class="ticks"><li>No deposits</li><li>Up to $200K simulated</li><li>Rewards processed within 48h</li></ul>
         </div>
 
@@ -532,7 +516,7 @@ main, footer { overflow-x: clip; }
               <svg id="dropSvg" viewBox="0 0 520 400" preserveAspectRatio="none"></svg>
             </div>
             <div class="fchip liquid loss"><span class="bump" id="lossB"><b class="tnum" id="lossN">−$0</b></span>From your savings</div>
-            <div class="fchip liquid cap"><b class="tnum">−$5</b>The cap · Pay After You Pass</div>
+            <div class="fchip liquid cap"><b class="tnum">−$350</b>The cap · $50K Instant</div>
             <div class="fchip liquid nd"><i></i>No deposit. Ever.</div>
           </div>
         </div>
@@ -618,13 +602,14 @@ main, footer { overflow-x: clip; }
           <span class="eyebrow">New to trading</span>
           <h2 class="th-h">The whole thing, <span class="grad">in a few texts.</span></h2>
           <p class="bub me">I've never traded. Is this for me?</p>
-          <p class="bub">Yes. You get a <em>$50K simulated account</em>. No deposit.</p>
+          <p class="bub">Yes. You get a <em>simulated account up to $200K</em>. No deposit.</p>
           <p class="bub me">Whose money am I trading?</p>
           <p class="bub">Nobody's. It's simulated. Your trades <em>never touch a real market.</em></p>
           <p class="bub me">So what can I lose?</p>
-          <p class="bub"><em>$5.</em> That's it, until you pass.</p>
-          <p class="bub">Hit 3%, pay the $300 activation fee, then earn <em>Rewards</em> on your Prime account.</p>
-          <div class="bub cta-b"><span>Learn the rules for $5.</span><a class="buy" href="#ways" data-path-go="new">Start for $5 <span class="ar" aria-hidden="true">→</span></a></div>
+          <p class="bub">The fee. <em>$350</em> for a $50K account. That's the cap.</p>
+          <p class="bub me">Do I have to pass a test first?</p>
+          <p class="bub">No. <em>No challenge, no target.</em> Trade from day one and request a Reward when you're in profit.</p>
+          <div class="bub cta-b"><span>Pick a size. From $70.</span><a class="buy" href="#ways">Show me <span class="ar" aria-hidden="true">→</span></a></div>
           <span class="typing" id="typing" aria-hidden="true"><i></i><i></i><i></i></span>
         </div>
       </div>
@@ -634,45 +619,35 @@ main, footer { overflow-x: clip; }
   <!-- pick your way in -->
   <section class="sec" id="ways" style="padding-top:0">
     <div class="wrap">
-      <div class="sh rv"><span class="eyebrow">Pick your way in</span><h2>One fee. <span class="grad">That's the most you lose.</span></h2><p>Two ways in, depending on where you're coming from. The whole cost is shown up front.</p></div>
-      <div class="ways">
-        <article class="way glass rv" id="wayOwn" data-spot="520,.14">
-          <span class="for">If you've traded your own money</span>
-          <h3>Instant. No challenge.</h3>
-          <p>Trade your way from day one. No profit target. Request a Reward when you're in profit.</p>
+      <div class="sh rv"><span class="eyebrow">FundingRock Instant</span><h2>One fee. <span class="grad">That's the most you lose.</span></h2><p>Pick a size. Pay once. No challenge, no target. Trade from day one.</p></div>
+      <article class="way solo glass rv on" id="wayOwn" data-spot="620,.14">
+        <div class="solo-l">
+          <span class="for">Instant account</span>
+          <h3>No challenge. Trade from day one.</h3>
           <div class="chips" role="group" aria-label="Instant account size" id="inSizes"></div>
-          <div class="fee"><span class="n tnum" id="inFee">$350</span><span class="s"><b>One-time fee</b>Your only risk</span></div>
+          <div class="fee"><span class="n tnum" id="inFee">$350</span><span class="s"><b>One-time fee</b><span id="inAcct">$50,000 simulated account</span></span></div>
+          <div class="go">
+            <a class="buy lg" id="inBuy" href="https://checkout.fundingrock.com/onboarding" target="_blank" rel="noopener">Get my $50K Instant for $350 <span class="ar" aria-hidden="true">→</span></a>
+            <p class="under">One-time fee. 14-day refund if you haven't placed a trade.</p>
+            <div class="pay"><img src="assets/foot/pay-visa.svg" alt="Visa"><img src="assets/foot/pay-mastercard.svg" alt="Mastercard"><img src="assets/foot/pay-bitcoin.svg" alt="Bitcoin"><img src="assets/foot/pay-usdt.svg" alt="USDT"><span>Card, Apple Pay, Google Pay, crypto</span></div>
+          </div>
+        </div>
+        <div class="solo-r">
           <dl class="obj">
             <div><dt>Daily loss limit</dt><dd class="tnum" id="inD">4%<small>$2,000</small></dd></div>
             <div><dt>Max loss (trailing)</dt><dd class="tnum" id="inM">8%<small>$4,000</small></dd></div>
             <div><dt>Profit target</dt><dd>None</dd></div>
             <div><dt>Reward Share</dt><dd>80%<small>95% add-on</small></dd></div>
           </dl>
-          <div class="go">
-            <a class="buy lg" id="inBuy" href="https://checkout.fundingrock.com/onboarding" target="_blank" rel="noopener">Get my $50K Instant for $350 <span class="ar" aria-hidden="true">→</span></a>
-            <p class="under">One-time fee. 14-day refund if you haven't placed a trade.</p>
-            <div class="pay"><img src="assets/foot/pay-visa.svg" alt="Visa"><img src="assets/foot/pay-mastercard.svg" alt="Mastercard"><img src="assets/foot/pay-bitcoin.svg" alt="Bitcoin"><img src="assets/foot/pay-usdt.svg" alt="USDT"><span>Card, Apple Pay, Google Pay, crypto</span></div>
-          </div>
-        </article>
-        <article class="way glass rv on" id="wayNew" data-spot="520,.14">
-          <span class="for">If you're new to trading</span>
-          <h3>Pay After You Pass.</h3>
-          <p>Learn the rules on a simulated account. Pay $5 to start. Pay the activation fee only if you pass.</p>
-          <div class="chips" role="group" aria-label="Pay After You Pass account size" id="ppSizes"></div>
-          <div class="fee"><span class="n tnum">$5</span><span class="then">today, then <b class="tnum" id="ppAct">$300</b><br>only if you pass</span></div>
-          <dl class="obj">
-            <div><dt>Profit target</dt><dd class="tnum" id="ppT">3%<small>$1,500</small></dd></div>
-            <div><dt>Max loss (trailing)</dt><dd class="tnum" id="ppM">8%<small>$4,000</small></dd></div>
-            <div><dt>Daily limit</dt><dd>None</dd></div>
-            <div><dt>Time limit</dt><dd>None</dd></div>
-          </dl>
-          <div class="go">
-            <a class="buy lg" id="ppBuy" href="https://checkout.fundingrock.com/onboarding" target="_blank" rel="noopener">Start my $50K for $5 <span class="ar" aria-hidden="true">→</span></a>
-            <p class="under">The most you can lose today is $5. 14-day refund on the $5 if you haven't placed a trade.</p>
-            <div class="pay"><img src="assets/foot/pay-visa.svg" alt="Visa"><img src="assets/foot/pay-mastercard.svg" alt="Mastercard"><img src="assets/foot/pay-bitcoin.svg" alt="Bitcoin"><img src="assets/foot/pay-usdt.svg" alt="USDT"><span>Card, Apple Pay, Google Pay, crypto</span></div>
-          </div>
-        </article>
-      </div>
+          <ul class="gets">
+            <li>No minimum trading days</li>
+            <li>News trading and EAs allowed</li>
+            <li>Rewards processed within 48h, minimum $100</li>
+            <li>Weekend holding as an add-on, +15% of the fee</li>
+            <li>Trade on TradeLocker or cTrader</li>
+          </ul>
+        </div>
+      </article>
     </div>
   </section>
 
@@ -680,7 +655,6 @@ main, footer { overflow-x: clip; }
   <section class="sec" id="how" style="padding-top:0">
     <div class="wrap">
       <div class="sh rv"><span class="eyebrow">How it works</span><h2>Three moves. <span class="grad">No deposit in any of them.</span></h2></div>
-      <div class="tabs-c rv"><div class="tabs" role="tablist" aria-label="Path"><button type="button" role="tab" data-path="new" aria-selected="true">New to trading</button><button type="button" role="tab" data-path="own" aria-selected="false">Traded my own money</button></div></div>
       <div class="steps" id="steps"></div>
     </div>
   </section>
@@ -745,8 +719,8 @@ main, footer { overflow-x: clip; }
         <details><summary>Why pay a fee to trade a simulated account?<i aria-hidden="true"></i></summary><div class="a">The fee is your entry. You trade a simulated account with set rules. Stay in profit and inside the rules, and you can request Rewards. Break a rule and the account ends. The fee is the most you can lose.</div></details>
         <details><summary>Where do Rewards come from?<i aria-hidden="true"></i></summary><div class="a">FundingRock pays them from its own funds, based on your simulated results. You never deposit money, and your trades never go to a real market.</div></details>
         <details><summary>Is FundingRock legit?<i aria-hidden="true"></i></summary><div class="a">FundingRock is a trade name of Mindwave Training Limited, a company registered in Cyprus (HE 471803). You trade on TradeLocker or cTrader. Rewards are paid via Riseworks or crypto. On Trustpilot we have 3.8 out of 5 from 215 reviews.</div></details>
-        <details><summary>What if I lose?<i aria-hidden="true"></i></summary><div class="a">If you break a rule, the account ends and the fee is gone. You owe nothing more. With Pay After You Pass, the most you can lose before you pass is $5. If you haven't placed a trade, you can get a full refund within 14 days.</div></details>
-        <details><summary>I've never traded. Can I still start?<i aria-hidden="true"></i></summary><div class="a">Yes. Pay After You Pass is built for that. You pay $5 for a $50K simulated account, learn the rules with no daily limit and no time limit, and pay the activation fee only if you hit 3%.</div></details>
+        <details><summary>What if I lose?<i aria-hidden="true"></i></summary><div class="a">If you break a rule, the account ends and the fee is gone. You owe nothing more. If you haven't placed a trade, you can get a full refund within 14 days.</div></details>
+        <details><summary>I've never traded. Can I still start?<i aria-hidden="true"></i></summary><div class="a">Yes. Instant has no challenge and no profit target. Start with a $5K simulated account for $70, learn how the rules work, and the fee is the most you can lose.</div></details>
         <details><summary>Can I use my own strategy?<i aria-hidden="true"></i></summary><div class="a">Yes. News trading and EAs (bots) are allowed. Instant has no profit target and no minimum days. Holding trades over the weekend on Instant is an add-on.</div></details>
       </div>
     </div>
@@ -758,9 +732,8 @@ main, footer { overflow-x: clip; }
         <div class="end-c">
           <span class="eyebrow">Discipline or nothing</span>
           <h2>Cap what <span class="grad">you can lose.</span></h2>
-          <p id="endP">Start a $50K simulated account for $5. Pay the activation fee only if you pass.</p>
-          <a class="buy lg" id="endBuy" href="https://checkout.fundingrock.com/onboarding" target="_blank" rel="noopener">Start for $5 <span class="ar" aria-hidden="true">→</span></a><br>
-          <a class="alt" id="endAlt" href="#wayOwn" data-path-go="own">Traded before? Get the $50K Instant for $350 →</a>
+          <p id="endP">Trade a $50K simulated account. If it goes wrong, the $350 fee is the cap.</p>
+          <a class="buy lg" id="endBuy" href="https://checkout.fundingrock.com/onboarding" target="_blank" rel="noopener">Get my $50K Instant for $350 <span class="ar" aria-hidden="true">→</span></a>
         </div>
         <div class="end-ph">
           <img src="assets/prove.webp" alt="" loading="lazy" width="904" height="1200">
@@ -771,14 +744,14 @@ main, footer { overflow-x: clip; }
   </section>
 </main>
 
-<div class="mbar" id="mbar" aria-hidden="true"><div><b id="mbT">$50K for $5</b><small id="mbS">Pay $300 only if you pass</small></div><a class="buy" id="mbBuy" href="#ways" tabindex="-1">Start <span class="ar" aria-hidden="true">→</span></a></div>
+<div class="mbar" id="mbar" aria-hidden="true"><div><b id="mbT">$50K Instant · $350</b><small id="mbS">One-time fee. No target.</small></div><a class="buy" id="mbBuy" href="#ways" tabindex="-1">Start <span class="ar" aria-hidden="true">→</span></a></div>
 
 <footer class="ft">
   <div class="wrap">
     <div class="ft-g">
       <div><img src="assets/logo.svg" alt="FundingRock" width="182" height="24"><p>401/2 Ayias Elenis 36, Nicosia 1061, Cyprus<br>support@fundingrock.com</p>
         <div class="pay"><img src="assets/foot/pay-visa.svg" alt="Visa"><img src="assets/foot/pay-mastercard.svg" alt="Mastercard"><img src="assets/foot/pay-discover.svg" alt="Discover"><img src="assets/foot/pay-bitcoin.svg" alt="Bitcoin"><img src="assets/foot/pay-usdt.svg" alt="USDT"><img src="assets/foot/pay-rise.svg" alt="Riseworks"></div></div>
-      <div><h4>Programs</h4><a href="https://fundingrock.com/instant/" target="_blank" rel="noopener">Instant</a><a href="https://fundingrock.com/pay-after-you-pass/" target="_blank" rel="noopener">Pay After You Pass</a><a href="https://fundingrock.com/1-step/" target="_blank" rel="noopener">1-Step Challenge</a><a href="https://fundingrock.com/2-step/" target="_blank" rel="noopener">2-Step Challenge</a></div>
+      <div><h4>Programs</h4><a href="https://fundingrock.com/instant/" target="_blank" rel="noopener">Instant</a><a href="https://fundingrock.com/1-step/" target="_blank" rel="noopener">1-Step Challenge</a><a href="https://fundingrock.com/2-step/" target="_blank" rel="noopener">2-Step Challenge</a></div>
       <div><h4>Company</h4><a href="https://fundingrock.com/about-us/" target="_blank" rel="noopener">About us</a><a href="https://fundingrock.com/affiliates/" target="_blank" rel="noopener">Affiliates</a><a href="https://fundingrock.com/contact-us/" target="_blank" rel="noopener">Contact us</a></div>
       <div><h4>Legal</h4><a href="https://fundingrock.com/terms/" target="_blank" rel="noopener">Terms</a><a href="https://fundingrock.com/privacy/" target="_blank" rel="noopener">Privacy</a><a href="https://fundingrock.com/risk-disclosure/" target="_blank" rel="noopener">Risk disclosure</a></div>
     </div>
@@ -811,50 +784,16 @@ main, footer { overflow-x: clip; }
 
   var nav = $("#nav"), mbar = $("#mbar");
 
-  /* ---------- paths: one choice drives the hero CTA, the price cards, the steps and the closing CTA ---------- */
-  var path = "new";
-  var STEPS = {
-    new: [["Start", "$5", "Start for $5", "Get a $50K simulated account. No deposit."],
-          ["Trade", "3%", "Hit 3%", "Make $1,500 without falling $4,000 (8%) below your highest balance. No daily limit. No time limit."],
-          ["Unlock", "Prime", "Pay only if you pass", "Pass, then pay the $300 activation fee. Trade your Prime account and earn Rewards."]],
-    own: [["Choose", "1", "Pick a size, pay once", "From $5K to $200K simulated. One fee. That's the most you can lose."],
-          ["Trade", "0%", "No target to hit", "Trade your way from day one. Stay inside 4% daily and 8% trailing."],
-          ["Get paid", "48h", "Request a Reward", "In profit? Request it. Minimum $100. 80% Reward Share, 95% with the add-on."]]
-  };
-  function renderSteps(anim) {
-    var s = $("#steps");
-    s.innerHTML = STEPS[path].map(function (t) { return '<article class="nc" data-spot="420,.16"><span class="tag">' + t[0] + '</span><span class="bign">' + t[1] + "</span><h3>" + t[2] + "</h3><p>" + t[3] + "</p></article>"; }).join("");
-    if (anim && !reduce) { s.classList.remove("swap"); void s.offsetWidth; s.classList.add("swap"); }
-    spotify($$(".nc", s));
-  }
-  function setPath(p, anim) {
-    path = p;
-    $$(".pth").forEach(function (b) { b.setAttribute("aria-pressed", b.getAttribute("data-path") === p); });
-    $$(".tabs button").forEach(function (b) { b.setAttribute("aria-selected", b.getAttribute("data-path") === p); });
-    $("#wayOwn").classList.toggle("on", p === "own"); $("#wayNew").classList.toggle("on", p === "new");
-    var own = p === "own";
-    $("#heroCta").innerHTML = (own ? "Get my $50K Instant for $350" : "Start my $50K for $5") + ' <span class="ar" aria-hidden="true">→</span>';
-    $("#heroCta").setAttribute("href", own ? "#wayOwn" : "#wayNew");
-    $("#heroUnder").textContent = own ? "Simulated trading. Only your fee is at risk. 14-day refund if you haven't placed a trade." : "Simulated trading. The most you can lose today is $5.";
-    $(".fchip.cap").innerHTML = own ? '<b class="tnum">−$350</b>The cap · $50K Instant' : '<b class="tnum">−$5</b>The cap · Pay After You Pass';
-    capV = own ? 350 : 5;
-    $(".nav .buy").textContent = own ? "Get Instant" : "Start for $5";
-    $(".nav .buy").setAttribute("href", own ? "#wayOwn" : "#wayNew");
-    $("#endP").textContent = own ? "Trade a $50K simulated account. If it goes wrong, the $350 fee is the cap." : "Start a $50K simulated account for $5. Pay the activation fee only if you pass.";
-    $("#endBuy").innerHTML = (own ? "Get my $50K Instant for $350" : "Start for $5") + ' <span class="ar" aria-hidden="true">→</span>';
-    $("#endAlt").textContent = own ? "Not sure yet? Try the rules first for $5 →" : "Traded before? Get the $50K Instant for $350 →";
-    $("#endAlt").setAttribute("href", own ? "#wayNew" : "#wayOwn"); $("#endAlt").setAttribute("data-path-go", own ? "new" : "own");
-    $("#mbT").textContent = own ? "$50K Instant · $350" : "$50K for $5"; $("#mbS").textContent = own ? "One-time fee. No target." : "Pay $300 only if you pass";
-    $("#mbBuy").setAttribute("href", own ? "#wayOwn" : "#wayNew");
-    renderSteps(anim);
-  }
-  $$(".pth, .tabs button").forEach(function (b) { b.addEventListener("click", function () { setPath(b.getAttribute("data-path"), true); }); });
-  document.addEventListener("click", function (e) { var a = e.target.closest("[data-path-go]"); if (a) setPath(a.getAttribute("data-path-go"), true); });
+  /* how it works */
+  var STEPS = [["Choose", "1", "Pick a size, pay once", "From $5K to $200K simulated. One fee. That's the most you can lose."],
+               ["Trade", "0%", "No target to hit", "Trade your way from day one. Stay inside 4% daily and 8% trailing."],
+               ["Get paid", "48h", "Request a Reward", "In profit? Request it. Minimum $100. 80% Reward Share, 95% with the add-on."]];
+  $("#steps").innerHTML = STEPS.map(function (t) { return '<article class="nc rv" data-spot="420,.16"><span class="tag">' + t[0] + '</span><span class="bign">' + t[1] + "</span><h3>" + t[2] + "</h3><p>" + t[3] + "</p></article>"; }).join("");
 
   /* ---------- hero: the drop. Two balances fall together. One stops at the cap. ---------- */
   var NS = "http://www.w3.org/2000/svg", svg = $("#dropSvg");
   function el(tag, at, par) { var e = document.createElementNS(NS, tag); for (var k in at) e.setAttribute(k, at[k]); (par || svg).appendChild(e); return e; }
-  var W = 520, H = 400, X0 = 26, X1 = 494, Y0 = 92, CAPY = 236, BOT = 430, capV = 5;
+  var W = 520, H = 400, X0 = 26, X1 = 494, Y0 = 92, CAPY = 236, BOT = 430;
   var defs = el("defs", {});
   defs.innerHTML = '<linearGradient id="gR" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#ff2156" stop-opacity=".35"/><stop offset="1" stop-color="#ff2156" stop-opacity="0"/></linearGradient><linearGradient id="gL" x1="0" x2="1"><stop offset="0" stop-color="#8ff3e8"/><stop offset="1" stop-color="#d9ff00"/></linearGradient><filter id="glow"><feGaussianBlur stdDeviation="4"/></filter>';
   [140, 188, 284, 332, 380].forEach(function (y) { el("line", { x1: X0, x2: X1, y1: y, y2: y, stroke: "rgba(255,255,255,.05)" }); });
@@ -982,26 +921,17 @@ main, footer { overflow-x: clip; }
 
   /* ---------- prices ---------- */
   var IN = [[5000, 70], [10000, 120], [25000, 200], [50000, 350], [100000, 600], [200000, 1100]], inI = 3, inShown = 350;
-  var PA = [[10000, 100], [25000, 180], [50000, 300], [100000, 500], [200000, 999]], ppI = 2, ppShown = 300;
   var K = function (a) { return "$" + (a / 1000) + "K"; };
   $("#inSizes").innerHTML = IN.map(function (s, i) { return '<button type="button" class="chip" aria-pressed="' + (i === inI) + '">' + K(s[0]) + "</button>"; }).join("");
-  $("#ppSizes").innerHTML = PA.map(function (s, i) { return '<button type="button" class="chip" aria-pressed="' + (i === ppI) + '">' + K(s[0]) + "</button>"; }).join("");
   function pickIn(i) {
     inI = i; var s = IN[i];
     $$("#inSizes .chip").forEach(function (b, j) { b.setAttribute("aria-pressed", j === i); });
     tween(inShown, s[1], 650, function (v) { $("#inFee").textContent = fmt(v); }); inShown = s[1];
     $("#inD").innerHTML = "4%<small>" + fmt(s[0] * .04) + "</small>"; $("#inM").innerHTML = "8%<small>" + fmt(s[0] * .08) + "</small>";
+    $("#inAcct").textContent = fmt(s[0]) + " simulated account";
     $("#inBuy").innerHTML = "Get my " + K(s[0]) + " Instant for " + fmt(s[1]) + ' <span class="ar" aria-hidden="true">→</span>';
   }
-  function pickPp(i) {
-    ppI = i; var s = PA[i];
-    $$("#ppSizes .chip").forEach(function (b, j) { b.setAttribute("aria-pressed", j === i); });
-    tween(ppShown, s[1], 650, function (v) { $("#ppAct").textContent = fmt(v); }); ppShown = s[1];
-    $("#ppT").innerHTML = "3%<small>" + fmt(s[0] * .03) + "</small>"; $("#ppM").innerHTML = "8%<small>" + fmt(s[0] * .08) + "</small>";
-    $("#ppBuy").innerHTML = "Start my " + K(s[0]) + " for $5" + ' <span class="ar" aria-hidden="true">→</span>';
-  }
   $$("#inSizes .chip").forEach(function (b, i) { b.addEventListener("click", function () { pickIn(i); }); });
-  $$("#ppSizes .chip").forEach(function (b, i) { b.addEventListener("click", function () { pickPp(i); }); });
 
   /* ---------- press, traders, certificates, reviews ---------- */
   var PR = [["forbes", "Forbes"], ["investing", "Investing.com"], ["bloomberg", "Bloomberg"], ["marketsinsiders", "Markets Insider"], ["yahoofinance", "Yahoo Finance"], ["benzinga", "Benzinga"]];
@@ -1036,7 +966,7 @@ main, footer { overflow-x: clip; }
     ["Jaša Kereži", "Jan 25, 2026", "Amazing experience", "The spreads are tight and the payout process is smooth and hassle-free, which makes trading with them a great experience."],
     ["G Mishra", "Jan 21, 2026", "Best part: No complex rules", "The best part of this firm is no rules except daily and overall loss limit. It gives a trader freehand to prove skills."],
     ["Tewodros Hailye", "June 2025", "3 Rewards received", "I have received 3 payouts from Funding Rock, all in under 24 hours. It's a genuine firm with minimum rules."],
-    ["Alan Haynes", "Sep 28, 2026", "This is the real test guys", "Joined Fundingrock last month and opened a pay after you pass challenge. Completed the challenge stage in a couple of days…"],
+    ["Simon", "Sep 14, 2026", "Fast and helpful Customer Care", "He was always quick to reply and followed up. Great service and the Dashboard is very good."],
     ["Kabeer khadav", "Aug 12, 2026", "Best for beginners", "Right now the best Prop firm for beginner's. The best pricing, offer, rules and support team."],
     ["sokor", "Sep 8, 2025", "Lowest spreads on XAUUSD", "Very simple rules, great spreads. I noticed almost near zero spreads on XAUUSD. Lowest spreads I've seen."],
     ["eaglestrade", "Sep 7, 2026", "I enjoyed trading with fundingrock", "I enjoyed trading with fundingrock and passed my evaluation on first trial."]];
@@ -1093,7 +1023,6 @@ main, footer { overflow-x: clip; }
     $$(".rv").forEach(function (e) { if (e.getBoundingClientRect().top > innerHeight) { e.classList.add("pre"); io.observe(e); } });
   }
 
-  setPath("new", false);
   placeCap(); onScroll();
   if (document.fonts) document.fonts.ready.then(placeCap);
   if (!reduce) (function loop(now) { if (sceneVis) heroFrame(now); requestAnimationFrame(loop); })(performance.now());
