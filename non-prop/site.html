@@ -848,7 +848,32 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
   </section>
 
   <!-- 2. pain point comparison: scroll drives a bad stretch, the cap line holds -->
-  <section id="drop" class="sec">
+  <!-- pick your way in -->
+  <section class="sec" id="ways">
+    <div class="wrap">
+      <div class="sh rv"><span class="eyebrow">Pick your program</span><h2>One fee. <span class="grad">That's the most you lose.</span></h2><p>Three ways in. Each one is a single fee, paid once, for a simulated account. Pick the one that fits how you trade.</p></div>
+      <div class="ptabs rv" role="tablist" aria-label="Programs" id="ptabs"></div>
+      <article class="way solo glass rv on" id="wayOwn" data-spot="620,.14" role="tabpanel">
+        <div class="solo-l">
+          <span class="for" id="pFor">Instant account</span>
+          <h3 id="pH3">No challenge. Trade from day one.</h3>
+          <div class="chips" role="group" aria-label="Account size" id="inSizes"></div>
+          <div class="fee"><span class="n tnum" id="inFee">$350</span><span class="s"><b>One-time fee</b><span id="inAcct">$50,000 simulated account</span></span></div>
+          <div class="go">
+            <a class="buy lg" id="inBuy" href="https://checkout.fundingrock.com/onboarding" target="_blank" rel="noopener">Get my $50K Instant for $350 <span class="ar" aria-hidden="true">→</span></a>
+            <p class="under" id="pUnder">One-time fee. 14-day refund if you haven't placed a trade.</p>
+            <div class="pay"><img src="assets/foot/pay-visa.svg" alt="Visa"><img src="assets/foot/pay-mastercard.svg" alt="Mastercard"><img src="assets/foot/pay-bitcoin.svg" alt="Bitcoin"><img src="assets/foot/pay-usdt.svg" alt="USDT"><span>Card, Apple Pay, Google Pay, crypto</span></div>
+          </div>
+        </div>
+        <div class="solo-r">
+          <dl class="obj" id="pRules"></dl>
+          <ul class="gets" id="pGets"></ul>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section id="drop" class="sec" style="padding-top:0">
     <div class="wrap">
       <div class="sh rv">
         <span class="eyebrow">Broker vs FundingRock</span>
@@ -890,31 +915,6 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
         </div>
       </div>
       <p class="cmp-note">Simulated trading. Rewards are not guaranteed. Example for illustration.</p>
-    </div>
-  </section>
-
-  <!-- pick your way in -->
-  <section class="sec" id="ways" style="padding-top:0">
-    <div class="wrap">
-      <div class="sh rv"><span class="eyebrow">Pick your program</span><h2>One fee. <span class="grad">That's the most you lose.</span></h2><p>Three ways in. Each one is a single fee, paid once, for a simulated account. Pick the one that fits how you trade.</p></div>
-      <div class="ptabs rv" role="tablist" aria-label="Programs" id="ptabs"></div>
-      <article class="way solo glass rv on" id="wayOwn" data-spot="620,.14" role="tabpanel">
-        <div class="solo-l">
-          <span class="for" id="pFor">Instant account</span>
-          <h3 id="pH3">No challenge. Trade from day one.</h3>
-          <div class="chips" role="group" aria-label="Account size" id="inSizes"></div>
-          <div class="fee"><span class="n tnum" id="inFee">$350</span><span class="s"><b>One-time fee</b><span id="inAcct">$50,000 simulated account</span></span></div>
-          <div class="go">
-            <a class="buy lg" id="inBuy" href="https://checkout.fundingrock.com/onboarding" target="_blank" rel="noopener">Get my $50K Instant for $350 <span class="ar" aria-hidden="true">→</span></a>
-            <p class="under" id="pUnder">One-time fee. 14-day refund if you haven't placed a trade.</p>
-            <div class="pay"><img src="assets/foot/pay-visa.svg" alt="Visa"><img src="assets/foot/pay-mastercard.svg" alt="Mastercard"><img src="assets/foot/pay-bitcoin.svg" alt="Bitcoin"><img src="assets/foot/pay-usdt.svg" alt="USDT"><span>Card, Apple Pay, Google Pay, crypto</span></div>
-          </div>
-        </div>
-        <div class="solo-r">
-          <dl class="obj" id="pRules"></dl>
-          <ul class="gets" id="pGets"></ul>
-        </div>
-      </article>
     </div>
   </section>
 
