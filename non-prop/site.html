@@ -413,7 +413,28 @@ body.hb .hx-sizes { visibility: hidden; }
 
 /* how it works: two steps */
 .hw { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); gap: 18px; align-items: stretch; }
-.hw .hs-pass, .hw .hw-ar2 { display: none; }
+/* flip cards: front explains the step, back lists the rules */
+.hs.flip { padding: 0 !important; background: none; border: 0; perspective: 1400px; cursor: pointer; outline: none; }
+.fl-in { position: relative; display: grid; height: 100%; transform-style: preserve-3d; transition: transform .8s var(--ease); }
+.hs.flip:hover .fl-in, .hs.flip.on .fl-in, .hs.flip:focus-visible .fl-in { transform: rotateY(180deg); }
+@media (hover: none) { .hs.flip:hover .fl-in { transform: none; } .hs.flip.on .fl-in { transform: rotateY(180deg); } }
+.fl-f, .fl-b { grid-area: 1 / 1; display: flex; flex-direction: column; padding: clamp(20px, 2.2vw, 30px); border-radius: 28px; -webkit-backface-visibility: hidden; backface-visibility: hidden; }
+.fl-b { transform: rotateY(180deg); background: linear-gradient(165deg, rgba(30,52,8,.92), rgba(6,16,10,.97) 60%), #071006; border-color: rgba(217,255,0,.45); }
+.hs.flip:focus-visible .fl-f, .hs.flip:focus-visible .fl-b { outline: 2px solid var(--lime); outline-offset: 3px; }
+.fl-hint { margin-top: auto; padding-top: 16px; display: inline-flex; align-items: center; gap: 8px; font-size: 13px; color: var(--iris); }
+.fl-hint svg { width: 15px; height: 15px; }
+.fl-hint em { font-style: normal; }
+.fl-ht { display: none; }
+@media (hover: none) { .fl-hd { display: none; } .fl-ht { display: inline; } }
+.fl-k { font-size: 12px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--lime); }
+.fl-list { margin: 14px 0 0; display: grid; gap: 1px; border-radius: 14px; overflow: hidden; border: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.08); }
+.fl-list > div { display: flex; justify-content: space-between; gap: 12px; padding: 11px 14px; background: rgba(4,10,8,.85); font-size: 14px; }
+.fl-list dt { color: var(--mute); }
+.fl-list dd { margin: 0; font-weight: 600; text-align: right; }
+.safe { margin-top: 22px; }
+.safe-ch { display: block; width: 100%; height: 90px; }
+.safe-p { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+.safe-p span { font-size: 12.5px; font-weight: 500; padding: 6px 11px; border-radius: 999px; border: 1px solid rgba(143,243,232,.3); color: var(--iris); background: rgba(0,216,195,.06); }
 .hw.three { grid-template-columns: minmax(0, 1fr) auto minmax(0, .8fr) auto minmax(0, 1fr); gap: 12px; }
 .hw.three .hs-pass, .hw.three .hw-ar2 { display: flex; }
 .hw.three .hw-ar2 { display: grid; }
@@ -855,26 +876,46 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
     <div class="wrap">
       <div class="sh rv"><span class="eyebrow">How it works</span><h2 id="hwH">Easier than you think. <span class="grad">Pick. Trade. Get rewarded.</span></h2></div>
       <div class="ptabs mini rv" role="tablist" aria-label="Program" id="hwTabs"></div>
-      <div class="hw" id="hw">
+      <div class="hw three" id="hw">
         <article class="hs glass rv" data-spot="460,.14">
           <div class="hs-t"><span class="hn">1</span><div><h3>Pick an account size</h3><p id="hwP1">From <b>$5,000</b> to <b>$200,000</b> in simulated capital. Pay one fee, once.</p></div></div>
           <div class="lad-v"><span class="tnum" id="ladA">$50K</span> simulated <i>·</i> <b class="tnum" id="ladF">$350</b> fee</div>
           <div class="lad" id="lad" role="group" aria-label="Account sizes and fees"></div>
         </article>
         <div class="hw-ar" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
-        <article class="hs glass rv hs-pass" id="hsPass" data-spot="460,.14">
-          <div class="hs-t"><span class="hn">2</span><div><h3 id="psH">Hit the target</h3><p id="psP">Reach the profit target on your simulated account. No time limit.</p></div></div>
-          <div class="ps-big tnum" id="psBig">10%</div>
-          <div class="ps-tracks" id="psTracks"></div>
-          <div class="ps-ok" id="psOk">Passed. Your Prime account is next.</div>
+        <article class="hs flip rv" tabindex="0" aria-label="Step 2. Activate to see the rules">
+          <div class="fl-in">
+            <div class="fl-f glass">
+              <div class="hs-t"><span class="hn">2</span><div><h3>Trade in a safe, simulated space</h3><p>Real market prices on a simulated account. Your savings never touch the market.</p></div></div>
+              <div class="safe">
+                <svg class="safe-ch" viewBox="0 0 300 90" preserveAspectRatio="none" aria-hidden="true"><path id="safeL" fill="none" stroke="url(#hxG)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" d="M0 70 L20 64 L40 68 L60 52 L80 58 L100 44 L120 50 L140 36 L160 42 L180 30 L200 38 L220 24 L240 30 L260 18 L280 22 L300 12"/></svg>
+                <div class="safe-p"><span>Simulated</span><span>No deposit</span><span>Your savings stay put</span></div>
+              </div>
+              <span class="fl-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg><em class="fl-hd">Hover</em><em class="fl-ht">Tap</em> to see the rules</span>
+            </div>
+            <div class="fl-b glass">
+              <span class="fl-k" id="rbK">The rules · Instant</span>
+              <dl class="fl-list" id="rbList"></dl>
+              <span class="fl-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg>Back</span>
+            </div>
+          </div>
         </article>
         <div class="hw-ar hw-ar2" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
-        <article class="hs glass rv" data-spot="460,.14">
-          <div class="hs-t"><span class="hn" id="hn2">2</span><div><h3 id="hwH2">Trade, then share the profit</h3><p id="hwP2">Stay inside two rules. In profit? Request a Reward and keep <b>80%</b>, or <b>95%</b> with the add-on.</p></div></div>
-          <div class="r2"><div><span>Daily loss limit</span><b id="r2D">4%</b></div><div><span id="r2Ml">Max loss (trailing)</span><b id="r2M">8%</b></div></div>
-          <div class="split" id="split">
-            <div class="sp-h"><span>Example: <b>$1,000</b> simulated profit</span><span class="sp-m" id="spMode">80% Reward Share</span></div>
-            <div class="sp-bar"><i id="spYou"><em class="tnum" id="spYouV">You $800</em></i><s id="spUs"><em class="tnum" id="spUsV">$200</em></s></div>
+        <article class="hs flip rv" tabindex="0" aria-label="Step 3. Activate to see how Rewards work">
+          <div class="fl-in">
+            <div class="fl-f glass">
+              <div class="hs-t"><span class="hn">3</span><div><h3>Trade and qualify for Rewards</h3><p>In profit? Request a Reward and keep <b>80%</b>, or <b>95%</b> with the add-on.</p></div></div>
+              <div class="split" id="split">
+                <div class="sp-h"><span>Example: <b>$1,000</b> simulated profit</span><span class="sp-m" id="spMode">80% Reward Share</span></div>
+                <div class="sp-bar"><i id="spYou"><em class="tnum" id="spYouV">You $800</em></i><s id="spUs"><em class="tnum" id="spUsV">$200</em></s></div>
+              </div>
+              <span class="fl-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg><em class="fl-hd">Hover</em><em class="fl-ht">Tap</em> to see how Rewards work</span>
+            </div>
+            <div class="fl-b glass">
+              <span class="fl-k">How Rewards work</span>
+              <dl class="fl-list" id="rwList"></dl>
+              <span class="fl-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg>Back</span>
+            </div>
           </div>
         </article>
       </div>
@@ -1025,37 +1066,28 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
     lbs.forEach(function (b, i) { b.addEventListener("click", function () { ladUser = true; ladAt(i); }); b.addEventListener("mouseenter", function () { ladUser = true; ladAt(i); }); });
     ladAt(def);
   }
-  function passRun() {
-    if (!hwProg || hwProg.id === "instant") return;
-    var tr = $$("#psTracks i"), ok = $("#psOk");
-    tr.forEach(function (t) { t.style.transition = "none"; t.style.width = "0"; }); ok.classList.remove("on"); void ok.offsetWidth;
-    tr.forEach(function (t, i) { t.style.transition = ""; setTimeout(function () { t.style.width = "100%"; if (i === tr.length - 1) setTimeout(function () { ok.classList.add("on"); }, 1300); }, reduce ? 0 : 300 + i * 1500); });
-  }
   function howFor(g) {
-    hwProg = g; var three = g.id !== "instant";
+    hwProg = g;
     $$("#hwTabs .pt").forEach(function (b) { b.setAttribute("aria-selected", b.getAttribute("data-p") === g.id); });
-    $("#hw").classList.toggle("three", three);
-    $("#hwH").innerHTML = 'Easier than you think. <span class="grad">' + (three ? "Pick. Pass. Get rewarded." : "Pick. Trade. Get rewarded.") + "</span>";
+    $("#hwH").innerHTML = 'Easier than you think. <span class="grad">Pick. Trade. Get rewarded.</span>';
     var lo = g.sizes[0][0], hi = g.sizes[g.sizes.length - 1][0];
     $("#hwP1").innerHTML = "From <b>" + fmt(lo) + "</b> to <b>" + fmt(hi) + "</b> in simulated capital. Pay one fee, once.";
     ladUser = false; buildLad(g.sizes, g.def);
-    $("#hn2").textContent = three ? "3" : "2";
-    var dl = g.rules.filter(function (r) { return /Daily/.test(r[0]); })[0], ml = g.rules.filter(function (r) { return /Max loss/.test(r[0]); })[0];
-    $("#r2D").textContent = dl[1]; $("#r2M").textContent = ml[1]; $("#r2Ml").textContent = ml[0];
-    $("#hwH2").textContent = three ? "Trade Prime, share the profit" : "Trade, then share the profit";
-    $("#hwP2").innerHTML = (three ? "Same two rules on your Prime account. " : "Stay inside two rules. ") + "In profit? Request a Reward and keep <b>80%</b>, or <b>95%</b> with the add-on.";
-    if (three) {
-      var two = g.id === "two";
-      $("#psH").textContent = two ? "Hit 6%, twice" : "Hit 10%, once";
-      $("#psP").textContent = two ? "6% in Phase 1, then 6% in Phase 2 on your simulated account. No time limit." : "One phase: reach 10% on your simulated account. No time limit, no minimum days.";
-      $("#psBig").textContent = two ? "6% × 2" : "10%";
-      $("#psTracks").innerHTML = (two ? ["Phase 1", "Phase 2"] : ["Phase 1"]).map(function (n) { return '<div class="ps-tr"><span><b>' + n + "</b><em>" + (two ? "6%" : "10%") + '</em></span><div><i></i></div></div>'; }).join("");
-      if (hwVis) passRun();
-    }
-    $("#hwFoot").innerHTML = (three ? ["No time limit", "No minimum days", "Rewards processed within 48h", "Minimum Reward $100"] : ["No profit target", "No minimum days", "Rewards processed within 48h", "Minimum Reward $100"]).map(function (t) { return "<li>" + t + "</li>"; }).join("");
+    var row = function (r) { return "<div><dt>" + r[0] + "</dt><dd>" + r[1] + "</dd></div>"; };
+    $("#rbK").textContent = "The rules · " + g.name;
+    var extra = g.id === "instant" ? [["Minimum days", "None"], ["News trading and EAs", "Allowed"]]
+      : g.id === "one" ? [["Phases", "1"], ["Time limit", "None"]]
+      : [["Phases", "2"], ["Time limit", "None"]];
+    $("#rbList").innerHTML = g.rules.filter(function (r) { return !/Reward/.test(r[0]); }).map(function (r) { return [r[0], r[1]]; }).concat(extra).map(row).join("");
+    $("#rwList").innerHTML = (g.id === "instant" ? [] : [["Rewards start", "After you pass"]]).concat([["Reward Share", "80%, or 95% add-on"], ["Minimum Reward", "$100"], ["Processed", "Within 48h, weekdays"], ["Paid via", "Riseworks or crypto"]]).map(row).join("");
+    $("#hwFoot").innerHTML = (g.id === "instant" ? ["No profit target", "No minimum days", "Rewards processed within 48h", "Minimum Reward $100"] : ["No time limit", "No minimum days", "Rewards processed within 48h", "Minimum Reward $100"]).map(function (t) { return "<li>" + t + "</li>"; }).join("");
   }
+  $$(".hs.flip").forEach(function (c) {
+    c.addEventListener("click", function () { if (!document.body.classList.contains("editing")) c.classList.toggle("on"); });
+    c.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); c.classList.toggle("on"); } });
+  });
   function split(p) { $("#spYou").style.flexBasis = p + "%"; $("#spYouV").textContent = "You $" + (p * 10).toLocaleString("en-US"); $("#spUsV").textContent = "$" + ((100 - p) * 10); $("#spMode").textContent = p === 95 ? "95% with the add-on" : "80% Reward Share"; }
-  new IntersectionObserver(function (es) { var was = hwVis; hwVis = es[0].isIntersecting; if (hwVis) { split(sp95 ? 95 : 80); if (!was) passRun(); } }, { threshold: .3 }).observe($("#hw"));
+  new IntersectionObserver(function (es) { var was = hwVis; hwVis = es[0].isIntersecting; if (hwVis) split(sp95 ? 95 : 80); }, { threshold: .3 }).observe($("#hw"));
   if (reduce) split(80);
   else {
     setInterval(function () { if (hwVis && !ladUser && LAD.length) ladAt((ladI + 1) % LAD.length); }, 1500);
