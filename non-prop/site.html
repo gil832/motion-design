@@ -498,6 +498,7 @@ body.hcv main { overflow-x: clip; }
 
 /* pinned scroll story (scene swap with zoom, cross-fade and a light sweep) */
 .story { position: relative; height: 330vh; }
+body:not(.hcv) .story { display: none !important; }
 .st-pin { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; display: flex; align-items: center; }
 .st-stage { position: absolute; inset: 0; }
 .st-scene { position: absolute; inset: 0; opacity: 0; transition: opacity 1s var(--ease); }
