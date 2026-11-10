@@ -556,6 +556,8 @@ main, footer { overflow-x: clip; }
 body.editing [data-ek] { outline: 1px dashed rgba(217,255,0,.55); outline-offset: 4px; cursor: text; border-radius: 4px; }
 body.editing [data-ek]:hover { outline-color: var(--lime); }
 body.editing [data-ek]:focus { outline: 2px solid var(--lime); }
+body.editing .hero h1 .ln { overflow: visible; }
+body.editing .hero h1 .ln > span { animation: none; }
 body.editing .bub.wait { opacity: 1 !important; transform: none !important; }
 body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
 </style>
@@ -623,7 +625,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
     <div class="wrap">
       <div class="sh rv">
         <span class="eyebrow">Broker vs FundingRock</span>
-        <h2>Trade <span class="tnum" id="cA">$5K</span>. <span class="grad">Without having <span class="tnum" id="cA2">$5K</span>.</span></h2>
+        <h2><span class="ekp">Trade</span> <span class="tnum" id="cA">$5K</span>. <span class="grad"><span class="ekp">Without having</span> <span class="tnum" id="cA2">$5K</span>.</span></h2>
         <p>A broker account costs you the whole balance, and all of it is at risk. With FundingRock you risk one small fee, and you can still earn from the profit.</p>
       </div>
       <div class="cmp-ctl rv"><span>Pick an account size</span><div class="acc" role="group" aria-label="Account size" id="cSizes"></div></div>
@@ -1102,6 +1104,8 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
     return !el.id && !el.querySelector("[id], a, button, img, svg") && !el.closest(".rc, .rv-c, .ug, #steps, .lb, .sp-bar");
   });
   els.forEach(function (el, i) { el.setAttribute("data-ek", "t" + i); });
+  /* extra editable pieces get their own key series so existing "t" keys never shift */
+  Array.prototype.slice.call(document.querySelectorAll(".ekp")).forEach(function (el, i) { el.setAttribute("data-ek", "p" + i); els.push(el); });
   var byKey = {}; els.forEach(function (el) { byKey[el.getAttribute("data-ek")] = el; });
   var ALLOW = { B: 1, EM: 1, S: 1, SPAN: 1, BR: 1, I: 1, STRONG: 1 };
   function clean(html) {
