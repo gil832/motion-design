@@ -350,6 +350,19 @@ main, footer { overflow-x: clip; }
 
 /* ---------- how it works ---------- */
 
+/* program tabs */
+.ptabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: 1080px; margin: 0 auto 18px; }
+.pt { appearance: none; cursor: pointer; text-align: left; padding: 20px 22px; border-radius: 22px; border: 1px solid rgba(143,243,232,.22); background: linear-gradient(170deg, rgba(10,44,50,.8), rgba(4,16,20,.92)); color: #fff; font: inherit; transition: transform .3s var(--ease), border-color .3s, background .3s, box-shadow .3s; }
+.pt:hover { transform: translateY(-3px); border-color: rgba(143,243,232,.5); }
+.pt b { display: block; font-size: clamp(24px, 2.4vw, 32px); font-weight: 600; letter-spacing: -.04em; line-height: 1.05; }
+.pt span { display: block; margin-top: 6px; font-size: 14px; color: var(--mute); }
+.pt span em { font-style: normal; color: #fff; font-weight: 600; }
+.pt[aria-selected="true"] { background: var(--lime); border-color: var(--lime); color: #0a0a0a; box-shadow: 0 20px 50px -20px rgba(217,255,0,.6); }
+.pt[aria-selected="true"] span, .pt[aria-selected="true"] span em { color: #0a0a0a; }
+#wayOwn.swap { animation: pswap .5s var(--ease); }
+@keyframes pswap { from { opacity: .3; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+@media (max-width: 700px) { .ptabs { gap: 8px; } .pt { padding: 14px; border-radius: 16px; } .pt b { font-size: 20px; } .pt span { font-size: 12px; } }
+
 /* how it works: two steps */
 .hw { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); gap: 18px; align-items: stretch; }
 .hs { padding: clamp(24px, 3vw, 38px); display: flex; flex-direction: column; }
@@ -719,33 +732,23 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
   <!-- pick your way in -->
   <section class="sec" id="ways" style="padding-top:0">
     <div class="wrap">
-      <div class="sh rv"><span class="eyebrow">FundingRock Instant</span><h2>One fee. <span class="grad">That's the most you lose.</span></h2><p>Pick a size. Pay once. No challenge, no target. Trade from day one.</p></div>
-      <article class="way solo glass rv on" id="wayOwn" data-spot="620,.14">
+      <div class="sh rv"><span class="eyebrow">Pick your program</span><h2>One fee. <span class="grad">That's the most you lose.</span></h2><p>Three ways in. Each one is a single fee, paid once, for a simulated account. Pick the one that fits how you trade.</p></div>
+      <div class="ptabs rv" role="tablist" aria-label="Programs" id="ptabs"></div>
+      <article class="way solo glass rv on" id="wayOwn" data-spot="620,.14" role="tabpanel">
         <div class="solo-l">
-          <span class="for">Instant account</span>
-          <h3>No challenge. Trade from day one.</h3>
-          <div class="chips" role="group" aria-label="Instant account size" id="inSizes"></div>
+          <span class="for" id="pFor">Instant account</span>
+          <h3 id="pH3">No challenge. Trade from day one.</h3>
+          <div class="chips" role="group" aria-label="Account size" id="inSizes"></div>
           <div class="fee"><span class="n tnum" id="inFee">$350</span><span class="s"><b>One-time fee</b><span id="inAcct">$50,000 simulated account</span></span></div>
           <div class="go">
             <a class="buy lg" id="inBuy" href="https://checkout.fundingrock.com/onboarding" target="_blank" rel="noopener">Get my $50K Instant for $350 <span class="ar" aria-hidden="true">→</span></a>
-            <p class="under">One-time fee. 14-day refund if you haven't placed a trade.</p>
+            <p class="under" id="pUnder">One-time fee. 14-day refund if you haven't placed a trade.</p>
             <div class="pay"><img src="assets/foot/pay-visa.svg" alt="Visa"><img src="assets/foot/pay-mastercard.svg" alt="Mastercard"><img src="assets/foot/pay-bitcoin.svg" alt="Bitcoin"><img src="assets/foot/pay-usdt.svg" alt="USDT"><span>Card, Apple Pay, Google Pay, crypto</span></div>
           </div>
         </div>
         <div class="solo-r">
-          <dl class="obj">
-            <div><dt>Daily loss limit</dt><dd class="tnum" id="inD">4%<small>$2,000</small></dd></div>
-            <div><dt>Max loss (trailing)</dt><dd class="tnum" id="inM">8%<small>$4,000</small></dd></div>
-            <div><dt>Profit target</dt><dd>None</dd></div>
-            <div><dt>Reward Share</dt><dd>80%<small>95% add-on</small></dd></div>
-          </dl>
-          <ul class="gets">
-            <li>No minimum trading days</li>
-            <li>News trading and EAs allowed</li>
-            <li>Rewards processed within 48h, minimum $100</li>
-            <li>Weekend holding as an add-on, +15% of the fee</li>
-            <li>Trade on TradeLocker or cTrader</li>
-          </ul>
+          <dl class="obj" id="pRules"></dl>
+          <ul class="gets" id="pGets"></ul>
         </div>
       </article>
     </div>
@@ -1010,18 +1013,47 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
 
 
   /* ---------- prices ---------- */
-  var IN = [[5000, 70], [10000, 120], [25000, 200], [50000, 350], [100000, 600], [200000, 1100]], inI = 3, inShown = 350;
   var K = function (a) { return "$" + (a / 1000) + "K"; };
-  $("#inSizes").innerHTML = IN.map(function (s, i) { return '<button type="button" class="chip" aria-pressed="' + (i === inI) + '">' + K(s[0]) + "</button>"; }).join("");
+  /* programs: sizes [simulated account, one-time fee], rules [label, value, share of account or null, note] */
+  var PROGS = [
+    { id: "instant", name: "Instant", tag: "No challenge", forL: "Instant account", h3: "No challenge. Trade from day one.", def: 3, buy: "Instant",
+      sizes: [[5000, 70], [10000, 120], [25000, 200], [50000, 350], [100000, 600], [200000, 1100]],
+      rules: [["Daily loss limit", "4%", .04], ["Max loss (trailing)", "8%", .08], ["Profit target", "None"], ["Reward Share", "80%", null, "95% add-on"]],
+      gets: ["No minimum trading days", "News trading and EAs allowed", "Rewards processed within 48h, minimum $100", "Weekend holding as an add-on, +15% of the fee", "Trade on TradeLocker or cTrader"],
+      under: "One-time fee. 14-day refund if you haven't placed a trade." },
+    { id: "one", name: "1-Step", tag: "One phase", forL: "1-Step Challenge", h3: "One phase. Hit 10% and you're in.", def: 2, buy: "1-Step",
+      sizes: [[5000, 50], [10000, 80], [25000, 155], [50000, 270], [100000, 450]],
+      rules: [["Profit target", "10%", .10], ["Daily loss limit", "3%", .03], ["Max loss (trailing)", "6%", .06], ["Minimum days", "0"]],
+      gets: ["No time limit", "Pass once, then trade your Prime account", "80% Reward Share, 95% with the add-on", "Leverage up to 1:30", "Trade on TradeLocker or cTrader"],
+      under: "One-time fee for a simulated account." },
+    { id: "two", name: "2-Step", tag: "Two phases", forL: "2-Step Challenge", h3: "Two phases. 6% each. The lowest fee.", def: 2, buy: "2-Step",
+      sizes: [[5000, 40], [10000, 60], [25000, 120], [50000, 210], [100000, 350]],
+      rules: [["Profit target, each phase", "6%", .06], ["Daily loss limit", "3%", .03], ["Max loss (static)", "6%", .06], ["Minimum days", "0"]],
+      gets: ["No time limit on either phase", "Static max loss: it never moves", "Pass both, then trade your Prime account", "80% Reward Share, 95% with the add-on", "Leverage up to 1:100"],
+      under: "One-time fee for a simulated account." }
+  ];
+  var pI = 0, inI = PROGS[0].def, inShown = PROGS[0].sizes[inI][1];
+  $("#ptabs").innerHTML = PROGS.map(function (g, i) { return '<button type="button" class="pt" role="tab" aria-selected="' + (i === pI) + '"><b>' + g.name + "</b><span>" + g.tag + " · from <em>" + fmt(g.sizes[0][1]) + "</em></span></button>"; }).join("");
   function pickIn(i) {
-    inI = i; var s = IN[i];
+    var g = PROGS[pI]; inI = i; var s = g.sizes[i];
     $$("#inSizes .chip").forEach(function (b, j) { b.setAttribute("aria-pressed", j === i); });
     tween(inShown, s[1], 650, function (v) { $("#inFee").textContent = fmt(v); }); inShown = s[1];
-    $("#inD").innerHTML = "4%<small>" + fmt(s[0] * .04) + "</small>"; $("#inM").innerHTML = "8%<small>" + fmt(s[0] * .08) + "</small>";
+    $("#pRules").innerHTML = g.rules.map(function (r) { return "<div><dt>" + r[0] + '</dt><dd class="tnum">' + r[1] + (r[2] ? "<small>" + fmt(s[0] * r[2]) + "</small>" : r[3] ? "<small>" + r[3] + "</small>" : "") + "</dd></div>"; }).join("");
     $("#inAcct").textContent = fmt(s[0]) + " simulated account";
-    $("#inBuy").innerHTML = "Get my " + K(s[0]) + " Instant for " + fmt(s[1]) + ' <span class="ar" aria-hidden="true">→</span>';
+    $("#inBuy").innerHTML = (g.id === "instant" ? "Get my " + K(s[0]) + " Instant for " : "Start the " + K(s[0]) + " " + g.buy + " for ") + fmt(s[1]) + ' <span class="ar" aria-hidden="true">→</span>';
   }
-  $$("#inSizes .chip").forEach(function (b, i) { b.addEventListener("click", function () { pickIn(i); }); });
+  function pickProg(n, anim) {
+    pI = n; var g = PROGS[n];
+    $$("#ptabs .pt").forEach(function (b, j) { b.setAttribute("aria-selected", j === n); });
+    $("#pFor").textContent = g.forL; $("#pH3").textContent = g.h3; $("#pUnder").textContent = g.under;
+    $("#pGets").innerHTML = g.gets.map(function (t) { return "<li>" + t + "</li>"; }).join("");
+    $("#inSizes").innerHTML = g.sizes.map(function (s, i) { return '<button type="button" class="chip" aria-pressed="false">' + K(s[0]) + "</button>"; }).join("");
+    $$("#inSizes .chip").forEach(function (b, i) { b.addEventListener("click", function () { pickIn(i); }); });
+    pickIn(g.def);
+    if (anim && !reduce) { var w = $("#wayOwn"); w.classList.remove("swap"); void w.offsetWidth; w.classList.add("swap"); }
+  }
+  $$("#ptabs .pt").forEach(function (b, i) { b.addEventListener("click", function () { pickProg(i, true); }); });
+  pickProg(0, false);
 
   /* ---------- press, traders, certificates, reviews ---------- */
   var PR = [["forbes", "Forbes"], ["investing", "Investing.com"], ["bloomberg", "Bloomberg"], ["marketsinsiders", "Markets Insider"], ["yahoofinance", "Yahoo Finance"], ["benzinga", "Benzinga"]];
@@ -1135,7 +1167,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
   if (window.parent === window) return;
   var SEL = "h1 .ln > span, h2, h3, .lede, .sh p, .bub:not(.cta-b), .bub.cta-b > span, .eyebrow, .hs p, .cc-k, .cc header b, .cc header span, .cc-r dt, .cc-r dd, .co-k, .co-x span, .cmp-note, .faq summary, .faq .a, .end p, .under, .ticks li, .hw-foot li, .gets li, .rt th, .rt td, .live, .for, .press-k, .way h3, .way > p, .end-ph .tag, .rw-band .k, .cmp-ctl > span, .r2 span, .lad-v";
   var els = Array.prototype.slice.call(document.querySelectorAll(SEL)).filter(function (el) {
-    return !el.id && !el.querySelector("[id], a, button, img, svg") && !el.closest(".rc, .rv-c, .ug, #steps, .lb, .sp-bar");
+    return !el.id && !el.querySelector("[id], a, button, img, svg") && !el.closest(".rc, .pc, .rv-c, .ug, #steps, .lb, .sp-bar, #pRules, #pGets, #ptabs");
   });
   els.forEach(function (el, i) { el.setAttribute("data-ek", "t" + i); });
   /* extra editable pieces get their own key series so existing "t" keys never shift */
