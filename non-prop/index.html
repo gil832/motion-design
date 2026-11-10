@@ -46,6 +46,7 @@ body { margin: 0; background: var(--bg); color: var(--fg); font: 14px "Helvetica
 <div class="app" id="app">
   <header class="bar">
     <b>Non-Prop Traders<span>Landing page</span></b>
+    <div class="seg" role="group" aria-label="Hero version" id="heroSeg"><button type="button" data-h="a" aria-pressed="true">Hero A</button><button type="button" data-h="b" aria-pressed="false">Hero B</button></div>
     <div class="seg" role="group" aria-label="Preview size"><button id="bDesk" type="button" aria-pressed="true">Desktop</button><button id="bMob" type="button" aria-pressed="false">Mobile</button></div>
     <div class="tools"><span class="est" id="est" aria-live="polite"></span><button class="open edt" id="edt" type="button" aria-pressed="false" hidden>Edit text</button><a class="open" href="site.html" target="_blank" rel="noopener">Open full page</a></div>
   </header>
@@ -81,6 +82,14 @@ body { margin: 0; background: var(--bg); color: var(--fg); font: 14px "Helvetica
 (function () {
   var frames = [document.getElementById("fDesk"), document.getElementById("fMob")];
   var btn = document.getElementById("edt"), est = document.getElementById("est");
+  var hero = "a";
+  Array.prototype.slice.call(document.querySelectorAll("#heroSeg button")).forEach(function (b) {
+    b.addEventListener("click", function () {
+      hero = b.getAttribute("data-h");
+      Array.prototype.slice.call(document.querySelectorAll("#heroSeg button")).forEach(function (x) { x.setAttribute("aria-pressed", x === b); });
+      all({ fr: "np", t: "hero", v: hero });
+    });
+  });
   var map = {}, editing = false, ref = null, timer = 0, saving = false, again = false, pend = false;
   function post(win, m) { try { win.postMessage(m, "*"); } catch (e) {} }
   function all(m) { frames.forEach(function (f) { if (f.contentWindow) post(f.contentWindow, m); }); }
@@ -88,7 +97,7 @@ body { margin: 0; background: var(--bg); color: var(--fg); font: 14px "Helvetica
   addEventListener("message", function (e) {
     var d = e.data; if (!d || d.fr !== "np") return;
     if (!frames.some(function (f) { return f.contentWindow === e.source; })) return;
-    if (d.t === "ready") { post(e.source, { fr: "np", t: "ov", map: map }); post(e.source, { fr: "np", t: "edit", on: editing }); }
+    if (d.t === "ready") { post(e.source, { fr: "np", t: "ov", map: map }); post(e.source, { fr: "np", t: "edit", on: editing }); post(e.source, { fr: "np", t: "hero", v: hero }); }
     if (d.t === "chg" && editing && ref && typeof d.k === "string" && typeof d.html === "string" && d.html.length < 4000) {
       map[d.k] = d.html; pend = true; status("Saving…"); clearTimeout(timer); timer = setTimeout(save, 700);
     }

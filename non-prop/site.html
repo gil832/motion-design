@@ -144,6 +144,16 @@ main, footer { overflow-x: clip; }
 .fchip .bump.go { animation: bump .45s var(--pop); }
 @keyframes bump { 40% { transform: scale(1.12); } }
 
+/* hero versions: A is the default; B shows when the page is told hero=b (preview toggle or ?hero=b) */
+.hero-b { display: none !important; }
+body.hb .hero-a { display: none !important; }
+body.hb .hero-b { display: flex !important; }
+.hero-b h1 { font-size: clamp(40px, 5.8vw, 88px) !important; }
+.hero-b .lede { max-width: 54ch; }
+.hero-b .under { margin-top: 16px; font-size: 13px; color: var(--dim); }
+body.hb .hx-sizes { visibility: hidden; }
+@media (max-width: 900px) { .hero-b h1 { font-size: clamp(34px, 9.4vw, 56px) !important; } }
+
 /* hero visual: one-time fee -> simulated account */
 .hx { margin: clamp(36px, 5vw, 60px) auto 0; perspective: 1600px; display: flex; justify-content: center; animation: fade 1.1s .7s var(--ease) both; }
 .hx-rig { position: relative; display: flex; align-items: center; gap: clamp(14px, 2.4vw, 30px); transform-style: preserve-3d; will-change: transform; }
@@ -682,13 +692,21 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
   <section class="hero" data-spot="680,.10" id="top">
     <div class="wrap">
       <div class="hero-grid">
-        <div class="hero-copy">
+        <div class="hero-copy hero-a">
           <h1><span class="ln"><span>You Don't Need A <s>Fortune</s></span></span><span class="ln"><span class="grad">To Start Trading.</span></span></h1>
           <p class="lede">Trade with <b>up to $200K in simulated capital</b>. One fee <b>from $70</b>, no target, and no risk to your personal savings in the market.</p>
           <div class="cta">
             <a class="buy lg" href="#ways" id="heroCta">Start Trading <span class="ar" aria-hidden="true">→</span></a>
           </div>
           <ul class="ticks"><li>No deposits</li><li>Up to $200K simulated</li><li>Rewards processed within 48h</li></ul>
+        </div>
+        <div class="hero-copy hero-b">
+          <h1><span class="ln"><span>Trade a $10K Simulated Account.</span></span><span class="ln"><span class="grad">For Just $100.</span></span></h1>
+          <p class="lede">No evaluation. No profit target. Just one fee to start trading in a simulated environment, with the opportunity to earn performance-based rewards.</p>
+          <div class="cta">
+            <a class="buy lg" href="#ways" data-pick="0,1">Explore $10K Instant <span class="ar" aria-hidden="true">→</span></a>
+          </div>
+          <p class="under">Simulated trading. Reward eligibility, program rules and loss limits apply.</p>
         </div>
 
         <div class="scene" id="scene" aria-hidden="true">
@@ -965,6 +983,13 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
   </div>
 </footer>
 
+<script>
+(function () {
+  function setHero(v) { document.body.classList.toggle("hb", v === "b"); if (window.npHeroShow) window.npHeroShow(); }
+  if (/[?&]hero=b\b/.test(location.search)) setHero("b");
+  addEventListener("message", function (e) { var d = e.data; if (e.source === parent && d && d.fr === "np" && d.t === "hero") setHero(d.v); });
+})();
+</script>
 <script src="js/certs.js"></script>
 <script>
 (function () {
@@ -1054,6 +1079,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
     }
     function show(i) {
       hi = i; var a = HX[i][0], f = HX[i][1];
+      if (document.body.classList.contains("hb")) { a = 10000; f = 100; }
       bars.forEach(function (b, j) { b.classList.toggle("on", j <= i); });
       tween(shownA, a, 900, function (v) { accEl.textContent = fmt(v); }); shownA = a;
       tween(shownF, f, 900, function (v) { feeEl.textContent = fmt(v); }); shownF = f;
@@ -1063,7 +1089,8 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
     show(hi);
     var vis = true;
     new IntersectionObserver(function (es) { vis = es[0].isIntersecting; }).observe(hx);
-    if (!reduce) setInterval(function () { if (vis && !document.hidden) show((hi + 1) % HX.length); }, 2800);
+    if (!reduce) setInterval(function () { if (vis && !document.hidden && !document.body.classList.contains("hb")) show((hi + 1) % HX.length); }, 2800);
+    window.npHeroShow = function () { show(document.body.classList.contains("hb") ? 1 : hi); };
     /* depth: the rig tilts toward the pointer */
     if (finePtr && !reduce) {
       var tx = 0, ty = 0, cx = 0, cy = 0;
@@ -1212,6 +1239,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
   $("#hwTabs").innerHTML = PROGS.map(function (g) { return '<button type="button" class="pt" role="tab" data-p="' + g.id + '" aria-selected="false"><b>' + g.name + "</b><span></span></button>"; }).join("");
   $$("#hwTabs .pt").forEach(function (b, i) { b.addEventListener("click", function () { pickProg(i, true); }); });
   pickProg(0, false);
+  $$("[data-pick]").forEach(function (a) { a.addEventListener("click", function () { var v = a.getAttribute("data-pick").split(","); pickProg(+v[0], true); pickIn(+v[1]); }); });
 
   /* ---------- press, traders, certificates, reviews ---------- */
   var PR = [["forbes", "Forbes"], ["investing", "Investing.com"], ["bloomberg", "Bloomberg"], ["marketsinsiders", "Markets Insider"], ["yahoofinance", "Yahoo Finance"], ["benzinga", "Benzinga"]];
