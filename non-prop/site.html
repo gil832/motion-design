@@ -520,8 +520,11 @@ body:not(.hcv) .story { display: none !important; }
 .st-scene.on { opacity: 1; }
 .st-img { position: absolute; inset: -4%; background-size: cover; background-position: 70% 40%; transform: scale(var(--z, 1.18)); will-change: transform; }
 .st-glowbg { background: radial-gradient(60% 70% at 72% 55%, rgba(217,255,0,.22), transparent 60%), radial-gradient(70% 80% at 60% 40%, rgba(0,216,195,.25), transparent 70%), #04100f; }
+.st-fr { position: absolute; right: 6%; top: 8%; width: 40%; height: 84%; }
+.st-tri { position: absolute; inset: 0; width: 100%; height: 100%; -webkit-mask-image: radial-gradient(60% 70% at 70% 52%, #000 30%, transparent 78%); mask-image: radial-gradient(60% 70% at 70% 52%, #000 30%, transparent 78%); }
+@media (max-width: 760px) { .st-fr { right: -6%; width: 80%; height: 60%; top: 6%; } }
 .st-person { position: absolute; right: 8%; bottom: 0; height: 92%; width: auto; max-width: none; transform: translateY(var(--py, 40px)) scale(var(--pz, 1.04)); transition: transform .2s linear; -webkit-mask-image: linear-gradient(180deg, #000 75%, transparent); mask-image: linear-gradient(180deg, #000 75%, transparent); }
-.st-reward { position: absolute; right: 30%; top: 30%; padding: 18px 22px; border-radius: 20px; transform: translateY(var(--ry, 30px)); opacity: var(--ro, 0); transition: transform .3s linear, opacity .3s linear; }
+.st-reward { position: absolute; right: 4%; top: 14%; padding: 18px 22px; border-radius: 20px; transform: translateY(var(--ry, 30px)); opacity: var(--ro, 0); transition: transform .3s linear, opacity .3s linear; }
 .st-reward span { display: flex; align-items: center; gap: 8px; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: #fff; }
 .st-reward i { width: 7px; height: 7px; border-radius: 50%; background: var(--lime); box-shadow: 0 0 10px var(--lime); }
 .st-reward b { display: block; margin-top: 10px; font-size: clamp(48px, 5vw, 72px); font-weight: 600; letter-spacing: -.05em; line-height: 1; background: linear-gradient(180deg, #fff 10%, #e9ff7a 60%, #d9ff00); -webkit-background-clip: text; background-clip: text; color: transparent; }
@@ -1052,6 +1055,8 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
         <div class="st-scene" data-i="1"><div class="st-img" style="background-image:url(assets/hc/desk.jpg)"></div></div>
         <div class="st-scene st-rw" data-i="2">
           <div class="st-img st-glowbg"></div>
+          <svg class="st-fr" viewBox="0 0 200 200" aria-hidden="true" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="frG" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#00d8c3" stop-opacity=".05"/><stop offset=".6" stop-color="#00d8c3" stop-opacity=".55"/><stop offset="1" stop-color="#8ff3e8" stop-opacity=".8"/></linearGradient></defs><path d="M10 200 L120 20 Q126 10 138 10 L190 10 Q196 10 196 16 L196 70 Q196 78 190 82 L80 200 Z" fill="url(#frG)"/></svg>
+          <canvas class="st-tri" id="stTri" aria-hidden="true"></canvas>
           <img class="st-person" src="assets/prove.webp" alt="" loading="lazy">
           <div class="st-reward liquid"><span><i></i>Reward request · Approved</span><b class="tnum">+$800</b><em>80% of $1,000 simulated profit</em></div>
         </div>
@@ -1586,6 +1591,44 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
       stats.style.transform = "translate3d(0," + (y * -.08).toFixed(1) + "px,0)";
     }
     addEventListener("scroll", function () { if (!q) { q = true; requestAnimationFrame(function () { q = false; px(); }); } }, { passive: true });
+  })();
+
+
+  /* brand texture: a matrix of lime triangles; each triangle's size follows the shading of the trader's silhouette, with a slow shimmer */
+  (function () {
+    var cv = $("#stTri"); if (!cv) return;
+    var ctx = cv.getContext("2d"), img = new Image(), lum = null, LW = 0, LH = 0, W = 0, H = 0, cell = 18, dpr = Math.min(devicePixelRatio || 1, 2), t0 = performance.now(), live = false;
+    img.onload = function () {
+      var c = document.createElement("canvas"); LW = 120; LH = Math.round(120 * img.height / img.width); c.width = LW; c.height = LH;
+      var x = c.getContext("2d"); x.filter = "blur(2px)"; x.drawImage(img, 0, 0, LW, LH);
+      var d = x.getImageData(0, 0, LW, LH).data; lum = new Float32Array(LW * LH);
+      for (var i = 0; i < LW * LH; i++) { var a = d[i * 4 + 3] / 255; lum[i] = a * (.35 + .65 * (d[i * 4] * .3 + d[i * 4 + 1] * .59 + d[i * 4 + 2] * .11) / 255); }
+      size(); draw(performance.now());
+    };
+    img.src = "assets/prove.webp";
+    function size() { var r = cv.getBoundingClientRect(); if (!r.width) return; W = Math.round(r.width * dpr); H = Math.round(r.height * dpr); cv.width = W; cv.height = H; cell = Math.max(14, Math.round(Math.min(W, H) / 44)); }
+    function sample(px, py) {
+      /* the silhouette is placed where the person image sits (right side, bottom aligned, ~92% tall), scaled up a little so the matrix frames him */
+      var ph = H * 1.0, pw = ph * LW / LH, ox = W * .92 - pw - W * .2, oy = H - ph;
+      var u = (px - ox) / pw, v = (py - oy) / ph; if (u < 0 || u >= 1 || v < 0 || v >= 1) return 0;
+      return lum[Math.floor(v * LH) * LW + Math.floor(u * LW)] || 0;
+    }
+    function draw(now) {
+      if (!lum || !W) return;
+      var k = (now - t0) / 1000; ctx.clearRect(0, 0, W, H); ctx.fillStyle = "#d9ff00";
+      for (var y = cell / 2; y < H; y += cell) for (var x = cell / 2; x < W; x += cell) {
+        var g = Math.exp(-Math.pow((x / W - .6) / .3, 2) - Math.pow((y / H - .55) / .45, 2)) * .32;
+        var l = Math.max(sample(x, y) * 1.05, g);
+        var wave = .82 + .18 * Math.sin(k * 1.4 - x / W * 7 + y / H * 3);
+        var sz = cell * .86 * l * wave; if (sz < 1.2 * dpr) continue;
+        ctx.globalAlpha = .18 + .55 * l;
+        ctx.beginPath(); ctx.moveTo(x, y - sz * .55); ctx.lineTo(x + sz * .55, y + sz * .45); ctx.lineTo(x - sz * .55, y + sz * .45); ctx.closePath(); ctx.fill();
+      }
+      ctx.globalAlpha = 1;
+    }
+    function loop(now) { if (!live) return; draw(now); requestAnimationFrame(loop); }
+    new IntersectionObserver(function (es) { var v = es[0].isIntersecting && !reduce; if (v && !live) { live = true; requestAnimationFrame(loop); } live = v; if (!v) draw(performance.now()); }).observe(cv);
+    if (window.ResizeObserver) new ResizeObserver(function () { size(); draw(performance.now()); }).observe(cv);
   })();
 
   /* hero visual: a one-time program fee opens a simulated account; cycles through the Instant sizes */
