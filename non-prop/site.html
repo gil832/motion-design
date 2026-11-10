@@ -780,7 +780,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
   <!-- how it works -->
   <section class="sec" id="how" style="padding-top:0">
     <div class="wrap">
-      <div class="sh rv"><span class="eyebrow">How it works</span><h2 id="hwH">Simple by design. <span class="grad">Pick. Trade. Get rewarded.</span></h2></div>
+      <div class="sh rv"><span class="eyebrow">How it works</span><h2 id="hwH">Easier than you think. <span class="grad">Pick. Trade. Get rewarded.</span></h2></div>
       <div class="ptabs mini rv" role="tablist" aria-label="Program" id="hwTabs"></div>
       <div class="hw" id="hw">
         <article class="hs glass rv" data-spot="460,.14">
@@ -955,7 +955,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
     hwProg = g; var three = g.id !== "instant";
     $$("#hwTabs .pt").forEach(function (b) { b.setAttribute("aria-selected", b.getAttribute("data-p") === g.id); });
     $("#hw").classList.toggle("three", three);
-    $("#hwH").innerHTML = 'Simple by design. <span class="grad">' + (three ? "Pick. Pass. Get rewarded." : "Pick. Trade. Get rewarded.") + "</span>";
+    $("#hwH").innerHTML = 'Easier than you think. <span class="grad">' + (three ? "Pick. Pass. Get rewarded." : "Pick. Trade. Get rewarded.") + "</span>";
     var lo = g.sizes[0][0], hi = g.sizes[g.sizes.length - 1][0];
     $("#hwP1").innerHTML = "From <b>" + fmt(lo) + "</b> to <b>" + fmt(hi) + "</b> in simulated capital. Pay one fee, once.";
     ladUser = false; buildLad(g.sizes, g.def);
