@@ -195,7 +195,7 @@ body.hcv .hero { padding-block: clamp(20px, 3vw, 40px) clamp(40px, 5vw, 70px) !i
 .hc-copy { position: relative; z-index: 3; max-width: 560px; }
 .hc-vis { position: absolute; z-index: 1; top: -40px; bottom: -110px; right: calc(-1 * max(48px, (100vw - 1240px) / 2 + 48px)); width: min(62vw, 1000px); touch-action: pan-y; }
 body.hcv main { overflow-x: clip; }
-.hc-vis::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(90deg, var(--bg) 0%, rgba(3,9,12,.7) 18%, transparent 46%), linear-gradient(270deg, rgba(3,9,12,.85) 0%, transparent 22%), linear-gradient(0deg, var(--bg) 0%, transparent 26%), linear-gradient(180deg, rgba(3,9,12,.7) 0%, transparent 18%); }
+.hc-vis::after { content: none; }
 .hc-card { position: absolute; z-index: 3; padding: 16px 18px; border-radius: 18px; font-size: 13px; color: var(--mute); pointer-events: none; }
 .hc-ct { display: flex; align-items: center; justify-content: space-between; gap: 18px; font-size: 11.5px; letter-spacing: .1em; text-transform: uppercase; }
 .hc-ct span { display: inline-flex; align-items: center; gap: 7px; color: #fff; }
@@ -214,7 +214,7 @@ body.hcv main { overflow-x: clip; }
 .hc-big { margin-top: 10px; font-size: 40px; font-weight: 600; letter-spacing: -.05em; line-height: 1; background: linear-gradient(180deg, #fff 10%, #e9ff7a 60%, #d9ff00); -webkit-background-clip: text; background-clip: text; color: transparent; }
 .hc-cs2 { margin-top: 6px; font-size: 12px; }
 .hc-word { position: relative; z-index: 2; margin-top: -90px; text-align: center; font-weight: 800; font-size: clamp(90px, 15vw, 230px); letter-spacing: -.04em; line-height: .8; color: transparent; -webkit-text-stroke: 1.5px rgba(143,243,232,.18); background: linear-gradient(180deg, rgba(143,243,232,.14), transparent 80%); -webkit-background-clip: text; background-clip: text; pointer-events: none; user-select: none; white-space: nowrap; overflow: hidden; }
-.hc-cv { position: absolute; inset: 0; width: 100%; height: 100%; cursor: crosshair; -webkit-mask-image: radial-gradient(ellipse 62% 60% at 58% 46%, #000 45%, rgba(0,0,0,.6) 68%, transparent 100%); mask-image: radial-gradient(ellipse 62% 60% at 58% 46%, #000 45%, rgba(0,0,0,.6) 68%, transparent 100%); }
+.hc-cv { position: absolute; inset: 0; width: 100%; height: 100%; cursor: crosshair; -webkit-mask-image: radial-gradient(ellipse 50% 50% at 56% 46%, #000 38%, rgba(0,0,0,.75) 58%, rgba(0,0,0,.3) 80%, transparent 100%); mask-image: radial-gradient(ellipse 50% 50% at 56% 46%, #000 38%, rgba(0,0,0,.75) 58%, rgba(0,0,0,.3) 80%, transparent 100%); }
 .hc-hint { position: absolute; left: 50%; top: auto; bottom: 26%; transform: translateX(-50%); padding: 9px 14px; border-radius: 999px; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: #fff; white-space: nowrap; transition: opacity .6s; z-index: 2; }
 .hc-vis.tried .hc-hint { opacity: 0; }
 .hc-glow { position: absolute; width: 70%; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle, rgba(217,255,0,.18), rgba(0,216,195,.1) 45%, transparent 70%); filter: blur(20px); animation: breathe 7s ease-in-out infinite; left: 15%; top: 10%; }
@@ -231,7 +231,6 @@ body.hcv main { overflow-x: clip; }
 @media (max-width: 900px) {
   .hc-grid { grid-template-columns: 1fr; min-height: 0; }
   .hc-vis { position: relative; top: auto; bottom: auto; right: auto; width: auto; height: 400px; margin: 0 -20px 6px; }
-  .hc-vis::after { background: linear-gradient(0deg, var(--bg) 0%, transparent 30%), linear-gradient(180deg, rgba(3,9,12,.6) 0%, transparent 20%); }
   .hc-c1 { display: none; } .hc-c2 { left: auto; right: 16px; bottom: 14%; width: 190px; } .hc-big { font-size: 32px; }
   .hc-hint { left: 50%; bottom: 6%; }
   .hc-word { margin-top: 10px; font-size: 22vw; }
