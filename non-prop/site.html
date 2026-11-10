@@ -551,6 +551,13 @@ main, footer { overflow-x: clip; }
   .rv.pre { opacity: 1; transform: none; }
   .bub.wait { opacity: 1; transform: none; }
 }
+
+/* text editing (driven by the preview shell) */
+body.editing [data-ek] { outline: 1px dashed rgba(217,255,0,.55); outline-offset: 4px; cursor: text; border-radius: 4px; }
+body.editing [data-ek]:hover { outline-color: var(--lime); }
+body.editing [data-ek]:focus { outline: 2px solid var(--lime); }
+body.editing .bub.wait { opacity: 1 !important; transform: none !important; }
+body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
 </style>
 </head>
 <body>
@@ -1083,6 +1090,58 @@ main, footer { overflow-x: clip; }
 
   onScroll();
   if (!reduce) (function loop(now) { if (sceneVis) heroFrame(now); requestAnimationFrame(loop); })(performance.now());
+})();
+</script>
+
+<script>
+/* Editable text. Inside the preview shell, saved edits arrive as {key: html} and are applied here;
+   in edit mode each text element becomes contenteditable and changes are sent back to the shell, which saves them. */
+(function () {
+  if (window.parent === window) return;
+  var SEL = "h1 .ln > span, h2, h3, .lede, .sh p, .bub:not(.cta-b), .bub.cta-b > span, .eyebrow, .hs p, .cc-k, .cc header b, .cc header span, .cc-r dt, .cc-r dd, .co-k, .co-x span, .cmp-note, .faq summary, .faq .a, .end p, .under, .ticks li, .hw-foot li, .gets li, .rt th, .rt td, .live, .for, .press-k, .way h3, .way > p, .end-ph .tag, .rw-band .k, .cmp-ctl > span, .r2 span, .lad-v";
+  var els = Array.prototype.slice.call(document.querySelectorAll(SEL)).filter(function (el) {
+    return !el.id && !el.querySelector("[id], a, button, img, svg") && !el.closest(".rc, .rv-c, .ug, #steps, .lb, .sp-bar");
+  });
+  els.forEach(function (el, i) { el.setAttribute("data-ek", "t" + i); });
+  var byKey = {}; els.forEach(function (el) { byKey[el.getAttribute("data-ek")] = el; });
+  var ALLOW = { B: 1, EM: 1, S: 1, SPAN: 1, BR: 1, I: 1, STRONG: 1 };
+  function clean(html) {
+    var t = document.createElement("template"); t.innerHTML = html;
+    (function walk(n) {
+      Array.prototype.slice.call(n.childNodes).forEach(function (c) {
+        if (c.nodeType === 1) {
+          if (!ALLOW[c.tagName]) { walk(c); while (c.firstChild) n.insertBefore(c.firstChild, c); n.removeChild(c); return; }
+          Array.prototype.slice.call(c.attributes).forEach(function (a) { if (a.name !== "class") c.removeAttribute(a.name); });
+          walk(c);
+        } else if (c.nodeType !== 3) n.removeChild(c);
+      });
+    })(t.content);
+    var d = document.createElement("div"); d.appendChild(t.content); return d.innerHTML;
+  }
+  var timers = {};
+  function send(el) {
+    var k = el.getAttribute("data-ek");
+    clearTimeout(timers[k]);
+    timers[k] = setTimeout(function () { parent.postMessage({ fr: "np", t: "chg", k: k, html: clean(el.innerHTML) }, "*"); }, 500);
+  }
+  function setEdit(on) {
+    document.body.classList.toggle("editing", on);
+    els.forEach(function (el) { if (on) el.setAttribute("contenteditable", "true"); else el.removeAttribute("contenteditable"); });
+  }
+  els.forEach(function (el) {
+    el.addEventListener("input", function () { send(el); });
+    el.addEventListener("click", function (e) { if (document.body.classList.contains("editing")) e.preventDefault(); });
+    el.addEventListener("keydown", function (e) { if (e.key === "Enter" && document.body.classList.contains("editing")) { e.preventDefault(); el.blur(); } });
+  });
+  addEventListener("message", function (e) {
+    var d = e.data; if (e.source !== parent || !d || d.fr !== "np") return;
+    if (d.t === "ov" && d.map) Object.keys(d.map).forEach(function (k) {
+      var el = byKey[k]; if (!el || el === document.activeElement || typeof d.map[k] !== "string") return;
+      var h = clean(d.map[k]); if (el.innerHTML !== h) el.innerHTML = h;
+    });
+    if (d.t === "edit") setEdit(!!d.on);
+  });
+  parent.postMessage({ fr: "np", t: "ready" }, "*");
 })();
 </script>
 </body>
