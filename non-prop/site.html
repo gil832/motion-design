@@ -214,6 +214,10 @@ body.hcv main { overflow-x: clip; }
 .hc-big { margin-top: 10px; font-size: 40px; font-weight: 600; letter-spacing: -.05em; line-height: 1; background: linear-gradient(180deg, #fff 10%, #e9ff7a 60%, #d9ff00); -webkit-background-clip: text; background-clip: text; color: transparent; }
 .hc-cs2 { margin-top: 6px; font-size: 12px; }
 .hc-word { position: relative; z-index: 2; margin-top: -90px; text-align: center; font-weight: 800; font-size: clamp(90px, 15vw, 230px); letter-spacing: -.04em; line-height: .8; color: transparent; -webkit-text-stroke: 1.5px rgba(143,243,232,.18); background: linear-gradient(180deg, rgba(143,243,232,.14), transparent 80%); -webkit-background-clip: text; background-clip: text; pointer-events: none; user-select: none; white-space: nowrap; overflow: hidden; }
+.hc-cv { position: absolute; inset: 0; width: 100%; height: 100%; cursor: crosshair; -webkit-mask-image: radial-gradient(ellipse 50% 50% at 56% 46%, #000 38%, rgba(0,0,0,.75) 58%, rgba(0,0,0,.3) 80%, transparent 100%); mask-image: radial-gradient(ellipse 50% 50% at 56% 46%, #000 38%, rgba(0,0,0,.75) 58%, rgba(0,0,0,.3) 80%, transparent 100%); }
+body.hcv:not(.hdv) .hc-split { display: none; }
+body.hdv .hc-cv { display: none; }
+.hint-d { display: none; } body.hdv .hint-d { display: inline; } body.hdv .hint-c { display: none; }
 .hc-split { position: absolute; inset: 0; cursor: ew-resize; touch-action: pan-y; --x: 62%; -webkit-mask-image: radial-gradient(ellipse 50% 50% at 56% 46%, #000 38%, rgba(0,0,0,.75) 58%, rgba(0,0,0,.3) 80%, transparent 100%); mask-image: radial-gradient(ellipse 50% 50% at 56% 46%, #000 38%, rgba(0,0,0,.75) 58%, rgba(0,0,0,.3) 80%, transparent 100%); }
 .hc-split img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 100% 30%; user-select: none; }
 .hs-desk { clip-path: inset(0 calc(100% - var(--x)) 0 0); }
@@ -976,12 +980,13 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
             </div>
           </div>
           <div class="hc-vis" id="hcVis">
+            <canvas class="hc-cv" id="hcCv" role="img" aria-label="An F1 driver in the cockpit. Move across him to reveal a FundingRock trader at his trading rig: the same race, simulated."></canvas>
             <div class="hc-split" id="hcSplit" role="img" aria-label="Move across the image: on one side an F1 driver in the cockpit, on the other a FundingRock trader at his trading desk. The same race, simulated.">
               <img class="hs-car" src="assets/hc/car.jpg" alt="" draggable="false">
               <img class="hs-desk" src="assets/hc/desk.jpg" alt="" draggable="false">
               <div class="hs-line"><span class="hs-tag l">Simulated</span><i></i><span class="hs-tag r">Race</span></div>
             </div>
-            <span class="hc-hint liquid" id="hcHint">Slide across</span>
+            <span class="hc-hint liquid" id="hcHint"><span class="hint-c">Move across the driver</span><span class="hint-d">Slide across</span></span>
             <div class="hc-card hc-c1 liquid" aria-hidden="true">
               <div class="hc-ct"><span><i></i>Simulated</span><b>Live</b></div>
               <div class="hc-ring"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg></div>
@@ -1337,15 +1342,15 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
   var certs = null, certsHome = null;
   function setHero(v) {
     var b = document.body;
-    b.classList.toggle("hb", v === "b"); b.classList.toggle("hcv", v === "c");
+    b.classList.toggle("hb", v === "b"); b.classList.toggle("hcv", v === "c" || v === "d"); b.classList.toggle("hdv", v === "d");
     if (!certs) { certs = document.getElementById("rewards"); certsHome = certs && certs.nextElementSibling; }
     if (certs) {
-      if (v === "c") { var hero = document.getElementById("top"); hero.parentNode.insertBefore(certs, hero.nextElementSibling); certs.style.paddingTop = "clamp(40px, 6vw, 80px)"; }
+      if (v === "c" || v === "d") { var hero = document.getElementById("top"); hero.parentNode.insertBefore(certs, hero.nextElementSibling); certs.style.paddingTop = "clamp(40px, 6vw, 80px)"; }
       else if (certsHome) { certsHome.parentNode.insertBefore(certs, certsHome); certs.style.paddingTop = "0"; }
     }
     if (window.npHeroShow) window.npHeroShow();
   }
-  var hq = (location.search.match(/[?&]hero=([abc])\b/) || [])[1];
+  var hq = (location.search.match(/[?&]hero=([abcd])\b/) || [])[1];
   if (hq) document.addEventListener("DOMContentLoaded", function () { setHero(hq); });
   addEventListener("message", function (e) { var d = e.data; if (e.source === parent && d && d.fr === "np" && d.t === "hero") setHero(d.v); });
 })();
@@ -1459,6 +1464,72 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
   })();
 
 
+  /* Hero C: the F1 driver; a brush trail reveals the trader underneath, with a lime cut edge */
+  (function () {
+    var cv = $("#hcCv"); if (!cv) return;
+    var vis = $("#hcVis"), ctx = cv.getContext("2d"), base = new Image(), top = new Image(), ready = 0;
+    var mask = document.createElement("canvas"), mx = mask.getContext("2d"), tmp = document.createElement("canvas"), tx = tmp.getContext("2d");
+    var W = 0, H = 0, dpr = Math.min(devicePixelRatio || 1, 2), last = null, running = false, idle = 0, tried = false;
+    function size() {
+      var r = cv.getBoundingClientRect(); if (!r.width) return;
+      W = Math.round(r.width * dpr); H = Math.round(r.height * dpr);
+      [cv, tmp].forEach(function (c) { c.width = W; c.height = H; });
+      mask.width = Math.round(W / 2); mask.height = Math.round(H / 2);
+      draw();
+    }
+    function fit() { var n = base.naturalWidth || 900, s = Math.max(W / n, H / n) * .92, w = n * s, h = n * s; return [W - w, (H - h) * .3, w, h]; }
+    function draw() {
+      if (ready < 2 || !W) return;
+      var f = fit();
+      ctx.clearRect(0, 0, W, H); ctx.drawImage(base, f[0], f[1], f[2], f[3]);
+      ctx.save(); ctx.globalCompositeOperation = "destination-out"; ctx.drawImage(mask, 0, 0, W, H); ctx.restore();
+      tx.globalCompositeOperation = "source-over"; tx.clearRect(0, 0, W, H);
+      tx.drawImage(top, f[0], f[1], f[2], f[3]);
+      tx.globalCompositeOperation = "destination-in"; tx.drawImage(mask, 0, 0, W, H);
+      ctx.drawImage(tmp, 0, 0);
+      /* lime cut edge: the mask outline, glowing */
+      /* the cut edge: a thin lime ring where the reveal meets the driver, only over the figures */
+      tx.globalCompositeOperation = "source-over"; tx.clearRect(0, 0, W, H);
+      tx.filter = "blur(" + (1.5 * dpr) + "px)"; tx.drawImage(mask, 0, 0, W, H); tx.filter = "none";
+      tx.globalCompositeOperation = "destination-out"; tx.drawImage(mask, 0, 0, W, H);
+      tx.globalCompositeOperation = "source-in"; tx.fillStyle = "#d9ff00"; tx.fillRect(0, 0, W, H);
+      ctx.save(); ctx.globalCompositeOperation = "lighter"; ctx.globalAlpha = 1; ctx.drawImage(tmp, 0, 0); ctx.restore();
+    }
+    function brush(x, y) {
+      var r = Math.max(mask.width, mask.height) * .12;
+      var g = mx.createRadialGradient(x, y, 0, x, y, r);
+      g.addColorStop(0, "rgba(0,0,0,1)"); g.addColorStop(.8, "rgba(0,0,0,1)"); g.addColorStop(1, "rgba(0,0,0,0)");
+      mx.globalCompositeOperation = "source-over"; mx.fillStyle = g; mx.beginPath(); mx.arc(x, y, r, 0, Math.PI * 2); mx.fill();
+    }
+    function stroke(p) {
+      if (!last) last = p;
+      var dx = p[0] - last[0], dy = p[1] - last[1], n = Math.max(1, Math.ceil(Math.hypot(dx, dy) / 6));
+      for (var i = 1; i <= n; i++) brush(last[0] + dx * i / n, last[1] + dy * i / n);
+      last = p; idle = 0; kick();
+    }
+    function frame() {
+      /* the trail heals slowly, so the driver returns */
+      mx.globalCompositeOperation = "destination-out"; mx.fillStyle = "rgba(0,0,0,.02)"; mx.fillRect(0, 0, mask.width, mask.height);
+      draw(); idle++;
+      if (idle < 160) requestAnimationFrame(frame); else running = false;
+    }
+    function kick() { if (!running) { running = true; requestAnimationFrame(frame); } }
+    function pos(e) { var r = cv.getBoundingClientRect(); return [(e.clientX - r.left) / r.width * mask.width, (e.clientY - r.top) / r.height * mask.height]; }
+    cv.addEventListener("pointermove", function (e) { if (!tried) { tried = true; vis.classList.add("tried"); } stroke(pos(e)); }, { passive: true });
+    cv.addEventListener("pointerleave", function () { last = null; });
+    cv.addEventListener("touchstart", function (e) { last = null; var t = e.touches[0]; stroke(pos(t)); tried = true; vis.classList.add("tried"); }, { passive: true });
+    cv.addEventListener("touchmove", function (e) { var t = e.touches[0]; stroke(pos(t)); }, { passive: true });
+    function loaded() {
+      if (++ready < 2) return; size();
+      if (!reduce) { /* a teaser sweep so people see there's someone underneath */
+        var t0 = performance.now();
+        (function sweep(now) { var k = Math.min(1, (now - t0) / 1600), x = mask.width * (.3 + .4 * k), y = mask.height * (.22 + .35 * Math.sin(k * Math.PI)); stroke([x, y]); if (k < 1) requestAnimationFrame(sweep); else last = null; })(t0 + 1);
+      }
+    }
+    base.onload = loaded; top.onload = loaded;
+    base.src = "assets/hc/car.jpg"; top.src = "assets/hc/desk.jpg";
+    if (window.ResizeObserver) new ResizeObserver(size).observe(cv); else addEventListener("resize", size);
+  })();
   /* Hero C: a split-line reveal. A thin lime line follows the pointer; left of it is the trader at his desk, right of it the driver. */
   (function () {
     var vis = $("#hcVis"), sp = $("#hcSplit"); if (!vis || !sp) return;
