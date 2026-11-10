@@ -667,6 +667,11 @@ body.hcv .hero { padding-block: clamp(20px, 3vw, 40px) clamp(40px, 5vw, 70px) !i
 .rw-band .v em { font-style: normal; color: var(--lime); }
 .rw-band .k { margin-top: 8px; color: var(--mute); font-size: 14px; }
 @media (max-width: 860px) { .rw-band { grid-template-columns: 1fr 1fr; } .rw-band > div:nth-child(3)::before { display: none; } .rw-band > div:nth-child(n+3) { border-top: 1px solid rgba(255,255,255,.08); } }
+/* certificates in the page palette: deep teal card, cyan-to-lime foil edge, cyan names */
+.rc { background: linear-gradient(160deg, #0a2a30, #05141a 60%) padding-box, linear-gradient(225deg, #8ff3e8 0%, #00d8c3 22%, #0d3a40 55%) border-box !important; box-shadow: 0 24px 50px -30px rgba(0,0,0,.9), 0 0 40px -22px rgba(0,216,195,.5); }
+.rc .nm { color: var(--iris) !important; }
+.rc .bx { background: rgba(0,216,195,.10) !important; }
+.rc .am { background: linear-gradient(180deg, #ffffff 20%, #e9ff7a 70%, #d9ff00); -webkit-background-clip: text; background-clip: text; color: transparent; }
 @media (max-width: 640px) { .rc { --u: .86px; } .certs .rows { gap: 12px; } .mrow .tr { gap: 12px; padding-right: 12px; } }
 
 /* featured trader video: half the screen, the rest of the stories scroll below */
@@ -1622,7 +1627,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
   /* Reward certificates: the card from the certificates Figma file, two rows running opposite ways */
   var KC = window.KCERTS || [];
   function cert(c) {
-    return '<div class="rc"><img class="dt" src="assets/cert-dots.png" alt=""><img class="mk" src="assets/mark.svg" alt="">' +
+    return '<div class="rc"><img class="dt" src="assets/cert-dots-teal.png" alt=""><img class="mk" src="assets/mark.svg" alt="">' +
       '<p class="ti">REWARD CERTIFICATE</p><div class="who"><p class="nm">' + c[0] + '</p><p class="am">' + c[1] + "</p></div>" +
       '<div class="ft"><div class="bx"><p><b>' + c[2] + '</b><span>Date</span></p></div><div class="bx ceo"><p><b>Meir Hefetz,</b><span>CEO</span></p><img class="sg" src="assets/cert-sign.png" alt="Signature"></div></div></div>';
   }
