@@ -439,7 +439,20 @@ body.hb .hx-sizes { visibility: hidden; }
 .fl-list dt { color: var(--mute); }
 .fl-list dd { margin: 0; font-weight: 600; text-align: right; }
 .safe { margin-top: 22px; }
-.safe-ch { display: block; width: 100%; height: 90px; }
+.term { border-radius: 16px; border: 1px solid rgba(255,255,255,.09); background: linear-gradient(180deg, #071216, #040a0c); overflow: hidden; text-align: left; }
+.term-h { display: flex; align-items: center; gap: 8px; padding: 9px 12px; border-bottom: 1px solid rgba(255,255,255,.07); font-size: 12px; }
+.term-h b { font-weight: 600; color: #fff; }
+.term-h span { color: var(--dim); }
+.term-px { margin-left: auto; font-style: normal; font-weight: 600; color: #fff; transition: color .25s; }
+.term-px.up { color: #2fe3a5; } .term-px.dn { color: #ff5c7c; }
+.term-sim { font-style: normal; font-size: 10px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: #0a0a0a; background: var(--iris); padding: 3px 7px; border-radius: 999px; }
+.term-ch { display: block; width: 100%; height: 130px; }
+.term-ch text { font-family: var(--font); font-size: 8px; fill: var(--dim); }
+.term-b { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; padding: 8px; border-top: 1px solid rgba(255,255,255,.07); }
+.term-b span { display: flex; justify-content: space-between; align-items: center; padding: 7px 10px; border-radius: 9px; font-size: 11.5px; font-weight: 600; }
+.term-b b { font-weight: 600; }
+.term-b .sell { background: rgba(255,33,86,.14); color: #ff8aa3; }
+.term-b .buy2 { background: rgba(47,227,165,.14); color: #2fe3a5; }
 .safe-p { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
 .safe-p span { font-size: 12.5px; font-weight: 500; padding: 6px 11px; border-radius: 999px; border: 1px solid rgba(143,243,232,.3); color: var(--iris); background: rgba(0,216,195,.06); }
 .hw.three { grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr); gap: 12px; }
@@ -914,7 +927,11 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
             <div class="fl-f glass">
               <div class="hs-t"><span class="hn">2</span><div><h3>Trade in a safe, simulated space</h3><p>Real market prices on a simulated account. Your savings never touch the market.</p></div></div>
               <div class="safe">
-                <svg class="safe-ch" viewBox="0 0 300 90" preserveAspectRatio="none" aria-hidden="true"><path id="safeL" fill="none" stroke="url(#hxG)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" d="M0 70 L20 64 L40 68 L60 52 L80 58 L100 44 L120 50 L140 36 L160 42 L180 30 L200 38 L220 24 L240 30 L260 18 L280 22 L300 12"/></svg>
+                <div class="term" aria-hidden="true">
+                  <div class="term-h"><b>XAU/USD</b><span>5m</span><em class="term-px tnum" id="tmPx">2,384.20</em><i class="term-sim">Simulated</i></div>
+                  <svg class="term-ch" id="tmCh" viewBox="0 0 300 130" preserveAspectRatio="none"></svg>
+                  <div class="term-b"><span class="sell">Sell <b class="tnum" id="tmBid">2,384.10</b></span><span class="buy2">Buy <b class="tnum" id="tmAsk">2,384.30</b></span></div>
+                </div>
                 <div class="safe-p"><span>Simulated</span><span>No deposit</span><span>Your savings stay put</span></div>
               </div>
               <span class="fl-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg><em class="fl-hd">Hover</em><em class="fl-ht">Tap</em> to see the rules</span>
@@ -1135,6 +1152,41 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
     setInterval(function () { if (hwVis) { sp95 = !sp95; split(sp95 ? 95 : 80); } }, 3200);
   }
 
+
+
+  /* step 2: a live simulated chart (candles tick on their own, nothing is real) */
+  (function () {
+    var svg = $("#tmCh"); if (!svg) return;
+    var NS = "http://www.w3.org/2000/svg", N = 34, W = 300, H = 130, R = 262, seed = 21, C = [], price = 2384.2, vis = false, ticks = 0, last = price;
+    function rnd() { seed = (seed * 16807) % 2147483647; return seed / 2147483647; }
+    for (var i = 0; i < N; i++) { var o = price, c = o + (rnd() - .46) * 3.2, h = Math.max(o, c) + rnd() * 1.4, l = Math.min(o, c) - rnd() * 1.4; C.push({ o: o, h: h, l: l, c: c }); price = c; }
+    function f2(v) { return v.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
+    function draw() {
+      var lo = Infinity, hi = -Infinity; C.forEach(function (k) { lo = Math.min(lo, k.l); hi = Math.max(hi, k.h); });
+      var pad = (hi - lo) * .12 || 1; lo -= pad; hi += pad;
+      var Y = function (v) { return 8 + (hi - v) / (hi - lo) * (H - 16); }, cw = R / N, out = "";
+      for (var g = 0; g < 4; g++) { var gy = 8 + g * (H - 16) / 3, gv = hi - g * (hi - lo) / 3; out += '<line x1="0" x2="' + R + '" y1="' + gy.toFixed(1) + '" y2="' + gy.toFixed(1) + '" stroke="rgba(255,255,255,.05)"/><text x="' + (R + 4) + '" y="' + (gy + 3).toFixed(1) + '">' + gv.toFixed(1) + "</text>"; }
+      C.forEach(function (k, i) {
+        var x = i * cw + cw / 2, up = k.c >= k.o, col = up ? "#2fe3a5" : "#ff5c7c", y1 = Y(Math.max(k.o, k.c)), y2 = Y(Math.min(k.o, k.c));
+        out += '<line x1="' + x.toFixed(1) + '" x2="' + x.toFixed(1) + '" y1="' + Y(k.h).toFixed(1) + '" y2="' + Y(k.l).toFixed(1) + '" stroke="' + col + '" stroke-width="1"/>';
+        out += '<rect x="' + (x - cw * .32).toFixed(1) + '" y="' + y1.toFixed(1) + '" width="' + (cw * .64).toFixed(1) + '" height="' + Math.max(1, y2 - y1).toFixed(1) + '" fill="' + col + '" rx=".6"/>';
+      });
+      var lc = C[N - 1].c, ly = Y(lc), up = lc >= C[N - 1].o;
+      out += '<line x1="0" x2="' + R + '" y1="' + ly.toFixed(1) + '" y2="' + ly.toFixed(1) + '" stroke="' + (up ? "#2fe3a5" : "#ff5c7c") + '" stroke-dasharray="2 3" stroke-width=".8"/>';
+      out += '<rect x="' + R + '" y="' + (ly - 6).toFixed(1) + '" width="38" height="12" rx="2" fill="' + (up ? "#2fe3a5" : "#ff5c7c") + '"/><text x="' + (R + 3) + '" y="' + (ly + 3).toFixed(1) + '" style="fill:#03090c;font-weight:700">' + lc.toFixed(1) + "</text>";
+      svg.innerHTML = out;
+      var px = $("#tmPx"); px.textContent = f2(lc); px.classList.toggle("up", lc > last); px.classList.toggle("dn", lc < last); last = lc;
+      $("#tmBid").textContent = f2(lc - .1); $("#tmAsk").textContent = f2(lc + .1);
+    }
+    function tick() {
+      var k = C[N - 1]; k.c += (rnd() - .48) * 1.1; k.h = Math.max(k.h, k.c); k.l = Math.min(k.l, k.c);
+      if (++ticks % 6 === 0) { C.shift(); C.push({ o: k.c, h: k.c, l: k.c, c: k.c }); }
+      draw();
+    }
+    draw();
+    new IntersectionObserver(function (es) { vis = es[0].isIntersecting; }).observe(svg);
+    if (!reduce) setInterval(function () { if (vis && !document.hidden) tick(); }, 700);
+  })();
 
   /* hero visual: a one-time program fee opens a simulated account; cycles through the Instant sizes */
   (function () {
