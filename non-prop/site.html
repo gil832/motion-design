@@ -161,11 +161,11 @@ body.hb .hx-sizes { visibility: hidden; }
 .hx-s { display: block; font-size: 14px; color: var(--mute); margin-top: 6px; }
 .hx-fee { padding: 22px 26px; border-radius: 24px; text-align: left; min-width: 190px; transform: translateZ(30px); }
 .hx-fee b { display: block; margin-top: 6px; font-size: clamp(40px, 4.2vw, 58px); font-weight: 600; letter-spacing: -.05em; line-height: 1; }
-.hx-ar { position: relative; width: clamp(50px, 7vw, 110px); height: 2px; background: linear-gradient(90deg, rgba(143,243,232,.2), rgba(217,255,0,.8)); }
+.hx-ar { position: relative; width: clamp(36px, 4vw, 70px); height: 2px; background: linear-gradient(90deg, rgba(143,243,232,.2), rgba(217,255,0,.8)); }
 .hx-ar::after { content: ""; position: absolute; right: -2px; top: 50%; width: 10px; height: 10px; border-top: 2px solid var(--lime); border-right: 2px solid var(--lime); transform: translateY(-50%) rotate(45deg); }
 .hx-ar i { position: absolute; top: 50%; left: 0; width: 8px; height: 8px; margin-top: -4px; border-radius: 50%; background: var(--lime); box-shadow: 0 0 14px var(--lime); animation: hxrun 1.8s var(--ease) infinite; }
 @keyframes hxrun { 0% { left: 0; opacity: 0; } 15% { opacity: 1; } 85% { opacity: 1; } 100% { left: calc(100% - 8px); opacity: 0; } }
-.hx-acc { position: relative; width: clamp(300px, 34vw, 440px); padding: 24px 26px 18px; text-align: left; overflow: hidden; transform: translateZ(60px); box-shadow: 0 50px 100px -40px rgba(0,0,0,.95), 0 0 60px -20px rgba(0,216,195,.35); }
+.hx-acc { position: relative; width: clamp(290px, 28vw, 380px); padding: 24px 26px 18px; text-align: left; overflow: hidden; transform: translateZ(60px); box-shadow: 0 50px 100px -40px rgba(0,0,0,.95), 0 0 60px -20px rgba(0,216,195,.35); }
 .hx-top { display: flex; justify-content: space-between; align-items: center; }
 .hx-pill { font-size: 11px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: #0a0a0a; background: var(--iris); padding: 4px 10px; border-radius: 999px; }
 .hx-acc b { display: block; margin-top: 8px; font-size: clamp(48px, 5.4vw, 76px); font-weight: 600; letter-spacing: -.055em; line-height: 1; background: linear-gradient(90deg, #ffffff, #a8fff4 45%, #d9ff00); -webkit-background-clip: text; background-clip: text; color: transparent; padding-bottom: 3px; }
@@ -173,10 +173,16 @@ body.hb .hx-sizes { visibility: hidden; }
 .hx-sizes { display: flex; gap: 6px; margin-top: 10px; }
 .hx-sizes span { flex: 1; height: 4px; border-radius: 99px; background: rgba(255,255,255,.1); transition: background .4s; }
 .hx-sizes span.on { background: var(--lime); box-shadow: 0 0 10px rgba(217,255,0,.6); }
+.hx-rw { position: relative; padding: 22px 24px; border-radius: 24px; text-align: left; min-width: 220px; transform: translateZ(90px); background: radial-gradient(130% 100% at 100% 0%, rgba(217,255,0,.22), transparent 55%), linear-gradient(165deg, #1a300a, #071006 72%); border: 1px solid rgba(217,255,0,.5); box-shadow: 0 40px 90px -40px rgba(0,0,0,.95), 0 0 70px -18px rgba(217,255,0,.55); overflow: hidden; }
+.hx-rw::after { content: ""; position: absolute; inset: 0; background: linear-gradient(115deg, transparent 35%, rgba(255,255,255,.12) 48%, transparent 60%); background-size: 260% 100%; animation: plsheen 5s ease-in-out infinite; pointer-events: none; }
+.hx-rw b { display: block; margin-top: 8px; font-size: clamp(40px, 4.2vw, 58px); font-weight: 600; letter-spacing: -.05em; line-height: 1; background: linear-gradient(180deg, #ffffff 10%, #e9ff7a 55%, #d9ff00); -webkit-background-clip: text; background-clip: text; color: transparent; padding-bottom: 2px; }
+.hx-ok { font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: #0a0a0a; background: var(--lime); padding: 4px 10px; border-radius: 999px; }
+.hx-ex { display: block; margin-top: 10px; font-size: 11.5px; color: var(--dim); }
+.hx-rw b.tick { animation: hxtick .5s var(--pop); }
 .hx-chip { position: absolute; padding: 12px 16px; font-size: 13px; color: var(--mute); white-space: nowrap; animation: bob 6s ease-in-out infinite; }
 .hx-chip b { display: block; font-size: 24px; line-height: 1.05; color: var(--lime); font-weight: 600; letter-spacing: -.04em; }
 .hx-chip.c1 { right: -60px; top: -26px; transform: translateZ(110px); }
-.hx-chip.c2 { right: -40px; bottom: -22px; transform: translateZ(90px); display: flex; align-items: center; gap: 9px; color: #fff; animation-delay: -3s; }
+.hx-chip.c2 { left: -30px; bottom: -22px; right: auto; transform: translateZ(90px); display: flex; align-items: center; gap: 9px; color: #fff; animation-delay: -3s; }
 .hx-chip.c2 i { width: 8px; height: 8px; border-radius: 50%; background: var(--lime); box-shadow: 0 0 10px var(--lime); }
 .hx-acc b.tick, .hx-fee b.tick { animation: hxtick .5s var(--pop); }
 @keyframes hxtick { 40% { transform: translateY(-4px) scale(1.03); } }
@@ -187,9 +193,11 @@ body.hb .hx-sizes { visibility: hidden; }
   .hx-ar i { left: 50% !important; margin-left: -4px; animation-name: hxrunv; }
   @keyframes hxrunv { 0% { top: 0; opacity: 0; } 15% { opacity: 1; } 85% { opacity: 1; } 100% { top: calc(100% - 8px); opacity: 0; } }
   .hx-fee { text-align: center; min-width: 0; padding: 16px 22px; }
+  .hx-rw { width: min(340px, 100%); text-align: center; }
+  .hx-rw .hx-top { justify-content: center; gap: 10px; }
   .hx-acc { width: min(340px, 100%); }
   .hx-chip.c1 { display: none; }
-  .hx-chip.c2 { right: -6px; bottom: -18px; }
+  .hx-chip.c2 { left: 6px; right: auto; bottom: -18px; }
 }
 
 /* trust row */
@@ -818,7 +826,13 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
             <svg class="hx-spark" viewBox="0 0 300 70" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="hxG" x1="0" x2="1"><stop offset="0" stop-color="#8ff3e8"/><stop offset="1" stop-color="#d9ff00"/></linearGradient><linearGradient id="hxA" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#d9ff00" stop-opacity=".22"/><stop offset="1" stop-color="#d9ff00" stop-opacity="0"/></linearGradient></defs><path id="hxArea" fill="url(#hxA)"/><path id="hxLine" fill="none" stroke="url(#hxG)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
             <div class="hx-sizes" id="hxSizes"></div>
           </div>
-          <div class="hx-chip liquid c1"><b>80%</b>Reward Share</div>
+          <div class="hx-ar hx-ar3" aria-hidden="true"><i></i><span></span></div>
+          <div class="hx-rw">
+            <div class="hx-top"><span class="hx-k">You earn</span><span class="hx-ok">Reward</span></div>
+            <b class="tnum" id="hxRw">$1,000</b>
+            <span class="hx-s" id="hxRwS">80% of $1,250 simulated profit</span>
+            <span class="hx-ex">Example · 5% simulated profit</span>
+          </div>
           <div class="hx-chip liquid c2"><i></i>No deposit</div>
         </div>
       </div>
@@ -1222,7 +1236,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
 
   /* hero visual: a one-time program fee opens a simulated account; cycles through the Instant sizes */
   (function () {
-    var HX = [[5000, 70], [10000, 120], [25000, 200], [50000, 350], [100000, 600], [200000, 1100]], hi = 2, shownA = 25000, shownF = 200;
+    var HX = [[5000, 70], [10000, 120], [25000, 200], [50000, 350], [100000, 600], [200000, 1100]], hi = 2, shownA = 25000, shownF = 200, shownR = 1000;
     var hx = $("#hx"), rig = $("#hxRig"), feeEl = $("#hxFee"), accEl = $("#hxAcc"), line = $("#hxLine"), area = $("#hxArea");
     $("#hxSizes").innerHTML = HX.map(function () { return "<span></span>"; }).join("");
     var bars = $$("#hxSizes span");
@@ -1241,7 +1255,10 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
       bars.forEach(function (b, j) { b.classList.toggle("on", j <= i); });
       tween(shownA, a, 900, function (v) { accEl.textContent = fmt(v); }); shownA = a;
       tween(shownF, f, 900, function (v) { feeEl.textContent = fmt(v); }); shownF = f;
-      if (!reduce) [accEl, feeEl].forEach(function (e) { e.classList.remove("tick"); void e.offsetWidth; e.classList.add("tick"); });
+      var prof = a * .05, rw = prof * .8, rwEl = $("#hxRw");
+      tween(shownR, rw, 900, function (v) { rwEl.textContent = fmt(v); }); shownR = rw;
+      $("#hxRwS").textContent = "80% of " + fmt(prof) + " simulated profit";
+      if (!reduce) [accEl, feeEl, rwEl].forEach(function (e) { e.classList.remove("tick"); void e.offsetWidth; e.classList.add("tick"); });
       spark();
     }
     show(hi);
