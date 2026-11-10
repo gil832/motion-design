@@ -435,7 +435,7 @@ body.hb .hx-sizes { visibility: hidden; }
 .safe-ch { display: block; width: 100%; height: 90px; }
 .safe-p { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
 .safe-p span { font-size: 12.5px; font-weight: 500; padding: 6px 11px; border-radius: 999px; border: 1px solid rgba(143,243,232,.3); color: var(--iris); background: rgba(0,216,195,.06); }
-.hw.three { grid-template-columns: minmax(0, 1fr) auto minmax(0, .8fr) auto minmax(0, 1fr); gap: 12px; }
+.hw.three { grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr); gap: 12px; }
 .hw.three .hs-pass, .hw.three .hw-ar2 { display: flex; }
 .hw.three .hw-ar2 { display: grid; }
 .hw.three .hs { padding: clamp(20px, 2.2vw, 30px); }
@@ -557,6 +557,25 @@ body.hb .hx-sizes { visibility: hidden; }
 .rw-band .k { margin-top: 8px; color: var(--mute); font-size: 14px; }
 @media (max-width: 860px) { .rw-band { grid-template-columns: 1fr 1fr; } .rw-band > div:nth-child(3)::before { display: none; } .rw-band > div:nth-child(n+3) { border-top: 1px solid rgba(255,255,255,.08); } }
 @media (max-width: 640px) { .rc { --u: .86px; } .certs .rows { gap: 12px; } .mrow .tr { gap: 12px; padding-right: 12px; } }
+
+/* featured trader video: half the screen, the rest of the stories scroll below */
+.feat { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(24px, 4vw, 60px); align-items: center; margin-bottom: clamp(36px, 4vw, 56px); }
+.feat-v { position: relative; aspect-ratio: 16 / 10; border-radius: 28px; overflow: hidden; border: 1px solid rgba(143,243,232,.22); background: #08171c; box-shadow: 0 40px 100px -40px rgba(0,0,0,.95), 0 0 60px -24px rgba(0,216,195,.4); }
+.feat-v img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.02); transition: transform 1s var(--ease); }
+.feat-v:hover img { transform: scale(1.06); }
+.feat-v::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 45%, rgba(3,10,14,.75)); pointer-events: none; }
+.feat-v iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; z-index: 3; }
+.feat-play { position: absolute; z-index: 2; left: 50%; top: 50%; width: 86px; height: 86px; margin: -43px 0 0 -43px; border-radius: 50%; border: 0; cursor: pointer; background: var(--lime); box-shadow: 0 0 0 10px rgba(217,255,0,.18), 0 20px 50px -10px rgba(217,255,0,.6); transition: transform .4s var(--pop); }
+.feat-play:hover { transform: scale(1.08); }
+.feat-play span { position: absolute; left: 34px; top: 27px; border-left: 26px solid #0a0a0a; border-top: 16px solid transparent; border-bottom: 16px solid transparent; }
+.feat-play::before { content: ""; position: absolute; inset: -10px; border-radius: 50%; border: 2px solid rgba(217,255,0,.5); animation: ping 2s ease-out infinite; }
+.feat-tag { position: absolute; z-index: 2; left: 18px; top: 18px; padding: 8px 14px; border-radius: 999px; font-size: 13px; color: #fff; }
+.feat-t h3 { margin: 16px 0 18px; font-size: clamp(30px, 3.4vw, 50px); letter-spacing: -.045em; line-height: 1.02; font-weight: 600; text-wrap: balance; }
+.feat-n { margin: 0 0 24px; display: flex; align-items: baseline; gap: 10px; }
+.feat-n b { font-size: 20px; font-weight: 600; }
+.feat-n span { color: var(--mute); font-size: 15px; }
+.feat-more { margin: 18px 0 0; font-size: 14px; color: var(--dim); }
+@media (max-width: 900px) { .feat { grid-template-columns: 1fr; } .feat-play { width: 70px; height: 70px; margin: -35px 0 0 -35px; } .feat-play span { left: 28px; top: 22px; border-left-width: 21px; border-top-width: 13px; border-bottom-width: 13px; } }
 
 /* Reward certificates, premium: foil border that turns, guilloche engraving, embossed seal */
 @property --fa { syntax: "<angle>"; inherits: false; initial-value: 0deg; }
@@ -965,7 +984,22 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
   </section>
 
   <section class="sec ugc" id="traders" style="padding-top:0">
-    <div class="wrap"><div class="sh rv"><span class="eyebrow">Traders like you</span><h2>Hear it <span class="grad">from them.</span></h2></div></div>
+    <div class="wrap"><div class="sh rv"><span class="eyebrow">Traders like you</span><h2>Hear it <span class="grad">from them.</span></h2></div>
+      <div class="feat rv" id="feat">
+        <div class="feat-v" id="featV">
+          <img id="featImg" src="assets/traders/ben.webp" alt="" loading="lazy">
+          <button type="button" class="feat-play" id="featPlay" aria-label="Play the video"><span></span></button>
+          <span class="feat-tag liquid">Featured story</span>
+        </div>
+        <div class="feat-t">
+          <span class="eyebrow">Trader story</span>
+          <h3 id="featH">From risking his own money to his first Reward.</h3>
+          <p class="feat-n"><b id="featN">Ben</b><span>FundingRock trader</span></p>
+          <a class="ghost" id="featYt" href="https://www.youtube.com/watch?v=Z-L3DxpLRPk" target="_blank" rel="noopener">Watch on YouTube <span class="ar" aria-hidden="true">→</span></a>
+          <p class="feat-more">More stories below. Pick one to play it here.</p>
+        </div>
+      </div>
+    </div>
     <div class="mq"><div class="mq-tr" id="ugcTr"></div></div>
   </section>
 
@@ -1281,8 +1315,30 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
   $("#pressTr").innerHTML = dup(ph + ph);
 
   var TR = [["ben", "Ben", "From risking his own money to his first Reward", "Z-L3DxpLRPk"], ["andrea", "Andrea", "From not believing prop trading exists to sharing it with friends", "dleWQCKUP7A"], ["brian", "Brian", "If someone like me can do it, you can too", "OaEGmOkxmzg"], ["anthony", "Anthony", "$25K Prime Account in a few weeks", "60H6FV155bk"], ["noam", "Noam F.", "Passed Phase 1 in under a week", "3TPTFMuXuMU"], ["jem", "Jem", "Responsive support and fast Rewards", "-l9catVK6RQ"], ["david", "David S.", "Passed his evaluation and ready to trade", "2q64-CFi94E"], ["trink", "Trink L.", "The confidence I needed to keep going", "Vcs_cRdC1wE"], ["dean", "Dean", "One step away from Prime", "7yiKot0ubpc"], ["guy", "Guy F.", "Can't wait for the next Reward", "keu7qCKlGMk"]];
-  $("#ugcTr").innerHTML = dup(TR.map(function (t) {
-    return '<a class="ug" href="https://www.youtube.com/watch?v=' + t[3] + '" target="_blank" rel="noopener" aria-label="Watch ' + t[1] + ' on YouTube"><img src="assets/traders/' + t[0] + '.webp" alt="' + t[1] + '" loading="lazy" draggable="false"><span class="pl" aria-hidden="true"></span><span class="tx2"><b>' + t[1] + "</b><small>" + t[2] + "</small></span></a>";
+  /* featured story: plays in place; the cards below switch which story is featured */
+  var featId = TR[0][3];
+  function feature(t, play) {
+    featId = t[3];
+    var v = $("#featV"), fr = v.querySelector("iframe"); if (fr) fr.remove();
+    $("#featImg").src = "assets/traders/" + t[0] + ".webp"; $("#featN").textContent = t[1]; $("#featH").textContent = t[2] + ".";
+    $("#featYt").href = "https://www.youtube.com/watch?v=" + t[3];
+    if (play) playFeat();
+  }
+  function playFeat() {
+    var v = $("#featV"); if (v.querySelector("iframe")) return;
+    var f = document.createElement("iframe");
+    f.src = "https://www.youtube-nocookie.com/embed/" + featId + "?autoplay=1&rel=0";
+    f.title = "Trader story video"; f.allow = "autoplay; encrypted-media; picture-in-picture; fullscreen"; f.allowFullscreen = true;
+    v.appendChild(f);
+  }
+  $("#featPlay").addEventListener("click", playFeat);
+  document.addEventListener("click", function (e) {
+    var a = e.target.closest && e.target.closest(".ug[data-i]"); if (!a) return;
+    e.preventDefault(); feature(TR[+a.getAttribute("data-i")], true);
+    $("#feat").scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "center" });
+  });
+  $("#ugcTr").innerHTML = dup(TR.map(function (t, i) {
+    return '<a class="ug" data-i="' + i + '" href="https://www.youtube.com/watch?v=' + t[3] + '" target="_blank" rel="noopener" aria-label="Watch ' + t[1] + ' on YouTube"><img src="assets/traders/' + t[0] + '.webp" alt="' + t[1] + '" loading="lazy" draggable="false"><span class="pl" aria-hidden="true"></span><span class="tx2"><b>' + t[1] + "</b><small>" + t[2] + "</small></span></a>";
   }).join(""));
 
   /* Reward certificates: the card from the certificates Figma file, two rows running opposite ways */
