@@ -741,7 +741,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
       <div class="sh rv">
         <span class="eyebrow">Broker vs FundingRock</span>
         <h2><span class="ekp">Trade</span> <span class="tnum" id="cA">$5K</span>. <span class="grad"><span class="ekp">Without having</span> <span class="tnum" id="cA2">$5K</span>.</span></h2>
-        <p>A broker account costs you the whole balance, and all of it is at risk. With FundingRock you risk one small fee, and you can still earn from the profit.</p>
+        <p>So yes, it's a simulated account. Your performance is what counts: when you're in profit, you request a Reward and keep 80% of it, or 95% with the add-on.</p>
       </div>
       <div class="cmp-ctl rv"><span>Pick an account size</span><div class="acc" role="group" aria-label="Account size" id="cSizes"></div></div>
       <div class="cmp rv" id="cmp">
@@ -1329,9 +1329,11 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
   var els = Array.prototype.slice.call(document.querySelectorAll(SEL)).filter(function (el) {
     return !el.id && !el.querySelector("[id], a, button, img, svg") && !el.closest(".rc, .pc, .rv-c, .ug, #steps, .lb, .sp-bar, #pRules, #pGets, #ptabs, #hw, #hwTabs, #hwFoot");
   });
-  els.forEach(function (el, i) { el.setAttribute("data-ek", "t" + i); });
-  /* extra editable pieces get their own key series so existing "t" keys never shift */
-  Array.prototype.slice.call(document.querySelectorAll(".ekp")).forEach(function (el, i) { el.setAttribute("data-ek", "p" + i); els.push(el); });
+  Array.prototype.slice.call(document.querySelectorAll(".ekp")).forEach(function (el) { els.push(el); });
+  /* keys come from each element's original text, so adding, removing or reordering sections never moves a saved edit onto another element */
+  function hash(t) { var h = 5381; for (var i = 0; i < t.length; i++) h = ((h << 5) + h + t.charCodeAt(i)) | 0; return (h >>> 0).toString(36); }
+  var seen = {};
+  els.forEach(function (el) { var b = "h" + hash(el.innerHTML.replace(/\s+/g, " ").trim()); seen[b] = (seen[b] || 0) + 1; el.setAttribute("data-ek", b + (seen[b] > 1 ? "-" + seen[b] : "")); });
   var byKey = {}; els.forEach(function (el) { byKey[el.getAttribute("data-ek")] = el; });
   var ALLOW = { B: 1, EM: 1, S: 1, SPAN: 1, BR: 1, I: 1, STRONG: 1 };
   function clean(html) {
