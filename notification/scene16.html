@@ -37,11 +37,13 @@
     background: rgba(105,112,108,.62); backdrop-filter: blur(30px) saturate(140%);
     box-shadow: 0 20px 60px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.10); transform-origin: 50% 0; }
   #notif .icon { position: absolute; left: 30px; top: 46px; width: 86px; height: 86px; border-radius: 22px; background: #050505;
-    box-shadow: 0 0 0 1px rgba(255,255,255,.06); }
+    box-shadow: 0 0 0 1px rgba(255,255,255,.06); display: grid; place-items: center; }
+  #notif .icon img { width: 52px; height: auto; display: block; }
   #notif .app { position: absolute; left: 140px; top: 36px; font-size: 25px; font-weight: 600; letter-spacing: .8px; color: rgba(255,255,255,.88); }
   #notif .now { position: absolute; right: 34px; top: 30px; font-size: 25px; font-weight: 500; color: rgba(255,255,255,.62); }
-  #notif .l1 { position: absolute; left: 140px; top: 76px; font-family: "Inter Display"; font-size: 41px; font-weight: 700; color: #fff; letter-spacing: -.3px; white-space: nowrap; }
-  #notif .l2 { position: absolute; left: 140px; top: 128px; font-family: "Inter Display"; font-size: 44px; font-weight: 800; color: var(--lime); letter-spacing: -.3px; white-space: nowrap; }
+  #notif .txt { position: absolute; left: 140px; right: 26px; top: 70px; bottom: 14px; overflow: hidden; padding: 0 6px 0 0; }
+  #notif .l1 { position: absolute; left: 0; top: 8px; font-family: "Inter Display"; font-size: 36px; font-weight: 700; color: #fff; letter-spacing: -.3px; white-space: nowrap; }
+  #notif .l2 { position: absolute; left: 0; top: 56px; font-family: "Inter Display"; font-size: 40px; font-weight: 800; color: var(--lime); letter-spacing: -.3px; white-space: nowrap; }
   .w { display: inline-block; }
   #sheen { position: absolute; inset: 0; border-radius: 52px; overflow: hidden; }
   #sheen div { position: absolute; top: -50%; width: 160px; height: 200%;
@@ -77,17 +79,10 @@
             <div class="time">9:41</div>
           </div>
           <div id="notif">
-            <div class="icon">
-              <svg viewBox="0 0 100 100" width="86" height="86">
-                <path fill="#d6f21d" d="M 20 22 L 49 22 L 44 36 L 36 36 L 31 48 L 40 48 L 22 80 L 26 56 L 20 56 Z"/>
-                <path fill="#d6f21d" fill-rule="evenodd" d="M 52 22 L 66 22 C 79 22 84 30 84 39 C 84 47 79 52 73 54 L 85 76 L 70 76 L 60 57 L 60 76 L 52 76 Z
-                         M 60 31 L 60 47 L 66 47 C 72 47 75 44 75 39 C 75 34 72 31 66 31 Z"/>
-              </svg>
-            </div>
+            <div class="icon"><img src="logo.svg" alt=""></div>
             <div class="app" id="appName">FUNDINGROCK</div>
             <div class="now" id="nowLbl">now</div>
-            <div class="l1" id="l1"></div>
-            <div class="l2" id="l2"></div>
+            <div class="txt"><div class="l1" id="l1"></div><div class="l2" id="l2"></div></div>
             <div id="sheen"><div></div></div>
           </div>
           <div class="qbtn" style="left:64px">
