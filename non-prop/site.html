@@ -245,8 +245,13 @@ body.hdv .hc-cv { display: none; }
 .hc-stats span { display: block; margin-top: 10px; font-size: 14px; color: var(--mute); }
 @media (max-width: 900px) {
   .hc-grid { grid-template-columns: 1fr; min-height: 0; }
-  .hc-vis { position: relative; top: auto; bottom: auto; right: auto; width: auto; height: 400px; margin: 0 -20px 6px; }
-  .hc-c1 { display: none; } .hc-c2 { left: auto; right: 16px; bottom: 14%; width: 190px; } .hc-big { font-size: 32px; }
+  .hc-vis { position: relative; top: auto; bottom: auto; right: auto; width: auto; height: auto; aspect-ratio: 1 / 1; margin: -24px -20px -10px; transform: none !important; }
+  .hc-cv, .hc-split { -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 10%, #000 80%, transparent 100%); mask-image: linear-gradient(180deg, transparent 0%, #000 10%, #000 80%, transparent 100%); }
+  .hc-split img { object-position: 50% 40%; }
+  .hs-tag { top: 14%; font-size: 10px; padding: 4px 8px; }
+  .hs-line { top: 8%; bottom: 14%; }
+  .hc-hint { top: 10% !important; bottom: auto !important; }
+  .hc-c1 { display: none; } .hc-c2 { left: auto; right: 14px; top: auto; bottom: 14%; width: 160px; padding: 11px 13px; animation: none; } .hc-big { font-size: 28px; } .hc-c2 .hc-ct { font-size: 10px; gap: 8px; }
   .hc-hint { left: 50%; bottom: 6%; }
   .hc-word { margin-top: 10px; font-size: 22vw; }
   .hc-btn { width: 100%; padding: 20px; font-size: 18px; }
@@ -524,7 +529,7 @@ body:not(.hcv) .story { display: none !important; }
 .st-tri { position: absolute; inset: 0; width: 100%; height: 100%; -webkit-mask-image: radial-gradient(60% 70% at 70% 52%, #000 30%, transparent 78%); mask-image: radial-gradient(60% 70% at 70% 52%, #000 30%, transparent 78%); }
 @media (max-width: 760px) { .st-fr { right: -6%; width: 80%; height: 60%; top: 6%; } }
 .st-person { position: absolute; right: 8%; bottom: 0; height: 92%; width: auto; max-width: none; transform: translateY(var(--py, 40px)) scale(var(--pz, 1.04)); transition: transform .2s linear; -webkit-mask-image: linear-gradient(180deg, #000 75%, transparent); mask-image: linear-gradient(180deg, #000 75%, transparent); }
-.st-reward { position: absolute; right: 4%; top: 14%; padding: 18px 22px; border-radius: 20px; transform: translateY(var(--ry, 30px)); opacity: var(--ro, 0); transition: transform .3s linear, opacity .3s linear; }
+.st-reward { position: absolute; right: 37%; top: 40%; padding: 18px 22px; border-radius: 20px; transform: translateY(var(--ry, 30px)); opacity: var(--ro, 0); transition: transform .3s linear, opacity .3s linear; }
 .st-reward span { display: flex; align-items: center; gap: 8px; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: #fff; }
 .st-reward i { width: 7px; height: 7px; border-radius: 50%; background: var(--lime); box-shadow: 0 0 10px var(--lime); }
 .st-reward b { display: block; margin-top: 10px; font-size: clamp(48px, 5vw, 72px); font-weight: 600; letter-spacing: -.05em; line-height: 1; background: linear-gradient(180deg, #fff 10%, #e9ff7a 60%, #d9ff00); -webkit-background-clip: text; background-clip: text; color: transparent; }
@@ -551,7 +556,7 @@ body:not(.hcv) .story { display: none !important; }
   .st-txt.on { transform: none; }
   .st-txt p { font-size: 16px; }
   .st-person { right: -10%; height: 70%; bottom: 30%; }
-  .st-reward { right: 6%; top: 10%; }
+  .st-reward { right: auto; left: 6%; top: 12%; }
   .st-dots { bottom: 5%; }
 }
 @media (prefers-reduced-motion: reduce) { .story { height: auto; } .st-pin { position: relative; height: auto; min-height: 100vh; } }
@@ -1055,7 +1060,6 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
         <div class="st-scene" data-i="1"><div class="st-img" style="background-image:url(assets/hc/desk.jpg)"></div></div>
         <div class="st-scene st-rw" data-i="2">
           <div class="st-img st-glowbg"></div>
-          <svg class="st-fr" viewBox="0 0 200 200" aria-hidden="true" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="frG" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#00d8c3" stop-opacity=".05"/><stop offset=".6" stop-color="#00d8c3" stop-opacity=".55"/><stop offset="1" stop-color="#8ff3e8" stop-opacity=".8"/></linearGradient></defs><path d="M10 200 L120 20 Q126 10 138 10 L190 10 Q196 10 196 16 L196 70 Q196 78 190 82 L80 200 Z" fill="url(#frG)"/></svg>
           <canvas class="st-tri" id="stTri" aria-hidden="true"></canvas>
           <img class="st-person" src="assets/prove.webp" alt="" loading="lazy">
           <div class="st-reward liquid"><span><i></i>Reward request · Approved</span><b class="tnum">+$800</b><em>80% of $1,000 simulated profit</em></div>
@@ -1482,7 +1486,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
       mask.width = Math.round(W / 2); mask.height = Math.round(H / 2);
       draw();
     }
-    function fit() { var n = base.naturalWidth || 900, s = Math.max(W / n, H / n) * .92, w = n * s, h = n * s; return [W - w, (H - h) * .3, w, h]; }
+    function fit() { var n = base.naturalWidth || 900, m = innerWidth <= 900, s = Math.max(W / n, H / n) * (m ? 1 : .92), w = n * s, h = n * s; return [m ? (W - w) / 2 : W - w, m ? (H - h) * .4 : (H - h) * .3, w, h]; }
     function draw() {
       if (ready < 2 || !W) return;
       var f = fit();
