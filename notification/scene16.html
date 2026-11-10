@@ -1,0 +1,234 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>FundingRock Notification 16:9</title>
+<!-- plate.js sets window.PLATE = { w, h, corners: [[x,y] TL, TR, BR, BL] } in plate pixels -->
+<script src="plate.js"></script>
+<style>
+  :root { --lime: #d6f21d; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 1920px; height: 1080px; overflow: hidden; background: #000; }
+  body { font-family: "Inter", sans-serif; -webkit-font-smoothing: antialiased; }
+
+  #stage { position: absolute; inset: 0; overflow: hidden; background: #000; }
+  #camera { position: absolute; left: 0; top: 0; transform-origin: 0 0; }
+  #plateBox { position: absolute; left: 0; top: 0; }
+  #plateBox > img { position: absolute; left: 0; top: 0; width: 100%; height: 100%; }
+  /* Everything inside #screenMask is clipped to the keyed screen area of the plate */
+  #screenMask { position: absolute; left: 0; top: 0; width: 100%; height: 100%;
+    -webkit-mask-image: url(matte.png); -webkit-mask-size: 100% 100%; mask-image: url(matte.png); mask-size: 100% 100%; }
+  #screen { position: absolute; left: 0; top: 0; width: 688px; height: 1468px; overflow: hidden; transform-origin: 0 0;
+    background: radial-gradient(90% 55% at 70% 18%, #1e3a2b 0%, rgba(0,0,0,0) 70%),
+                radial-gradient(80% 50% at 20% 85%, #18301f 0%, rgba(0,0,0,0) 70%),
+                linear-gradient(180deg, #0f2219 0%, #0a1712 50%, #050c09 100%); }
+  #wake { position: absolute; inset: 0; background: #020303; }
+  #status { position: absolute; left: 0; right: 0; top: 40px; height: 44px; padding: 0 62px 0 78px;
+    display: flex; justify-content: space-between; align-items: center; color: #fff; font-weight: 600; font-size: 28px; }
+  #status .icons { display: flex; gap: 12px; align-items: center; }
+  #clock { position: absolute; left: 0; right: 0; top: 150px; text-align: center; color: rgba(235,245,238,.92); }
+  #clock .date { font-size: 32px; font-weight: 600; letter-spacing: .2px; }
+  #clock .time { font-family: "Inter Display"; font-size: 200px; font-weight: 600; line-height: 1; letter-spacing: -4px; margin-top: 4px; }
+  #bottomBar { position: absolute; left: 50%; bottom: 22px; width: 250px; height: 9px; margin-left: -125px; border-radius: 5px; background: rgba(255,255,255,.85); }
+  .qbtn { position: absolute; bottom: 92px; width: 96px; height: 96px; border-radius: 50%;
+    background: rgba(255,255,255,.12); display: grid; place-items: center; }
+
+  #notif { position: absolute; left: 22px; right: 22px; top: 560px; height: 214px; border-radius: 52px;
+    background: rgba(105,112,108,.62); backdrop-filter: blur(30px) saturate(140%);
+    box-shadow: 0 20px 60px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.10); transform-origin: 50% 0; }
+  #notif .icon { position: absolute; left: 30px; top: 46px; width: 86px; height: 86px; border-radius: 22px; background: #050505;
+    box-shadow: 0 0 0 1px rgba(255,255,255,.06); }
+  #notif .app { position: absolute; left: 140px; top: 36px; font-size: 25px; font-weight: 600; letter-spacing: .8px; color: rgba(255,255,255,.88); }
+  #notif .now { position: absolute; right: 34px; top: 30px; font-size: 25px; font-weight: 500; color: rgba(255,255,255,.62); }
+  #notif .l1 { position: absolute; left: 140px; top: 76px; font-family: "Inter Display"; font-size: 41px; font-weight: 700; color: #fff; letter-spacing: -.3px; white-space: nowrap; }
+  #notif .l2 { position: absolute; left: 140px; top: 128px; font-family: "Inter Display"; font-size: 44px; font-weight: 800; color: var(--lime); letter-spacing: -.3px; white-space: nowrap; }
+  .w { display: inline-block; }
+  #sheen { position: absolute; inset: 0; border-radius: 52px; overflow: hidden; }
+  #sheen div { position: absolute; top: -50%; width: 160px; height: 200%;
+    background: linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,.16), rgba(255,255,255,0)); transform: rotate(20deg); }
+
+  /* Glass: reflection + slight softness so the UI sits under the cover glass */
+  #glass { position: absolute; inset: 0; pointer-events: none;
+    background: linear-gradient(118deg, rgba(255,255,255,0) 22%, rgba(255,255,255,.07) 34%, rgba(255,255,255,0) 46%),
+                linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,0) 30%); }
+  #spill { position: absolute; left: 0; top: 0; width: 100%; height: 100%; pointer-events: none; mix-blend-mode: screen; }
+  #vignette { position: absolute; inset: 0; pointer-events: none;
+    background: radial-gradient(70% 70% at 50% 50%, rgba(0,0,0,0) 55%, rgba(0,0,0,.55) 100%); }
+  #fade { position: absolute; inset: 0; background: #000; pointer-events: none; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="camera">
+    <div id="plateBox">
+      <img src="plate_clean.jpg" alt="">
+      <div id="screenMask">
+        <div id="screen">
+          <div id="status">
+            <span>9:41</span>
+            <span class="icons">
+              <svg width="34" height="22" viewBox="0 0 34 22"><g fill="#fff"><rect x="0" y="14" width="6" height="8" rx="1.5"/><rect x="9" y="10" width="6" height="12" rx="1.5"/><rect x="18" y="5" width="6" height="17" rx="1.5"/><rect x="27" y="0" width="6" height="22" rx="1.5"/></g></svg>
+              <svg width="30" height="22" viewBox="0 0 30 22"><g fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round"><path d="M2 8 A19 19 0 0 1 28 8"/><path d="M7 13 A12 12 0 0 1 23 13"/></g><circle cx="15" cy="18.5" r="3" fill="#fff"/></svg>
+              <svg width="52" height="24" viewBox="0 0 52 24"><rect x="1" y="1" width="44" height="22" rx="7" fill="none" stroke="rgba(255,255,255,.5)" stroke-width="2"/><rect x="4" y="4" width="34" height="16" rx="4.5" fill="#fff"/><rect x="47" y="8" width="3.5" height="8" rx="1.5" fill="rgba(255,255,255,.5)"/></svg>
+            </span>
+          </div>
+          <div id="clock">
+            <div class="date">Tuesday, November 10</div>
+            <div class="time">9:41</div>
+          </div>
+          <div id="notif">
+            <div class="icon">
+              <svg viewBox="0 0 100 100" width="86" height="86">
+                <path fill="#d6f21d" d="M 20 22 L 49 22 L 44 36 L 36 36 L 31 48 L 40 48 L 22 80 L 26 56 L 20 56 Z"/>
+                <path fill="#d6f21d" fill-rule="evenodd" d="M 52 22 L 66 22 C 79 22 84 30 84 39 C 84 47 79 52 73 54 L 85 76 L 70 76 L 60 57 L 60 76 L 52 76 Z
+                         M 60 31 L 60 47 L 66 47 C 72 47 75 44 75 39 C 75 34 72 31 66 31 Z"/>
+              </svg>
+            </div>
+            <div class="app" id="appName">FUNDINGROCK</div>
+            <div class="now" id="nowLbl">now</div>
+            <div class="l1" id="l1"></div>
+            <div class="l2" id="l2"></div>
+            <div id="sheen"><div></div></div>
+          </div>
+          <div class="qbtn" style="left:64px">
+            <svg width="40" height="44" viewBox="0 0 40 44"><path d="M14 2h12v10l6 8v20a2 2 0 0 1-2 2H10a2 2 0 0 1-2-2V20l6-8z" fill="#fff"/></svg>
+          </div>
+          <div class="qbtn" style="right:64px">
+            <svg width="46" height="38" viewBox="0 0 46 38"><path d="M4 8h9l4-6h12l4 6h9v28H4z" fill="#fff"/><circle cx="23" cy="21" r="8" fill="#555"/></svg>
+          </div>
+          <div id="bottomBar"></div>
+          <div id="wake"></div>
+        </div>
+        <div id="glass"></div>
+      </div>
+      <!-- light from the screen spilling onto the hand and frame -->
+      <div id="spill"></div>
+    </div>
+  </div>
+  <div id="vignette"></div>
+  <div id="fade"></div>
+</div>
+
+<script>
+const P = window.PLATE;
+const SW = 688, SH = 1468;               // screen UI size (px, pre-transform)
+const SCALE = 1920 / P.w;                // plate -> stage
+const PW = 1920, PH = P.h * SCALE;
+const $ = id => document.getElementById(id);
+$("plateBox").style.width = PW + "px";
+$("plateBox").style.height = PH + "px";
+
+// Homography: map UI rect (0,0)-(SW,SH) onto the screen quad in the plate.
+function homography(src, dst) {
+  const A = [], b = [];
+  for (let i = 0; i < 4; i++) {
+    const [x, y] = src[i], [u, v] = dst[i];
+    A.push([x, y, 1, 0, 0, 0, -u * x, -u * y]); b.push(u);
+    A.push([0, 0, 0, x, y, 1, -v * x, -v * y]); b.push(v);
+  }
+  // Gaussian elimination
+  for (let c = 0; c < 8; c++) {
+    let p = c; for (let r = c + 1; r < 8; r++) if (Math.abs(A[r][c]) > Math.abs(A[p][c])) p = r;
+    [A[c], A[p]] = [A[p], A[c]]; [b[c], b[p]] = [b[p], b[c]];
+    for (let r = 0; r < 8; r++) if (r !== c) {
+      const f = A[r][c] / A[c][c];
+      for (let k = c; k < 8; k++) A[r][k] -= f * A[c][k];
+      b[r] -= f * b[c];
+    }
+  }
+  const h = b.map((v, i) => v / A[i][i]);
+  return `matrix3d(${h[0]},${h[3]},0,${h[6]},${h[1]},${h[4]},0,${h[7]},0,0,1,0,${h[2]},${h[5]},0,1)`;
+}
+const dst = P.corners.map(([x, y]) => [x * SCALE, y * SCALE]);
+$("screen").style.transform = homography([[0, 0], [SW, 0], [SW, SH], [0, SH]], dst);
+
+// Screen-light spill: soft glow centred on the screen
+const cx = dst.reduce((s, p) => s + p[0], 0) / 4, cy = dst.reduce((s, p) => s + p[1], 0) / 4;
+const scrW = dst[1][0] - dst[0][0];
+$("spill").style.background = `radial-gradient(${scrW * 1.1}px ${scrW * 1.9}px at ${cx}px ${cy}px, rgba(120,160,140,.20), rgba(0,0,0,0) 70%)`;
+
+// Text setup
+function words(el, text) {
+  el.innerHTML = text.split(" ").map(w => `<span class="w">${w}</span>`).join(" ");
+  return [...el.querySelectorAll(".w")];
+}
+const w1 = words($("l1"), "A $100K Trading Challenge.");
+const w2 = words($("l2"), "Now for Less.");
+
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const lerp = (a, b, k) => a + (b - a) * k;
+const prog = (t, t0, d) => clamp((t - t0) / d);
+const easeOutCubic = k => 1 - Math.pow(1 - k, 3);
+const easeInOut = k => k < .5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
+function spring(k, freq = 4.5, damp = 5.5) {
+  if (k <= 0) return 0;
+  return 1 - Math.exp(-damp * k) * Math.cos(freq * Math.PI * k);
+}
+// Smooth pseudo-random handheld noise
+function noise(t, seed) {
+  return Math.sin(t * 1.31 + seed) * .5 + Math.sin(t * 2.17 + seed * 3.1) * .3 + Math.sin(t * 3.73 + seed * 7.7) * .2;
+}
+
+const T = { wake: 0.9, notif: 1.3, app: 1.55, l1: 1.7, l2: 2.3, push: 1.2, pushDur: 3.8, sheen: 3.3, end: 7.0 };
+window.DURATION = T.end;
+
+// Notification centre in stage coords (approx: UI point (SW/2, 667) through the homography)
+function uiToStage(x, y) {
+  // bilinear approximation over the quad is fine for a near-planar, near-frontal screen
+  const u = x / SW, v = y / SH;
+  const top = [lerp(dst[0][0], dst[1][0], u), lerp(dst[0][1], dst[1][1], u)];
+  const bot = [lerp(dst[3][0], dst[2][0], u), lerp(dst[3][1], dst[2][1], u)];
+  return [lerp(top[0], bot[0], v), lerp(top[1], bot[1], v)];
+}
+const focus = uiToStage(SW / 2, 667);
+
+window.render = function (t) {
+  // Camera: start slightly wide and low, push in to frame the notification.
+  const p = easeInOut(prog(t, T.push, T.pushDur));
+  const settle = easeOutCubic(prog(t, 0, 1.4));
+  const zoom = lerp(1.06, 1.0, settle) * lerp(1.0, 1.95, p) * (1 + .012 * prog(t, T.push + T.pushDur, 2));
+  // focus point: plate centre -> notification
+  const fx = lerp(PW / 2, focus[0], p), fy = lerp(PH / 2 + lerp(30, 0, settle), focus[1], p);
+  // Haptic buzz + handheld shake
+  const bz = prog(t, T.notif, 0.35);
+  const buzz = bz > 0 && bz < 1 ? Math.sin(bz * 70) * 3 * (1 - bz) : 0;
+  const hx = noise(t, 1) * 5 + buzz, hy = noise(t, 2) * 5, hr = noise(t, 3) * .25;
+  const tx = 960 - fx * zoom + hx, ty = 540 - fy * zoom + hy;
+  $("camera").style.transform = `translate(${tx}px, ${ty}px) rotate(${hr}deg) scale(${zoom})`;
+
+  // Screen wakes
+  const wk = easeOutCubic(prog(t, T.wake, 0.5));
+  $("wake").style.opacity = 1 - wk;
+  $("spill").style.opacity = wk * (1 + .25 * Math.exp(-Math.max(0, t - T.notif) * 3) * (t > T.notif));
+
+  // Notification drops in
+  const n = prog(t, T.notif, 1.0);
+  const ns = spring(n, 2.2, 6.5);
+  $("notif").style.transform = `translateY(${lerp(-500, 0, ns)}px) scale(${lerp(0.35, 1, ns)})`;
+  $("notif").style.opacity = clamp(n * 5);
+  $("notif").style.filter = `blur(${lerp(14, 0, clamp(n * 3))}px)`;
+  $("clock").style.opacity = lerp(1, .55, easeInOut(prog(t, T.notif, 1)));
+
+  const fadeUp = (el, t0, d = .45, dist = 18) => {
+    const k = easeOutCubic(prog(t, t0, d));
+    el.style.opacity = k;
+    el.style.transform = `translateY(${(1 - k) * dist}px)`;
+    el.style.filter = `blur(${(1 - k) * 6}px)`;
+  };
+  fadeUp($("appName"), T.app); fadeUp($("nowLbl"), T.app + .1);
+  w1.forEach((w, i) => fadeUp(w, T.l1 + i * .09, .5, 24));
+  w2.forEach((w, i) => {
+    const t0 = T.l2 + i * .14, k = prog(t, t0, .55), s = spring(k, 2.4, 6);
+    w.style.opacity = clamp(k * 3);
+    w.style.transform = `translateY(${(1 - s) * 34}px) scale(${lerp(.7, 1, s)})`;
+    w.style.filter = `blur(${(1 - clamp(k * 2.5)) * 8}px)`;
+    w.style.textShadow = `0 0 ${lerp(0, 22, clamp(k * 2)) * (1 - .5 * prog(t, t0 + .6, 1))}px rgba(214,242,29,.55)`;
+  });
+  $("sheen").firstElementChild.style.left = `${lerp(-300, 900, easeInOut(prog(t, T.sheen, .9)))}px`;
+
+  $("fade").style.opacity = Math.max(1 - prog(t, 0, .5), prog(t, T.end - .5, .5));
+};
+render(Number(new URLSearchParams(location.search).get("t") || 3));
+</script>
+</body>
+</html>
