@@ -286,20 +286,6 @@ main, footer { overflow-x: clip; }
 .cmp-note { margin: 14px 0 0; text-align: center; font-size: 13px; color: var(--dim); }
 @media (max-width: 900px) { .cmp { grid-template-columns: 1fr; } .cc-vs { justify-self: center; margin: -8px 0; position: relative; z-index: 2; } .cmp-out { grid-template-columns: 1fr; } .cc-r > div { grid-template-columns: 1fr; gap: 2px; } }
 
-/* ---------- the odds ---------- */
-.odds { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
-.od { padding: clamp(26px, 3.4vw, 44px); display: grid; grid-template-columns: auto 1fr; gap: 28px; align-items: center; overflow: hidden; }
-.od .big { white-space: nowrap; font-size: clamp(40px, 4.2vw, 62px); font-weight: 600; letter-spacing: -0.055em; line-height: .95; }
-.od p { margin: 10px 0 0; font-size: 18px; color: #fff; max-width: 24ch; }
-.od cite { display: block; margin-top: 14px; font-style: normal; font-size: 12.5px; color: var(--dim); }
-.ringv { width: clamp(120px, 12vw, 170px); aspect-ratio: 1; }
-.ringv circle { fill: none; stroke-width: 12; }
-.dots { display: grid; grid-template-columns: repeat(10, 1fr); gap: 5px; width: clamp(120px, 12vw, 170px); }
-.dots i { aspect-ratio: 1; border-radius: 50%; background: rgba(255,255,255,.12); transition: background .3s, box-shadow .3s, transform .4s var(--pop); }
-.dots i.x { background: rgba(255,33,86,.75); }
-.dots i.k { background: var(--lime); box-shadow: 0 0 12px var(--lime); transform: scale(1.35); }
-.odds-say { text-align: center; margin: clamp(40px, 5vw, 64px) auto 0; font-size: clamp(28px, 3.6vw, 48px); font-weight: 600; letter-spacing: -.045em; line-height: 1.05; max-width: 22ch; text-wrap: balance; }
-@media (max-width: 900px) { .odds { grid-template-columns: 1fr; } }
 @media (max-width: 480px) { .od { grid-template-columns: 1fr; gap: 18px; } }
 
 /* ---------- talk: explained in texts, for people who have never traded ---------- */
@@ -672,24 +658,6 @@ main, footer { overflow-x: clip; }
     </div>
   </section>
 
-  <!-- the odds -->
-  <section class="sec" id="odds">
-    <div class="wrap">
-      <div class="sh rv"><span class="eyebrow r">The odds with your own money</span><h2>The market keeps <span class="grad">most deposits.</span></h2></div>
-      <div class="odds">
-        <div class="od glass rv" data-spot="420,.14">
-          <svg class="ringv" id="ringV" viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="50" stroke="rgba(255,255,255,.08)"/><circle id="ringB" cx="60" cy="60" r="50" stroke="rgba(255,33,86,.38)" stroke-linecap="round" transform="rotate(-90 60 60)" stroke-dasharray="0 400"/><circle id="ringA" cx="60" cy="60" r="50" stroke="#ff2156" stroke-linecap="round" transform="rotate(-90 60 60)" stroke-dasharray="0 400"/></svg>
-          <div><div class="big tnum redt" id="oddA">74 to 89%</div><p>of retail CFD accounts lose money.</p><cite>ESMA, 2018. EU retail CFD accounts.</cite></div>
-        </div>
-        <div class="od glass rv" data-spot="420,.14">
-          <div class="dots" id="dots" aria-hidden="true"></div>
-          <div><div class="big tnum"><span class="grad">&lt;1%</span></div><p>of day traders reliably profit after fees.</p><cite>Barber, Lee, Liu, Odean. Journal of Financial Markets, 2014.</cite></div>
-        </div>
-      </div>
-      <p class="odds-say rv">We can't change those odds. <span class="grad">We can cap what you lose.</span></p>
-    </div>
-  </section>
-
   <!-- explained in texts, for people who have never traded -->
   <section class="sec talk" id="talk" style="padding-top:0">
     <div class="wrap">
@@ -873,7 +841,6 @@ main, footer { overflow-x: clip; }
     </div>
     <div class="ft-b">
       <p>FundingRock (fundingrock.com) is a trade name of Mindwave Training Limited (HE 471803), 401/2 Ayias Elenis 36, Nicosia 1061, Cyprus. All accounts are simulated. No real funds are traded and we take no deposits. Rewards are based on simulated performance and are not guaranteed. FundingRock is not a broker and does not give financial advice. Past performance does not indicate future results.</p>
-      <p>Sources: European Securities and Markets Authority (ESMA), product intervention measures on CFDs, 2018: 74 to 89% of retail CFD accounts lose money. Barber, B., Lee, Y., Liu, Y., Odean, T. "The cross-section of speculator skill: Evidence from day trading." Journal of Financial Markets 18 (2014), pages 1 to 24 (Taiwan data).</p>
     </div>
   </div>
 </footer>
@@ -1009,18 +976,6 @@ main, footer { overflow-x: clip; }
   new IntersectionObserver(function (es) { if (es[0].isIntersecting && !cIn) { cIn = true; cmp.classList.add("in"); cRender(false); } }, { threshold: .35 }).observe(cmp);
   cRender(false);
 
-  /* ---------- the odds ---------- */
-  var dots = $("#dots"); dots.innerHTML = new Array(101).join("<i></i>");
-  var D = $$("i", dots), oddsDone = false;
-  var C = 2 * Math.PI * 50;
-  function runOdds() {
-    if (oddsDone) return; oddsDone = true;
-    tween(0, 1, 1600, function (v) { $("#ringB").setAttribute("stroke-dasharray", (C * .89 * v).toFixed(1) + " 400"); $("#ringA").setAttribute("stroke-dasharray", (C * .74 * v).toFixed(1) + " 400"); });
-    var keep = 57;
-    D.forEach(function (d, i) { if (i === keep) return; if (reduce) d.classList.add("x"); else setTimeout(function () { d.classList.add("x"); }, 200 + i * 14 + Math.random() * 200); });
-    setTimeout(function () { D[keep].classList.add("k"); }, reduce ? 0 : 1800);
-  }
-  new IntersectionObserver(function (es) { if (es[0].isIntersecting) runOdds(); }, { threshold: .35 }).observe($("#odds .odds"));
 
   /* ---------- prices ---------- */
   var IN = [[5000, 70], [10000, 120], [25000, 200], [50000, 350], [100000, 600], [200000, 1100]], inI = 3, inShown = 350;
