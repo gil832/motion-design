@@ -365,6 +365,29 @@ main, footer { overflow-x: clip; }
 
 /* how it works: two steps */
 .hw { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); gap: 18px; align-items: stretch; }
+.hw .hs-pass, .hw .hw-ar2 { display: none; }
+.hw.three { grid-template-columns: minmax(0, 1fr) auto minmax(0, .8fr) auto minmax(0, 1fr); gap: 12px; }
+.hw.three .hs-pass, .hw.three .hw-ar2 { display: flex; }
+.hw.three .hw-ar2 { display: grid; }
+.hw.three .hs { padding: clamp(20px, 2.2vw, 30px); }
+.hw.three .hs h3 { font-size: clamp(21px, 1.9vw, 26px); }
+.hw.three .hn { width: 44px; height: 44px; font-size: 22px; border-radius: 14px; }
+.hw.three .hs-t { gap: 14px; }
+.hw.three .lad-v { font-size: 14px; white-space: nowrap; }
+.hw.three .lad-v span { font-size: clamp(26px, 2.4vw, 36px); }
+.hw.three .lad-v b { font-size: 17px; }
+.ptabs.mini { max-width: 560px; margin: -18px auto 26px; gap: 6px; }
+.ptabs.mini .pt { padding: 12px 14px; border-radius: 999px; text-align: center; }
+.ptabs.mini .pt b { font-size: 17px; letter-spacing: -.02em; }
+.ptabs.mini .pt span { display: none; }
+.ps-big { margin-top: 26px; font-size: clamp(52px, 5vw, 76px); font-weight: 600; letter-spacing: -.06em; line-height: .9; color: var(--lime); }
+.ps-tracks { margin-top: 20px; display: grid; gap: 12px; }
+.ps-tr span { display: flex; justify-content: space-between; font-size: 13px; color: var(--mute); margin-bottom: 6px; }
+.ps-tr div { height: 12px; border-radius: 99px; background: rgba(255,255,255,.07); overflow: hidden; }
+.ps-tr i { display: block; height: 100%; width: 0; border-radius: inherit; background: linear-gradient(90deg, #8ff3e8, var(--lime)); box-shadow: 0 0 16px rgba(217,255,0,.5); transition: width 1.4s var(--ease); }
+.ps-ok { margin-top: auto; padding-top: 18px; font-size: 14px; font-weight: 600; color: var(--lime); opacity: 0; transform: translateY(6px); transition: opacity .5s, transform .5s var(--ease); }
+.ps-ok.on { opacity: 1; transform: none; }
+@media (max-width: 900px) { .hw.three { grid-template-columns: 1fr; } .ptabs.mini { margin-top: -10px; } }
 .hs { padding: clamp(24px, 3vw, 38px); display: flex; flex-direction: column; }
 .hs-t { display: flex; gap: 18px; align-items: flex-start; }
 .hn { flex: none; width: 52px; height: 52px; border-radius: 16px; display: grid; place-items: center; font-size: 26px; font-weight: 700; color: #0a0a0a; background: var(--lime); box-shadow: 0 10px 30px -10px rgba(217,255,0,.7); }
@@ -757,24 +780,32 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
   <!-- how it works -->
   <section class="sec" id="how" style="padding-top:0">
     <div class="wrap">
-      <div class="sh rv"><span class="eyebrow">How it works</span><h2>Two steps. <span class="grad">That's all.</span></h2></div>
-      <div class="hw">
+      <div class="sh rv"><span class="eyebrow">How it works</span><h2 id="hwH">Two steps. <span class="grad">That's all.</span></h2></div>
+      <div class="ptabs mini rv" role="tablist" aria-label="Program" id="hwTabs"></div>
+      <div class="hw" id="hw">
         <article class="hs glass rv" data-spot="460,.14">
-          <div class="hs-t"><span class="hn">1</span><div><h3>Pick an account size</h3><p>From <b>$5,000</b> to <b>$200,000</b> in simulated capital. Pay one fee, once.</p></div></div>
-          <div class="lad-v"><span class="tnum" id="ladA">$50K</span> account <i>·</i> <b class="tnum" id="ladF">$350</b> fee</div>
+          <div class="hs-t"><span class="hn">1</span><div><h3>Pick an account size</h3><p id="hwP1">From <b>$5,000</b> to <b>$200,000</b> in simulated capital. Pay one fee, once.</p></div></div>
+          <div class="lad-v"><span class="tnum" id="ladA">$50K</span> simulated <i>·</i> <b class="tnum" id="ladF">$350</b> fee</div>
           <div class="lad" id="lad" role="group" aria-label="Account sizes and fees"></div>
         </article>
         <div class="hw-ar" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+        <article class="hs glass rv hs-pass" id="hsPass" data-spot="460,.14">
+          <div class="hs-t"><span class="hn">2</span><div><h3 id="psH">Hit the target</h3><p id="psP">Reach the profit target on your simulated account. No time limit.</p></div></div>
+          <div class="ps-big tnum" id="psBig">10%</div>
+          <div class="ps-tracks" id="psTracks"></div>
+          <div class="ps-ok" id="psOk">Passed. Your Prime account is next.</div>
+        </article>
+        <div class="hw-ar hw-ar2" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
         <article class="hs glass rv" data-spot="460,.14">
-          <div class="hs-t"><span class="hn">2</span><div><h3>Trade, then share the profit</h3><p>Stay inside two rules. In profit? Request a Reward and keep <b>80%</b>, or <b>95%</b> with the add-on.</p></div></div>
-          <div class="r2"><div><span>Daily loss limit</span><b>4%</b></div><div><span>Max loss (trailing)</span><b>8%</b></div></div>
+          <div class="hs-t"><span class="hn" id="hn2">2</span><div><h3 id="hwH2">Trade, then share the profit</h3><p id="hwP2">Stay inside two rules. In profit? Request a Reward and keep <b>80%</b>, or <b>95%</b> with the add-on.</p></div></div>
+          <div class="r2"><div><span>Daily loss limit</span><b id="r2D">4%</b></div><div><span id="r2Ml">Max loss (trailing)</span><b id="r2M">8%</b></div></div>
           <div class="split" id="split">
-            <div class="sp-h"><span>Example: <b>$1,000</b> profit</span><span class="sp-m" id="spMode">80% Reward Share</span></div>
+            <div class="sp-h"><span>Example: <b>$1,000</b> simulated profit</span><span class="sp-m" id="spMode">80% Reward Share</span></div>
             <div class="sp-bar"><i id="spYou"><em class="tnum" id="spYouV">You $800</em></i><s id="spUs"><em class="tnum" id="spUsV">$200</em></s></div>
           </div>
         </article>
       </div>
-      <ul class="hw-foot rv"><li>No profit target</li><li>No minimum days</li><li>Rewards processed within 48h</li><li>Minimum Reward $100</li></ul>
+      <ul class="hw-foot rv" id="hwFoot"><li>No profit target</li><li>No minimum days</li><li>Rewards processed within 48h</li><li>Minimum Reward $100</li></ul>
     </div>
   </section>
 
@@ -902,18 +933,52 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
 
   var nav = $("#nav"), mbar = $("#mbar");
 
-  /* how it works: step 1 cycles through the sizes, step 2 splits an example profit */
-  var LAD = [[5000, 70, 22], [10000, 120, 32], [25000, 200, 46], [50000, 350, 62], [100000, 600, 80], [200000, 1100, 100]], ladI = 3, ladUser = false;
-  $("#lad").innerHTML = LAD.map(function (l, i) { return '<button type="button" class="lb' + (i === ladI ? " on" : "") + '" style="--h:' + l[2] + '%" aria-label="$' + (l[0] / 1000) + 'K account, $' + l[1] + ' fee"><i></i><b>$' + (l[0] / 1000) + "K</b><small>$" + l[1].toLocaleString("en-US") + "</small></button>"; }).join("");
-  var lbs = $$("#lad .lb");
+  /* how it works: follows the selected program. Step 1 cycles through its sizes; challenges add a "hit the target" step; the last step splits an example profit */
+  var LAD = [], ladI = 0, ladUser = false, lbs = [], hwVis = false, sp95 = false, hwProg = null;
   function ladAt(i) { ladI = i; lbs.forEach(function (b, j) { b.classList.toggle("on", j === i); }); $("#ladA").textContent = "$" + (LAD[i][0] / 1000) + "K"; $("#ladF").textContent = "$" + LAD[i][1].toLocaleString("en-US"); }
-  lbs.forEach(function (b, i) { b.addEventListener("click", function () { ladUser = true; ladAt(i); }); b.addEventListener("mouseenter", function () { ladUser = true; ladAt(i); }); });
-  var hwVis = false, sp95 = false;
+  function buildLad(sizes, def) {
+    var lo = Math.log(sizes[0][0]), hi = Math.log(sizes[sizes.length - 1][0]);
+    LAD = sizes.map(function (z) { return [z[0], z[1], Math.round(22 + 78 * (Math.log(z[0]) - lo) / (hi - lo || 1))]; });
+    $("#lad").style.gridTemplateColumns = "repeat(" + LAD.length + ", 1fr)";
+    $("#lad").innerHTML = LAD.map(function (l) { return '<button type="button" class="lb" style="--h:' + l[2] + '%" aria-label="$' + (l[0] / 1000) + 'K simulated account, $' + l[1] + ' fee"><i></i><b>$' + (l[0] / 1000) + "K</b><small>$" + l[1].toLocaleString("en-US") + "</small></button>"; }).join("");
+    lbs = $$("#lad .lb");
+    lbs.forEach(function (b, i) { b.addEventListener("click", function () { ladUser = true; ladAt(i); }); b.addEventListener("mouseenter", function () { ladUser = true; ladAt(i); }); });
+    ladAt(def);
+  }
+  function passRun() {
+    if (!hwProg || hwProg.id === "instant") return;
+    var tr = $$("#psTracks i"), ok = $("#psOk");
+    tr.forEach(function (t) { t.style.transition = "none"; t.style.width = "0"; }); ok.classList.remove("on"); void ok.offsetWidth;
+    tr.forEach(function (t, i) { t.style.transition = ""; setTimeout(function () { t.style.width = "100%"; if (i === tr.length - 1) setTimeout(function () { ok.classList.add("on"); }, 1300); }, reduce ? 0 : 300 + i * 1500); });
+  }
+  function howFor(g) {
+    hwProg = g; var three = g.id !== "instant";
+    $$("#hwTabs .pt").forEach(function (b) { b.setAttribute("aria-selected", b.getAttribute("data-p") === g.id); });
+    $("#hw").classList.toggle("three", three);
+    $("#hwH").innerHTML = (three ? "Three steps. " : "Two steps. ") + '<span class="grad">That\'s all.</span>';
+    var lo = g.sizes[0][0], hi = g.sizes[g.sizes.length - 1][0];
+    $("#hwP1").innerHTML = "From <b>" + fmt(lo) + "</b> to <b>" + fmt(hi) + "</b> in simulated capital. Pay one fee, once.";
+    ladUser = false; buildLad(g.sizes, g.def);
+    $("#hn2").textContent = three ? "3" : "2";
+    var dl = g.rules.filter(function (r) { return /Daily/.test(r[0]); })[0], ml = g.rules.filter(function (r) { return /Max loss/.test(r[0]); })[0];
+    $("#r2D").textContent = dl[1]; $("#r2M").textContent = ml[1]; $("#r2Ml").textContent = ml[0];
+    $("#hwH2").textContent = three ? "Trade Prime, share the profit" : "Trade, then share the profit";
+    $("#hwP2").innerHTML = (three ? "Same two rules on your Prime account. " : "Stay inside two rules. ") + "In profit? Request a Reward and keep <b>80%</b>, or <b>95%</b> with the add-on.";
+    if (three) {
+      var two = g.id === "two";
+      $("#psH").textContent = two ? "Hit 6%, twice" : "Hit 10%, once";
+      $("#psP").textContent = two ? "6% in Phase 1, then 6% in Phase 2 on your simulated account. No time limit." : "One phase: reach 10% on your simulated account. No time limit, no minimum days.";
+      $("#psBig").textContent = two ? "6% × 2" : "10%";
+      $("#psTracks").innerHTML = (two ? ["Phase 1", "Phase 2"] : ["Phase 1"]).map(function (n) { return '<div class="ps-tr"><span><b>' + n + "</b><em>" + (two ? "6%" : "10%") + '</em></span><div><i></i></div></div>'; }).join("");
+      if (hwVis) passRun();
+    }
+    $("#hwFoot").innerHTML = (three ? ["No time limit", "No minimum days", "Rewards processed within 48h", "Minimum Reward $100"] : ["No profit target", "No minimum days", "Rewards processed within 48h", "Minimum Reward $100"]).map(function (t) { return "<li>" + t + "</li>"; }).join("");
+  }
   function split(p) { $("#spYou").style.flexBasis = p + "%"; $("#spYouV").textContent = "You $" + (p * 10).toLocaleString("en-US"); $("#spUsV").textContent = "$" + ((100 - p) * 10); $("#spMode").textContent = p === 95 ? "95% with the add-on" : "80% Reward Share"; }
-  new IntersectionObserver(function (es) { hwVis = es[0].isIntersecting; if (hwVis) split(sp95 ? 95 : 80); }, { threshold: .3 }).observe($(".hw"));
+  new IntersectionObserver(function (es) { var was = hwVis; hwVis = es[0].isIntersecting; if (hwVis) { split(sp95 ? 95 : 80); if (!was) passRun(); } }, { threshold: .3 }).observe($("#hw"));
   if (reduce) split(80);
   else {
-    setInterval(function () { if (hwVis && !ladUser) ladAt((ladI + 1) % LAD.length); }, 1500);
+    setInterval(function () { if (hwVis && !ladUser && LAD.length) ladAt((ladI + 1) % LAD.length); }, 1500);
     setInterval(function () { if (hwVis) { sp95 = !sp95; split(sp95 ? 95 : 80); } }, 3200);
   }
 
@@ -1050,9 +1115,12 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
     $("#inSizes").innerHTML = g.sizes.map(function (s, i) { return '<button type="button" class="chip" aria-pressed="false">' + K(s[0]) + "</button>"; }).join("");
     $$("#inSizes .chip").forEach(function (b, i) { b.addEventListener("click", function () { pickIn(i); }); });
     pickIn(g.def);
+    howFor(g);
     if (anim && !reduce) { var w = $("#wayOwn"); w.classList.remove("swap"); void w.offsetWidth; w.classList.add("swap"); }
   }
   $$("#ptabs .pt").forEach(function (b, i) { b.addEventListener("click", function () { pickProg(i, true); }); });
+  $("#hwTabs").innerHTML = PROGS.map(function (g) { return '<button type="button" class="pt" role="tab" data-p="' + g.id + '" aria-selected="false"><b>' + g.name + "</b><span></span></button>"; }).join("");
+  $$("#hwTabs .pt").forEach(function (b, i) { b.addEventListener("click", function () { pickProg(i, true); }); });
   pickProg(0, false);
 
   /* ---------- press, traders, certificates, reviews ---------- */
@@ -1167,7 +1235,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
   if (window.parent === window) return;
   var SEL = "h1 .ln > span, h2, h3, .lede, .sh p, .bub:not(.cta-b), .bub.cta-b > span, .eyebrow, .hs p, .cc-k, .cc header b, .cc header span, .cc-r dt, .cc-r dd, .co-k, .co-x span, .cmp-note, .faq summary, .faq .a, .end p, .under, .ticks li, .hw-foot li, .gets li, .rt th, .rt td, .live, .for, .press-k, .way h3, .way > p, .end-ph .tag, .rw-band .k, .cmp-ctl > span, .r2 span, .lad-v";
   var els = Array.prototype.slice.call(document.querySelectorAll(SEL)).filter(function (el) {
-    return !el.id && !el.querySelector("[id], a, button, img, svg") && !el.closest(".rc, .pc, .rv-c, .ug, #steps, .lb, .sp-bar, #pRules, #pGets, #ptabs");
+    return !el.id && !el.querySelector("[id], a, button, img, svg") && !el.closest(".rc, .pc, .rv-c, .ug, #steps, .lb, .sp-bar, #pRules, #pGets, #ptabs, #hw, #hwTabs, #hwFoot");
   });
   els.forEach(function (el, i) { el.setAttribute("data-ek", "t" + i); });
   /* extra editable pieces get their own key series so existing "t" keys never shift */
