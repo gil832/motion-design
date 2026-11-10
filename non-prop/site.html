@@ -190,9 +190,31 @@ body.hcv .hero { padding-block: clamp(20px, 3vw, 40px) clamp(40px, 5vw, 70px) !i
 .hc-av { display: flex; }
 .hc-av img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid var(--bg); margin-left: -9px; }
 .hc-av img:first-child { margin-left: 0; }
-.hc-vis { position: relative; height: clamp(440px, 44vw, 640px); display: grid; place-items: center; touch-action: pan-y; }
-.hc-cv { position: absolute; inset: 0; width: 100%; height: 100%; cursor: crosshair; -webkit-mask-image: linear-gradient(180deg, #000 80%, transparent); mask-image: linear-gradient(180deg, #000 80%, transparent); }
-.hc-hint { position: absolute; left: 50%; bottom: 4%; transform: translateX(-50%); padding: 9px 14px; border-radius: 999px; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: #fff; white-space: nowrap; transition: opacity .6s; z-index: 2; }
+.hc { position: relative; }
+.hc-grid { position: relative; min-height: clamp(560px, 50vw, 720px); align-items: center; }
+.hc-copy { position: relative; z-index: 3; max-width: 560px; }
+.hc-vis { position: absolute; z-index: 1; top: -40px; bottom: -110px; right: -4vw; width: min(56vw, 900px); touch-action: pan-y; }
+.hc-vis::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(90deg, var(--bg) 0%, rgba(3,9,12,.8) 12%, transparent 34%), linear-gradient(0deg, var(--bg) 0%, transparent 26%), linear-gradient(180deg, rgba(3,9,12,.7) 0%, transparent 18%); }
+.hc-card { position: absolute; z-index: 3; padding: 16px 18px; border-radius: 18px; font-size: 13px; color: var(--mute); pointer-events: none; }
+.hc-ct { display: flex; align-items: center; justify-content: space-between; gap: 18px; font-size: 11.5px; letter-spacing: .1em; text-transform: uppercase; }
+.hc-ct span { display: inline-flex; align-items: center; gap: 7px; color: #fff; }
+.hc-ct i { width: 7px; height: 7px; border-radius: 50%; background: var(--lime); box-shadow: 0 0 10px var(--lime); }
+.hc-ct b { font-weight: 600; font-size: 10.5px; color: #0a0a0a; background: var(--iris); padding: 3px 8px; border-radius: 999px; }
+.hc-c1 { right: 4%; top: 6%; width: 270px; }
+.hc-ring { width: 64px; height: 64px; margin: 16px auto 8px; border-radius: 50%; display: grid; place-items: center; color: var(--lime); border: 1px solid rgba(217,255,0,.45); box-shadow: 0 0 0 8px rgba(217,255,0,.06), 0 0 30px -6px rgba(217,255,0,.6); }
+.hc-ring svg { width: 28px; height: 28px; }
+.hc-cs { text-align: center; color: #fff; font-size: 13px; letter-spacing: .06em; }
+.hc-cg { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 14px; }
+.hc-cg div { padding: 10px 11px; border-radius: 12px; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08); }
+.hc-cg span { display: block; font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--dim); }
+.hc-cg b { display: block; margin-top: 4px; font-size: 16px; color: #fff; font-weight: 600; }
+.hc-cg em { display: block; font-style: normal; font-size: 11px; color: var(--lime); margin-top: 2px; }
+.hc-c2 { left: 6%; bottom: 22%; width: 230px; animation: bob 6s ease-in-out infinite; }
+.hc-big { margin-top: 10px; font-size: 40px; font-weight: 600; letter-spacing: -.05em; line-height: 1; background: linear-gradient(180deg, #fff 10%, #e9ff7a 60%, #d9ff00); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.hc-cs2 { margin-top: 6px; font-size: 12px; }
+.hc-word { position: relative; z-index: 2; margin-top: -90px; text-align: center; font-weight: 800; font-size: clamp(90px, 15vw, 230px); letter-spacing: -.04em; line-height: .8; color: transparent; -webkit-text-stroke: 1.5px rgba(143,243,232,.18); background: linear-gradient(180deg, rgba(143,243,232,.14), transparent 80%); -webkit-background-clip: text; background-clip: text; pointer-events: none; user-select: none; white-space: nowrap; overflow: hidden; }
+.hc-cv { position: absolute; inset: 0; width: 100%; height: 100%; cursor: crosshair; }
+.hc-hint { position: absolute; left: 50%; top: auto; bottom: 26%; transform: translateX(-50%); padding: 9px 14px; border-radius: 999px; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: #fff; white-space: nowrap; transition: opacity .6s; z-index: 2; }
 .hc-vis.tried .hc-hint { opacity: 0; }
 .hc-glow { position: absolute; width: 70%; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle, rgba(217,255,0,.18), rgba(0,216,195,.1) 45%, transparent 70%); filter: blur(20px); animation: breathe 7s ease-in-out infinite; left: 15%; top: 10%; }
 .hc-mark { opacity: .6; position: absolute; font-weight: 800; font-size: clamp(220px, 26vw, 380px); letter-spacing: -.08em; line-height: 1; color: transparent; -webkit-text-stroke: 1.5px rgba(143,243,232,.22); user-select: none; }
@@ -200,17 +222,21 @@ body.hcv .hero { padding-block: clamp(20px, 3vw, 40px) clamp(40px, 5vw, 70px) !i
 .hc-ph b { display: block; font-size: 18px; font-weight: 600; }
 .hc-ph span { display: block; margin-top: 4px; font-size: 14px; color: var(--mute); }
 .hc-ph i { display: inline-block; margin-top: 10px; font-style: normal; font-size: 11px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: #0a0a0a; background: var(--iris); padding: 4px 10px; border-radius: 999px; }
-.hc-stats { margin-top: clamp(36px, 4vw, 56px); display: grid; grid-template-columns: repeat(4, 1fr); border-radius: 28px; overflow: hidden; border: 1px solid rgba(255,255,255,.12); background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.02)); box-shadow: inset 0 1px 0 rgba(255,255,255,.18), 0 30px 80px -30px rgba(0,0,0,.95); animation: fade 1s .85s var(--ease) both; }
+.hc-stats { position: relative; z-index: 3; margin-top: 0; display: grid; grid-template-columns: repeat(4, 1fr); border-radius: 28px; overflow: hidden; border: 1px solid rgba(255,255,255,.12); background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.02)); box-shadow: inset 0 1px 0 rgba(255,255,255,.18), 0 30px 80px -30px rgba(0,0,0,.95); animation: fade 1s .85s var(--ease) both; }
 .hc-stats > div { padding: clamp(22px, 2.6vw, 34px); text-align: center; position: relative; }
 .hc-stats > div + div::before { content: ""; position: absolute; left: 0; top: 22%; bottom: 22%; width: 1px; background: rgba(255,255,255,.1); }
 .hc-stats b { display: block; font-size: clamp(40px, 4.6vw, 68px); font-weight: 600; letter-spacing: -.055em; line-height: 1; }
 .hc-stats span { display: block; margin-top: 10px; font-size: 14px; color: var(--mute); }
 @media (max-width: 900px) {
-  .hc-grid { grid-template-columns: 1fr; }
+  .hc-grid { grid-template-columns: 1fr; min-height: 0; }
+  .hc-vis { position: relative; top: auto; bottom: auto; right: auto; width: auto; height: 400px; margin: 0 -20px 6px; }
+  .hc-vis::after { background: linear-gradient(0deg, var(--bg) 0%, transparent 30%), linear-gradient(180deg, rgba(3,9,12,.6) 0%, transparent 20%); }
+  .hc-c1 { display: none; } .hc-c2 { left: auto; right: 16px; bottom: 14%; width: 190px; } .hc-big { font-size: 32px; }
+  .hc-hint { left: 50%; bottom: 6%; }
+  .hc-word { margin-top: 10px; font-size: 22vw; }
   .hc-btn { width: 100%; padding: 20px; font-size: 18px; }
   .hc-proof { flex-wrap: wrap; justify-content: center; width: 100%; }
   .hc-r { font-size: 17px; } .hc-st svg { width: 18px; height: 18px; } .hc-st { margin-right: 8px; }
-  .hc-vis { height: 320px; order: -1; }
   .hc-stats { grid-template-columns: 1fr 1fr; }
   .hc-stats > div:nth-child(3)::before { display: none; }
   .hc-stats > div:nth-child(n+3) { border-top: 1px solid rgba(255,255,255,.08); }
@@ -894,12 +920,22 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
             </div>
           </div>
           <div class="hc-vis" id="hcVis">
-            <div class="hc-glow"></div>
-            <div class="hc-mark" aria-hidden="true">FR</div>
-            <canvas class="hc-cv" id="hcCv" role="img" aria-label="A Formula 1 driver. Move across him to reveal the FundingRock trader underneath."></canvas>
+            <canvas class="hc-cv" id="hcCv" role="img" aria-label="An F1 driver in the cockpit. Move across him to reveal a FundingRock trader at his trading rig: the same race, simulated."></canvas>
             <span class="hc-hint liquid" id="hcHint">Move across the driver</span>
+            <div class="hc-card hc-c1 liquid" aria-hidden="true">
+              <div class="hc-ct"><span><i></i>Simulated</span><b>Live</b></div>
+              <div class="hc-ring"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg></div>
+              <div class="hc-cs">Savings protected</div>
+              <div class="hc-cg"><div><span>Account</span><b>$10,000</b><em>Simulated</em></div><div><span>Your risk</span><b>$100</b><em>One-time fee</em></div></div>
+            </div>
+            <div class="hc-card hc-c2 liquid" aria-hidden="true">
+              <div class="hc-ct"><span><i></i>Reward request</span><b>Approved</b></div>
+              <div class="hc-big">+$800</div>
+              <div class="hc-cs2">80% of $1,000 simulated profit</div>
+            </div>
           </div>
         </div>
+        <div class="hc-word" aria-hidden="true">SIMULATED</div>
         <div class="hc-stats">
           <div><b class="tnum" style="color:var(--lime)">$6.3M+</b><span>Rewards approved</span></div>
           <div><b class="tnum">42K+</b><span>Traders</span></div>
@@ -1354,7 +1390,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
       mask.width = Math.round(W / 2); mask.height = Math.round(H / 2);
       draw();
     }
-    function fit() { var s = Math.max(W / 1024, H / 1024) * .98, w = 1024 * s, h = 1024 * s; return [(W - w) / 2, (H - h) / 2 + H * .02, w, h]; }
+    function fit() { var n = base.naturalWidth || 900, s = Math.max(W / n, H / n) * .92, w = n * s, h = n * s; return [W - w, (H - h) * .3, w, h]; }
     function draw() {
       if (ready < 2 || !W) return;
       var f = fit();
@@ -1367,16 +1403,15 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
       /* lime cut edge: the mask outline, glowing */
       /* the cut edge: a thin lime ring where the reveal meets the driver, only over the figures */
       tx.globalCompositeOperation = "source-over"; tx.clearRect(0, 0, W, H);
-      tx.filter = "blur(" + (3 * dpr) + "px)"; tx.drawImage(mask, 0, 0, W, H); tx.filter = "none";
+      tx.filter = "blur(" + (1.5 * dpr) + "px)"; tx.drawImage(mask, 0, 0, W, H); tx.filter = "none";
       tx.globalCompositeOperation = "destination-out"; tx.drawImage(mask, 0, 0, W, H);
       tx.globalCompositeOperation = "source-in"; tx.fillStyle = "#d9ff00"; tx.fillRect(0, 0, W, H);
-      tx.globalCompositeOperation = "destination-in"; tx.drawImage(base, f[0], f[1], f[2], f[3]);
-      ctx.save(); ctx.globalCompositeOperation = "lighter"; ctx.globalAlpha = .6; ctx.drawImage(tmp, 0, 0); ctx.restore();
+      ctx.save(); ctx.globalCompositeOperation = "lighter"; ctx.globalAlpha = 1; ctx.drawImage(tmp, 0, 0); ctx.restore();
     }
     function brush(x, y) {
       var r = Math.max(mask.width, mask.height) * .12;
       var g = mx.createRadialGradient(x, y, 0, x, y, r);
-      g.addColorStop(0, "rgba(0,0,0,1)"); g.addColorStop(.55, "rgba(0,0,0,.9)"); g.addColorStop(1, "rgba(0,0,0,0)");
+      g.addColorStop(0, "rgba(0,0,0,1)"); g.addColorStop(.8, "rgba(0,0,0,1)"); g.addColorStop(1, "rgba(0,0,0,0)");
       mx.globalCompositeOperation = "source-over"; mx.fillStyle = g; mx.beginPath(); mx.arc(x, y, r, 0, Math.PI * 2); mx.fill();
     }
     function stroke(p) {
@@ -1387,7 +1422,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
     }
     function frame() {
       /* the trail heals slowly, so the driver returns */
-      mx.globalCompositeOperation = "destination-out"; mx.fillStyle = "rgba(0,0,0,.035)"; mx.fillRect(0, 0, mask.width, mask.height);
+      mx.globalCompositeOperation = "destination-out"; mx.fillStyle = "rgba(0,0,0,.02)"; mx.fillRect(0, 0, mask.width, mask.height);
       draw(); idle++;
       if (idle < 160) requestAnimationFrame(frame); else running = false;
     }
@@ -1405,7 +1440,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
       }
     }
     base.onload = loaded; top.onload = loaded;
-    base.src = "assets/hc/f1.webp"; top.src = "assets/hc/trader.webp";
+    base.src = "assets/hc/car.jpg"; top.src = "assets/hc/desk.jpg";
     if (window.ResizeObserver) new ResizeObserver(size).observe(cv); else addEventListener("resize", size);
   })();
 
