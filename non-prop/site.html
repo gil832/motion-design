@@ -190,9 +190,12 @@ body.hcv .hero { padding-block: clamp(20px, 3vw, 40px) clamp(40px, 5vw, 70px) !i
 .hc-av { display: flex; }
 .hc-av img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid var(--bg); margin-left: -9px; }
 .hc-av img:first-child { margin-left: 0; }
-.hc-vis { position: relative; height: clamp(420px, 42vw, 600px); border-radius: 32px; display: grid; place-items: center; overflow: hidden; border: 1px dashed rgba(143,243,232,.28); background: radial-gradient(70% 60% at 55% 40%, rgba(0,216,195,.18), transparent 70%); }
+.hc-vis { position: relative; height: clamp(440px, 44vw, 640px); display: grid; place-items: center; touch-action: pan-y; }
+.hc-cv { position: absolute; inset: 0; width: 100%; height: 100%; cursor: crosshair; -webkit-mask-image: linear-gradient(180deg, #000 80%, transparent); mask-image: linear-gradient(180deg, #000 80%, transparent); }
+.hc-hint { position: absolute; left: 50%; bottom: 4%; transform: translateX(-50%); padding: 9px 14px; border-radius: 999px; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: #fff; white-space: nowrap; transition: opacity .6s; z-index: 2; }
+.hc-vis.tried .hc-hint { opacity: 0; }
 .hc-glow { position: absolute; width: 70%; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle, rgba(217,255,0,.18), rgba(0,216,195,.1) 45%, transparent 70%); filter: blur(20px); animation: breathe 7s ease-in-out infinite; left: 15%; top: 10%; }
-.hc-mark { position: absolute; font-weight: 800; font-size: clamp(220px, 26vw, 380px); letter-spacing: -.08em; line-height: 1; color: transparent; -webkit-text-stroke: 1.5px rgba(143,243,232,.22); user-select: none; }
+.hc-mark { opacity: .6; position: absolute; font-weight: 800; font-size: clamp(220px, 26vw, 380px); letter-spacing: -.08em; line-height: 1; color: transparent; -webkit-text-stroke: 1.5px rgba(143,243,232,.22); user-select: none; }
 .hc-ph { position: relative; padding: 18px 22px; border-radius: 20px; text-align: center; }
 .hc-ph b { display: block; font-size: 18px; font-weight: 600; }
 .hc-ph span { display: block; margin-top: 4px; font-size: 14px; color: var(--mute); }
@@ -650,7 +653,7 @@ body.hcv .hero { padding-block: clamp(20px, 3vw, 40px) clamp(40px, 5vw, 70px) !i
 .rc .who { position: absolute; left: calc(8 * var(--u)); top: calc(86.2 * var(--u)); width: calc(260 * var(--u)); display: flex; flex-direction: column; align-items: center; gap: calc(3.1 * var(--u)); white-space: nowrap; }
 .rc .nm { margin: 0; color: #d9ff00; font-weight: 400; font-size: calc(13.057 * var(--u)); line-height: 1.4; text-transform: capitalize; }
 .rc .am { margin: 0; font-weight: 700; font-size: calc(23.212 * var(--u)); line-height: 1; font-variant-numeric: tabular-nums; }
-.rc .ft { position: absolute; left: calc(9.61 * var(--u)); top: calc(155.4 * var(--u)); width: calc(256.788 * var(--u)); display: flex; gap: calc(5.803 * var(--u)); text-align: left; }
+.rc .ft { padding: 0; margin: 0; border: 0; color: inherit; font-size: inherit; position: absolute; left: calc(9.61 * var(--u)); top: calc(155.4 * var(--u)); width: calc(256.788 * var(--u)); display: flex; gap: calc(5.803 * var(--u)); text-align: left; }
 .rc .bx { flex: 1 1 0; min-width: 0; height: calc(47.876 * var(--u)); padding: calc(7.254 * var(--u)) calc(11.606 * var(--u)); border-radius: calc(4.352 * var(--u)); background: rgba(217,255,0,.12); display: flex; align-items: center; gap: calc(2.902 * var(--u)); font-size: calc(9.43 * var(--u)); line-height: 1.4; }
 .rc .bx p { margin: 0; flex: 1 1 0; min-width: 0; }
 .rc .bx b { display: block; font-weight: 500; }
@@ -875,7 +878,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
       <div class="hc">
         <div class="hc-grid">
           <div class="hc-copy">
-            <h1 class="hc-h"><span class="hc-l1">$10K Simulated Account.</span><span class="hc-l2 grad">For Just $100.</span></h1>
+            <h1 class="hc-h"><span class="hc-l1">$10K Simulated Trading Account.</span><span class="hc-l2 grad">For Just $100.</span></h1>
             <p class="hc-sub"><span>Trade in a simulated environment, keep your savings out of the market, and qualify for Rewards on your profits.</span></p>
             <div class="hc-cta">
               <a class="hc-btn" href="#ways" data-pick="0,1">Get Access</a>
@@ -885,10 +888,11 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
               </div>
             </div>
           </div>
-          <div class="hc-vis" aria-label="Hero visual placeholder">
+          <div class="hc-vis" id="hcVis">
             <div class="hc-glow"></div>
             <div class="hc-mark" aria-hidden="true">FR</div>
-            <div class="hc-ph liquid"><b>Hero visual</b><span>F1 driver → hover reveals the trader</span><i>Placeholder</i></div>
+            <canvas class="hc-cv" id="hcCv" role="img" aria-label="A Formula 1 driver. Move across him to reveal the FundingRock trader underneath."></canvas>
+            <span class="hc-hint liquid" id="hcHint">Move across the driver</span>
           </div>
         </div>
         <div class="hc-stats">
@@ -963,7 +967,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
     <div class="wrap">
       <div class="sh rv">
         <span class="eyebrow">Broker vs FundingRock</span>
-        <h2><span class="ekp">Trade</span> <span class="tnum" id="cA">$5K</span>. <span class="grad"><span class="ekp">Without having</span> <span class="tnum" id="cA2">$5K</span>.</span></h2>
+        <h2><span class="ekp">Same</span> <span class="tnum" id="cA">$5K</span> <span class="ekp">account.</span> <span class="grad"><span class="ekp">Two very different deals.</span></span></h2>
         <p>So yes, it's a simulated account. Your performance is what counts: when you're in profit, you request a Reward and keep 80% of it, or 95% with the add-on.</p>
       </div>
       <div class="cmp-ctl rv"><span>Pick an account size</span><div class="acc" role="group" aria-label="Account size" id="cSizes"></div></div>
@@ -1331,6 +1335,75 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
     if (!reduce) setInterval(function () { if (vis && !document.hidden) tick(); }, 700);
   })();
 
+
+  /* Hero C: the F1 driver; a brush trail reveals the trader underneath, with a lime cut edge */
+  (function () {
+    var cv = $("#hcCv"); if (!cv) return;
+    var vis = $("#hcVis"), ctx = cv.getContext("2d"), base = new Image(), top = new Image(), ready = 0;
+    var mask = document.createElement("canvas"), mx = mask.getContext("2d"), tmp = document.createElement("canvas"), tx = tmp.getContext("2d");
+    var W = 0, H = 0, dpr = Math.min(devicePixelRatio || 1, 2), last = null, running = false, idle = 0, tried = false;
+    function size() {
+      var r = cv.getBoundingClientRect(); if (!r.width) return;
+      W = Math.round(r.width * dpr); H = Math.round(r.height * dpr);
+      [cv, tmp].forEach(function (c) { c.width = W; c.height = H; });
+      mask.width = Math.round(W / 2); mask.height = Math.round(H / 2);
+      draw();
+    }
+    function fit() { var s = Math.max(W / 1024, H / 1024) * .98, w = 1024 * s, h = 1024 * s; return [(W - w) / 2, (H - h) / 2 + H * .02, w, h]; }
+    function draw() {
+      if (ready < 2 || !W) return;
+      var f = fit();
+      ctx.clearRect(0, 0, W, H); ctx.drawImage(base, f[0], f[1], f[2], f[3]);
+      ctx.save(); ctx.globalCompositeOperation = "destination-out"; ctx.drawImage(mask, 0, 0, W, H); ctx.restore();
+      tx.globalCompositeOperation = "source-over"; tx.clearRect(0, 0, W, H);
+      tx.drawImage(top, f[0], f[1], f[2], f[3]);
+      tx.globalCompositeOperation = "destination-in"; tx.drawImage(mask, 0, 0, W, H);
+      ctx.drawImage(tmp, 0, 0);
+      /* lime cut edge: the mask outline, glowing */
+      /* the cut edge: a thin lime ring where the reveal meets the driver, only over the figures */
+      tx.globalCompositeOperation = "source-over"; tx.clearRect(0, 0, W, H);
+      tx.filter = "blur(" + (3 * dpr) + "px)"; tx.drawImage(mask, 0, 0, W, H); tx.filter = "none";
+      tx.globalCompositeOperation = "destination-out"; tx.drawImage(mask, 0, 0, W, H);
+      tx.globalCompositeOperation = "source-in"; tx.fillStyle = "#d9ff00"; tx.fillRect(0, 0, W, H);
+      tx.globalCompositeOperation = "destination-in"; tx.drawImage(base, f[0], f[1], f[2], f[3]);
+      ctx.save(); ctx.globalCompositeOperation = "lighter"; ctx.globalAlpha = .6; ctx.drawImage(tmp, 0, 0); ctx.restore();
+    }
+    function brush(x, y) {
+      var r = Math.max(mask.width, mask.height) * .12;
+      var g = mx.createRadialGradient(x, y, 0, x, y, r);
+      g.addColorStop(0, "rgba(0,0,0,1)"); g.addColorStop(.55, "rgba(0,0,0,.9)"); g.addColorStop(1, "rgba(0,0,0,0)");
+      mx.globalCompositeOperation = "source-over"; mx.fillStyle = g; mx.beginPath(); mx.arc(x, y, r, 0, Math.PI * 2); mx.fill();
+    }
+    function stroke(p) {
+      if (!last) last = p;
+      var dx = p[0] - last[0], dy = p[1] - last[1], n = Math.max(1, Math.ceil(Math.hypot(dx, dy) / 6));
+      for (var i = 1; i <= n; i++) brush(last[0] + dx * i / n, last[1] + dy * i / n);
+      last = p; idle = 0; kick();
+    }
+    function frame() {
+      /* the trail heals slowly, so the driver returns */
+      mx.globalCompositeOperation = "destination-out"; mx.fillStyle = "rgba(0,0,0,.035)"; mx.fillRect(0, 0, mask.width, mask.height);
+      draw(); idle++;
+      if (idle < 160) requestAnimationFrame(frame); else running = false;
+    }
+    function kick() { if (!running) { running = true; requestAnimationFrame(frame); } }
+    function pos(e) { var r = cv.getBoundingClientRect(); return [(e.clientX - r.left) / r.width * mask.width, (e.clientY - r.top) / r.height * mask.height]; }
+    cv.addEventListener("pointermove", function (e) { if (!tried) { tried = true; vis.classList.add("tried"); } stroke(pos(e)); }, { passive: true });
+    cv.addEventListener("pointerleave", function () { last = null; });
+    cv.addEventListener("touchstart", function (e) { last = null; var t = e.touches[0]; stroke(pos(t)); tried = true; vis.classList.add("tried"); }, { passive: true });
+    cv.addEventListener("touchmove", function (e) { var t = e.touches[0]; stroke(pos(t)); }, { passive: true });
+    function loaded() {
+      if (++ready < 2) return; size();
+      if (!reduce) { /* a teaser sweep so people see there's someone underneath */
+        var t0 = performance.now();
+        (function sweep(now) { var k = Math.min(1, (now - t0) / 1600), x = mask.width * (.3 + .4 * k), y = mask.height * (.22 + .35 * Math.sin(k * Math.PI)); stroke([x, y]); if (k < 1) requestAnimationFrame(sweep); else last = null; })(t0 + 1);
+      }
+    }
+    base.onload = loaded; top.onload = loaded;
+    base.src = "assets/hc/f1.webp"; top.src = "assets/hc/trader.webp";
+    if (window.ResizeObserver) new ResizeObserver(size).observe(cv); else addEventListener("resize", size);
+  })();
+
   /* hero visual: a one-time program fee opens a simulated account; cycles through the Instant sizes */
   (function () {
     var HX = [[5000, 70], [10000, 120], [25000, 200], [50000, 350], [100000, 600], [200000, 1100]], hi = 2, shownA = 25000, shownF = 200, shownR = 1000;
@@ -1451,7 +1524,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
   $("#cSizes").innerHTML = CS.map(function (c, i) { return '<button type="button" class="ac" aria-pressed="' + (i === cI) + '"><b>$' + (c[0] / 1000) + "K</b><small>Fee <em>$" + c[1].toLocaleString("en-US") + "</em></small></button>"; }).join("");
   function cRender(anim) {
     var a = CS[cI][0], f = CS[cI][1], K = "$" + (a / 1000) + "K";
-    $("#cA").textContent = K; $("#cA2").textContent = K;
+    $("#cA").textContent = K;
     var from = cShown; cShown = [a, f];
     tween(anim ? from[0] : a, a, 700, function (v) { $("#cBk").textContent = fmt(v); });
     tween(anim ? from[1] : f, f, 700, function (v) { $("#cFr").textContent = fmt(v); });
