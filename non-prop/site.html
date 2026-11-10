@@ -439,6 +439,25 @@ body.hb .hx-sizes { visibility: hidden; }
 .fl-list dt { color: var(--mute); }
 .fl-list dd { margin: 0; font-weight: 600; text-align: right; }
 .safe { margin-top: 22px; }
+/* step 3: a Reward request that goes through */
+.rwd { position: relative; margin-top: 22px; padding: 16px 16px 14px; border-radius: 18px; text-align: left; background: radial-gradient(120% 100% at 100% 0%, rgba(217,255,0,.18), transparent 55%), linear-gradient(170deg, #12240a, #060d06 70%); border: 1px solid rgba(217,255,0,.4); box-shadow: 0 0 50px -16px rgba(217,255,0,.45); overflow: hidden; }
+.rwd::after { content: ""; position: absolute; inset: 0; background: linear-gradient(115deg, transparent 35%, rgba(255,255,255,.10) 48%, transparent 60%); background-size: 260% 100%; animation: plsheen 5s ease-in-out infinite; pointer-events: none; }
+.rwd-top { display: flex; justify-content: space-between; align-items: center; font-size: 11.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--mute); }
+.rwd-top i { font-style: normal; letter-spacing: .08em; font-weight: 700; color: #0a0a0a; background: var(--lime); padding: 3px 9px; border-radius: 999px; opacity: 0; transform: scale(.7); transition: opacity .3s, transform .45s var(--pop); }
+.rwd.ok .rwd-top i { opacity: 1; transform: none; }
+.rwd-amt { margin-top: 8px; font-size: clamp(40px, 3.8vw, 54px); font-weight: 600; letter-spacing: -.05em; line-height: 1; background: linear-gradient(180deg, #ffffff 10%, #e9ff7a 55%, #d9ff00); -webkit-background-clip: text; background-clip: text; color: transparent; padding-bottom: 2px; }
+.rwd-sub { margin-top: 6px; font-size: 13px; color: var(--mute); }
+.rwd-st { list-style: none; margin: 14px 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+.rwd-st li { position: relative; font-size: 11.5px; color: var(--dim); padding-top: 18px; transition: color .3s; }
+.rwd-st li b { position: absolute; left: 0; top: 0; width: 13px; height: 13px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,.25); transition: background .3s, border-color .3s, box-shadow .3s; }
+.rwd-st li::before { content: ""; position: absolute; left: 16px; right: 4px; top: 6px; height: 1.5px; background: rgba(255,255,255,.12); }
+.rwd-st li:last-child::before { display: none; }
+.rwd-st li.on { color: #fff; }
+.rwd-st li.on b { background: var(--lime); border-color: var(--lime); box-shadow: 0 0 12px rgba(217,255,0,.7); }
+.rwd-st li.on b::after { content: ""; position: absolute; left: 3.5px; top: 1.5px; width: 3px; height: 6px; border-right: 1.5px solid #0a0a0a; border-bottom: 1.5px solid #0a0a0a; transform: rotate(45deg); }
+.rwd-sw { display: flex; gap: 6px; margin-top: 14px; }
+.rwd-sw span { white-space: nowrap; font-size: 11.5px; font-weight: 600; padding: 5px 10px; border-radius: 999px; border: 1px solid rgba(217,255,0,.25); color: var(--mute); transition: background .3s, color .3s; }
+.rwd-sw span.on { background: rgba(217,255,0,.16); color: var(--lime); }
 .term { border-radius: 16px; border: 1px solid rgba(255,255,255,.09); background: linear-gradient(180deg, #071216, #040a0c); overflow: hidden; text-align: left; }
 .term-h { display: flex; align-items: center; gap: 8px; padding: 9px 12px; border-bottom: 1px solid rgba(255,255,255,.07); font-size: 12px; }
 .term-h b { font-weight: 600; color: #fff; }
@@ -948,9 +967,12 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
           <div class="fl-in">
             <div class="fl-f glass">
               <div class="hs-t"><span class="hn">3</span><div><h3>Trade and qualify for Rewards</h3><p>In profit? Request a Reward and keep <b>80%</b>, or <b>95%</b> with the add-on.</p></div></div>
-              <div class="split" id="split">
-                <div class="sp-h"><span>Example: <b>$1,000</b> simulated profit</span><span class="sp-m" id="spMode">80% Reward Share</span></div>
-                <div class="sp-bar"><i id="spYou"><em class="tnum" id="spYouV">You $800</em></i><s id="spUs"><em class="tnum" id="spUsV">$200</em></s></div>
+              <div class="rwd" id="split">
+                <div class="rwd-top"><span>Reward request</span><i id="rwStat">Approved</i></div>
+                <div class="rwd-amt tnum" id="rwAmt">$800.00</div>
+                <div class="rwd-sub" id="rwSub">Your 80% share of $1,000 simulated profit</div>
+                <ol class="rwd-st" id="rwSt"><li><b></b>Requested</li><li><b></b>Approved</li><li><b></b>Paid within 48h</li></ol>
+                <div class="rwd-sw"><span id="rw80" class="on">80% share</span><span id="rw95">95% with add-on</span></div>
               </div>
               <span class="fl-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg><em class="fl-hd">Hover</em><em class="fl-ht">Tap</em> to see how Rewards work</span>
             </div>
@@ -1144,7 +1166,17 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
     c.addEventListener("click", function () { if (!document.body.classList.contains("editing")) c.classList.toggle("on"); });
     c.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); c.classList.toggle("on"); } });
   });
-  function split(p) { $("#spYou").style.flexBasis = p + "%"; $("#spYouV").textContent = "You $" + (p * 10).toLocaleString("en-US"); $("#spUsV").textContent = "$" + ((100 - p) * 10); $("#spMode").textContent = p === 95 ? "95% with the add-on" : "80% Reward Share"; }
+  var rwRun = 0;
+  function split(p) {
+    var run = ++rwRun, card = $("#split"), st = $$("#rwSt li");
+    $("#rw80").classList.toggle("on", p === 80); $("#rw95").classList.toggle("on", p === 95);
+    $("#rwSub").textContent = "Your " + p + "% share of $1,000 simulated profit";
+    card.classList.remove("ok"); st.forEach(function (l) { l.classList.remove("on"); });
+    var target = p * 10, from = p === 95 ? 800 : 0;
+    tween(from, target, reduce ? 0 : 900, function (v) { if (run === rwRun) $("#rwAmt").textContent = "$" + v.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 }); });
+    st.forEach(function (l, i) { setTimeout(function () { if (run !== rwRun) return; l.classList.add("on"); if (i === 1) card.classList.add("ok"); }, reduce ? 0 : 250 + i * 450); });
+  }
+  function splitOld(p) { $("#spYou").style.flexBasis = p + "%"; $("#spYouV").textContent = "You $" + (p * 10).toLocaleString("en-US"); $("#spUsV").textContent = "$" + ((100 - p) * 10); $("#spMode").textContent = p === 95 ? "95% with the add-on" : "80% Reward Share"; }
   new IntersectionObserver(function (es) { var was = hwVis; hwVis = es[0].isIntersecting; if (hwVis) split(sp95 ? 95 : 80); }, { threshold: .3 }).observe($("#hw"));
   if (reduce) split(80);
   else {
