@@ -516,39 +516,47 @@ body.hdv .hc-cv { display: none; }
 
 /* ---------- how it works ---------- */
 
-/* story: three full-width panels that scroll normally; each fades and rises in, the image eases out of a slight zoom */
+/* story: an expanding triptych, all three steps in one section; the active panel widens and shows its text */
 .story { position: relative; }
 body:not(.hcv) .story { display: none !important; }
-.sp { position: relative; min-height: 86vh; display: flex; align-items: center; overflow: hidden; }
-.sp-media { position: absolute; inset: 0; }
-.sp-media::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(90deg, rgba(3,9,12,.92) 0%, rgba(3,9,12,.55) 36%, transparent 64%), linear-gradient(0deg, var(--bg) 0%, transparent 22%), linear-gradient(180deg, var(--bg) 0%, transparent 22%); }
-.st-img { position: absolute; inset: 0; background-size: cover; background-position: 70% 40%; transform: scale(1.08); transition: transform 1.6s var(--ease); }
-.sp.in .st-img { transform: none; }
-.st-glowbg { background: radial-gradient(60% 70% at 72% 55%, rgba(217,255,0,.22), transparent 60%), radial-gradient(70% 80% at 60% 40%, rgba(0,216,195,.25), transparent 70%), #04100f; }
-.st-tri { position: absolute; inset: 0; width: 100%; height: 100%; -webkit-mask-image: radial-gradient(60% 70% at 70% 52%, #000 30%, transparent 78%); mask-image: radial-gradient(60% 70% at 70% 52%, #000 30%, transparent 78%); }
-.st-person { position: absolute; right: 8%; bottom: 0; height: 92%; width: auto; max-width: none; transform: translateY(30px); opacity: 0; transition: transform 1.2s var(--ease), opacity 1s var(--ease); -webkit-mask-image: linear-gradient(180deg, #000 75%, transparent); mask-image: linear-gradient(180deg, #000 75%, transparent); }
-.sp.in .st-person { transform: none; opacity: 1; }
-.st-reward { position: absolute; right: 3%; top: auto; bottom: 16%; z-index: 2; padding: 18px 22px; border-radius: 20px; transform: translateY(24px); opacity: 0; transition: transform 1s .35s var(--ease), opacity .8s .35s var(--ease); }
-.sp.in .st-reward { transform: none; opacity: 1; }
-.st-reward span { display: flex; align-items: center; gap: 8px; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: #fff; }
+.tri3 { display: flex; gap: 14px; height: clamp(480px, 62vh, 640px); }
+.tp { position: relative; flex: 1 1 0; min-width: 0; border-radius: 28px; overflow: hidden; cursor: pointer; border: 1px solid rgba(143,243,232,.18); background: #061114; transition: flex-grow .8s var(--ease), border-color .5s, box-shadow .6s; outline: none; }
+.tp.on { flex-grow: 3.2; border-color: rgba(217,255,0,.45); box-shadow: 0 40px 90px -40px rgba(0,0,0,.95), 0 0 50px -24px rgba(217,255,0,.4); }
+.tp:focus-visible { box-shadow: 0 0 0 2px var(--lime); }
+.tp-media { position: absolute; inset: 0; }
+.tp-media::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(0deg, rgba(3,9,12,.95) 0%, rgba(3,9,12,.55) 38%, transparent 70%); transition: background .6s; }
+.tp:not(.on) .tp-media::after { background: linear-gradient(0deg, rgba(3,9,12,.95) 0%, rgba(3,9,12,.7) 50%, rgba(3,9,12,.35) 100%); }
+.st-img { position: absolute; inset: 0; background-size: cover; background-position: 50% 35%; transform: scale(1.12); transition: transform 1.4s var(--ease); }
+.tp.on .st-img { transform: scale(1.02); }
+.st-glowbg { background: radial-gradient(60% 70% at 70% 45%, rgba(217,255,0,.22), transparent 60%), radial-gradient(70% 80% at 60% 35%, rgba(0,216,195,.25), transparent 70%), #04100f; }
+.st-tri { position: absolute; inset: 0; width: 100%; height: 100%; -webkit-mask-image: radial-gradient(60% 70% at 62% 45%, #000 30%, transparent 78%); mask-image: radial-gradient(60% 70% at 62% 45%, #000 30%, transparent 78%); }
+.st-person { position: absolute; right: 6%; bottom: 0; height: 88%; width: auto; max-width: none; -webkit-mask-image: linear-gradient(180deg, #000 70%, transparent); mask-image: linear-gradient(180deg, #000 70%, transparent); }
+.st-reward { position: absolute; right: 6%; top: 8%; z-index: 2; padding: 14px 18px; border-radius: 18px; opacity: 0; transform: translateY(14px); transition: opacity .6s .3s var(--ease), transform .8s .3s var(--ease); }
+.tp.on .st-reward { opacity: 1; transform: none; }
+.st-reward span { display: flex; align-items: center; gap: 8px; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: #fff; }
 .st-reward i { width: 7px; height: 7px; border-radius: 50%; background: var(--lime); box-shadow: 0 0 10px var(--lime); }
-.st-reward b { display: block; margin-top: 10px; font-size: clamp(48px, 5vw, 72px); font-weight: 600; letter-spacing: -.05em; line-height: 1; background: linear-gradient(180deg, #fff 10%, #e9ff7a 60%, #d9ff00); -webkit-background-clip: text; background-clip: text; color: transparent; }
-.st-reward em { display: block; margin-top: 6px; font-style: normal; font-size: 13px; color: var(--mute); }
-.sp-copy { position: relative; z-index: 2; width: 100%; }
-.sp-txt { max-width: 520px; }
-.sp-txt h2 { margin: 16px 0 18px; font-size: clamp(42px, 5.6vw, 84px); letter-spacing: -.05em; line-height: .98; font-weight: 600; }
-.sp-txt p { margin: 0 0 26px; color: var(--mute); font-size: 19px; max-width: 40ch; }
-@media (max-width: 760px) {
-  .sp { min-height: 0; flex-direction: column; align-items: stretch; }
-  .sp-media { position: relative; height: 100vw; }
-  .sp-media::after { background: linear-gradient(0deg, var(--bg) 0%, transparent 35%), linear-gradient(180deg, var(--bg) 0%, transparent 18%); }
-  .st-img { background-position: 60% 40%; }
-  .sp-copy { margin-top: -40px; padding-bottom: 48px; }
-  .sp-txt p { font-size: 16px; }
-  .st-person { right: -6%; height: 96%; }
-  .st-reward { right: auto; left: 5%; top: 30%; bottom: auto; width: 44%; padding: 12px 14px; } .st-reward b { font-size: 34px; } .st-reward span { font-size: 9.5px; } .st-reward em { font-size: 11px; }
+.st-reward b { display: block; margin-top: 8px; font-size: 44px; font-weight: 600; letter-spacing: -.05em; line-height: 1; background: linear-gradient(180deg, #fff 10%, #e9ff7a 60%, #d9ff00); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.st-reward em { display: block; margin-top: 6px; font-style: normal; font-size: 12px; color: var(--mute); }
+.tp-body { position: absolute; left: 0; right: 0; bottom: 0; z-index: 2; padding: clamp(20px, 2.4vw, 32px); }
+.tp-n { display: block; font-size: 14px; font-weight: 600; letter-spacing: .16em; color: var(--lime); }
+.tp-k { display: block; margin-top: 6px; font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--iris); }
+.tp h3 { margin: 10px 0 0; font-size: clamp(26px, 2.6vw, 42px); letter-spacing: -.045em; line-height: 1.02; font-weight: 600; }
+.tp:not(.on) h3 { font-size: clamp(18px, 1.6vw, 22px); }
+.tp:not(.on) h3 br { display: none; }
+.tp:not(.on) h3 .grad { display: none; }
+.tp p { margin: 12px 0 0; max-width: 42ch; color: var(--mute); font-size: 16px; max-height: 0; opacity: 0; overflow: hidden; transition: max-height .6s var(--ease), opacity .5s .2s; }
+.tp.on p { max-height: 140px; opacity: 1; }
+.tri3-cta { display: flex; justify-content: center; margin-top: 28px; }
+@media (max-width: 860px) {
+  .tri3 { flex-direction: column; height: auto; }
+  .tp, .tp.on { flex: none; height: 300px; }
+  .tp:not(.on) { height: 120px; }
+  .tp.on { height: 400px; }
+  .tp:not(.on) .st-reward { display: none; }
+  .st-reward { top: 5%; right: 4%; padding: 10px 12px; } .st-reward b { font-size: 30px; } .st-reward span { font-size: 9.5px; } .st-reward em { font-size: 10.5px; }
+  .tp p { font-size: 15px; }
 }
-@media (prefers-reduced-motion: reduce) { .st-img, .st-person, .st-reward { transform: none !important; opacity: 1 !important; transition: none !important; } }
+@media (prefers-reduced-motion: reduce) { .tp, .st-img, .st-reward, .tp p { transition: none !important; } }
 
 /* hero C parallax: layers move at different speeds as you scroll */
 .hc-vis { will-change: transform; }
@@ -1042,23 +1050,24 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
 
   <!-- 2. pain point comparison: scroll drives a bad stretch, the cap line holds -->
   <!-- pinned scroll story: the screen holds, scenes swap as you scroll -->
-  <section class="story" id="story" aria-label="How it feels">
-    <div class="sp">
-      <div class="sp-media"><div class="st-img" style="background-image:url(assets/hc/car.jpg)"></div></div>
-      <div class="wrap sp-copy"><div class="sp-txt rv"><span class="eyebrow">01 · The feeling</span><h2>The thrill of trading.<br><span class="grad">None of the risk.</span></h2><p>Fast charts, sharp decisions, full focus. All of it on a simulated account, so your own money never enters the race.</p></div></div>
-    </div>
-    <div class="sp">
-      <div class="sp-media"><div class="st-img" style="background-image:url(assets/hc/desk.jpg)"></div></div>
-      <div class="wrap sp-copy"><div class="sp-txt rv"><span class="eyebrow">02 · The difference</span><h2>Simulated account.<br><span class="grad">Your savings stay put.</span></h2><p>Trade $5K to $200K in simulated capital from your desk. One fee, paid once. Nothing else at risk.</p></div></div>
-    </div>
-    <div class="sp st-rw">
-      <div class="sp-media">
-        <div class="st-img st-glowbg"></div>
-        <canvas class="st-tri" id="stTri" aria-hidden="true"></canvas>
-        <img class="st-person" src="assets/prove.webp" alt="" loading="lazy">
-        <div class="st-reward liquid"><span><i></i>Reward request · Approved</span><b class="tnum">+$800</b><em>80% of $1,000 simulated profit</em></div>
+  <section class="sec story" id="story" aria-label="How it feels">
+    <div class="wrap">
+      <div class="sh rv"><span class="eyebrow">Same race. Simulated.</span><h2>Feel it. Trade it. <span class="grad">Get rewarded.</span></h2></div>
+      <div class="tri3 rv" id="tri3">
+      <article class="tp on" tabindex="0" data-i="0">
+        <div class="tp-media"><div class="st-img" style="background-image:url(assets/hc/car.jpg)"></div></div>
+        <div class="tp-body"><span class="tp-n">01</span><div class="tp-txt"><span class="tp-k">The feeling</span><h3>The thrill of trading.<br><span class="grad">None of the risk.</span></h3><p>Fast charts, sharp decisions, full focus. All of it on a simulated account, so your own money never enters the race.</p></div></div>
+      </article>
+      <article class="tp" tabindex="0" data-i="1">
+        <div class="tp-media"><div class="st-img" style="background-image:url(assets/hc/desk.jpg)"></div></div>
+        <div class="tp-body"><span class="tp-n">02</span><div class="tp-txt"><span class="tp-k">The difference</span><h3>Simulated account.<br><span class="grad">Your savings stay put.</span></h3><p>Trade $5K to $200K in simulated capital from your desk. One fee, paid once. Nothing else at risk.</p></div></div>
+      </article>
+      <article class="tp rw" tabindex="0" data-i="2">
+        <div class="tp-media"><div class="st-img st-glowbg"></div><canvas class="st-tri" id="stTri" aria-hidden="true"></canvas><img class="st-person" src="assets/prove.webp" alt="" loading="lazy"><div class="st-reward liquid"><span><i></i>Reward · Approved</span><b class="tnum">+$800</b><em>80% of $1,000 simulated profit</em></div></div>
+        <div class="tp-body"><span class="tp-n">03</span><div class="tp-txt"><span class="tp-k">The payoff</span><h3>Perform.<br><span class="grad">Get rewarded.</span></h3><p>In profit? Request a Reward and keep up to 95%. Processed within 48 hours.</p></div></div>
+      </article>
       </div>
-      <div class="wrap sp-copy"><div class="sp-txt rv"><span class="eyebrow">03 · The payoff</span><h2>Perform.<br><span class="grad">Get rewarded.</span></h2><p>In profit? Request a Reward and keep up to 95%. Processed within 48 hours.</p><a class="buy lg" href="#ways">Pick your program <span class="ar" aria-hidden="true">→</span></a></div></div>
+      <div class="tri3-cta rv"><a class="buy lg" href="#ways">Pick your program <span class="ar" aria-hidden="true">→</span></a></div>
     </div>
   </section>
 
@@ -1544,12 +1553,18 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
   })();
 
 
-  /* story panels: mark each one "in" as it scrolls into view */
+  /* story triptych: hover, focus or tap expands a panel; when untouched they cycle slowly */
   (function () {
-    var ps = $$(".sp"); if (!ps.length) return;
-    if (reduce || !("IntersectionObserver" in window)) { ps.forEach(function (x) { x.classList.add("in"); }); return; }
-    var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }); }, { threshold: .25 });
-    ps.forEach(function (x) { io.observe(x); });
+    var tps = $$(".tp"); if (!tps.length) return;
+    var cur = 0, touched = false, vis = false;
+    function set(i) { cur = i; tps.forEach(function (t, j) { t.classList.toggle("on", j === i); }); }
+    tps.forEach(function (t, i) {
+      t.addEventListener("mouseenter", function () { touched = true; set(i); });
+      t.addEventListener("focus", function () { touched = true; set(i); });
+      t.addEventListener("click", function () { touched = true; set(i); });
+    });
+    new IntersectionObserver(function (es) { vis = es[0].isIntersecting; }, { threshold: .3 }).observe($("#tri3"));
+    if (!reduce) setInterval(function () { if (vis && !touched && !document.hidden) set((cur + 1) % tps.length); }, 4200);
   })();
 
   /* hero C parallax: the image sinks slower than the page, the copy rises and fades, the stats strip lifts */
@@ -1582,7 +1597,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
     function size() { var r = cv.getBoundingClientRect(); if (!r.width) return; W = Math.round(r.width * dpr); H = Math.round(r.height * dpr); cv.width = W; cv.height = H; cell = Math.max(14, Math.round(Math.min(W, H) / 44)); }
     function sample(px, py) {
       /* the silhouette is placed where the person image sits (right side, bottom aligned, ~92% tall), scaled up a little so the matrix frames him */
-      var ph = H * 1.0, pw = ph * LW / LH, ox = W * .92 - pw - W * .2, oy = H - ph;
+      var ph = H * .88, pw = ph * LW / LH, ox = W * .94 - pw - pw * .5, oy = H - ph;
       var u = (px - ox) / pw, v = (py - oy) / ph; if (u < 0 || u >= 1 || v < 0 || v >= 1) return 0;
       return lum[Math.floor(v * LH) * LW + Math.floor(u * LW)] || 0;
     }
