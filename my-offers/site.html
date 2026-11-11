@@ -361,6 +361,18 @@
   body.grd .code-btn{border-color:rgba(127,243,220,.35);background:rgba(3,9,12,.5)}
   body.grd .code-btn .c{background:var(--g);-webkit-background-clip:text;background-clip:text;color:transparent!important}
   body.grd .offer .use{border-radius:999px}
+
+  /* two coupons stacked; only the featured one gets the lime edge */
+  .coupons{display:flex;flex-direction:column;gap:16px}
+  .offer.feature.is-std{outline:0;box-shadow:none}
+  .is-std .deal .val{font-size:24px;line-height:1.15}
+  .offer.feature .stub .btn-ghost{min-height:44px;font-size:14px}
+  body.cpn .offer.feature.is-std,body.cpn .offer.feature.is-std:hover{background:repeating-linear-gradient(-55deg,rgba(10,10,10,.05) 0 1px,transparent 1px 6px),linear-gradient(90deg,rgba(150,185,0,0) 55%,rgba(150,185,0,.22) 100%),var(--lime)}
+  body.cpn .feature.is-std .use{background:#0a0a0a;color:var(--lime);border-color:#0a0a0a}
+  body.grd .offer.feature.is-std,body.grd .offer.feature.is-std:hover{background:linear-gradient(180deg,rgba(18,46,48,.55),rgba(7,18,20,.9));box-shadow:inset 0 0 0 1px rgba(127,243,220,.16)}
+  body.grd .offer.feature.is-std .stub{background:rgba(0,216,195,.05);border-color:rgba(127,243,220,.25)}
+  body.grd .is-std .deal .val{background:var(--g);-webkit-background-clip:text;background-clip:text;color:transparent}
+  body.colr .feature.is-std .use{border-color:color-mix(in srgb,var(--brand) 60%,transparent);color:color-mix(in srgb,var(--brand) 78%,#fff)}
 </style>
 </head>
 <body>
@@ -461,13 +473,8 @@
         </div>
       </div>
 
-      <div class="label" id="count-label">5 offers</div>
-      <div id="featured"></div>
-
-      <section class="more" aria-labelledby="more-title">
-        <h2 class="sec-title" id="more-title">More offers</h2>
-        <div class="grid" id="grid"></div>
-      </section>
+      <div class="label" id="count-label">2 offers</div>
+      <div class="coupons" id="coupons"></div>
 
       <section class="how" aria-label="How to redeem">
         <span class="label">How to redeem</span>
@@ -487,21 +494,20 @@
 <div class="toast" id="toast">Code copied</div>
 
 <script>
-  /* Featured campaign: one card, several deals. Each deal may carry its own code. */
-  const CAMPAIGN = {
-    title: 'Black November', sub: 'Every order gets a bonus challenge. Bundles too.', exp: 'Ends Nov 30, 2026', cta: 'Use Offer', code: 'BLACKNOV',
-    deals: [
-      {type:'Discount', icon:'o-pct',    val:'30% OFF', desc:'Every program and account size', brand:'#d9ff00'},
-      {type:'Bundle',   icon:'o-layers', val:'2+1',     desc:'Buy 2 challenges, get 1 free',  brand:'#00d8c3'},
-      {type:'Bundle',   icon:'o-layers', val:'3+2',     desc:'Buy 3 challenges, get 2 free',  brand:'#78ff00'},
-    ]
-  };
-  /* Individual offers. kind 'coupon' shows a code + Use Offer; kind 'link' needs no code and opens the offer. */
-  const OFFERS = [
-    {kind:'coupon', type:'Coupon',        icon:'o-rebuild', title:'Breached Users',     desc:'A comeback offer for traders whose account was breached.', code:'REBUILD30', cta:'Use Offer',    brand:'#ff5c00'},
-    {kind:'link',   type:'New program',   icon:'o-gem',     title:'Kokuyō',             desc:'Live sale on the new Kokuyō program.',                     cta:'View Program', brand:'#8042ff'},
-    {kind:'link',   type:'Special offer', icon:'o-pass',    title:'Pay After You Pass', desc:'Start now, pay when you pass.',                            cta:'View Offer',   brand:'#00d8c3'},
-    {kind:'link',   type:'Special offer', icon:'o-skip',    title:'Skip the Challenge', desc:'Details for this offer are coming soon.',                  cta:'View Offer',   brand:'#ff2156'},
+  /* Each coupon = one card, one code, several deals inside it. */
+  const COUPONS = [
+    { id:'bn', featured:true, brand:'#d9ff00', meta:'Pre-sale', title:'Black November', sub:'Every order gets a bonus challenge. Bundles too.', exp:'Ends Nov 30, 2026', code:'BLACKNOV', cta:'Use Offer',
+      deals: [
+        {type:'Discount', icon:'o-pct',    val:'30% OFF', desc:'Every program and account size', brand:'#d9ff00'},
+        {type:'Bundle',   icon:'o-layers', val:'2+1',     desc:'Buy 2 challenges, get 1 free',  brand:'#00d8c3'},
+        {type:'Bundle',   icon:'o-layers', val:'3+2',     desc:'Buy 3 challenges, get 2 free',  brand:'#78ff00'},
+      ] },
+    { id:'bu', featured:false, brand:'#ff5c00', meta:'Comeback', title:'Breached Users', sub:'For traders whose account was breached.', code:'REBUILD30', cta:'Use Offer',
+      deals: [
+        {type:'New program',   icon:'o-gem',  val:'Kokuyō',             desc:'Live sale on the new Kokuyō program', brand:'#8042ff'},
+        {type:'Special offer', icon:'o-pass', val:'Pay After You Pass', desc:'Start now, pay when you pass',        brand:'#00d8c3'},
+        {type:'Special offer', icon:'o-skip', val:'Skip the Challenge', desc:'Details coming soon',                 brand:'#ff2156'},
+      ] },
   ];
   const codeChip = code => `
         <div class="code-wrap">
@@ -512,19 +518,19 @@
         </div>`;
   const arrow = '<svg width="12" height="12"><use href="#i-arrow"/></svg>';
 
-  document.getElementById('featured').innerHTML = `
-    <article class="offer feature" aria-labelledby="bn-title" style="--brand:#d9ff00">
+  document.getElementById('coupons').innerHTML = COUPONS.map(c => `
+    <article class="offer feature${c.featured ? ' is-featured' : ' is-std'}" aria-labelledby="${c.id}-title" style="--brand:${c.brand}">
       <div class="main">
         <div class="ft-head">
           <div>
-            <div class="cg-meta"><span class="cg-pill"><svg width="11" height="11"><use href="#o-star"/></svg>Featured</span><span>Pre-sale · ${CAMPAIGN.deals.length} deals</span></div>
-            <h2 class="ft-title" id="bn-title">${CAMPAIGN.title}</h2>
-            <p class="ft-sub">${CAMPAIGN.sub}</p>
+            <div class="cg-meta">${c.featured ? '<span class="cg-pill"><svg width="11" height="11"><use href="#o-star"/></svg>Featured</span>' : ''}<span>${c.meta} · ${c.deals.length} deals</span></div>
+            <h2 class="ft-title" id="${c.id}-title">${c.title}</h2>
+            <p class="ft-sub">${c.sub}</p>
           </div>
-          <span class="expiry"><svg width="13" height="13"><use href="#i-clock"/></svg><span class="ext">${CAMPAIGN.exp}</span></span>
+          ${c.exp ? `<span class="expiry"><svg width="13" height="13"><use href="#i-clock"/></svg><span class="ext">${c.exp}</span></span>` : ''}
         </div>
         <div class="deals">
-          ${CAMPAIGN.deals.map(d => `
+          ${c.deals.map(d => `
           <div class="deal" style="--brand:${d.brand}">
             <div class="eb"><svg><use href="#${d.icon}"/></svg><span class="ebt">${d.type}</span></div>
             <div class="val">${d.val}</div>
@@ -533,28 +539,14 @@
         </div>
       </div>
       <div class="stub">
-        ${codeChip(CAMPAIGN.code)}
-        <small class="stub-note">One code for all three deals</small>
-        <button class="btn-lime use" type="button" data-go="${CAMPAIGN.title}" data-code="${CAMPAIGN.code}">${CAMPAIGN.cta} ${arrow}</button>
-      </div>
-    </article>`;
-
-  document.getElementById('grid').innerHTML = OFFERS.map(o => `
-    <article class="offer" data-kind="${o.kind}" style="--brand:${o.brand}">
-      <div class="main">
-        <div class="eb"><svg><use href="#${o.icon}"/></svg><span class="ebt">${o.type}</span></div>
-        <h3 class="title">${o.title}</h3>
-        <div class="desc">${o.desc}</div>
-        ${o.exp ? `<div class="foot"><span class="expiry"><svg width="12" height="12"><use href="#i-clock"/></svg><span class="ext">${o.exp}</span></span></div>` : ''}
-      </div>
-      <div class="stub">
-        ${o.kind === 'coupon' ? codeChip(o.code) : '<small class="code-label nocode">No code needed</small>'}
-        <button class="btn-ghost use" type="button" data-go="${o.title}" ${o.code ? `data-code="${o.code}"` : ''}>${o.cta} ${arrow}</button>
+        ${codeChip(c.code)}
+        <small class="stub-note">One code for all ${c.deals.length} deals</small>
+        <button class="${c.featured ? 'btn-lime' : 'btn-ghost'} use" type="button" data-go="${c.title}" data-code="${c.code}">${c.cta} ${arrow}</button>
       </div>
     </article>`).join('');
 
-  // Gift badge and counts follow the number of offers (the campaign counts as one)
-  const n = OFFERS.length + 1;
+  // Gift badge and counts follow the number of coupons
+  const n = COUPONS.length;
   document.querySelector('#gift-btn b').textContent = n;
   document.getElementById('gift-btn').setAttribute('aria-label', `My Offers, ${n} available`);
   document.getElementById('count-label').textContent = `${n} offers`;
