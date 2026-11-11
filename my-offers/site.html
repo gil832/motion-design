@@ -391,6 +391,12 @@
   body.cpn .grid .offer .main{border:1.5px dashed var(--lime);border-right:0}
   @media (max-width:560px){ body.cpn .grid .offer .main{border-right:1.5px dashed var(--lime);border-bottom:0} }
   body.cpn .grid .offer::before,body.cpn .grid .offer::after{border:1.5px dashed var(--lime);box-sizing:border-box}
+
+  /* E · Coupon: dark deal tiles become mini tickets (inset dashed lime outline + half-circle side notches) */
+  body.cpn .feature .deal{position:relative;border:0;outline:1.5px dashed var(--lime);outline-offset:-7px;padding-left:22px;padding-right:22px}
+  body.cpn .feature .deal::before,body.cpn .feature .deal::after{content:"";position:absolute;top:50%;width:24px;height:24px;margin-top:-12px;border-radius:50%;background:#d6f700;box-shadow:0 0 0 1.5px var(--lime) inset}
+  body.cpn .feature .deal::before{left:-12px;clip-path:inset(0 0 0 50%)}
+  body.cpn .feature .deal::after{right:-12px;clip-path:inset(0 50% 0 0)}
 </style>
 </head>
 <body>
