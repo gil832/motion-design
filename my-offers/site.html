@@ -129,16 +129,8 @@
     .offer .desc{font-size:12.5px}
     .offer .stub .c{font-size:12px}
     .how{flex-direction:column;align-items:flex-start;gap:14px}
-    .switcher{left:16px;right:16px;bottom:12px;justify-content:center}
-  }
+    }
 
-  /* ---- card style variants (prototype switcher) ---- */
-  body.v1 .offer .eb{color:var(--lime)}
-  body.v1 .offer .val{color:#fff}
-  .switcher{position:fixed;right:20px;bottom:20px;display:flex;gap:4px;padding:4px;background:#121212;border:1px solid var(--line);border-radius:8px;z-index:10;box-shadow:0 8px 24px rgba(0,0,0,.5)}
-  .switcher span{align-self:center;padding:0 8px;color:var(--text-4);font-size:10px;letter-spacing:1px;font-weight:600}
-  .switcher button{padding:6px 10px;border-radius:6px;color:var(--text-3);font-weight:500;font-size:12px;border:1px solid transparent}
-  .switcher button.on{background:var(--lime-bg);border-color:var(--lime);color:var(--lime);font-weight:600}
   .gift-btn{position:relative;width:37px;height:37px;border-radius:8px;background:#161616;border:1px solid #262626;display:grid;place-items:center;color:#e6e6e6;flex:none;cursor:pointer}
   .gift-btn:hover{border-color:var(--lime);color:var(--lime)}
   .gift-btn svg{width:18px;height:18px}
@@ -149,58 +141,13 @@
   body.editing [data-ek]:hover{outline-color:var(--lime)}
   body.editing [data-ek]:focus{outline:2px solid var(--lime);background:rgba(217,255,0,.08)}
 
-  /* ---- Ticket layout variants (chosen in the preview shell) ---- */
-  /* B · bottom stub: horizontal tear line, code strip along the bottom */
-  body.lay-b .offer{flex-direction:column}
-  body.lay-b .offer .main{border-radius:10px 10px 0 0}
-  body.lay-b .offer .stub{width:auto;flex-direction:row;justify-content:flex-start;gap:12px;border-left:0;border-top:2px dashed #262626;border-radius:0 0 10px 10px;padding:12px 18px}
-  body.lay-b .offer .stub .c{writing-mode:horizontal-tb;transform:none;font-size:15px;letter-spacing:2px}
-  body.lay-b .offer .stub svg{margin-left:auto}
-  body.lay-b .offer::before{top:auto;bottom:35px;left:-11px;right:auto;clip-path:inset(0 0 0 50%)}
-  body.lay-b .offer::after{bottom:35px;right:-11px;left:auto;clip-path:inset(0 50% 0 0)}
-  /* C · wide side stub: code reads horizontally */
-  body.lay-c .offer{--stub:150px}
-  body.lay-c .offer .stub .c{writing-mode:horizontal-tb;transform:none;font-size:15px;letter-spacing:1.5px}
-  /* D · code chip: side cut-outs, dashed code chip above the footer */
-  body.lay-d .offer{display:flex;flex-direction:column;gap:4px;padding:18px 18px 16px;background:linear-gradient(90deg,color-mix(in srgb,var(--acc) 4.5%,transparent),transparent 50%),var(--card)}
-  body.lay-d .offer .main{display:contents}
-  body.lay-d .offer .eb{order:1}
-  body.lay-d .offer .val{order:2}
-  body.lay-d .offer .desc{order:3}
-  body.lay-d .offer .stub{order:4;align-self:flex-start;width:auto;flex-direction:row;gap:10px;margin-top:12px;padding:9px 12px;border:1px dashed var(--acc);border-radius:8px;background:color-mix(in srgb,var(--acc) 6%,transparent)}
-  body.lay-d .offer .stub .c{writing-mode:horizontal-tb;transform:none;font-size:14px;letter-spacing:1.5px}
-  body.lay-d .offer .foot{order:5}
-  body.lay-d .offer::before{top:50%;left:-11px;right:auto;transform:translateY(-50%);clip-path:inset(0 0 0 50%)}
-  body.lay-d .offer::after{top:50%;bottom:auto;right:-11px;transform:translateY(-50%);clip-path:inset(0 50% 0 0)}
+  /* Ticket: wide side stub, code reads horizontally */
+  .offer{--stub:150px}
+  .offer .stub .c{writing-mode:horizontal-tb;transform:none;font-size:15px;letter-spacing:1.5px}
   @media (max-width:860px){
-    body.lay-c .offer{--stub:118px}
-    body.lay-c .offer .stub .c{font-size:12px;letter-spacing:1px}
-    body.lay-b .offer .stub .c{font-size:14px}
-    body.lay-d .offer{padding:16px 14px 14px 16px}
+    .offer{--stub:118px}
+    .offer .stub .c{font-size:12px;letter-spacing:1px}
   }
-
-  /* B+ · brand colours (soft): bottom stub, each offer tinted with its own brand colour (FundingRock Brand palette) */
-  body.brandcol .offer{--btxt:color-mix(in srgb,var(--brand) 80%,#fff);background:color-mix(in srgb,var(--brand) 4%,var(--card))}
-  body.brandcol .offer .main{background:radial-gradient(120% 110% at 0% 0%,color-mix(in srgb,var(--brand) 9%,transparent),transparent 60%)}
-  body.brandcol .offer .eb,body.brandcol .offer .eb svg{color:var(--btxt)}
-  body.brandcol .offer .val{color:#fff}
-  body.brandcol .offer .stub{background:color-mix(in srgb,var(--brand) 12%,var(--card));color:var(--btxt);border-top-color:color-mix(in srgb,var(--brand) 35%,transparent)}
-  body.brandcol .offer .stub:hover{background:color-mix(in srgb,var(--brand) 18%,var(--card))}
-  body.brandcol .offer .stub small{color:color-mix(in srgb,var(--brand) 65%,transparent)}
-  body.brandcol .offer .stub .c{color:var(--btxt)}
-  body.brandcol .offer .claim{background:color-mix(in srgb,var(--brand) 16%,var(--card));color:var(--btxt);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--brand) 40%,transparent)}
-  body.brandcol .offer .claim:hover{background:color-mix(in srgb,var(--brand) 24%,var(--card))}
-  /* A+ / C+ · negative stub: soft brand card, code stub in solid brand colour with dark (or white on purple) text */
-  body.neg .offer .stub{background:var(--brand);color:var(--ink);border-left-color:color-mix(in srgb,var(--ink) 30%,transparent)}
-  body.neg .offer .stub:hover{background:var(--brand);filter:brightness(1.06)}
-  body.neg .offer .stub small{color:color-mix(in srgb,var(--ink) 60%,transparent)}
-  body.neg .offer .stub .c{color:var(--ink)}
-  /* A · Colour: side stub, each offer's value, code and glow in its brand colour; lime Claim buttons */
-  body.colr .offer{--btxt:color-mix(in srgb,var(--brand) 80%,#fff)}
-  body.colr .offer .main{background:radial-gradient(120% 120% at 0% 0%,color-mix(in srgb,var(--brand) 12%,transparent),transparent 55%)}
-  body.colr .offer .val{color:var(--btxt)}
-  body.colr .offer .stub{background:linear-gradient(180deg,color-mix(in srgb,var(--brand) 11%,var(--card)),color-mix(in srgb,var(--brand) 4%,var(--card)))}
-  body.colr .offer .stub .c{color:var(--btxt)}
 </style>
 </head>
 <body>
@@ -307,15 +254,15 @@
 
 <script>
   const OFFERS = [
-    {acc:'var(--lime)', brand:'#78ff00', ink:'#0a0a0a', title:'Bundle',         val:'3+2',                desc:'Buy 3 challenges, get 2 free',        code:'BUY3GET2',   exp:'Until Nov 30, 2026', cat:'bundle'},
-    {acc:'var(--lime)', brand:'#d9ff00', ink:'#0a0a0a', title:'Black November', val:'30% OFF',            desc:'Every program, every account size',   code:'BLACKNOV30', exp:'Until Nov 30, 2026', cat:'discount'},
-    {acc:'var(--lime)', brand:'#00d8c3', ink:'#0a0a0a', title:'Bundle',         val:'2+1',                desc:'Buy 2 challenges, get 1 free',        code:'BUY2GET1',   exp:'Until Nov 30, 2026', cat:'bundle'},
-    {acc:'var(--lime)', brand:'#ff5c00', ink:'#0a0a0a', title:'+1 Offer',       val:'PAY AFTER YOU PASS', desc:'Start now, pay when you pass',        code:'PAYAFTER',   exp:'Until Nov 30, 2026', cat:'program'},
-    {acc:'var(--lime)', brand:'#8042ff', ink:'#ffffff', title:'New program',    val:'KOKUYŌ',             desc:'Live sale on the new Kokuyō program', code:'KOKUYO',     exp:'Live now',           cat:'program', live:true},
+    {acc:'var(--lime)', title:'Bundle',         val:'3+2',                desc:'Buy 3 challenges, get 2 free',        code:'BUY3GET2',   exp:'Until Nov 30, 2026', cat:'bundle'},
+    {acc:'var(--lime)', title:'Black November', val:'30% OFF',            desc:'Every program, every account size',   code:'BLACKNOV30', exp:'Until Nov 30, 2026', cat:'discount'},
+    {acc:'var(--lime)', title:'Bundle',         val:'2+1',                desc:'Buy 2 challenges, get 1 free',        code:'BUY2GET1',   exp:'Until Nov 30, 2026', cat:'bundle'},
+    {acc:'var(--lime)', title:'+1 Offer',       val:'PAY AFTER YOU PASS', desc:'Start now, pay when you pass',        code:'PAYAFTER',   exp:'Until Nov 30, 2026', cat:'program'},
+    {acc:'var(--lime)', title:'New program',    val:'KOKUYŌ',             desc:'Live sale on the new Kokuyō program', code:'KOKUYO',     exp:'Live now',           cat:'program', live:true},
   ];
   const grid = document.getElementById('grid');
   grid.innerHTML = OFFERS.map(o => `
-    <article class="offer" data-cat="${o.cat}" style="--acc:${o.acc};--brand:${o.brand};--ink:${o.ink}">
+    <article class="offer" data-cat="${o.cat}" style="--acc:${o.acc}">
       <div class="main">
         <div class="eb"><svg><use href="#i-fr"/></svg><span class="ebt">${o.title}</span></div>
         <div class="val">${o.val}</div>
@@ -382,7 +329,7 @@
 </script>
 <script>
 /* Preview-shell bridge (same pattern as the non-prop LP).
-   Inside the shell: the value colour arrives as {t:"style"}; saved text edits arrive as {key: html} and are applied here;
+   Inside the shell: saved text edits arrive as {key: html} and are applied here;
    in edit mode each text element becomes contenteditable and changes go back to the shell, which saves them. */
 (function () {
   if (window.parent === window) return;
@@ -429,8 +376,6 @@
       var h = clean(d.map[k]); if (el.innerHTML !== h) { el.innerHTML = h; syncCode(el); }
     });
     if (d.t === "edit") setEdit(!!d.on);
-    if (d.t === "style") document.body.classList.toggle("v1", d.v === "white");
-    if (d.t === "layout") { var v = ({ e: "b", f: "a", g: "c", h: "a" })[d.v] || d.v; ["a","b","c","d"].forEach(function (x) { document.body.classList.toggle("lay-" + x, v === x); }); document.body.classList.toggle("brandcol", /[efg]/.test(d.v)); document.body.classList.toggle("neg", /[fg]/.test(d.v)); document.body.classList.toggle("colr", d.v === "h"); }
   });
   parent.postMessage({ fr: "mo", t: "ready" }, "*");
 })();
