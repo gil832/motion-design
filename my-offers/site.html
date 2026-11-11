@@ -195,6 +195,12 @@
   body.neg .offer .stub:hover{background:var(--brand);filter:brightness(1.06)}
   body.neg .offer .stub small{color:color-mix(in srgb,var(--ink) 60%,transparent)}
   body.neg .offer .stub .c{color:var(--ink)}
+  /* A · Colour: side stub, each offer's value, code and glow in its brand colour; lime Claim buttons */
+  body.colr .offer{--btxt:color-mix(in srgb,var(--brand) 80%,#fff)}
+  body.colr .offer .main{background:radial-gradient(120% 120% at 0% 0%,color-mix(in srgb,var(--brand) 12%,transparent),transparent 55%)}
+  body.colr .offer .val{color:var(--btxt)}
+  body.colr .offer .stub{background:linear-gradient(180deg,color-mix(in srgb,var(--brand) 11%,var(--card)),color-mix(in srgb,var(--brand) 4%,var(--card)))}
+  body.colr .offer .stub .c{color:var(--btxt)}
 </style>
 </head>
 <body>
@@ -424,7 +430,7 @@
     });
     if (d.t === "edit") setEdit(!!d.on);
     if (d.t === "style") document.body.classList.toggle("v1", d.v === "white");
-    if (d.t === "layout") { var v = ({ e: "b", f: "a", g: "c" })[d.v] || d.v; ["a","b","c","d"].forEach(function (x) { document.body.classList.toggle("lay-" + x, v === x); }); document.body.classList.toggle("brandcol", /[efg]/.test(d.v)); document.body.classList.toggle("neg", /[fg]/.test(d.v)); }
+    if (d.t === "layout") { var v = ({ e: "b", f: "a", g: "c", h: "a" })[d.v] || d.v; ["a","b","c","d"].forEach(function (x) { document.body.classList.toggle("lay-" + x, v === x); }); document.body.classList.toggle("brandcol", /[efg]/.test(d.v)); document.body.classList.toggle("neg", /[fg]/.test(d.v)); document.body.classList.toggle("colr", d.v === "h"); }
   });
   parent.postMessage({ fr: "mo", t: "ready" }, "*");
 })();
