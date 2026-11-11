@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>FundingRock · New Offers</title>
+<title>FundingRock · My Offers</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Host+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -174,7 +174,7 @@
   <aside class="sidebar" aria-label="Main navigation">
     <button class="nav-item" data-view="Overview"><svg><use href="#i-home"/></svg>Overview</button>
     <button class="nav-item" data-view="Accounts"><svg><use href="#i-wallet"/></svg>Accounts</button>
-    <button class="nav-item active" data-view="New Offers" aria-current="page"><svg><use href="#i-offer"/></svg>New Offers</button>
+    <button class="nav-item active" data-view="My Offers" aria-current="page"><svg><use href="#i-offer"/></svg>My Offers</button>
     <button class="nav-item" data-view="Rewards"><svg><use href="#i-gift"/></svg>Rewards</button>
     <button class="nav-item" data-view="Certificates"><svg><use href="#i-cert"/></svg>Certificates</button>
     <button class="nav-item" data-view="Contracts"><svg><use href="#i-doc"/></svg>Contracts</button>
@@ -201,7 +201,7 @@
           FUNDINGROCK
         </span>
         <svg width="16" height="16" viewBox="0 0 24 24" style="color:var(--text-2)"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M5 7h14M5 12h14M5 17h14"/></svg>
-        <span class="page" id="page-title">New Offers</span>
+        <span class="page" id="page-title">My Offers</span>
       </div>
       <div class="nav-right">
         <button class="btn-lime">Start Challenge</button>
@@ -217,7 +217,7 @@
       <div class="page-header">
         <div>
           <div class="campaign">BLACK NOVEMBER · PRE-SALE</div>
-          <h1>New Offers</h1>
+          <h1>My Offers</h1>
           <p>Every order gets a bonus challenge. Bundles too. Copy a code and apply it at checkout.</p>
         </div>
         <div class="tabs" role="tablist">
@@ -282,7 +282,7 @@
   document.querySelectorAll('.nav-item').forEach(btn => btn.addEventListener('click', () => {
     document.querySelectorAll('.nav-item').forEach(b => { b.classList.remove('active'); b.removeAttribute('aria-current'); });
     btn.classList.add('active'); btn.setAttribute('aria-current', 'page');
-    const v = btn.dataset.view, isOffers = v === 'New Offers';
+    const v = btn.dataset.view, isOffers = v === 'My Offers';
     document.getElementById('page-title').textContent = v === 'Accounts' ? 'Account Details' : v;
     offersView.hidden = !isOffers; otherView.hidden = isOffers;
     otherView.textContent = `${v} screen — unchanged, not part of this prototype.`;
@@ -330,7 +330,7 @@
 
   // Top-bar gift shortcut -> offers
   document.getElementById('gift-btn').addEventListener('click', () => {
-    const item = document.querySelector('.nav-item[data-view="New Offers"]');
+    const item = document.querySelector('.nav-item[data-view="My Offers"]');
     item.click(); item.classList.remove('flash'); void item.offsetWidth; item.classList.add('flash');
     window.scrollTo({top:0,behavior:'smooth'});
   });
