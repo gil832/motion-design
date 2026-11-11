@@ -148,6 +148,36 @@
   body.editing [data-ek]{outline:1px dashed rgba(217,255,0,.5);outline-offset:2px;border-radius:2px;cursor:text}
   body.editing [data-ek]:hover{outline-color:var(--lime)}
   body.editing [data-ek]:focus{outline:2px solid var(--lime);background:rgba(217,255,0,.08)}
+
+  /* ---- Ticket layout variants (chosen in the preview shell) ---- */
+  /* B · bottom stub: horizontal tear line, code strip along the bottom */
+  body.lay-b .offer{flex-direction:column}
+  body.lay-b .offer .main{border-radius:10px 10px 0 0}
+  body.lay-b .offer .stub{width:auto;flex-direction:row;justify-content:flex-start;gap:12px;border-left:0;border-top:2px dashed #262626;border-radius:0 0 10px 10px;padding:12px 18px}
+  body.lay-b .offer .stub .c{writing-mode:horizontal-tb;transform:none;font-size:15px;letter-spacing:2px}
+  body.lay-b .offer .stub svg{margin-left:auto}
+  body.lay-b .offer::before{top:auto;bottom:35px;left:-11px;right:auto;clip-path:inset(0 0 0 50%)}
+  body.lay-b .offer::after{bottom:35px;right:-11px;left:auto;clip-path:inset(0 50% 0 0)}
+  /* C · wide side stub: code reads horizontally */
+  body.lay-c .offer{--stub:150px}
+  body.lay-c .offer .stub .c{writing-mode:horizontal-tb;transform:none;font-size:15px;letter-spacing:1.5px}
+  /* D · code chip: side cut-outs, dashed code chip above the footer */
+  body.lay-d .offer{display:flex;flex-direction:column;gap:4px;padding:18px 18px 16px;background:linear-gradient(90deg,color-mix(in srgb,var(--acc) 4.5%,transparent),transparent 50%),var(--card)}
+  body.lay-d .offer .main{display:contents}
+  body.lay-d .offer .eb{order:1}
+  body.lay-d .offer .val{order:2}
+  body.lay-d .offer .desc{order:3}
+  body.lay-d .offer .stub{order:4;align-self:flex-start;width:auto;flex-direction:row;gap:10px;margin-top:12px;padding:9px 12px;border:1px dashed var(--acc);border-radius:8px;background:color-mix(in srgb,var(--acc) 6%,transparent)}
+  body.lay-d .offer .stub .c{writing-mode:horizontal-tb;transform:none;font-size:14px;letter-spacing:1.5px}
+  body.lay-d .offer .foot{order:5}
+  body.lay-d .offer::before{top:50%;left:-11px;right:auto;transform:translateY(-50%);clip-path:inset(0 0 0 50%)}
+  body.lay-d .offer::after{top:50%;bottom:auto;right:-11px;transform:translateY(-50%);clip-path:inset(0 50% 0 0)}
+  @media (max-width:860px){
+    body.lay-c .offer{--stub:118px}
+    body.lay-c .offer .stub .c{font-size:12px;letter-spacing:1px}
+    body.lay-b .offer .stub .c{font-size:14px}
+    body.lay-d .offer{padding:16px 14px 14px 16px}
+  }
 </style>
 </head>
 <body>
@@ -377,6 +407,7 @@
     });
     if (d.t === "edit") setEdit(!!d.on);
     if (d.t === "style") document.body.classList.toggle("v1", d.v === "white");
+    if (d.t === "layout") { ["a","b","c","d"].forEach(function (x) { document.body.classList.toggle("lay-" + x, d.v === x); }); }
   });
   parent.postMessage({ fr: "mo", t: "ready" }, "*");
 })();

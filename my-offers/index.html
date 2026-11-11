@@ -20,7 +20,7 @@ body { margin: 0; background: var(--bg); color: var(--fg); font: 14px "Host Grot
 .bar b span { color: var(--mute); font-weight: 400; }
 .groups { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
 .seg { display: inline-flex; padding: 3px; border: 1px solid var(--line); border-radius: 999px; background: var(--panel); }
-.seg button { appearance: none; border: 0; background: transparent; color: var(--mute); font: inherit; font-size: 13px; font-weight: 500; padding: 7px 16px; border-radius: 999px; cursor: pointer; }
+.seg button { appearance: none; border: 0; background: transparent; color: var(--mute); font: inherit; font-size: 13px; font-weight: 500; padding: 7px 14px; white-space: nowrap; border-radius: 999px; cursor: pointer; }
 .seg button[aria-pressed="true"] { background: var(--lime); color: var(--ink); }
 .seg button:focus-visible, a:focus-visible, .open:focus-visible { outline: 2px solid var(--lime); outline-offset: 2px; }
 .tools { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
@@ -52,6 +52,7 @@ body { margin: 0; background: var(--bg); color: var(--fg); font: 14px "Host Grot
     <b><svg viewBox="0 0 24 20" fill="currentColor" aria-hidden="true"><path d="M10.0363 0C10.6661 0 10.981 0.762458 10.5335 1.20999L2.59401 9.1412H10.0363C10.6661 9.1412 10.981 9.90366 10.5335 10.3512L1.20999 19.6747C0.762458 20.1222 0 19.8073 0 19.1775V0.704444C0 0.314928 0.314928 0 0.704444 0H10.0363Z"/><path d="M18.0835 0C21.0753 0 23.5036 2.42829 23.5036 5.4201C23.5036 8.41192 21.0753 10.8402 18.0835 10.8402H15.1828L23.0312 18.6802C23.4787 19.1278 23.1638 19.8902 22.5339 19.8902H13.2104C12.8209 19.8902 12.506 19.5753 12.506 19.1858V0.704471C12.506 0.314955 12.8209 0 13.2104 0H18.0835Z"/></svg>My Offers<span>Trading area</span></b>
     <div class="groups">
       <div class="seg" role="group" aria-label="Preview size"><button id="bDesk" type="button" aria-pressed="true">Desktop</button><button id="bMob" type="button" aria-pressed="false">Mobile</button></div>
+      <div class="seg" role="group" aria-label="Ticket layout" id="laySeg"><button type="button" data-l="a" aria-pressed="true" title="Side stub, vertical code">A · Side stub</button><button type="button" data-l="b" aria-pressed="false" title="Tear-off strip along the bottom">B · Bottom stub</button><button type="button" data-l="c" aria-pressed="false" title="Wider side stub, horizontal code">C · Wide stub</button><button type="button" data-l="d" aria-pressed="false" title="Side cut-outs, dashed code chip">D · Code chip</button></div>
       <div class="seg" role="group" aria-label="Offer value colour" id="valSeg"><button type="button" data-v="lime" aria-pressed="true">Lime value</button><button type="button" data-v="white" aria-pressed="false">White value</button></div>
     </div>
     <div class="tools">
@@ -96,7 +97,14 @@ body { margin: 0; background: var(--bg); color: var(--fg); font: 14px "Host Grot
 (function () {
   var frames = [document.getElementById("fDesk"), document.getElementById("fMob")];
   var btn = document.getElementById("edt"), est = document.getElementById("est"), cmt = document.getElementById("cmt");
-  var val = "lime";
+  var val = "lime", lay = "a";
+  Array.prototype.slice.call(document.querySelectorAll("#laySeg button")).forEach(function (b) {
+    b.addEventListener("click", function () {
+      lay = b.getAttribute("data-l");
+      Array.prototype.slice.call(document.querySelectorAll("#laySeg button")).forEach(function (x) { x.setAttribute("aria-pressed", x === b); });
+      all({ fr: "mo", t: "layout", v: lay });
+    });
+  });
   Array.prototype.slice.call(document.querySelectorAll("#valSeg button")).forEach(function (b) {
     b.addEventListener("click", function () {
       val = b.getAttribute("data-v");
@@ -111,7 +119,7 @@ body { margin: 0; background: var(--bg); color: var(--fg); font: 14px "Host Grot
   addEventListener("message", function (e) {
     var d = e.data; if (!d || d.fr !== "mo") return;
     if (!frames.some(function (f) { return f.contentWindow === e.source; })) return;
-    if (d.t === "ready") { post(e.source, { fr: "mo", t: "ov", map: map }); post(e.source, { fr: "mo", t: "edit", on: editing }); post(e.source, { fr: "mo", t: "style", v: val }); }
+    if (d.t === "ready") { post(e.source, { fr: "mo", t: "ov", map: map }); post(e.source, { fr: "mo", t: "edit", on: editing }); post(e.source, { fr: "mo", t: "style", v: val }); post(e.source, { fr: "mo", t: "layout", v: lay }); }
     if (d.t === "chg" && editing && ref && typeof d.k === "string" && typeof d.html === "string" && d.html.length < 4000) {
       map[d.k] = d.html; pend = true; status("Saving…"); clearTimeout(timer); timer = setTimeout(save, 700);
       frames.forEach(function (f) { if (f.contentWindow && f.contentWindow !== e.source) post(f.contentWindow, { fr: "mo", t: "ov", map: map }); });
