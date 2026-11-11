@@ -248,6 +248,55 @@
     .offer::before{top:auto;bottom:83px;left:-11px;right:auto;clip-path:inset(0 0 0 50%)}
     .offer::after{bottom:83px;right:-11px;left:auto;clip-path:inset(0 50% 0 0)}
   }
+
+  /* ================= Design versions (same structure and behaviour, different skin) ================= */
+  /* A · Colour: each offer in its brand colour; soft glow behind the value, tinted stub */
+  body.colr .offer{--btxt:color-mix(in srgb,var(--brand) 80%,#fff)}
+  body.colr .offer .main{background:radial-gradient(45% 45% at 24% 42%,color-mix(in srgb,var(--brand) 14%,transparent),transparent 70%)}
+  body.colr .offer .val{color:var(--btxt)}
+  body.colr .offer .eb svg{color:var(--btxt)}
+  body.colr .offer .stub,body.colr .offer .stub:hover{background:linear-gradient(180deg,color-mix(in srgb,var(--brand) 10%,#1a1a1a),color-mix(in srgb,var(--brand) 4%,#1a1a1a))}
+  body.colr .code-btn{border-color:color-mix(in srgb,var(--brand) 40%,#333)}
+  body.colr .code-btn .c{color:var(--btxt)!important}
+
+  /* E · Coupon: textured lime coupon with black text, side cut-outs, no separate stub panel */
+  body.cpn .offer{background:repeating-linear-gradient(-55deg,rgba(10,10,10,.05) 0 1px,transparent 1px 6px),radial-gradient(110% 150% at 0% 0%,rgba(240,255,140,.75) 0%,rgba(240,255,140,0) 55%),linear-gradient(90deg,rgba(150,185,0,0) 55%,rgba(150,185,0,.22) 100%),var(--lime);color:#0a0a0a}
+  body.cpn .offer:hover{background:repeating-linear-gradient(-55deg,rgba(10,10,10,.05) 0 1px,transparent 1px 6px),radial-gradient(110% 150% at 0% 0%,rgba(240,255,140,.75) 0%,rgba(240,255,140,0) 55%),linear-gradient(90deg,rgba(150,185,0,0) 55%,rgba(150,185,0,.22) 100%),var(--lime)}
+  body.cpn .offer .val,body.cpn .offer .desc{color:#0a0a0a}
+  body.cpn .offer .eb,body.cpn .offer .expiry{color:rgba(10,10,10,.6)}
+  body.cpn .offer .eb svg{color:#0a0a0a}
+  body.cpn .offer .stub,body.cpn .offer .stub:hover{background:none;border-left-color:rgba(10,10,10,.25)}
+  body.cpn .offer .code-label{color:rgba(10,10,10,.6)}
+  body.cpn .code-btn{border-color:rgba(10,10,10,.4);background:rgba(10,10,10,.05);color:#0a0a0a}
+  body.cpn .code-btn:hover{border-color:#0a0a0a;color:#0a0a0a}
+  body.cpn .code-btn .c{color:#0a0a0a!important}
+  body.cpn .offer .use{background:#0a0a0a;color:var(--lime)}
+  body.cpn .offer.copied .code-btn{border-color:#0a0a0a;background:rgba(10,10,10,.1)}
+  body.cpn .offer.copied .code-btn .ic-ok,body.cpn .offer.copied .code-label{color:#0a0a0a}
+  body.cpn .offer::before{top:50%;left:-11px;right:auto;transform:translateY(-50%);clip-path:inset(0 0 0 50%)}
+  body.cpn .offer::after{top:50%;bottom:auto;right:-11px;transform:translateY(-50%);clip-path:inset(0 50% 0 0)}
+
+  /* F · Brand gradient: landing-page palette; glass cards with a cyan edge, gradient value and code, featured 30% OFF */
+  body.grd .offer{--g:linear-gradient(90deg,#7ff3dc 0%,#00d8c3 35%,#78ff00 72%,#d9ff00 100%);background:linear-gradient(180deg,rgba(18,46,48,.55),rgba(7,18,20,.9));box-shadow:inset 0 0 0 1px rgba(127,243,220,.16)}
+  body.grd .offer:hover{background:linear-gradient(180deg,rgba(18,46,48,.55),rgba(7,18,20,.9))}
+  body.grd .offer .eb{color:#a6c4c6}
+  body.grd .offer .val{background:var(--g);-webkit-background-clip:text;background-clip:text;color:transparent}
+  body.grd .offer .desc{color:#cfe3e3}
+  body.grd .offer .expiry,body.grd .offer .code-label{color:#7c9a9b}
+  body.grd .offer .stub,body.grd .offer .stub:hover{background:rgba(0,216,195,.05);border-left-color:rgba(127,243,220,.25)}
+  body.grd .code-btn{border-color:rgba(127,243,220,.35);background:rgba(3,9,12,.5)}
+  body.grd .code-btn .c{background:var(--g);-webkit-background-clip:text;background-clip:text;color:transparent!important}
+  body.grd .offer .use{border-radius:999px}
+  body.grd .offer[data-cat="discount"]{background:linear-gradient(180deg,rgba(44,58,10,.5),rgba(10,16,6,.9));box-shadow:inset 0 0 0 1px rgba(217,255,0,.55)}
+  body.grd .offer[data-cat="discount"] .stub{background:rgba(217,255,0,.06);border-left-color:rgba(217,255,0,.35)}
+
+  @media (max-width:560px){
+    body.cpn .offer .stub{border-top-color:rgba(10,10,10,.25)}
+    body.cpn .offer::before{top:auto;bottom:83px;transform:none}
+    body.cpn .offer::after{top:auto;bottom:83px;transform:none}
+    body.grd .offer .stub{border-top-color:rgba(127,243,220,.25)}
+    body.grd .offer[data-cat="discount"] .stub{border-top-color:rgba(217,255,0,.35)}
+  }
 </style>
 </head>
 <body>
@@ -374,13 +423,13 @@
 
 <script>
   const OFFERS = [
-    {type:'Discount', icon:'o-pct',    val:'30% OFF', desc:'On every program and account size', code:'BLACKNOV30', exp:'Ends Nov 30, 2026', cat:'discount'},
-    {type:'Bundle',   icon:'o-layers', val:'2+1',     desc:'Buy 2 challenges, get 1 free',      code:'BUY2GET1',   exp:'Ends Nov 30, 2026', cat:'bundle'},
-    {type:'Bundle',   icon:'o-layers', val:'3+2',     desc:'Buy 3 challenges, get 2 free',      code:'BUY3GET2',   exp:'Ends Nov 30, 2026', cat:'bundle'},
+    {type:'Discount', brand:'#d9ff00', icon:'o-pct',    val:'30% OFF', desc:'On every program and account size', code:'BLACKNOV30', exp:'Ends Nov 30, 2026', cat:'discount'},
+    {type:'Bundle',   brand:'#00d8c3', icon:'o-layers', val:'2+1',     desc:'Buy 2 challenges, get 1 free',      code:'BUY2GET1',   exp:'Ends Nov 30, 2026', cat:'bundle'},
+    {type:'Bundle',   brand:'#78ff00', icon:'o-layers', val:'3+2',     desc:'Buy 3 challenges, get 2 free',      code:'BUY3GET2',   exp:'Ends Nov 30, 2026', cat:'bundle'},
   ];
   const grid = document.getElementById('grid');
   grid.innerHTML = OFFERS.map(o => `
-    <article class="offer" data-cat="${o.cat}">
+    <article class="offer" data-cat="${o.cat}" style="--brand:${o.brand}">
       <div class="main">
         <div class="eb"><svg><use href="#${o.icon}"/></svg><span class="ebt">${o.type}</span></div>
         <div class="val">${o.val}</div>
@@ -505,6 +554,7 @@
       var h = clean(d.map[k]); if (el.innerHTML !== h) { el.innerHTML = h; syncCode(el); }
     });
     if (d.t === "edit") setEdit(!!d.on);
+    if (d.t === "layout") { document.body.classList.toggle("colr", d.v === "colour"); document.body.classList.toggle("cpn", d.v === "coupon"); document.body.classList.toggle("grd", d.v === "gradient"); }
   });
   parent.postMessage({ fr: "mo", t: "ready" }, "*");
 })();
