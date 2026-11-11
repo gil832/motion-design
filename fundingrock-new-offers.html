@@ -66,36 +66,32 @@
 
   .label{font-size:10px;font-weight:500;letter-spacing:1px;color:var(--text-4);text-transform:uppercase}
 
-  /* offer cards — "payout certificate" style */
+  /* offer cards — ticket stub */
   .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
-  .offer{--acc:var(--lime);position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:center;text-align:center;gap:14px;
-    padding:22px 16px 16px;border-radius:10px;
-    border:1px solid color-mix(in srgb,var(--acc) 35%,#1f1f1f);
-    background:radial-gradient(90% 70% at 100% 0%,color-mix(in srgb,var(--acc) 9%,transparent),transparent 70%),#0d0d0d;
-    transition:transform .15s,border-color .15s}
-  .offer:hover{transform:translateY(-2px);border-color:color-mix(in srgb,var(--acc) 70%,#1f1f1f)}
+  .offer{--acc:var(--lime);--stub:104px;position:relative;display:flex;min-height:172px;border-radius:10px;background:var(--card);border:1px solid var(--line);transition:transform .15s,border-color .15s}
+  .offer:hover{transform:translateY(-2px);border-color:color-mix(in srgb,var(--acc) 45%,var(--line))}
   .offer[hidden]{display:none}
-  .offer .dots{position:absolute;inset:0;pointer-events:none;
-    background-image:radial-gradient(var(--acc) 1.1px,transparent 1.5px);background-size:11px 11px;
-    -webkit-mask-image:radial-gradient(190px 150px at 100% 0%,#000 0%,transparent 100%);mask-image:radial-gradient(190px 150px at 100% 0%,#000 0%,transparent 100%);opacity:.7}
-  .offer .dots.l{-webkit-mask-image:radial-gradient(110px 80px at 0% 0%,#000 0%,transparent 100%);mask-image:radial-gradient(110px 80px at 0% 0%,#000 0%,transparent 100%);opacity:.4}
-  .offer > *:not(.dots){position:relative}
-  .o-title{font-weight:700;font-size:12px;letter-spacing:1.2px;text-transform:uppercase;margin-top:2px}
-  .o-sub{color:var(--acc);font-weight:600;font-size:13px;margin-top:-6px}
-  .o-value{font-size:36px;font-weight:700;letter-spacing:-.5px;line-height:1}
-  .o-desc{color:var(--text-3);font-weight:500;font-size:12px;margin-top:-4px}
-  .tiles{display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;margin-top:4px}
-  .tile{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:11px 12px;border-radius:8px;text-align:left;
-    background:color-mix(in srgb,var(--acc) 11%,#121212);border:1px solid transparent}
-  .tile:hover{border-color:color-mix(in srgb,var(--acc) 50%,transparent)}
-  .tile b{display:block;font-weight:600;font-size:13px;letter-spacing:.3px}
-  .tile small{display:block;color:var(--text-3);font-size:11px;font-weight:500;margin-top:2px}
-  .tile svg{width:18px;height:18px;color:var(--acc)}
-  .tile.code b{color:var(--acc);letter-spacing:1px}
-  .tile.claim svg{width:26px;height:26px;padding:6px;border-radius:999px;background:var(--lime);color:var(--bg)}
-  .tile.copied{border-color:var(--acc)}
-  .expiry{display:flex;align-items:center;gap:5px;color:var(--text-4);font-size:11px;font-weight:500}
+  .offer .main{flex:1;min-width:0;padding:18px 18px 16px;display:flex;flex-direction:column;gap:4px;border-radius:10px 0 0 10px;
+    background:radial-gradient(120% 120% at 0% 0%,color-mix(in srgb,var(--acc) 12%,transparent),transparent 55%)}
+  .offer .eb{display:flex;align-items:center;gap:8px;font-size:10px;letter-spacing:1.2px;color:var(--text-4);font-weight:600;text-transform:uppercase}
+  .offer .eb svg{width:14px;height:12px;color:var(--lime)}
+  .offer .val{font-size:34px;font-weight:800;letter-spacing:-.5px;line-height:1.1;margin-top:6px;color:var(--acc)}
+  .offer .desc{color:var(--text-2);font-weight:500}
+  .offer .foot{margin-top:auto;padding-top:14px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+  .expiry{display:flex;align-items:center;gap:5px;color:var(--text-4);font-size:11px;font-weight:500;white-space:nowrap}
   .expiry.urgent{color:var(--pink)}
+  .claim{padding:7px 12px;font-size:12px}
+  .offer .stub{width:var(--stub);flex:none;border-left:2px dashed #262626;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:12px 8px;border-radius:0 10px 10px 0;
+    background:color-mix(in srgb,var(--acc) 6%,var(--card));color:var(--text-3)}
+  .offer .stub:hover{background:color-mix(in srgb,var(--acc) 12%,var(--card));color:var(--acc)}
+  .offer .stub small{font-size:9px;letter-spacing:1.2px;font-weight:600;color:var(--text-4)}
+  .offer .stub .c{writing-mode:vertical-rl;transform:rotate(180deg);font-weight:700;letter-spacing:2px;font-size:13px;color:var(--acc);font-family:"Host Grotesk",sans-serif}
+  .offer .stub svg{width:16px;height:16px}
+  .offer .stub.copied{background:color-mix(in srgb,var(--acc) 18%,var(--card))}
+  .offer .stub.copied small{color:var(--acc)}
+  .offer::before,.offer::after{content:"";position:absolute;right:calc(var(--stub) - 10px);width:20px;height:20px;border-radius:50%;background:var(--bg);border:1px solid var(--line);clip-path:inset(50% 0 0 0)}
+  .offer::before{top:-11px}
+  .offer::after{bottom:-11px;clip-path:inset(0 0 50% 0)}
 
   .how{display:flex;align-items:center;gap:28px;flex-wrap:wrap;padding:16px 20px;background:var(--card);border:1px solid var(--line);border-radius:var(--r)}
   .step{display:flex;align-items:center;gap:10px}
@@ -212,27 +208,28 @@
 
 <script>
   const OFFERS = [
-    {acc:'var(--lime)',  title:'Discount Voucher', sub:'All Simulation Rock challenges', val:'25% OFF',   desc:'Any account size, any platform',           code:'ROCK25',    exp:'Valid until Nov 30, 2026', cat:'challenge'},
-    {acc:'var(--green)', title:'Welcome Voucher',  sub:'Your first challenge',           val:'40% OFF',   desc:'One-time offer for new traders',           code:'FIRST40',   exp:'Valid until Dec 15, 2026', cat:'challenge'},
-    {acc:'var(--orange)',title:'Add-on Voucher',   sub:'Free account reset',             val:'1 RESET',   desc:'With any $100K+ challenge',                 code:'FREERESET', exp:'Valid until Dec 31, 2026', cat:'addon'},
-    {acc:'var(--blue)',  title:'Upgrade Voucher',  sub:'Profit split boost',             val:'90% SPLIT', desc:'On your next funded account',               code:'SPLIT90',   exp:'Valid until Jan 10, 2027', cat:'addon'},
-    {acc:'var(--purple)',title:'Bundle Voucher',   sub:'Buy 2 challenges',               val:'15% OFF',   desc:'Both challenges in one checkout',           code:'BUNDLE15',  exp:'Valid until Jan 31, 2027', cat:'challenge'},
-    {acc:'var(--pink)',  title:'Flash Voucher',    sub:'$50K Simulation Rock',           val:'10% OFF',   desc:'Today only',                                code:'FLASH10',   exp:'Ends in 8h 12m',           cat:'expiring', urgent:true},
+    {acc:'var(--lime)',  title:'Challenge discount', val:'25% OFF',    desc:'All Simulation Rock challenges',          code:'ROCK25',    exp:'Until Nov 30, 2026', cat:'challenge'},
+    {acc:'var(--green)', title:'Welcome offer',      val:'40% OFF',    desc:'Your first challenge, any account size',  code:'FIRST40',   exp:'Until Dec 15, 2026', cat:'challenge'},
+    {acc:'var(--orange)',title:'Add-on',             val:'FREE RESET', desc:'With any $100K+ challenge',                code:'FREERESET', exp:'Until Dec 31, 2026', cat:'addon'},
+    {acc:'var(--blue)',  title:'Upgrade',            val:'90% SPLIT',  desc:'Profit split on your next funded account', code:'SPLIT90',   exp:'Until Jan 10, 2027', cat:'addon'},
+    {acc:'var(--purple)',title:'Bundle',             val:'15% OFF',    desc:'Buy any two challenges in one checkout',   code:'BUNDLE15',  exp:'Until Jan 31, 2027', cat:'challenge'},
+    {acc:'var(--pink)',  title:'Flash sale',         val:'10% OFF',    desc:'$50K Simulation Rock challenge',           code:'FLASH10',   exp:'Ends in 8h 12m',     cat:'expiring', urgent:true},
   ];
   const grid = document.getElementById('grid');
   grid.innerHTML = OFFERS.map(o => `
     <article class="offer" data-cat="${o.cat}" style="--acc:${o.acc}">
-      <div class="dots"></div><div class="dots l"></div>
-      <svg width="20" height="17" style="color:var(--lime)"><use href="#i-fr"/></svg>
-      <div class="o-title">${o.title}</div>
-      <div class="o-sub">${o.sub}</div>
-      <div class="o-value">${o.val}</div>
-      <div class="o-desc">${o.desc}</div>
-      <div class="tiles">
-        <button class="tile code code-chip-t" data-code="${o.code}"><span><b>${o.code}</b><small>Promo code</small></span><svg><use href="#i-copy"/></svg></button>
-        <button class="tile claim"><span><b>Claim offer</b><small>Apply at checkout</small></span><svg><use href="#i-arrow"/></svg></button>
+      <div class="main">
+        <div class="eb"><svg><use href="#i-fr"/></svg>${o.title}</div>
+        <div class="val">${o.val}</div>
+        <div class="desc">${o.desc}</div>
+        <div class="foot">
+          <span class="expiry${o.urgent ? ' urgent' : ''}"><svg width="12" height="12"><use href="#i-clock"/></svg>${o.exp}</span>
+          <button class="btn-lime claim">Claim <svg width="12" height="12"><use href="#i-arrow"/></svg></button>
+        </div>
       </div>
-      <span class="expiry${o.urgent ? ' urgent' : ''}"><svg width="12" height="12"><use href="#i-clock"/></svg>${o.exp}</span>
+      <button class="stub code-chip-t" data-code="${o.code}" aria-label="Copy code ${o.code}">
+        <small>CODE</small><span class="c">${o.code}</span><svg><use href="#i-copy"/></svg>
+      </button>
     </article>`).join('');
 
   // Sidebar active state
@@ -261,7 +258,8 @@
     const chip = e.target.closest('.code-chip, .code-chip-t'); if (!chip) return;
     const code = chip.dataset.code;
     try { navigator.clipboard?.writeText(code); } catch (_) {}
-    chip.classList.add('copied'); setTimeout(() => chip.classList.remove('copied'), 1200);
+    chip.classList.add('copied'); const sm = chip.querySelector('small'); if (sm) sm.textContent = 'COPIED';
+    setTimeout(() => { chip.classList.remove('copied'); if (sm) sm.textContent = 'CODE'; }, 1400);
     toast.textContent = `Code ${code} copied`; toast.classList.add('show');
     clearTimeout(tt); tt = setTimeout(() => toast.classList.remove('show'), 1600);
   });
