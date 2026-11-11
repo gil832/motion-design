@@ -156,19 +156,20 @@
   body.colr .offer .stub{background:linear-gradient(180deg,color-mix(in srgb,var(--brand) 11%,var(--card)),color-mix(in srgb,var(--brand) 4%,var(--card)))}
   /* E · Coupon (option): one gray coupon with side cut-outs; offer left, big code + expiry right, Claim bottom-right */
   body.cpn .offer{display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"val stub" "eb exp" "desc claim";column-gap:18px;row-gap:6px;align-items:start;
-    padding:24px 26px 20px;border-radius:14px;background:linear-gradient(135deg,#2a2a2a 0%,#1d1d1d 100%);box-shadow:0 10px 30px -12px rgba(0,0,0,.7)}
-  body.cpn .offer:hover{background:linear-gradient(135deg,#2f2f2f 0%,#202020 100%)}
+    padding:24px 26px 20px;border-radius:14px;background:var(--lime);color:#0a0a0a;box-shadow:0 10px 30px -12px rgba(0,0,0,.7)}
+  body.cpn .offer:hover{background:var(--lime);filter:brightness(1.04)}
   body.cpn .offer .main,body.cpn .offer .foot{display:contents}
-  body.cpn .offer .val{grid-area:val;margin:0;color:#fff;font-size:30px}
-  body.cpn .offer .eb{grid-area:eb;color:var(--text-4);font-size:10.5px}
-  body.cpn .offer .desc{grid-area:desc;color:#fff;font-size:15px;font-weight:600;align-self:end}
-  body.cpn .offer .stub{grid-area:stub;justify-self:end;align-self:center;width:auto;flex-direction:row;gap:8px;padding:0;border:0;background:none;color:var(--text-3)}
+  body.cpn .offer .val{grid-area:val;margin:0;color:#0a0a0a;font-size:30px}
+  body.cpn .offer .eb{grid-area:eb;color:rgba(10,10,10,.6);font-size:10.5px}
+  body.cpn .offer .desc{grid-area:desc;color:#0a0a0a;font-size:15px;font-weight:600;align-self:end}
+  body.cpn .offer .stub{grid-area:stub;justify-self:end;align-self:center;width:auto;flex-direction:row;gap:8px;padding:0;border:0;background:none;color:#0a0a0a}
   body.cpn .offer .stub small{display:none}
-  body.cpn .offer .stub .c{writing-mode:horizontal-tb;transform:none;font-size:24px;font-weight:800;letter-spacing:.5px;color:var(--lime)}
+  body.cpn .offer .stub .c{writing-mode:horizontal-tb;transform:none;font-size:24px;font-weight:800;letter-spacing:.5px;color:#0a0a0a}
   body.cpn .offer .stub svg{width:15px;height:15px}
-  body.cpn .offer .expiry{grid-area:exp;justify-self:end;text-transform:uppercase;letter-spacing:1px;font-size:10.5px}
+  body.cpn .offer .expiry{grid-area:exp;justify-self:end;color:rgba(10,10,10,.6);text-transform:uppercase;letter-spacing:1px;font-size:10.5px}
   body.cpn .offer .expiry svg{display:none}
-  body.cpn .offer .claim{grid-area:claim;justify-self:end;align-self:end}
+  body.cpn .offer .claim{grid-area:claim;justify-self:end;align-self:end;background:#0a0a0a;color:var(--lime)}
+  body.cpn .offer .eb svg{color:#0a0a0a}
   body.cpn .offer::before{top:50%;left:-11px;right:auto;transform:translateY(-50%);clip-path:inset(0 0 0 50%)}
   body.cpn .offer::after{top:50%;bottom:auto;right:-11px;transform:translateY(-50%);clip-path:inset(0 50% 0 0)}
   @media (max-width:860px){
