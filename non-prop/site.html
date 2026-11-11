@@ -545,6 +545,29 @@ body:not(.hcv) .story { display: none !important; }
 .tp.on .st-img { transform: scale(1.02); }
 .st-glowbg { background: radial-gradient(60% 70% at 70% 45%, rgba(217,255,0,.22), transparent 60%), radial-gradient(70% 80% at 60% 35%, rgba(0,216,195,.25), transparent 70%), #04100f; }
 .st-tri { position: absolute; inset: 0; width: 100%; height: 100%; -webkit-mask-image: radial-gradient(60% 70% at 62% 45%, #000 30%, transparent 78%); mask-image: radial-gradient(60% 70% at 62% 45%, #000 30%, transparent 78%); }
+/* trading screens: glass panels stacked in depth behind the trader */
+.st-stack { position: absolute; left: 5%; top: 9%; width: 58%; height: 50%; perspective: 1100px; perspective-origin: 30% 40%; opacity: 0; transition: opacity .8s .2s var(--ease); pointer-events: none; }
+.tp.on .st-stack { opacity: 1; }
+.st-rig { position: absolute; inset: 0; transform-style: preserve-3d; transform: rotateY(-30deg) rotateX(6deg); animation: stRig 9s ease-in-out infinite alternate; }
+@keyframes stRig { to { transform: rotateY(-24deg) rotateX(3deg); } }
+.st-scr { position: absolute; left: 0; top: 0; width: 64%; aspect-ratio: 1.45; padding: 4.5% 5%; border-radius: 14px; border: 1px solid rgba(143,243,232,.38); background: linear-gradient(160deg, #1d3a3b, #0a1f21 45%, #050f11); box-shadow: inset 0 1px 0 rgba(255,255,255,.35), inset 0 0 30px rgba(0,216,195,.12), 0 30px 60px -20px rgba(0,0,0,.9); display: flex; flex-direction: column; color: #fff; font-size: clamp(9px, .85vw, 12px); backface-visibility: hidden; }
+.st-scr::before { content: ""; position: absolute; left: 6%; right: 6%; top: -1px; height: 1px; background: linear-gradient(90deg, transparent, rgba(217,255,0,.8), transparent); }
+.st-scr header { display: flex; justify-content: space-between; align-items: baseline; gap: 6px; white-space: nowrap; }
+.st-scr header b { font-weight: 600; letter-spacing: .02em; }
+.st-scr header span { color: var(--mute); font-size: .9em; }
+.st-scr header em { font-style: normal; color: var(--lime); font-weight: 600; }
+.st-scr header em.dn { color: #ff6b7a; }
+.st-scr svg { flex: 1; width: 100%; min-height: 0; margin-top: 6%; overflow: visible; }
+.st-scr footer { display: flex; justify-content: space-between; margin-top: 5%; color: var(--mute); font-size: .85em; white-space: nowrap; }
+.st-scr footer b { color: #fff; font-weight: 600; }
+.st-scr.front { border-color: rgba(217,255,0,.55); box-shadow: inset 0 1px 0 rgba(255,255,255,.45), inset 0 0 40px rgba(217,255,0,.1), 0 40px 70px -24px rgba(0,0,0,.95), 0 0 40px -14px rgba(217,255,0,.45); }
+.st-ticket { position: absolute; left: 34%; bottom: 4%; z-index: 3; display: flex; align-items: center; gap: 8px; padding: 7px 11px; border-radius: 10px; font-size: clamp(9px, .8vw, 11.5px); white-space: nowrap; color: #fff; background: rgba(6,22,24,.86); border: 1px solid rgba(143,243,232,.35); box-shadow: 0 14px 30px -12px rgba(0,0,0,.9); transform: translateZ(60px); animation: stTk 4.2s ease-in-out infinite; }
+.st-ticket i { padding: 2px 7px; border-radius: 6px; background: var(--lime); color: #0a0a0a; font-style: normal; font-weight: 700; letter-spacing: .04em; }
+.st-ticket em { font-style: normal; color: var(--lime); font-weight: 600; }
+@keyframes stTk { 50% { transform: translateZ(60px) translateY(-6px); } }
+.st-tri { opacity: .55; }
+@media (max-width: 860px) { .st-stack { left: 3%; top: 6%; width: 74%; height: 40%; } .st-ticket { display: none; } .st-scr:nth-child(n+4) { display: none; } }
+@media (prefers-reduced-motion: reduce) { .st-rig, .st-ticket { animation: none; } }
 .st-person { position: absolute; right: 6%; bottom: 0; height: 88%; width: auto; max-width: none; -webkit-mask-image: linear-gradient(180deg, #000 70%, transparent); mask-image: linear-gradient(180deg, #000 70%, transparent); }
 .st-reward { position: absolute; right: 6%; top: 8%; z-index: 2; padding: 14px 18px; border-radius: 18px; opacity: 0; transform: translateY(14px); transition: opacity .6s .3s var(--ease), transform .8s .3s var(--ease); }
 .tp.on .st-reward { opacity: 1; transform: none; }
@@ -946,6 +969,10 @@ body.hcv .co-row b { font-size: clamp(18px, 1.7vw, 24px); }
   .hero h1 { font-size: clamp(38px, 10.6vw, 64px) !important; }
   .hero h1 .ln { white-space: normal; }
   .hero-copy { max-width: 100%; }
+}
+/* site Figma, mobile: hero titles are 44px on phones (every hero version) */
+@media (max-width: 600px) {
+  .hero h1, .hero h1.hc-h { font-size: 44px !important; }
   .scene { height: 400px; margin: 10px -8px 0; }
   .scene { height: 470px; }
   .rig { left: 4%; right: 4%; bottom: 10%; height: 70%; }
@@ -1129,7 +1156,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
         <div class="tp-body"><span class="tp-n">02</span><div class="tp-txt"><span class="tp-k">The difference</span><h3>Simulated account.<br><span class="grad">Your savings stay put.</span></h3><p>Trade $5K to $200K in simulated capital from your desk. One fee, paid once. Nothing else at risk.</p></div></div>
       </article>
       <article class="tp rw" tabindex="0" data-i="2">
-        <div class="tp-media"><div class="st-img st-glowbg"></div><canvas class="st-tri" id="stTri" aria-hidden="true"></canvas><img class="st-person" src="assets/prove.webp" alt="" loading="lazy"><div class="st-reward liquid"><span><i></i>Reward · Approved</span><b class="tnum">+$800</b><em>80% of $1,000 simulated profit</em></div></div>
+        <div class="tp-media"><div class="st-img st-glowbg"></div><canvas class="st-tri" id="stTri" aria-hidden="true"></canvas><div class="st-stack" id="stStack" aria-hidden="true"></div><img class="st-person" src="assets/prove.webp" alt="" loading="lazy"><div class="st-reward liquid"><span><i></i>Reward · Approved</span><b class="tnum">+$800</b><em>80% of $1,000 simulated profit</em></div></div>
         <div class="tp-body"><span class="tp-n">03</span><div class="tp-txt"><span class="tp-k">The payoff</span><h3>Perform.<br><span class="grad">Get rewarded.</span></h3><p>In profit? Request a Reward and keep up to 95%. Processed within 48 hours.</p></div></div>
       </article>
       </div>
@@ -1687,6 +1714,41 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
     if (window.ResizeObserver) new ResizeObserver(function () { size(); draw(performance.now()); }).observe(cv);
   })();
 
+
+  /* story panel 03: build the stacked trading screens (simulated account first, then markets receding behind the trader) */
+  (function () {
+    var box = $("#stStack"); if (!box) return;
+    var seed = 11; function rnd() { seed = (seed * 9301 + 49297) % 233280; return seed / 233280; }
+    function candles(n, up) {
+      var o = 50, out = "", w = 100 / n, hi = -1e9, lo = 1e9, rows = [];
+      for (var i = 0; i < n; i++) { var c = o + (rnd() - (up ? .38 : .55)) * 9, h = Math.max(o, c) + rnd() * 3, l = Math.min(o, c) - rnd() * 3; rows.push([o, c, h, l]); hi = Math.max(hi, h); lo = Math.min(lo, l); o = c; }
+      function y(v) { return 56 - (v - lo) / (hi - lo) * 52; }
+      rows.forEach(function (r, i) { var x = i * w + w / 2, g = r[1] >= r[0], col = g ? "#d9ff00" : "#ff6b7a";
+        out += '<line x1="' + x + '" x2="' + x + '" y1="' + y(r[2]) + '" y2="' + y(r[3]) + '" stroke="' + col + '" stroke-width=".5" opacity=".8"/>' +
+               '<rect x="' + (x - w * .3) + '" width="' + (w * .6) + '" y="' + Math.min(y(r[0]), y(r[1])) + '" height="' + Math.max(.8, Math.abs(y(r[0]) - y(r[1]))) + '" fill="' + col + '" rx=".4"/>'; });
+      return '<svg viewBox="0 0 100 60" preserveAspectRatio="none">' + out + '</svg>';
+    }
+    function equity() {
+      var pts = [], v = 10, d = "";
+      for (var i = 0; i <= 30; i++) { v += (rnd() - .3) * 2.2; pts.push([i * 100 / 30, v]); }
+      var mx = Math.max.apply(0, pts.map(function (p) { return p[1]; })), mn = Math.min.apply(0, pts.map(function (p) { return p[1]; }));
+      pts.forEach(function (p, i) { d += (i ? "L" : "M") + p[0].toFixed(1) + " " + (56 - (p[1] - mn) / (mx - mn) * 50).toFixed(1); });
+      return '<svg viewBox="0 0 100 60" preserveAspectRatio="none"><defs><linearGradient id="stEq" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d9ff00" stop-opacity=".45"/><stop offset="1" stop-color="#d9ff00" stop-opacity="0"/></linearGradient></defs>' +
+        '<path d="' + d + 'L100 60L0 60Z" fill="url(#stEq)"/><path d="' + d + '" fill="none" stroke="#d9ff00" stroke-width="1.2" vector-effect="non-scaling-stroke"/></svg>';
+    }
+    var S = [
+      ["Simulated account", "$10,000", "+10.0%", equity(), "Profit <b>+$1,000</b>", "Reward <b>80%</b>", " front"],
+      ["XAU/USD", "2,384.6", "+0.8%", candles(26, 1), "Buy <b>1.00</b>", "Sim P&amp;L <b>+$420</b>", ""],
+      ["NAS100", "18,942", "+1.2%", candles(26, 1), "Buy <b>0.50</b>", "Sim P&amp;L <b>+$365</b>", ""],
+      ["EUR/USD", "1.0842", "&minus;0.2%", candles(26, 0), "Sell <b>2.00</b>", "Sim P&amp;L <b>+$215</b>", ""],
+      ["BTC/USD", "64,210", "+2.1%", candles(26, 1), "Closed", "Win rate <b>64%</b>", ""]
+    ];
+    box.innerHTML = '<div class="st-rig">' + S.map(function (r, i) {
+      return '<div class="st-scr' + r[6] + '" style="transform:translate3d(' + (i * 15) + '%,' + (i * -3) + '%,' + (-i * 130) + 'px);z-index:' + (9 - i) + ';opacity:' + (1 - i * .14) + '">' +
+        '<header><b>' + r[0] + '</b><span>' + r[1] + '</span><em' + (r[2].indexOf("minus") > 0 ? ' class="dn"' : "") + '>' + r[2] + '</em></header>' + r[3] +
+        '<footer><span>' + r[4] + '</span><span>' + r[5] + '</span></footer></div>';
+    }).join("") + '<div class="st-ticket"><i>BUY</i>XAU/USD · simulated <em>+$420</em></div></div>';
+  })();
 
   /* comparison details toggle (C/D) */
   $$(".cc-more").forEach(function (b) { b.addEventListener("click", function () { var c = b.closest(".cc"), o = !c.classList.contains("open"); c.classList.toggle("open", o); b.setAttribute("aria-expanded", o); b.firstChild.nodeValue = o ? "Hide details " : "See details "; }); });
