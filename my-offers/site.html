@@ -148,6 +148,13 @@
     .offer{--stub:118px}
     .offer .stub .c{font-size:12px;letter-spacing:1px}
   }
+  /* A · Colour (option): side stub with vertical code; each offer in its brand colour with a soft glow behind the value */
+  body.colr .offer{--stub:104px;--btxt:color-mix(in srgb,var(--brand) 80%,#fff)}
+  body.colr .offer .stub .c{writing-mode:vertical-rl;transform:rotate(180deg);font-size:13px;letter-spacing:2px;color:var(--btxt)}
+  body.colr .offer .main{background:radial-gradient(42% 38% at 26% 44%,color-mix(in srgb,var(--brand) 16%,transparent),transparent 70%),radial-gradient(120% 120% at 0% 0%,color-mix(in srgb,var(--brand) 6%,transparent),transparent 55%)}
+  body.colr .offer .val{color:var(--btxt)}
+  body.colr .offer .stub{background:linear-gradient(180deg,color-mix(in srgb,var(--brand) 11%,var(--card)),color-mix(in srgb,var(--brand) 4%,var(--card)))}
+  @media (max-width:860px){ body.colr .offer{--stub:76px} body.colr .offer .stub .c{font-size:12px;letter-spacing:1.6px} }
 </style>
 </head>
 <body>
@@ -254,15 +261,15 @@
 
 <script>
   const OFFERS = [
-    {acc:'var(--lime)', title:'Bundle',         val:'3+2',                desc:'Buy 3 challenges, get 2 free',        code:'BUY3GET2',   exp:'Until Nov 30, 2026', cat:'bundle'},
-    {acc:'var(--lime)', title:'Black November', val:'30% OFF',            desc:'Every program, every account size',   code:'BLACKNOV30', exp:'Until Nov 30, 2026', cat:'discount'},
-    {acc:'var(--lime)', title:'Bundle',         val:'2+1',                desc:'Buy 2 challenges, get 1 free',        code:'BUY2GET1',   exp:'Until Nov 30, 2026', cat:'bundle'},
-    {acc:'var(--lime)', title:'+1 Offer',       val:'PAY AFTER YOU PASS', desc:'Start now, pay when you pass',        code:'PAYAFTER',   exp:'Until Nov 30, 2026', cat:'program'},
-    {acc:'var(--lime)', title:'New program',    val:'KOKUYŌ',             desc:'Live sale on the new Kokuyō program', code:'KOKUYO',     exp:'Live now',           cat:'program', live:true},
+    {acc:'var(--lime)', brand:'#78ff00', title:'Bundle',         val:'3+2',                desc:'Buy 3 challenges, get 2 free',        code:'BUY3GET2',   exp:'Until Nov 30, 2026', cat:'bundle'},
+    {acc:'var(--lime)', brand:'#d9ff00', title:'Black November', val:'30% OFF',            desc:'Every program, every account size',   code:'BLACKNOV30', exp:'Until Nov 30, 2026', cat:'discount'},
+    {acc:'var(--lime)', brand:'#00d8c3', title:'Bundle',         val:'2+1',                desc:'Buy 2 challenges, get 1 free',        code:'BUY2GET1',   exp:'Until Nov 30, 2026', cat:'bundle'},
+    {acc:'var(--lime)', brand:'#ff5c00', title:'+1 Offer',       val:'PAY AFTER YOU PASS', desc:'Start now, pay when you pass',        code:'PAYAFTER',   exp:'Until Nov 30, 2026', cat:'program'},
+    {acc:'var(--lime)', brand:'#8042ff', title:'New program',    val:'KOKUYŌ',             desc:'Live sale on the new Kokuyō program', code:'KOKUYO',     exp:'Live now',           cat:'program', live:true},
   ];
   const grid = document.getElementById('grid');
   grid.innerHTML = OFFERS.map(o => `
-    <article class="offer" data-cat="${o.cat}" style="--acc:${o.acc}">
+    <article class="offer" data-cat="${o.cat}" style="--acc:${o.acc};--brand:${o.brand}">
       <div class="main">
         <div class="eb"><svg><use href="#i-fr"/></svg><span class="ebt">${o.title}</span></div>
         <div class="val">${o.val}</div>
@@ -376,6 +383,7 @@
       var h = clean(d.map[k]); if (el.innerHTML !== h) { el.innerHTML = h; syncCode(el); }
     });
     if (d.t === "edit") setEdit(!!d.on);
+    if (d.t === "layout") document.body.classList.toggle("colr", d.v === "colour");
   });
   parent.postMessage({ fr: "mo", t: "ready" }, "*");
 })();
