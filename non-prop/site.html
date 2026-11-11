@@ -489,6 +489,21 @@ body.hdv .hc-cv { display: none; }
 .gets li { display: flex; gap: 12px; align-items: flex-start; }
 .gets li::before { content: ""; flex: none; width: 14px; height: 8px; margin-top: 6px; border-left: 2px solid var(--lime); border-bottom: 2px solid var(--lime); transform: rotate(-45deg); }
 @media (max-width: 860px) { .way.solo { grid-template-columns: 1fr; } }
+@media (max-width: 600px) {
+  .way.solo { padding: 18px; gap: 16px; }
+  .way.solo h3 { margin: 12px 0 4px; font-size: 24px; }
+  .way.solo .chips { margin-top: 14px; flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; gap: 6px; }
+  .way.solo .chips::-webkit-scrollbar { display: none; }
+  .way.solo .chip { flex: none; padding: 7px 11px; font-size: 13px; }
+  .way.solo .fee { margin-top: 14px; }
+  .way.solo .fee .n { font-size: 54px; }
+  .way.solo .go { padding-top: 14px; }
+  .way.solo .buy.lg { padding: 14px 18px; font-size: 15px; }
+  .way.solo .under { margin-top: 8px; font-size: 12px; }
+  .way.solo .obj > div { padding: 10px 12px; } .way.solo .obj dd { font-size: 16px; }
+  .gets { margin-top: 12px; gap: 8px; font-size: 14px; }
+  .ptabs .pt { padding: 12px; } .ptabs .pt b { font-size: 18px; }
+}
 .way.on { border-color: rgba(217,255,0,.55); box-shadow: 0 40px 100px -40px rgba(0,0,0,.9), 0 0 0 1px rgba(217,255,0,.25), 0 30px 80px -40px rgba(217,255,0,.35); }
 .way .for { display: inline-flex; align-self: flex-start; align-items: center; gap: 8px; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--iris); border: 1px solid rgba(143,243,232,.25); border-radius: 999px; padding: 6px 12px; }
 .way.on .for { color: #0a0a0a; background: var(--lime); border-color: var(--lime); }
@@ -1948,7 +1963,8 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
   var ticking = false;
   function onScroll() {
     nav.classList.toggle("on", scrollY > 10);
-    mbar.classList.toggle("on", scrollY > innerHeight * .9 && $("#end").getBoundingClientRect().top > innerHeight * .6);
+    var wr = $("#ways").getBoundingClientRect(), inWays = wr.top < innerHeight && wr.bottom > 0;
+    mbar.classList.toggle("on", scrollY > innerHeight * .9 && !inWays && $("#end").getBoundingClientRect().top > innerHeight * .6);
     if (!reduce) { var pr = talkPh.getBoundingClientRect(), c = (pr.top + pr.height / 2 - innerHeight / 2) / innerHeight; talkPh.style.setProperty("--py", (c * 40).toFixed(1) + "px"); }
     ticking = false;
   }
