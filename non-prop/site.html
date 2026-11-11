@@ -568,8 +568,8 @@ body:not(.hcv) .story { display: none !important; }
 .st-tri { opacity: .55; }
 @media (max-width: 860px) { .st-stack { left: 3%; top: 6%; width: 74%; height: 40%; } .st-ticket { display: none; } .st-scr:nth-child(n+4) { display: none; } }
 @media (prefers-reduced-motion: reduce) { .st-rig, .st-ticket { animation: none; } }
-.st-person { position: absolute; right: 6%; bottom: 0; height: 88%; width: auto; max-width: none; -webkit-mask-image: linear-gradient(180deg, #000 70%, transparent); mask-image: linear-gradient(180deg, #000 70%, transparent); }
-.st-reward { position: absolute; right: 6%; top: 8%; z-index: 2; padding: 14px 18px; border-radius: 18px; opacity: 0; transform: translateY(14px); transition: opacity .6s .3s var(--ease), transform .8s .3s var(--ease); }
+.st-person { position: absolute; right: 0; bottom: 0; height: 100%; width: auto; max-width: none; -webkit-mask-image: linear-gradient(180deg, #000 70%, transparent); mask-image: linear-gradient(180deg, #000 70%, transparent); }
+.st-reward { position: absolute; right: 4%; top: 4%; z-index: 2; padding: 14px 18px; border-radius: 18px; opacity: 0; transform: translateY(14px); transition: opacity .6s .3s var(--ease), transform .8s .3s var(--ease); }
 .tp.on .st-reward { opacity: 1; transform: none; }
 .st-reward span { display: flex; align-items: center; gap: 8px; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: #fff; }
 .st-reward i { width: 7px; height: 7px; border-radius: 50%; background: var(--lime); box-shadow: 0 0 10px var(--lime); }
@@ -591,7 +591,7 @@ body:not(.hcv) .story { display: none !important; }
   .tp:not(.on) { height: 120px; }
   .tp.on { height: 400px; }
   .tp:not(.on) .st-reward { display: none; }
-  .st-reward { top: 5%; right: 4%; padding: 10px 12px; } .st-reward b { font-size: 30px; } .st-reward span { font-size: 9.5px; } .st-reward em { font-size: 10.5px; }
+  .st-reward { top: 3%; right: 3%; padding: 8px 10px; border-radius: 13px; } .st-reward b { font-size: 24px; margin-top: 4px; } .st-reward span { font-size: 9.5px; } .st-reward em { font-size: 10.5px; }
   .tp p { font-size: 15px; }
 }
 @media (prefers-reduced-motion: reduce) { .tp, .st-img, .st-reward, .tp p { transition: none !important; } }
@@ -1692,7 +1692,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
     function size() { var r = cv.getBoundingClientRect(); if (!r.width) return; W = Math.round(r.width * dpr); H = Math.round(r.height * dpr); cv.width = W; cv.height = H; cell = Math.max(14, Math.round(Math.min(W, H) / 44)); }
     function sample(px, py) {
       /* the silhouette is placed where the person image sits (right side, bottom aligned, ~92% tall), scaled up a little so the matrix frames him */
-      var ph = H * .88, pw = ph * LW / LH, ox = W * .94 - pw - pw * .5, oy = H - ph;
+      var ph = H, pw = ph * LW / LH, ox = W - pw - pw * .5, oy = H - ph;
       var u = (px - ox) / pw, v = (py - oy) / ph; if (u < 0 || u >= 1 || v < 0 || v >= 1) return 0;
       return lum[Math.floor(v * LH) * LW + Math.floor(u * LW)] || 0;
     }
