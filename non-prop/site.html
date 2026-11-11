@@ -561,6 +561,38 @@ body:not(.hcv) .story { display: none !important; }
 /* hero C parallax: layers move at different speeds as you scroll */
 .hc-vis { will-change: transform; }
 
+/* C/D: compact comparison; details fold behind a toggle */
+.cc-more { display: none; }
+body.hcv .acc { gap: 8px; max-width: 760px; margin: 0 auto; }
+body.hcv .ac { padding: 11px 14px 10px; border-radius: 14px; }
+body.hcv .ac b { font-size: clamp(18px, 1.7vw, 24px); }
+body.hcv .ac small { margin-top: 4px; font-size: 12px; }
+body.hcv .cmp { max-width: 980px; margin: 0 auto; gap: 14px; align-items: start; }
+body.hcv .cc-vs { align-self: center; }
+body.hcv .cc { padding: 20px 22px; border-radius: 22px; }
+body.hcv .cc header b { font-size: 17px; }
+body.hcv .cc header span { font-size: 13px; }
+body.hcv .cc-k { margin-top: 14px; font-size: 11px; }
+body.hcv .cc-n { font-size: clamp(34px, 3.4vw, 48px); margin-top: 2px; }
+body.hcv .cc-bar { height: 34px; margin-top: 12px; border-radius: 11px; }
+body.hcv .cc-bar i { border-radius: 10px; }
+body.hcv .bad .cc-bar em, body.hcv .cc-tag { font-size: 12.5px; }
+body.hcv .cc-tag { left: 14px; }
+body.hcv .cc-vs { width: 44px; height: 44px; font-size: 12px; }
+body.hcv .cc-more { display: inline-flex; align-items: center; gap: 8px; margin-top: 14px; padding: 0; border: 0; background: none; color: var(--mute); font: inherit; font-size: 13px; cursor: pointer; align-self: flex-start; }
+body.hcv .cc-more span { display: inline-grid; place-items: center; width: 20px; height: 20px; border-radius: 50%; border: 1px solid rgba(255,255,255,.25); font-size: 14px; line-height: 1; transition: transform .4s var(--pop), background .3s, color .3s; }
+body.hcv .cc-more:hover { color: #fff; }
+body.hcv .cc.open .cc-more span { transform: rotate(45deg); background: var(--lime); color: #0a0a0a; border-color: var(--lime); }
+body.hcv .cc-r { margin-top: 0; max-height: 0; opacity: 0; overflow: hidden; border-width: 0; transition: max-height .5s var(--ease), opacity .4s, margin-top .4s; }
+body.hcv .cc.open .cc-r { max-height: 320px; opacity: 1; margin-top: 12px; border-width: 1px; }
+body.hcv .cc-r > div { padding: 10px 13px; font-size: 13px; }
+body.hcv .cc-r dd { font-size: 13.5px; }
+body.hcv .cmp-out { max-width: 980px; margin: 14px auto 0; padding: 16px 22px; border-radius: 20px; gap: 22px; }
+body.hcv .co-x b { font-size: clamp(36px, 3.6vw, 52px); }
+body.hcv .co-x span { font-size: 12.5px; }
+body.hcv .co-ex p { font-size: clamp(14px, 1.2vw, 16px); }
+@media (max-width: 900px) { body.hcv .acc { grid-template-columns: repeat(3, 1fr); } body.hcv .cc-vs { margin: -10px 0; } }
+
 /* program tabs */
 .ptabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: 1080px; margin: 0 auto 18px; }
 .pt { appearance: none; cursor: pointer; text-align: left; padding: 20px 22px; border-radius: 22px; border: 1px solid rgba(143,243,232,.22); background: linear-gradient(170deg, rgba(10,44,50,.8), rgba(4,16,20,.92)); color: #fff; font: inherit; transition: transform .3s var(--ease), border-color .3s, background .3s, box-shadow .3s; }
@@ -1109,6 +1141,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
           <div class="cc-k">You put in</div>
           <div class="cc-n tnum" id="cBk">$5,000</div>
           <div class="cc-bar"><i id="cBkBar"><em>Your whole budget at risk</em></i></div>
+          <button type="button" class="cc-more" aria-expanded="false">See details <span aria-hidden="true">+</span></button>
           <dl class="cc-r">
             <div><dt>At risk</dt><dd class="r tnum" id="cBkRisk">$50,000</dd></div>
             <div><dt>If it goes wrong</dt><dd class="r">Your savings are gone</dd></div>
@@ -1121,6 +1154,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
           <div class="cc-k">You pay</div>
           <div class="cc-n tnum" id="cFr">$70</div>
           <div class="cc-bar"><i id="cFrBar"></i><span class="cc-tag" id="cFrTag">Only $350 at risk</span></div>
+          <button type="button" class="cc-more" aria-expanded="false">See details <span aria-hidden="true">+</span></button>
           <dl class="cc-r">
             <div><dt>At risk</dt><dd class="g tnum" id="cFrRisk">$350, one time</dd></div>
             <div><dt>If it goes wrong</dt><dd>The account ends. You lose the fee, nothing more</dd></div>
@@ -1618,6 +1652,10 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
     new IntersectionObserver(function (es) { var v = es[0].isIntersecting && !reduce; if (v && !live) { live = true; requestAnimationFrame(loop); } live = v; if (!v) draw(performance.now()); }).observe(cv);
     if (window.ResizeObserver) new ResizeObserver(function () { size(); draw(performance.now()); }).observe(cv);
   })();
+
+
+  /* comparison details toggle (C/D) */
+  $$(".cc-more").forEach(function (b) { b.addEventListener("click", function () { var c = b.closest(".cc"), o = !c.classList.contains("open"); c.classList.toggle("open", o); b.setAttribute("aria-expanded", o); b.firstChild.nodeValue = o ? "Hide details " : "See details "; }); });
 
   /* hero visual: a one-time program fee opens a simulated account; cycles through the Instant sizes */
   (function () {
