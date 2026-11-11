@@ -516,50 +516,39 @@ body.hdv .hc-cv { display: none; }
 
 /* ---------- how it works ---------- */
 
-/* pinned scroll story (scene swap with zoom, cross-fade and a light sweep) */
-.story { position: relative; height: 330vh; }
+/* story: three full-width panels that scroll normally; each fades and rises in, the image eases out of a slight zoom */
+.story { position: relative; }
 body:not(.hcv) .story { display: none !important; }
-.st-pin { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; display: flex; align-items: center; }
-.st-stage { position: absolute; inset: 0; }
-.st-scene { position: absolute; inset: 0; opacity: 0; transition: opacity 1s var(--ease); }
-.st-scene.on { opacity: 1; }
-.st-img { position: absolute; inset: -4%; background-size: cover; background-position: 70% 40%; transform: scale(var(--z, 1.18)); will-change: transform; }
+.sp { position: relative; min-height: 86vh; display: flex; align-items: center; overflow: hidden; }
+.sp-media { position: absolute; inset: 0; }
+.sp-media::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(90deg, rgba(3,9,12,.92) 0%, rgba(3,9,12,.55) 36%, transparent 64%), linear-gradient(0deg, var(--bg) 0%, transparent 22%), linear-gradient(180deg, var(--bg) 0%, transparent 22%); }
+.st-img { position: absolute; inset: 0; background-size: cover; background-position: 70% 40%; transform: scale(1.08); transition: transform 1.6s var(--ease); }
+.sp.in .st-img { transform: none; }
 .st-glowbg { background: radial-gradient(60% 70% at 72% 55%, rgba(217,255,0,.22), transparent 60%), radial-gradient(70% 80% at 60% 40%, rgba(0,216,195,.25), transparent 70%), #04100f; }
-.st-fr { position: absolute; right: 6%; top: 8%; width: 40%; height: 84%; }
 .st-tri { position: absolute; inset: 0; width: 100%; height: 100%; -webkit-mask-image: radial-gradient(60% 70% at 70% 52%, #000 30%, transparent 78%); mask-image: radial-gradient(60% 70% at 70% 52%, #000 30%, transparent 78%); }
-@media (max-width: 760px) { .st-fr { right: -6%; width: 80%; height: 60%; top: 6%; } }
-.st-person { position: absolute; right: 8%; bottom: 0; height: 92%; width: auto; max-width: none; transform: translateY(var(--py, 40px)) scale(var(--pz, 1.04)); transition: transform .2s linear; -webkit-mask-image: linear-gradient(180deg, #000 75%, transparent); mask-image: linear-gradient(180deg, #000 75%, transparent); }
-.st-reward { position: absolute; right: 41%; top: 44%; padding: 18px 22px; border-radius: 20px; transform: translateY(var(--ry, 30px)); opacity: var(--ro, 0); transition: transform .3s linear, opacity .3s linear; }
+.st-person { position: absolute; right: 8%; bottom: 0; height: 92%; width: auto; max-width: none; transform: translateY(30px); opacity: 0; transition: transform 1.2s var(--ease), opacity 1s var(--ease); -webkit-mask-image: linear-gradient(180deg, #000 75%, transparent); mask-image: linear-gradient(180deg, #000 75%, transparent); }
+.sp.in .st-person { transform: none; opacity: 1; }
+.st-reward { position: absolute; right: 3%; top: auto; bottom: 16%; z-index: 2; padding: 18px 22px; border-radius: 20px; transform: translateY(24px); opacity: 0; transition: transform 1s .35s var(--ease), opacity .8s .35s var(--ease); }
+.sp.in .st-reward { transform: none; opacity: 1; }
 .st-reward span { display: flex; align-items: center; gap: 8px; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: #fff; }
 .st-reward i { width: 7px; height: 7px; border-radius: 50%; background: var(--lime); box-shadow: 0 0 10px var(--lime); }
 .st-reward b { display: block; margin-top: 10px; font-size: clamp(48px, 5vw, 72px); font-weight: 600; letter-spacing: -.05em; line-height: 1; background: linear-gradient(180deg, #fff 10%, #e9ff7a 60%, #d9ff00); -webkit-background-clip: text; background-clip: text; color: transparent; }
 .st-reward em { display: block; margin-top: 6px; font-style: normal; font-size: 13px; color: var(--mute); }
-.st-sweep { position: absolute; inset: 0; pointer-events: none; background: linear-gradient(105deg, transparent 38%, rgba(217,255,0,.0) 42%, rgba(217,255,0,.45) 49%, rgba(255,255,255,.7) 50%, rgba(0,216,195,.4) 52%, transparent 60%); background-size: 260% 100%; background-position: 130% 0; opacity: 0; mix-blend-mode: screen; }
-.st-sweep.go { animation: stsweep 1.1s var(--ease); }
-@keyframes stsweep { 0% { opacity: 1; background-position: 130% 0; } 100% { opacity: 1; background-position: -30% 0; } }
-.st-shade { position: absolute; inset: 0; pointer-events: none; background: linear-gradient(90deg, rgba(3,9,12,.92) 0%, rgba(3,9,12,.6) 34%, transparent 62%), linear-gradient(0deg, var(--bg) 0%, transparent 18%), linear-gradient(180deg, var(--bg) 0%, transparent 14%); }
-.st-copy { position: relative; z-index: 2; width: 100%; height: 100%; }
-.st-txt { position: absolute; left: 0; top: 50%; max-width: 520px; padding-inline: inherit; transform: translateY(calc(-50% + 40px)); opacity: 0; transition: opacity .7s var(--ease), transform .9s var(--ease); pointer-events: none; }
-.st-txt.on { opacity: 1; transform: translateY(-50%); pointer-events: auto; }
-.st-txt h2 { margin: 16px 0 18px; font-size: clamp(42px, 5.6vw, 84px); letter-spacing: -.05em; line-height: .98; font-weight: 600; }
-.st-txt p { margin: 0 0 26px; color: var(--mute); font-size: 19px; max-width: 40ch; }
-.st-dots { position: absolute; right: max(20px, env(safe-area-inset-right)); bottom: 8%; display: flex; align-items: center; gap: 10px; }
-@media (min-width: 761px) { .st-txt { left: 48px; } .st-dots { right: 48px; } }
-.st-dots i { width: 28px; height: 3px; border-radius: 99px; background: rgba(255,255,255,.2); transition: background .4s, width .4s; }
-.st-dots i.on { width: 46px; background: var(--lime); }
-.st-dots span { margin-left: 8px; font-size: 13px; letter-spacing: .14em; color: var(--mute); }
+.sp-copy { position: relative; z-index: 2; width: 100%; }
+.sp-txt { max-width: 520px; }
+.sp-txt h2 { margin: 16px 0 18px; font-size: clamp(42px, 5.6vw, 84px); letter-spacing: -.05em; line-height: .98; font-weight: 600; }
+.sp-txt p { margin: 0 0 26px; color: var(--mute); font-size: 19px; max-width: 40ch; }
 @media (max-width: 760px) {
-  .story { height: 300vh; }
-  .st-img { background-position: 62% 40%; }
-  .st-shade { background: linear-gradient(0deg, rgba(3,9,12,.95) 0%, rgba(3,9,12,.75) 42%, transparent 70%), linear-gradient(180deg, var(--bg) 0%, transparent 12%); }
-  .st-txt { left: 20px; right: 20px; top: auto; bottom: 14%; transform: translateY(40px); }
-  .st-txt.on { transform: none; }
-  .st-txt p { font-size: 16px; }
-  .st-person { right: -10%; height: 70%; bottom: 30%; }
-  .st-reward { right: auto; left: 5%; top: 30%; width: 44%; padding: 12px 14px; } .st-reward b { font-size: 34px; } .st-reward span { font-size: 9.5px; } .st-reward em { font-size: 11px; }
-  .st-dots { bottom: 5%; }
+  .sp { min-height: 0; flex-direction: column; align-items: stretch; }
+  .sp-media { position: relative; height: 100vw; }
+  .sp-media::after { background: linear-gradient(0deg, var(--bg) 0%, transparent 35%), linear-gradient(180deg, var(--bg) 0%, transparent 18%); }
+  .st-img { background-position: 60% 40%; }
+  .sp-copy { margin-top: -40px; padding-bottom: 48px; }
+  .sp-txt p { font-size: 16px; }
+  .st-person { right: -6%; height: 96%; }
+  .st-reward { right: auto; left: 5%; top: 30%; bottom: auto; width: 44%; padding: 12px 14px; } .st-reward b { font-size: 34px; } .st-reward span { font-size: 9.5px; } .st-reward em { font-size: 11px; }
 }
-@media (prefers-reduced-motion: reduce) { .story { height: auto; } .st-pin { position: relative; height: auto; min-height: 100vh; } }
+@media (prefers-reduced-motion: reduce) { .st-img, .st-person, .st-reward { transform: none !important; opacity: 1 !important; transition: none !important; } }
 
 /* hero C parallax: layers move at different speeds as you scroll */
 .hc-vis { will-change: transform; }
@@ -1054,25 +1043,22 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
   <!-- 2. pain point comparison: scroll drives a bad stretch, the cap line holds -->
   <!-- pinned scroll story: the screen holds, scenes swap as you scroll -->
   <section class="story" id="story" aria-label="How it feels">
-    <div class="st-pin">
-      <div class="st-stage">
-        <div class="st-scene on" data-i="0"><div class="st-img" style="background-image:url(assets/hc/car.jpg)"></div></div>
-        <div class="st-scene" data-i="1"><div class="st-img" style="background-image:url(assets/hc/desk.jpg)"></div></div>
-        <div class="st-scene st-rw" data-i="2">
-          <div class="st-img st-glowbg"></div>
-          <canvas class="st-tri" id="stTri" aria-hidden="true"></canvas>
-          <img class="st-person" src="assets/prove.webp" alt="" loading="lazy">
-          <div class="st-reward liquid"><span><i></i>Reward request · Approved</span><b class="tnum">+$800</b><em>80% of $1,000 simulated profit</em></div>
-        </div>
-        <div class="st-sweep" id="stSweep" aria-hidden="true"></div>
-        <div class="st-shade" aria-hidden="true"></div>
+    <div class="sp">
+      <div class="sp-media"><div class="st-img" style="background-image:url(assets/hc/car.jpg)"></div></div>
+      <div class="wrap sp-copy"><div class="sp-txt rv"><span class="eyebrow">01 · The feeling</span><h2>The thrill of trading.<br><span class="grad">None of the risk.</span></h2><p>Fast charts, sharp decisions, full focus. All of it on a simulated account, so your own money never enters the race.</p></div></div>
+    </div>
+    <div class="sp">
+      <div class="sp-media"><div class="st-img" style="background-image:url(assets/hc/desk.jpg)"></div></div>
+      <div class="wrap sp-copy"><div class="sp-txt rv"><span class="eyebrow">02 · The difference</span><h2>Simulated account.<br><span class="grad">Your savings stay put.</span></h2><p>Trade $5K to $200K in simulated capital from your desk. One fee, paid once. Nothing else at risk.</p></div></div>
+    </div>
+    <div class="sp st-rw">
+      <div class="sp-media">
+        <div class="st-img st-glowbg"></div>
+        <canvas class="st-tri" id="stTri" aria-hidden="true"></canvas>
+        <img class="st-person" src="assets/prove.webp" alt="" loading="lazy">
+        <div class="st-reward liquid"><span><i></i>Reward request · Approved</span><b class="tnum">+$800</b><em>80% of $1,000 simulated profit</em></div>
       </div>
-      <div class="wrap st-copy">
-        <div class="st-txt on" data-i="0"><span class="eyebrow">01 · The feeling</span><h2>The thrill of trading.<br><span class="grad">None of the risk.</span></h2><p>Fast charts, sharp decisions, full focus. All of it on a simulated account, so your own money never enters the race.</p></div>
-        <div class="st-txt" data-i="1"><span class="eyebrow">02 · The difference</span><h2>Simulated account.<br><span class="grad">Your savings stay put.</span></h2><p>Trade $5K to $200K in simulated capital from your desk. One fee, paid once. Nothing else at risk.</p></div>
-        <div class="st-txt" data-i="2"><span class="eyebrow">03 · The payoff</span><h2>Perform.<br><span class="grad">Get rewarded.</span></h2><p>In profit? Request a Reward and keep up to 95%. Processed within 48 hours.</p><a class="buy lg" href="#ways">Pick your program <span class="ar" aria-hidden="true">→</span></a></div>
-        <div class="st-dots" aria-hidden="true"><i class="on"></i><i></i><i></i><span class="tnum" id="stNum">01 / 03</span></div>
-      </div>
+      <div class="wrap sp-copy"><div class="sp-txt rv"><span class="eyebrow">03 · The payoff</span><h2>Perform.<br><span class="grad">Get rewarded.</span></h2><p>In profit? Request a Reward and keep up to 95%. Processed within 48 hours.</p><a class="buy lg" href="#ways">Pick your program <span class="ar" aria-hidden="true">→</span></a></div></div>
     </div>
   </section>
 
@@ -1558,29 +1544,12 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
   })();
 
 
-  /* pinned story: scroll position picks the scene; each scene zooms out slowly while it is on screen; a light sweep marks every swap */
+  /* story panels: mark each one "in" as it scrolls into view */
   (function () {
-    var st = $("#story"); if (!st) return;
-    var scenes = $$(".st-scene", st), txts = $$(".st-txt", st), dots = $$(".st-dots i", st), sweep = $("#stSweep"), num = $("#stNum"), cur = 0, N = scenes.length;
-    var person = $(".st-person", st), reward = $(".st-reward", st);
-    function show(i) {
-      if (i === cur) return; cur = i;
-      scenes.forEach(function (x, j) { x.classList.toggle("on", j === i); });
-      txts.forEach(function (x, j) { x.classList.toggle("on", j === i); });
-      dots.forEach(function (x, j) { x.classList.toggle("on", j === i); });
-      num.textContent = "0" + (i + 1) + " / 0" + N;
-      if (!reduce) { sweep.classList.remove("go"); void sweep.offsetWidth; sweep.classList.add("go"); }
-    }
-    function onStory() {
-      var r = st.getBoundingClientRect(), span = r.height - innerHeight; if (span <= 0) return;
-      var k = Math.max(0, Math.min(.9999, -r.top / span)), f = k * N, i = Math.floor(f), local = f - i;
-      show(i);
-      var img = scenes[i].querySelector(".st-img"); if (img) img.style.setProperty("--z", (1.18 - .14 * local).toFixed(4));
-      if (i === N - 1) { person.style.setProperty("--py", ((1 - local) * 60).toFixed(1) + "px"); person.style.setProperty("--pz", (1.06 - .06 * local).toFixed(3)); reward.style.setProperty("--ry", ((1 - Math.min(1, local * 2)) * 40).toFixed(1) + "px"); reward.style.setProperty("--ro", Math.min(1, local * 2.2).toFixed(2)); }
-    }
-    if (reduce) { reward.style.setProperty("--ro", 1); return; }
-    var q = false; addEventListener("scroll", function () { if (!q) { q = true; requestAnimationFrame(function () { q = false; onStory(); }); } }, { passive: true });
-    addEventListener("resize", onStory); onStory();
+    var ps = $$(".sp"); if (!ps.length) return;
+    if (reduce || !("IntersectionObserver" in window)) { ps.forEach(function (x) { x.classList.add("in"); }); return; }
+    var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }); }, { threshold: .25 });
+    ps.forEach(function (x) { io.observe(x); });
   })();
 
   /* hero C parallax: the image sinks slower than the page, the copy rises and fades, the stats strip lifts */
