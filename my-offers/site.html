@@ -457,6 +457,20 @@
     .ofc .title{font-size:17px;margin-top:8px}
     .code-btn,.bn-act .use,.ofc-btn{min-height:44px}
   }
+
+  /* A + C: all coupons the same size; Black November is one of them */
+  .ofc-grid{grid-template-columns:repeat(3,minmax(0,1fr));grid-auto-rows:1fr}
+  .ofc-bn{border-color:rgba(217,255,0,.4)}
+  .ofc-bn .ofc-top .bn-ends{margin-left:auto;font-size:10.5px;letter-spacing:.3px;text-transform:none;font-weight:500;color:var(--text-3);padding:0;border:0;background:none}
+  .bn-list{list-style:none;margin:8px 0 0;padding:0;display:flex;flex-direction:column}
+  .bn-list li{display:flex;align-items:baseline;gap:10px;padding:5px 0}
+  .bn-list li + li{border-top:1px solid #262626}
+  .bn-list .val{flex:none;min-width:78px;font-size:15px;font-weight:800;color:var(--lime);letter-spacing:-.2px}
+  .bn-list .desc{font-size:12.5px;color:var(--text-2)}
+  .ofc-btn.primary{background:var(--lime);border-color:var(--lime);color:#0a0a0a}
+  .ofc-btn.primary:hover{background:var(--lime);filter:brightness(1.06)}
+  @media (max-width:1100px){ .ofc-grid{grid-template-columns:repeat(2,minmax(0,1fr))} }
+  @media (max-width:560px){ .ofc-grid{grid-template-columns:1fr;grid-auto-rows:auto} }
 </style>
 </head>
 <body>
@@ -558,10 +572,7 @@
       </div>
 
       <div class="label" id="count-label">5 offers</div>
-      <div id="bn"></div>
-
-      <section class="more" aria-labelledby="more-title">
-        <h2 class="sec-title" id="more-title">More offers</h2>
+      <section class="more" aria-label="Offers">
         <div class="ofc-grid" id="grid"></div>
       </section>
 
@@ -585,9 +596,9 @@
 <script>
   /* Each coupon = one card, one code, several deals inside it. */
   /* Featured campaign: one card, three compact deals. Each deal has its own code and button. */
-  const CAMPAIGN = { title:'Black November', sub:'Every order gets a bonus challenge. Bundles too.', exp:'Ends Nov 30, 2026',
+  const CAMPAIGN = { title:'Black November', sub:'Every order gets a bonus challenge. Bundles too.', exp:'Ends Nov 30, 2026', code:'BLACKNOV',
     deals: [
-      {type:'Discount', icon:'o-pct',    val:'30% OFF',  desc:'Every program and account size', code:'BLACKNOV30'},
+      {type:'Discount', icon:'o-pct',    val:'30% OFF',  desc:'Every program and account size'},
       {type:'Bundle',   icon:'o-layers', val:'2+1 FREE', desc:'Buy 2 challenges, get 1 free',   code:'BUY2GET1'},
       {type:'Bundle',   icon:'o-layers', val:'3+2 FREE', desc:'Buy 3 challenges, get 2 free',   code:'BUY3GET2'},
     ] };
@@ -615,30 +626,21 @@
             <small class="code-label" aria-live="polite">Tap to copy</small>
           </div>`;
 
-  document.getElementById('bn').innerHTML = `
-    <article class="bn" aria-labelledby="bn-title">
-      <header class="bn-head">
-        <div class="bn-titles">
-          <div class="cg-meta"><span class="cg-pill"><svg width="11" height="11"><use href="#o-star"/></svg>Featured</span><span>${CAMPAIGN.deals.length} deals</span></div>
-          <h2 class="bn-title" id="bn-title">${CAMPAIGN.title}</h2>
-          <p class="bn-sub">${CAMPAIGN.sub}</p>
-        </div>
-        <span class="bn-ends"><svg width="13" height="13"><use href="#i-clock"/></svg><span class="ext">${CAMPAIGN.exp}</span></span>
-      </header>
-      <div class="bn-deals">
-        ${CAMPAIGN.deals.map(d => `
-        <div class="bn-deal">
-          <div class="bn-info">
-            <div class="eb"><svg><use href="#${d.icon}"/></svg><span class="ebt">${d.type}</span></div>
-            <div class="val">${d.val}</div>
-            <div class="desc">${d.desc}</div>
-          </div>
-          <div class="bn-act">${chip(d.code)}<button class="btn-lime use" type="button" data-go="${CAMPAIGN.title}" data-code="${d.code}">Use <svg width="12" height="12"><use href="#i-arrow"/></svg></button></div>
-        </div>`).join('')}
+  const bnCard = `
+    <article class="ofc ofc-bn" data-kind="coupon" style="--c:#d9ff00" aria-labelledby="bn-title">
+      <div class="ofc-body">
+        <div class="ofc-top"><span class="ofc-ic"><svg><use href="#o-star"/></svg></span><span class="ebt">Featured</span><span class="bn-ends"><span class="ext">${CAMPAIGN.exp}</span></span></div>
+        <h3 class="title" id="bn-title">${CAMPAIGN.title}</h3>
+        <ul class="bn-list">
+          ${CAMPAIGN.deals.map(d => `<li><span class="val">${d.val}</span><span class="desc">${d.desc}</span></li>`).join('')}
+        </ul>
+      </div>
+      <div class="ofc-stub">
+        ${chip(CAMPAIGN.code)}
+        <button class="ofc-btn use primary" type="button" data-go="${CAMPAIGN.title}" data-code="${CAMPAIGN.code}">Use Offer <svg width="12" height="12"><use href="#i-arrow"/></svg></button>
       </div>
     </article>`;
-
-  document.getElementById('grid').innerHTML = OFFERS.map(o => `
+  document.getElementById('grid').innerHTML = bnCard + OFFERS.map(o => `
     <article class="ofc" data-kind="${o.kind}" style="--c:${o.c}">
       <div class="ofc-body">
         <div class="ofc-top"><span class="ofc-ic"><svg><use href="#${o.icon}"/></svg></span><span class="ebt">${o.type}</span></div>
