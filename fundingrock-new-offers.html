@@ -69,8 +69,8 @@
 
   /* offer cards — ticket stub */
   .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
-  .offer{--acc:var(--lime);--stub:104px;position:relative;display:flex;min-height:172px;border-radius:10px;background:var(--card);border:1px solid var(--line);transition:transform .15s,border-color .15s}
-  .offer:hover{transform:translateY(-2px);border-color:color-mix(in srgb,var(--acc) 45%,var(--line))}
+  .offer{--acc:var(--lime);--stub:104px;position:relative;display:flex;min-height:172px;border-radius:10px;background:var(--card);transition:transform .15s,background .15s}
+  .offer:hover{transform:translateY(-2px);background:#151515}
   .offer[hidden]{display:none}
   .offer .main{flex:1;min-width:0;padding:18px 18px 16px;display:flex;flex-direction:column;gap:4px;border-radius:10px 0 0 10px;
     background:linear-gradient(90deg,color-mix(in srgb,var(--acc) 4.5%,transparent),transparent 50%)}
@@ -91,7 +91,7 @@
   .offer .stub svg{width:16px;height:16px}
   .offer .stub.copied{background:color-mix(in srgb,var(--acc) 18%,var(--card))}
   .offer .stub.copied small{color:var(--acc)}
-  .offer::before,.offer::after{content:"";position:absolute;right:calc(var(--stub) - 10px);width:20px;height:20px;border-radius:50%;background:var(--bg);border:1px solid var(--line);clip-path:inset(50% 0 0 0)}
+  .offer::before,.offer::after{content:"";position:absolute;right:calc(var(--stub) - 10px);width:20px;height:20px;border-radius:50%;background:var(--bg);clip-path:inset(50% 0 0 0)}
   .offer::before{top:-11px}
   .offer::after{bottom:-11px;clip-path:inset(0 0 50% 0)}
 
@@ -138,6 +138,12 @@
   .switcher span{align-self:center;padding:0 8px;color:var(--text-4);font-size:10px;letter-spacing:1px;font-weight:600}
   .switcher button{padding:6px 10px;border-radius:6px;color:var(--text-3);font-weight:500;font-size:12px;border:1px solid transparent}
   .switcher button.on{background:var(--lime-bg);border-color:var(--lime);color:var(--lime);font-weight:600}
+  .gift-btn{position:relative;width:37px;height:37px;border-radius:8px;background:#161616;border:1px solid #262626;display:grid;place-items:center;color:#e6e6e6;flex:none;cursor:pointer}
+  .gift-btn:hover{border-color:var(--lime);color:var(--lime)}
+  .gift-btn svg{width:18px;height:18px}
+  .gift-btn b{position:absolute;top:-7px;right:-7px;min-width:18px;height:18px;padding:0 5px;border-radius:999px;background:var(--lime);color:var(--bg);font-size:10.5px;font-weight:700;display:grid;place-items:center;box-shadow:0 0 0 2px var(--topnav)}
+  @keyframes navflash{0%,100%{box-shadow:none}50%{box-shadow:0 0 0 4px rgba(217,255,0,.35)}}
+  .nav-item.flash{animation:navflash .5s ease 2}
 </style>
 </head>
 <body>
@@ -199,6 +205,7 @@
       </div>
       <div class="nav-right">
         <button class="btn-lime">Start Challenge</button>
+        <button class="gift-btn" id="gift-btn" title="My Offers" aria-label="My Offers, 5 available"><svg><use href="#i-offer"/></svg><b>5</b></button>
         <span class="dot" style="width:6px;height:6px;border-radius:9px;background:var(--text-2)"></span>
         <span class="avatar">MC</span>
         <span class="user">Malik Coley</span>
@@ -320,6 +327,13 @@
       : '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>';
   });
   document.querySelectorAll('.nav-item').forEach(b => b.addEventListener('click', () => { if (document.body.classList.contains('menu-open')) mb.click(); }));
+
+  // Top-bar gift shortcut -> offers
+  document.getElementById('gift-btn').addEventListener('click', () => {
+    const item = document.querySelector('.nav-item[data-view="New Offers"]');
+    item.click(); item.classList.remove('flash'); void item.offsetWidth; item.classList.add('flash');
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
 </script>
 </body>
 </html>

@@ -95,7 +95,7 @@
   .label{font-size:10px;font-weight:500;letter-spacing:1px;color:var(--text-4);text-transform:uppercase}
 
   /* ticket */
-  .offer{--stub:104px;position:relative;display:flex;border-radius:10px;background:var(--card);border:1px solid var(--line)}
+  .offer{--stub:104px;position:relative;display:flex;border-radius:10px;background:var(--card)}
   .offer .main{flex:1;min-width:0;padding:18px 18px 16px;display:flex;flex-direction:column;gap:4px;border-radius:10px 0 0 10px;background:linear-gradient(90deg,rgba(217,255,0,.045),transparent 50%)}
   .offer .eb{display:flex;align-items:center;gap:8px;font-size:10px;letter-spacing:1.2px;color:var(--text-4);font-weight:600;text-transform:uppercase}
   .offer .eb svg{width:14px;height:12px;color:var(--lime)}
@@ -109,7 +109,7 @@
   .offer .stub small{font-size:9px;letter-spacing:1.2px;font-weight:600;color:var(--text-4)}
   .offer .stub .c{writing-mode:vertical-rl;transform:rotate(180deg);font-weight:700;letter-spacing:2px;font-size:13px;color:var(--lime)}
   .offer .stub svg{width:16px;height:16px}
-  .offer::before,.offer::after{content:"";position:absolute;right:calc(var(--stub) - 10px);width:20px;height:20px;border-radius:50%;background:var(--bg);border:1px solid var(--line)}
+  .offer::before,.offer::after{content:"";position:absolute;right:calc(var(--stub) - 10px);width:20px;height:20px;border-radius:50%;background:var(--bg)}
   .offer::before{top:-11px;clip-path:inset(50% 0 0 0)}
   .offer::after{bottom:-11px;clip-path:inset(0 0 50% 0)}
   body.style-white .offer .eb{color:var(--lime)}
@@ -182,6 +182,13 @@
   .toast{position:fixed;bottom:20px;left:50%;transform:translate(-50%,20px);opacity:0;transition:.2s;background:var(--lime);color:var(--bg);font-weight:600;padding:10px 16px;border-radius:6px;pointer-events:none;z-index:60}
   .toast.show{opacity:1;transform:translate(-50%,0)}
   @media (max-width:640px){.deck{padding:24px 16px 60px}.toolbar{padding:10px 16px}.cover h1{font-size:30px}.cover{padding:20px}}
+  .gift-btn{position:relative;width:37px;height:37px;border-radius:8px;background:#161616;border:1px solid #262626;display:grid;place-items:center;color:#e6e6e6;flex:none;cursor:pointer}
+  .gift-btn:hover{border-color:var(--lime);color:var(--lime)}
+  .gift-btn svg{width:18px;height:18px}
+  .gift-btn b{position:absolute;top:-7px;right:-7px;min-width:18px;height:18px;padding:0 5px;border-radius:999px;background:var(--lime);color:var(--bg);font-size:10.5px;font-weight:700;display:grid;place-items:center;box-shadow:0 0 0 2px var(--topnav)}
+  @keyframes navflash{0%,100%{box-shadow:none}50%{box-shadow:0 0 0 4px rgba(217,255,0,.35)}}
+  .nav-item.flash{animation:navflash .5s ease 2}
+  .m .tr{display:flex;align-items:center;gap:10px}
 </style>
 </head>
 <body class="style-lime">
@@ -337,7 +344,7 @@
           <header class="topnav">
             <div class="left"><span class="logo"><svg width="24" height="20" style="color:var(--lime)"><use href="#i-fr"/></svg>FUNDINGROCK</span>
               <svg width="16" height="16" style="color:var(--text-2)"><use href="#i-menu"/></svg>${E('title','span','page')}</div>
-            <div class="right"><span class="btn-lime">Start Challenge</span><span style="width:6px;height:6px;border-radius:9px;background:var(--text-2)"></span><span class="avatar">MC</span><span style="font-weight:500">Malik Coley</span><svg width="12" height="12" style="color:var(--text-3)"><use href="#i-chev"/></svg></div>
+            <div class="right"><span class="btn-lime">Start Challenge</span><span class="gift-btn" data-gift title="My Offers">${icon('i-offer')}<b>${M.offers.length}</b></span><span style="width:6px;height:6px;border-radius:9px;background:var(--text-2)"></span><span class="avatar">MC</span><span style="font-weight:500">Malik Coley</span><svg width="12" height="12" style="color:var(--text-3)"><use href="#i-chev"/></svg></div>
           </header>
           <div class="content">
             <div class="head">${headHTML()}<div class="tabs">${tabsHTML()}</div></div>
@@ -349,7 +356,7 @@
       </div>`;
   }
   function renderMobile(){
-    const top = close => `<div class="topbar"><div class="left"><svg width="22" height="22"><use href="#${close?'i-close':'i-menu'}"/></svg><span class="logo"><svg width="20" height="17" style="color:var(--lime)"><use href="#i-fr"/></svg>FUNDINGROCK</span></div><span class="avatar">MC</span></div>`;
+    const top = close => `<div class="topbar"><div class="left"><svg width="22" height="22"><use href="#${close?'i-close':'i-menu'}"/></svg><span class="logo"><svg width="20" height="17" style="color:var(--lime)"><use href="#i-fr"/></svg>FUNDINGROCK</span></div><div class="tr"><span class="gift-btn" data-gift title="My Offers">${icon('i-offer')}<b>${M.offers.length}</b></span><span class="avatar">MC</span></div></div>`;
     document.getElementById('mob-page').innerHTML = `
       <div class="ui m">${top(false)}
         <div class="content">
@@ -425,6 +432,11 @@
     if (act === 'up' && i > 0) [M.offers[i-1], M.offers[i]] = [M.offers[i], M.offers[i-1]];
     if (act === 'live') M.offers[i].live = !M.offers[i].live;
     save(); render();
+  });
+  document.addEventListener('click', e => {
+    if (!e.target.closest?.('[data-gift]')) return;
+    document.querySelectorAll('.nav-item.active').forEach(n => { n.classList.remove('flash'); void n.offsetWidth; n.classList.add('flash'); });
+    toast('Opens My Offers');
   });
   document.querySelectorAll('[data-style]').forEach(b => b.addEventListener('click', () => { M.style = b.dataset.style; save(); render(); }));
   document.getElementById('reset-btn').addEventListener('click', () => {
