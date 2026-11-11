@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FundingRock · New Offers</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Host+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0a0a; --sidebar:#0d0d0d; --topnav:#0f0f0f; --card:#121212; --field:#161616;
+    --line:#1f1f1f; --line-2:#242424; --line-3:#262626;
+    --text:#ffffff; --text-2:#c4c4c4; --text-3:#9a9a9a; --text-4:#6f6f6f;
+    --lime:#d9ff00; --lime-bg:#141a06; --lime-deep:#2b3a08;
+    --green:#3ddc84; --orange:#f5a623; --blue:#5b9dff; --purple:#a78bfa; --pink:#ff5c7a;
+    --r:6px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{background:var(--bg);color:var(--text);font-family:"Host Grotesk",system-ui,sans-serif;font-size:13px;-webkit-font-smoothing:antialiased}
+  button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+  svg{display:block;flex:none}
+
+  .app{display:flex;min-height:100vh}
+
+  /* ---------- Sidebar ---------- */
+  .sidebar{width:190px;flex:none;background:var(--sidebar);border-right:1px solid #1a1a1a;padding:16px 14px;display:flex;flex-direction:column;gap:4px;position:sticky;top:0;height:100vh}
+  .nav-item{display:flex;align-items:center;gap:12px;padding:10px;border-radius:var(--r);border:1px solid transparent;color:var(--text-2);font-weight:500;font-size:12.5px;text-align:left;width:100%}
+  .nav-item svg{width:17px;height:17px;color:var(--text-3)}
+  .nav-item:hover{background:#141414}
+  .nav-item.active{background:var(--lime-bg);border-color:var(--lime);color:var(--lime);font-weight:600}
+  .nav-item.active svg{color:var(--lime)}
+  .nav-item .chev{margin-left:auto;width:12px;height:12px}
+  .spacer{flex:1}
+  .sidebar-cta{background:#141414;border:1px solid var(--line-2);border-radius:var(--r);padding:14px 12px;display:flex;flex-direction:column;align-items:center;gap:10px}
+  .sidebar-cta p{font-weight:600;font-size:12.5px}
+
+  /* ---------- Main ---------- */
+  .main{flex:1;min-width:0;display:flex;flex-direction:column}
+  .topnav{height:66px;background:var(--topnav);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:14px 20px 14px 18px}
+  .brand{display:flex;align-items:center;gap:16px}
+  .brand .logo{display:flex;align-items:center;gap:6px;font-weight:800;font-size:16px;letter-spacing:1px}
+  .brand .page{font-weight:600;font-size:17px}
+  .nav-right{display:flex;align-items:center;gap:14px}
+  .btn-lime{background:var(--lime);color:var(--bg);font-weight:600;font-size:13px;border-radius:var(--r);padding:10px 16px;display:inline-flex;align-items:center;gap:7px;white-space:nowrap}
+  .btn-lime:hover{filter:brightness(1.08)}
+  .avatar{width:30px;height:30px;border-radius:999px;background:var(--lime-deep);color:var(--lime);font-weight:600;font-size:11px;display:grid;place-items:center}
+  .user{font-weight:500}
+
+  .content{padding:16px 20px 20px;display:flex;flex-direction:column;gap:16px}
+
+  /* header */
+  .page-header{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap}
+  .page-header h1{font-size:24px;font-weight:600;letter-spacing:-.4px}
+  .page-header p{color:var(--text-3);font-weight:500;margin-top:5px}
+  .tabs{display:flex;gap:4px;padding:4px;background:var(--card);border:1px solid var(--line);border-radius:var(--r)}
+  .tab{display:flex;align-items:center;gap:7px;padding:7px 12px;border-radius:var(--r);border:1px solid transparent;color:var(--text-3);font-weight:500;font-size:12.5px}
+  .tab .count{background:var(--line);border-radius:999px;padding:1px 6px;font-size:10.5px;font-weight:600}
+  .tab:hover{color:var(--text-2)}
+  .tab.active{background:var(--lime-bg);border-color:var(--lime);color:var(--lime);font-weight:600}
+  .tab.active .count{background:var(--lime-deep)}
+
+  /* featured */
+  .featured{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;padding:22px 24px;border:1px solid var(--lime);border-radius:var(--r);
+    background:linear-gradient(90deg,rgba(217,255,0,0) 0%,rgba(217,255,0,.14) 100%),#0f1404}
+  .badge{display:inline-block;background:var(--lime);color:var(--bg);font-weight:700;font-size:10px;letter-spacing:1px;padding:3px 8px;border-radius:4px}
+  .featured h2{font-size:24px;font-weight:600;letter-spacing:-.4px;margin:8px 0}
+  .featured p{color:var(--text-2);font-weight:500}
+  .featured-actions{display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+  .countdown{display:flex;gap:6px}
+  .unit{width:54px;padding:8px 0;background:var(--bg);border:1px solid var(--lime-deep);border-radius:var(--r);text-align:center}
+  .unit b{display:block;font-size:20px;font-weight:600;font-variant-numeric:tabular-nums}
+  .unit small{font-size:9px;letter-spacing:1px;color:var(--text-4);font-weight:500}
+
+  .featured{--acc:var(--lime)}
+  .code-chip{display:inline-flex;align-items:center;gap:7px;padding:7px 10px;border:1px dashed var(--acc);border-radius:var(--r);background:var(--field);color:var(--acc);font-weight:700;font-size:12.5px;letter-spacing:1px;white-space:nowrap}
+  .code-chip:hover{background:#1c1c1c}
+  .code-chip.lg{padding:10px 14px;font-size:13px;background:var(--bg)}
+  .code-chip.copied{border-style:solid}
+
+  .label{font-size:10px;font-weight:500;letter-spacing:1px;color:var(--text-4);text-transform:uppercase}
+
+  /* offer cards */
+  .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+  .offer{--acc:var(--lime);position:relative;display:flex;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;
+    background:radial-gradient(120% 140% at 100% 0%,color-mix(in srgb,var(--acc) 10%,transparent) 0%,transparent 60%),var(--card)}
+  .offer[hidden]{display:none}
+  .stub{width:58px;flex:none;display:grid;place-items:center;background:linear-gradient(180deg,var(--acc),color-mix(in srgb,var(--acc) 70%,transparent))}
+  .stub span{writing-mode:vertical-rl;transform:rotate(180deg);font-weight:800;font-size:12px;letter-spacing:2px;color:var(--bg)}
+  .offer::before,.offer::after{content:"";position:absolute;left:49px;width:18px;height:18px;border-radius:50%;background:var(--bg);border:1px solid var(--line)}
+  .offer::before{top:-10px}.offer::after{bottom:-10px}
+  .body{flex:1;min-width:0;padding:18px 20px 18px 22px;display:flex;flex-direction:column;gap:12px}
+  .eyebrow{font-size:11px;font-weight:500;color:var(--text-3);letter-spacing:.5px}
+  .value{font-size:30px;font-weight:600;letter-spacing:-.5px;line-height:1.25}
+  .desc{color:var(--text-2);font-weight:500}
+  .actions{display:flex;align-items:center;gap:10px}
+  .expiry{flex:1;min-width:0;display:flex;align-items:center;gap:5px;color:var(--text-4);font-size:11.5px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .expiry.urgent{color:var(--pink)}
+  .claim{padding:8px 14px;font-size:12.5px}
+
+  .how{display:flex;align-items:center;gap:28px;flex-wrap:wrap;padding:16px 20px;background:var(--card);border:1px solid var(--line);border-radius:var(--r)}
+  .step{display:flex;align-items:center;gap:10px}
+  .num{width:26px;height:26px;border-radius:999px;background:var(--lime-deep);color:var(--lime);display:grid;place-items:center;font-weight:600;font-size:11px}
+  .step b{display:block;font-weight:600;font-size:12.5px}
+  .step small{color:var(--text-3);font-size:11.5px;font-weight:500}
+
+  .placeholder{margin:40px 20px;padding:40px;border:1px dashed var(--line-3);border-radius:var(--r);color:var(--text-3);text-align:center}
+
+  .toast{position:fixed;bottom:24px;left:50%;transform:translate(-50%,20px);opacity:0;transition:.2s;background:var(--lime);color:var(--bg);font-weight:600;padding:10px 16px;border-radius:var(--r);pointer-events:none}
+  .toast.show{opacity:1;transform:translate(-50%,0)}
+
+  @media (max-width:1280px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  @media (max-width:860px){.grid{grid-template-columns:1fr}.sidebar{display:none}.nav-right .user,.nav-right .dot{display:none}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-home" viewBox="0 0 24 24"><path fill="currentColor" d="M12 3 2 11h3v9h5v-6h4v6h5v-9h3z"/></symbol>
+    <symbol id="i-wallet" viewBox="0 0 24 24"><path fill="currentColor" d="M3 6a2 2 0 0 1 2-2h13v3H5v1h15a1 1 0 0 1 1 1v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm13 7a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3"/></symbol>
+    <symbol id="i-offer" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linejoin="round" d="M2 9a3 3 0 0 0 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 0 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/><path stroke-linecap="round" d="m9 15 6-6"/><circle cx="9.5" cy="9.5" r="1.1" fill="currentColor" stroke="none"/><circle cx="14.5" cy="14.5" r="1.1" fill="currentColor" stroke="none"/></symbol>
+    <symbol id="i-gift" viewBox="0 0 24 24"><path fill="currentColor" d="M20 7h-2.2A3 3 0 0 0 12 4a3 3 0 0 0-5.8 3H4a1 1 0 0 0-1 1v3h8V7h2v4h8V8a1 1 0 0 0-1-1M9 7a1 1 0 1 1 1-1v1zm5 0V6a1 1 0 1 1 1 1zM4 13v6a1 1 0 0 0 1 1h6v-7zm9 7h6a1 1 0 0 0 1-1v-6h-7z"/></symbol>
+    <symbol id="i-cert" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2 9.5 4H6v3.5L4 10l2 2.5V16h3.5l2.5 2 2.5-2H18v-3.5l2-2.5-2-2.5V4h-3.5z"/></symbol>
+    <symbol id="i-doc" viewBox="0 0 24 24"><path fill="currentColor" d="M6 2h8l5 5v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2m7 1.5V8h4.5z"/></symbol>
+    <symbol id="i-trophy" viewBox="0 0 24 24"><path fill="currentColor" d="M7 3h10v2h4v3a4 4 0 0 1-4 4h-.3A5 5 0 0 1 13 14.9V18h3v3H8v-3h3v-3.1A5 5 0 0 1 7.3 12H7a4 4 0 0 1-4-4V5h4zm0 4H5v1a2 2 0 0 0 2 2zm10 0v3a2 2 0 0 0 2-2V7z"/></symbol>
+    <symbol id="i-bars" viewBox="0 0 24 24"><path fill="currentColor" d="M4 20h17v1.5H4zM5 12h3v7H5zm5-6h3v13h-3zm5 4h3v9h-3z"/></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24"><path fill="currentColor" d="M6 2h12a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2"/></symbol>
+    <symbol id="i-card" viewBox="0 0 24 24"><path fill="currentColor" d="M3 6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v2H3zm0 4h18v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm3 5v2h5v-2z"/></symbol>
+    <symbol id="i-users" viewBox="0 0 24 24"><path fill="currentColor" d="M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8m8 0a3 3 0 1 0 0-6 3 3 0 0 0 0 6M1 20c0-3.3 3.6-6 8-6s8 2.7 8 6v1H1zm17.5-5.8c2.6.5 4.5 2.4 4.5 4.8v1h-4v-1c0-1.8-.2-3.4-.5-4.8"/></symbol>
+    <symbol id="i-gear" viewBox="0 0 24 24"><path fill="currentColor" d="m19.4 13 2-1.6-2-3.4-2.4.9a7 7 0 0 0-1.7-1L15 5h-4l-.3 2.9a7 7 0 0 0-1.7 1L6.6 8l-2 3.4 2 1.6a7 7 0 0 0 0 2l-2 1.6 2 3.4 2.4-.9a7 7 0 0 0 1.7 1L11 23h4l.3-2.9a7 7 0 0 0 1.7-1l2.4.9 2-3.4-2-1.6a7 7 0 0 0 0-2M13 17a3 3 0 1 1 0-6 3 3 0 0 1 0 6" transform="translate(-1 -2)"/></symbol>
+    <symbol id="i-help" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20m1 16h-2v-2h2zm2.1-7.7-.9.9c-.7.7-1.2 1.3-1.2 2.8h-2v-.5c0-1.1.5-2.1 1.2-2.8l1.2-1.3A2 2 0 1 0 10 8H8a4 4 0 1 1 7.1 2.3"/></symbol>
+    <symbol id="i-chev" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" d="m7 10 5 5 5-5"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="8" y="8" width="13" height="13" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  </defs>
+</svg>
+
+<div class="app">
+  <aside class="sidebar" aria-label="Main navigation">
+    <button class="nav-item" data-view="Overview"><svg><use href="#i-home"/></svg>Overview</button>
+    <button class="nav-item" data-view="Accounts"><svg><use href="#i-wallet"/></svg>Accounts</button>
+    <button class="nav-item active" data-view="New Offers" aria-current="page"><svg><use href="#i-offer"/></svg>New Offers</button>
+    <button class="nav-item" data-view="Rewards"><svg><use href="#i-gift"/></svg>Rewards</button>
+    <button class="nav-item" data-view="Certificates"><svg><use href="#i-cert"/></svg>Certificates</button>
+    <button class="nav-item" data-view="Contracts"><svg><use href="#i-doc"/></svg>Contracts</button>
+    <button class="nav-item" data-view="Competitions"><svg><use href="#i-trophy"/></svg>Competitions</button>
+    <button class="nav-item" data-view="Leaderboard"><svg><use href="#i-bars"/></svg>Leaderboard</button>
+    <button class="nav-item" data-view="Trading Resources"><svg><use href="#i-book"/></svg>Trading<br>Resources<svg class="chev"><use href="#i-chev"/></svg></button>
+    <button class="nav-item" data-view="Billing"><svg><use href="#i-card"/></svg>Billing</button>
+    <button class="nav-item" data-view="Affiliates"><svg><use href="#i-users"/></svg>Affiliates</button>
+    <button class="nav-item" data-view="Settings"><svg><use href="#i-gear"/></svg>Settings</button>
+    <button class="nav-item" data-view="Help Center"><svg><use href="#i-help"/></svg>Help Center</button>
+    <div class="spacer"></div>
+    <div class="sidebar-cta">
+      <p>Ready to trade?</p>
+      <button class="btn-lime" style="width:100%;justify-content:center;font-size:12.5px;padding:9px 0">Start Challenge</button>
+    </div>
+  </aside>
+
+  <div class="main">
+    <header class="topnav">
+      <div class="brand">
+        <span class="logo">
+          <svg width="24" height="20" viewBox="0 0 24 20"><path fill="#d9ff00" d="M0 0h11v5H5v3h5v4H5v8H0zM13 0h6a5 5 0 0 1 2.2 9.5L24 20h-5.5l-2.3-9H18V20h-5z"/></svg>
+          FUNDINGROCK
+        </span>
+        <svg width="16" height="16" viewBox="0 0 24 24" style="color:var(--text-2)"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M5 7h14M5 12h14M5 17h14"/></svg>
+        <span class="page" id="page-title">New Offers</span>
+      </div>
+      <div class="nav-right">
+        <button class="btn-lime">Start Challenge</button>
+        <span class="dot" style="width:6px;height:6px;border-radius:9px;background:var(--text-2)"></span>
+        <span class="avatar">MC</span>
+        <span class="user">Malik Coley</span>
+        <svg width="12" height="12" style="color:var(--text-3)"><use href="#i-chev"/></svg>
+      </div>
+    </header>
+
+    <main class="content" id="offers-view">
+      <div class="page-header">
+        <div>
+          <h1>New Offers</h1>
+          <p>Exclusive discounts on challenges and add-ons. Copy a code and apply it at checkout.</p>
+        </div>
+        <div class="tabs" role="tablist">
+          <button class="tab active" data-filter="all" role="tab">All offers <span class="count">6</span></button>
+          <button class="tab" data-filter="challenge" role="tab">Challenges <span class="count">3</span></button>
+          <button class="tab" data-filter="addon" role="tab">Add-ons <span class="count">2</span></button>
+          <button class="tab" data-filter="expiring" role="tab">Expiring soon <span class="count">1</span></button>
+        </div>
+      </div>
+
+      <section class="featured">
+        <div>
+          <span class="badge">LIMITED TIME</span>
+          <h2>Black Friday: 40% OFF every challenge</h2>
+          <p>Valid on all account sizes. Stacks with a free reset on $100K+ challenges.</p>
+        </div>
+        <div class="featured-actions">
+          <div class="countdown" id="countdown">
+            <div class="unit"><b data-u="d">02</b><small>DAYS</small></div>
+            <div class="unit"><b data-u="h">14</b><small>HRS</small></div>
+            <div class="unit"><b data-u="m">32</b><small>MIN</small></div>
+            <div class="unit"><b data-u="s">08</b><small>SEC</small></div>
+          </div>
+          <button class="code-chip lg" data-code="BLACKFRIDAY40"><svg width="14" height="14"><use href="#i-copy"/></svg>BLACKFRIDAY40</button>
+          <button class="btn-lime" style="padding:11px 20px">Claim Offer <svg width="12" height="12"><use href="#i-arrow"/></svg></button>
+        </div>
+      </section>
+
+      <div class="label" id="count-label">Available offers · 6</div>
+
+      <div class="grid" id="grid"></div>
+
+      <section class="how">
+        <span class="label">How to redeem</span>
+        <div class="step"><span class="num">1</span><div><b>Copy a code</b><small>Tap the code chip on any offer</small></div></div>
+        <div class="step"><span class="num">2</span><div><b>Start a challenge</b><small>Pick your account size and platform</small></div></div>
+        <div class="step"><span class="num">3</span><div><b>Paste at checkout</b><small>Discount applies before payment</small></div></div>
+      </section>
+    </main>
+
+    <div class="placeholder" id="other-view" hidden></div>
+  </div>
+</div>
+
+<div class="toast" id="toast">Code copied</div>
+
+<script>
+  const OFFERS = [
+    {acc:'var(--lime)',  stub:'DISCOUNT',  eb:'Up to',         val:'25% OFF',  desc:'All Simulation Rock challenges',                  code:'ROCK25',    exp:'Expires Nov 30, 2026', cat:'challenge'},
+    {acc:'var(--green)', stub:'FIRST BUY', eb:'Welcome offer', val:'40% OFF',  desc:'Your first challenge, any account size',          code:'FIRST40',   exp:'Expires Dec 15, 2026', cat:'challenge'},
+    {acc:'var(--orange)',stub:'ADD-ON',    eb:'Free',          val:'1 RESET',  desc:'Free account reset with any $100K+ challenge',    code:'FREERESET', exp:'Expires Dec 31, 2026', cat:'addon'},
+    {acc:'var(--blue)',  stub:'UPGRADE',   eb:'Boost to',      val:'90% SPLIT',desc:'Profit split upgrade on your next funded account', code:'SPLIT90',   exp:'Expires Jan 10, 2027', cat:'addon'},
+    {acc:'var(--purple)',stub:'BUNDLE',    eb:'Buy 2, save',   val:'15% OFF',  desc:'Bundle any two challenges in one checkout',       code:'BUNDLE15',  exp:'Expires Jan 31, 2027', cat:'challenge'},
+    {acc:'var(--pink)',  stub:'FLASH',     eb:'Today only',    val:'10% OFF',  desc:'$50K Simulation Rock challenge',                  code:'FLASH10',   exp:'Ends in 8h 12m',       cat:'expiring', urgent:true},
+  ];
+  const grid = document.getElementById('grid');
+  grid.innerHTML = OFFERS.map(o => `
+    <article class="offer" data-cat="${o.cat}" style="--acc:${o.acc}">
+      <div class="stub"><span>${o.stub}</span></div>
+      <div class="body">
+        <div><div class="eyebrow">${o.eb}</div><div class="value">${o.val}</div><div class="desc">${o.desc}</div></div>
+        <div class="actions">
+          <button class="code-chip" data-code="${o.code}"><svg width="14" height="14"><use href="#i-copy"/></svg>${o.code}</button>
+          <span class="expiry${o.urgent ? ' urgent' : ''}"><svg width="13" height="13"><use href="#i-clock"/></svg>${o.exp}</span>
+          <button class="btn-lime claim">Claim <svg width="12" height="12"><use href="#i-arrow"/></svg></button>
+        </div>
+      </div>
+    </article>`).join('');
+
+  // Sidebar active state
+  const offersView = document.getElementById('offers-view'), otherView = document.getElementById('other-view');
+  document.querySelectorAll('.nav-item').forEach(btn => btn.addEventListener('click', () => {
+    document.querySelectorAll('.nav-item').forEach(b => { b.classList.remove('active'); b.removeAttribute('aria-current'); });
+    btn.classList.add('active'); btn.setAttribute('aria-current', 'page');
+    const v = btn.dataset.view, isOffers = v === 'New Offers';
+    document.getElementById('page-title').textContent = v === 'Accounts' ? 'Account Details' : v;
+    offersView.hidden = !isOffers; otherView.hidden = isOffers;
+    otherView.textContent = `${v} screen — unchanged, not part of this prototype.`;
+  }));
+
+  // Filter tabs
+  document.querySelectorAll('.tab').forEach(tab => tab.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    const f = tab.dataset.filter; let n = 0;
+    document.querySelectorAll('.offer').forEach(c => { const show = f === 'all' || c.dataset.cat === f; c.hidden = !show; n += show; });
+    document.getElementById('count-label').textContent = `Available offers · ${n}`;
+  }));
+
+  // Copy code
+  const toast = document.getElementById('toast'); let tt;
+  document.addEventListener('click', e => {
+    const chip = e.target.closest('.code-chip'); if (!chip) return;
+    const code = chip.dataset.code;
+    try { navigator.clipboard?.writeText(code); } catch (_) {}
+    chip.classList.add('copied'); setTimeout(() => chip.classList.remove('copied'), 1200);
+    toast.textContent = `Code ${code} copied`; toast.classList.add('show');
+    clearTimeout(tt); tt = setTimeout(() => toast.classList.remove('show'), 1600);
+  });
+
+  // Countdown
+  let left = ((2*24 + 14)*60 + 32)*60 + 8;
+  const pad = n => String(n).padStart(2, '0'), cd = document.getElementById('countdown');
+  setInterval(() => {
+    left = Math.max(0, left - 1);
+    const d = Math.floor(left/86400), h = Math.floor(left%86400/3600), m = Math.floor(left%3600/60), s = left%60;
+    cd.querySelector('[data-u=d]').textContent = pad(d); cd.querySelector('[data-u=h]').textContent = pad(h);
+    cd.querySelector('[data-u=m]').textContent = pad(m); cd.querySelector('[data-u=s]').textContent = pad(s);
+  }, 1000);
+</script>
+</body>
+</html>
