@@ -148,13 +148,12 @@
     .offer{--stub:118px}
     .offer .stub .c{font-size:12px;letter-spacing:1px}
   }
-  /* A · Colour (option): side stub with vertical code; each offer in its brand colour with a soft glow behind the value */
-  body.colr .offer{--stub:104px;--btxt:color-mix(in srgb,var(--brand) 80%,#fff)}
-  body.colr .offer .stub .c{writing-mode:vertical-rl;transform:none;font-size:13px;letter-spacing:2px;color:var(--btxt)}
+  /* A · Colour (option): wide side stub with horizontal code (same shape as C); each offer in its brand colour with a soft glow behind the value */
+  body.colr .offer{--btxt:color-mix(in srgb,var(--brand) 80%,#fff)}
+  body.colr .offer .stub .c{color:var(--btxt)}
   body.colr .offer .main{background:radial-gradient(42% 38% at 26% 44%,color-mix(in srgb,var(--brand) 16%,transparent),transparent 70%),radial-gradient(120% 120% at 0% 0%,color-mix(in srgb,var(--brand) 6%,transparent),transparent 55%)}
   body.colr .offer .val{color:var(--btxt)}
   body.colr .offer .stub{background:linear-gradient(180deg,color-mix(in srgb,var(--brand) 11%,var(--card)),color-mix(in srgb,var(--brand) 4%,var(--card)))}
-  @media (max-width:860px){ body.colr .offer{--stub:76px} body.colr .offer .stub .c{font-size:12px;letter-spacing:1.6px} }
 </style>
 </head>
 <body>
