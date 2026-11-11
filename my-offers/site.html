@@ -373,6 +373,12 @@
   body.grd .offer.feature.is-std .stub{background:rgba(0,216,195,.05);border-color:rgba(127,243,220,.25)}
   body.grd .is-std .deal .val{background:var(--g);-webkit-background-clip:text;background-clip:text;color:transparent}
   body.colr .feature.is-std .use{border-color:color-mix(in srgb,var(--brand) 60%,transparent);color:color-mix(in srgb,var(--brand) 78%,#fff)}
+
+  /* three individual coupons in one row on desktop */
+  .more .grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .more .offer{--stub:150px}
+  .more .offer .title{font-size:21px}
+  @media (max-width:1280px){ .more .grid{grid-template-columns:1fr} .more .offer{--stub:180px} }
 </style>
 </head>
 <body>
@@ -473,8 +479,13 @@
         </div>
       </div>
 
-      <div class="label" id="count-label">2 offers</div>
+      <div class="label" id="count-label">4 offers</div>
       <div class="coupons" id="coupons"></div>
+
+      <section class="more" aria-labelledby="more-title">
+        <h2 class="sec-title" id="more-title">More offers</h2>
+        <div class="grid" id="grid"></div>
+      </section>
 
       <section class="how" aria-label="How to redeem">
         <span class="label">How to redeem</span>
@@ -502,12 +513,12 @@
         {type:'Bundle',   icon:'o-layers', val:'2+1',     desc:'Buy 2 challenges, get 1 free',  brand:'#00d8c3'},
         {type:'Bundle',   icon:'o-layers', val:'3+2',     desc:'Buy 3 challenges, get 2 free',  brand:'#78ff00'},
       ] },
-    { id:'bu', featured:false, brand:'#ff5c00', meta:'Comeback', title:'Breached Users', sub:'For traders whose account was breached.', code:'REBUILD30', cta:'Use Offer',
-      deals: [
-        {type:'New program',   icon:'o-gem',  val:'Kokuyō',             desc:'Live sale on the new Kokuyō program', brand:'#8042ff'},
-        {type:'Special offer', icon:'o-pass', val:'Pay After You Pass', desc:'Start now, pay when you pass',        brand:'#00d8c3'},
-        {type:'Special offer', icon:'o-skip', val:'Skip the Challenge', desc:'Details coming soon',                 brand:'#ff2156'},
-      ] },
+  ];
+  /* Individual coupons. kind 'coupon' shows a code + Use Offer; kind 'link' needs no code and opens the offer. */
+  const OFFERS = [
+    {kind:'coupon', type:'Coupon',        icon:'o-rebuild', title:'Breached Users',     desc:'A comeback offer for traders whose account was breached.', code:'REBUILD30', cta:'Use Offer',    brand:'#ff5c00'},
+    {kind:'link',   type:'New program',   icon:'o-gem',     title:'Kokuyō',             desc:'Live sale on the new Kokuyō program.',                     cta:'View Program', brand:'#8042ff'},
+    {kind:'link',   type:'Special offer', icon:'o-pass',    title:'Pay After You Pass', desc:'Start now, pay when you pass.',                            cta:'View Offer',   brand:'#00d8c3'},
   ];
   const codeChip = code => `
         <div class="code-wrap">
@@ -545,8 +556,21 @@
       </div>
     </article>`).join('');
 
+  document.getElementById('grid').innerHTML = OFFERS.map(o => `
+    <article class="offer" data-kind="${o.kind}" style="--brand:${o.brand}">
+      <div class="main">
+        <div class="eb"><svg><use href="#${o.icon}"/></svg><span class="ebt">${o.type}</span></div>
+        <h3 class="title">${o.title}</h3>
+        <div class="desc">${o.desc}</div>
+      </div>
+      <div class="stub">
+        ${o.kind === 'coupon' ? codeChip(o.code) : '<small class="code-label nocode">No code needed</small>'}
+        <button class="btn-ghost use" type="button" data-go="${o.title}" ${o.code ? `data-code="${o.code}"` : ''}>${o.cta} ${arrow}</button>
+      </div>
+    </article>`).join('');
+
   // Gift badge and counts follow the number of coupons
-  const n = COUPONS.length;
+  const n = COUPONS.length + OFFERS.length;
   document.querySelector('#gift-btn b').textContent = n;
   document.getElementById('gift-btn').setAttribute('aria-label', `My Offers, ${n} available`);
   document.getElementById('count-label').textContent = `${n} offers`;
