@@ -190,6 +190,11 @@
   body.brandcol .offer .stub .c{color:var(--btxt)}
   body.brandcol .offer .claim{background:color-mix(in srgb,var(--brand) 16%,var(--card));color:var(--btxt);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--brand) 40%,transparent)}
   body.brandcol .offer .claim:hover{background:color-mix(in srgb,var(--brand) 24%,var(--card))}
+  /* A+ / C+ · negative stub: soft brand card, code stub in solid brand colour with dark (or white on purple) text */
+  body.neg .offer .stub{background:var(--brand);color:var(--ink);border-left-color:color-mix(in srgb,var(--ink) 30%,transparent)}
+  body.neg .offer .stub:hover{background:var(--brand);filter:brightness(1.06)}
+  body.neg .offer .stub small{color:color-mix(in srgb,var(--ink) 60%,transparent)}
+  body.neg .offer .stub .c{color:var(--ink)}
 </style>
 </head>
 <body>
@@ -419,7 +424,7 @@
     });
     if (d.t === "edit") setEdit(!!d.on);
     if (d.t === "style") document.body.classList.toggle("v1", d.v === "white");
-    if (d.t === "layout") { var v = d.v === "e" ? "b" : d.v; ["a","b","c","d"].forEach(function (x) { document.body.classList.toggle("lay-" + x, v === x); }); document.body.classList.toggle("brandcol", d.v === "e"); }
+    if (d.t === "layout") { var v = ({ e: "b", f: "a", g: "c" })[d.v] || d.v; ["a","b","c","d"].forEach(function (x) { document.body.classList.toggle("lay-" + x, v === x); }); document.body.classList.toggle("brandcol", /[efg]/.test(d.v)); document.body.classList.toggle("neg", /[fg]/.test(d.v)); }
   });
   parent.postMessage({ fr: "mo", t: "ready" }, "*");
 })();
