@@ -423,6 +423,16 @@
   .offer.feature.in-grid::before,.offer.feature.in-grid::after{box-sizing:border-box;border:1px solid rgba(217,255,0,.45)}
 
   .new-tag{margin-left:auto;padding:2px 7px;border-radius:999px;background:repeating-linear-gradient(-55deg,rgba(10,10,10,.05) 0 1px,transparent 1px 5px),radial-gradient(120% 160% at 0% 0%,rgba(245,255,170,.7),rgba(245,255,170,0) 60%),linear-gradient(90deg,rgba(150,185,0,0) 50%,rgba(150,185,0,.2)),var(--lime);color:#0a0a0a;font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;line-height:1.4}
+
+  /* Soft ticket texture (fine diagonal hairlines + top-left highlight) and a FundingRock mark on every coupon */
+  .offer{background-image:repeating-linear-gradient(-55deg,rgba(255,255,255,.028) 0 1px,transparent 1px 6px),radial-gradient(90% 120% at 0% 0%,rgba(255,255,255,.045),transparent 60%)}
+  .offer .stub{position:relative;background-image:repeating-linear-gradient(-55deg,rgba(255,255,255,.028) 0 1px,transparent 1px 6px)}
+  .offer .stub::before{content:"FUNDINGROCK";position:absolute;top:13px;left:50%;transform:translateX(-50%);padding-left:17px;white-space:nowrap;
+    background:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2020%22%20fill%3D%22%23d9ff00%22%3E%3Cpath%20d%3D%22M10.04%200c.63%200%20.94.76.5%201.21L2.59%209.14h7.45c.63%200%20.94.76.5%201.21L1.21%2019.67c-.45.45-1.21.14-1.21-.5V.7C0%20.31.31%200%20.7%200z%22/%3E%3Cpath%20d%3D%22M18.08%200a5.42%205.42%200%200%201%200%2010.84h-2.9l7.85%207.84c.45.45.13%201.21-.5%201.21H13.2a.7.7%200%200%201-.7-.7V.7c0-.39.31-.7.7-.7z%22/%3E%3C/svg%3E") left center/13px 11px no-repeat;font-size:8.5px;font-weight:700;letter-spacing:1.8px;color:#7a7a7a}
+  /* the stub now paints above the card outline, so it carries the featured outline itself */
+  .offer.feature.in-grid .stub{box-shadow:inset -1px 0 0 rgba(217,255,0,.45),inset 0 1px 0 rgba(217,255,0,.45),inset 0 -1px 0 rgba(217,255,0,.45)}
+  @media (max-width:560px){ .offer.feature.in-grid .stub{box-shadow:inset -1px 0 0 rgba(217,255,0,.45),inset 1px 0 0 rgba(217,255,0,.45),inset 0 -1px 0 rgba(217,255,0,.45)} }
+  @media (max-width:560px){ .offer .stub::before{top:12px;left:auto;right:16px;transform:none} .offer.feature.in-grid .stub{padding-top:32px} .offer.feature.in-grid::before,.offer.feature.in-grid::after{bottom:129px} }
 </style>
 </head>
 <body>
