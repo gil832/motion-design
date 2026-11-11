@@ -1,28 +1,27 @@
-<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>New Offers Presentation</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Host+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<style>
-  :root{
+<title data-src>FundingRock New Offers</title>
+<meta data-src name="claude:viewport-fit-sides" content="cover">
+<link data-src rel="preconnect" href="https://fonts.googleapis.com">
+<link data-src rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link data-src href="https://fonts.googleapis.com/css2?family=Host+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style data-src>
+  /* Layout: sticky presentation toolbar over a centered deck: cover, desktop in a browser frame, two phones. Deliberately dark (product UI). */
+  :root{color-scheme:dark;
     --bg:#0a0a0a; --sidebar:#0d0d0d; --topnav:#0f0f0f; --card:#121212; --line:#1f1f1f; --line-2:#242424;
     --text:#fff; --text-2:#c4c4c4; --text-3:#9a9a9a; --text-4:#6f6f6f;
     --lime:#d9ff00; --lime-bg:#141a06; --lime-deep:#2b3a08; --pink:#ff5c7a;
     --stage:#161616;
   }
   *{box-sizing:border-box;margin:0;padding:0}
+  [hidden]{display:none!important}
   html,body{background:var(--stage)}
   body{color:var(--text);font-family:"Host Grotesk",system-ui,sans-serif;font-size:13px;-webkit-font-smoothing:antialiased;overflow-x:hidden}
   button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   svg{display:block;flex:none}
 
   /* ================= Presentation chrome ================= */
-  .toolbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;
-    padding:12px 24px;background:rgba(16,16,16,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:#101010}
+  .toolbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;
+    padding-block:12px;padding-left:max(24px,env(safe-area-inset-left,0px));padding-right:max(24px,env(safe-area-inset-right,0px));background:rgba(16,16,16,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
   .toolbar .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:13px;letter-spacing:.5px}
   .toolbar .brand small{color:var(--text-4);font-weight:500;letter-spacing:0}
   .tools{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
@@ -33,10 +32,10 @@
   .seg{display:flex;gap:2px;padding:2px;border:1px solid var(--line-2);border-radius:7px;background:#121212}
   .seg .tbtn{border:0;background:none;padding:6px 10px}
   .seg .tbtn.on{background:var(--lime-bg);box-shadow:inset 0 0 0 1px var(--lime)}
-  .hint{display:none;padding:10px 24px;background:var(--lime-bg);border-bottom:1px solid #2b3a08;color:var(--lime);font-size:12px;font-weight:500}
+  .hint{display:none;padding-block:10px;padding-left:max(24px,env(safe-area-inset-left,0px));padding-right:max(24px,env(safe-area-inset-right,0px));background:var(--lime-bg);border-bottom:1px solid #2b3a08;color:var(--lime);font-size:12px;font-weight:500}
   body.editing .hint{display:block}
 
-  .deck{max-width:1440px;margin:0 auto;padding:40px 24px 80px;display:flex;flex-direction:column;gap:56px}
+  .deck{max-width:1440px;margin:0 auto;padding-block:40px 80px;padding-left:max(24px,env(safe-area-inset-left,0px));padding-right:max(24px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:56px}
   .slide-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:18px}
   .kicker{color:var(--lime);font-weight:600;font-size:11px;letter-spacing:3px}
   .slide-head h2{font-size:26px;font-weight:600;letter-spacing:-.4px;margin-top:6px}
@@ -181,7 +180,7 @@
 
   .toast{position:fixed;bottom:20px;left:50%;transform:translate(-50%,20px);opacity:0;transition:.2s;background:var(--lime);color:var(--bg);font-weight:600;padding:10px 16px;border-radius:6px;pointer-events:none;z-index:60}
   .toast.show{opacity:1;transform:translate(-50%,0)}
-  @media (max-width:640px){.deck{padding:24px 16px 60px}.toolbar{padding:10px 16px}.cover h1{font-size:30px}.cover{padding:20px}}
+  @media (max-width:640px){.deck{padding-block:24px 60px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}.toolbar{padding-block:10px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}.cover h1{font-size:30px}.cover{padding:20px}}
   .gift-btn{position:relative;width:37px;height:37px;border-radius:8px;background:#161616;border:1px solid #262626;display:grid;place-items:center;color:#e6e6e6;flex:none;cursor:pointer}
   .gift-btn:hover{border-color:var(--lime);color:var(--lime)}
   .gift-btn svg{width:18px;height:18px}
@@ -189,10 +188,29 @@
   @keyframes navflash{0%,100%{box-shadow:none}50%{box-shadow:0 0 0 4px rgba(217,255,0,.35)}}
   .nav-item.flash{animation:navflash .5s ease 2}
   .m .tr{display:flex;align-items:center;gap:10px}
+  .menu-wrap{position:relative}
+  .pop{position:absolute;right:0;top:calc(100% + 6px);z-index:70;width:290px;padding:6px;border-radius:10px;background:#141414;border:1px solid #2a2a2a;box-shadow:0 20px 50px -10px rgba(0,0,0,.8)}
+  .pop .item{display:flex;gap:10px;align-items:flex-start;width:100%;padding:9px 10px;border-radius:7px;text-align:left;color:var(--text-2)}
+  .pop .item:hover,.pop .item:focus-visible{background:#1c1c1c;color:#fff;outline:none}
+  .pop .item svg{width:16px;height:16px;margin-top:1px;color:var(--lime)}
+  .pop .item b{display:block;font-weight:600;font-size:12.5px;color:#fff}
+  .pop .item small{display:block;color:var(--text-4);font-size:11.5px;line-height:1.4;margin-top:2px}
+  .pop .note{padding:9px 10px 6px;border-top:1px solid #222;margin-top:4px;color:var(--text-4);font-size:11.5px;line-height:1.45}
+  .pop .item[disabled]{opacity:.45;cursor:not-allowed}
+  .cbtn{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:6px;border:1px solid var(--line-2);background:#121212;color:var(--text-3);font-size:12px;font-weight:500}
+  .cbtn:hover{border-color:var(--lime);color:var(--lime)}
+  .cbtn svg{width:14px;height:14px}
+  .slide-head .side{display:flex;flex-direction:column;align-items:flex-end;gap:10px}
+  @media (max-width:640px){.slide-head .side{align-items:flex-start}}
+  .modal{position:fixed;inset:0;z-index:80;display:grid;place-items:center;background:rgba(0,0,0,.6);padding:16px}
+  .modal .box{width:min(380px,100%);padding:20px;border-radius:12px;background:#141414;border:1px solid #2a2a2a;display:flex;flex-direction:column;gap:14px}
+  .modal .box p{color:var(--text-2);line-height:1.5}
+  .modal .row{display:flex;gap:8px;justify-content:flex-end}
+  .badge-saved{font-size:11px;color:var(--text-4)}
+  :focus-visible{outline:2px solid var(--lime);outline-offset:2px}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
-</head>
-<body class="style-lime">
-<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<svg data-src width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
   <symbol id="i-fr" viewBox="0 0 24 20" fill="currentColor"><path d="M10.0363 0C10.6661 0 10.981 0.762458 10.5335 1.20999L2.59401 9.1412H10.0363C10.6661 9.1412 10.981 9.90366 10.5335 10.3512L1.20999 19.6747C0.762458 20.1222 0 19.8073 0 19.1775V0.704444C0 0.314928 0.314928 0 0.704444 0H10.028H10.0363Z"/><path d="M18.0835 2.67029e-05C21.0753 2.67029e-05 23.5036 2.42829 23.5036 5.4201C23.5036 8.41192 21.0753 10.8402 18.0835 10.8402H15.1828L23.0312 18.6802C23.4787 19.1278 23.1638 19.8902 22.5339 19.8902H13.2104C12.8209 19.8902 12.506 19.5753 12.506 19.1858V0.704471C12.506 0.314955 12.8209 2.67029e-05 13.2104 2.67029e-05H18.0918H18.0835Z"/></symbol>
   <symbol id="i-home" viewBox="0 0 24 24"><path fill="currentColor" d="M12 3 2 11h3v9h5v-6h4v6h5v-9h3z"/></symbol>
   <symbol id="i-wallet" viewBox="0 0 24 24"><path fill="currentColor" d="M3 6a2 2 0 0 1 2-2h13v3H5v1h15a1 1 0 0 1 1 1v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm13 7a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3"/></symbol>
@@ -214,10 +232,14 @@
   <symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
   <symbol id="i-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></symbol>
   <symbol id="i-pen" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></symbol>
+  <symbol id="i-chat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4z"/></symbol>
+  <symbol id="i-share" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="19" r="2.5"/><path d="m8.2 10.8 7.6-4.4M8.2 13.2l7.6 4.4"/></symbol>
+  <symbol id="i-save" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3h11l3 3v15H5z"/><path d="M8 3v6h8V3M8 21v-7h8v7"/></symbol>
+  <symbol id="i-doc2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M6 2h9l5 5v15H6z"/><path d="M14 2v6h6"/></symbol>
   <symbol id="i-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v12M6 10l6 6 6-6M5 20h14"/></symbol>
 </defs></svg>
 
-<div class="toolbar">
+<div data-src class="toolbar">
   <div class="brand"><svg width="22" height="18" style="color:var(--lime)"><use href="#i-fr"/></svg>FUNDINGROCK <small>· New Offers · Desktop &amp; Mobile</small></div>
   <div class="tools">
     <div class="seg" role="group" aria-label="Offer value colour">
@@ -226,13 +248,29 @@
     </div>
     <button class="tbtn" id="edit-btn"><svg width="14" height="14"><use href="#i-pen"/></svg>Edit</button>
     <button class="tbtn" id="reset-btn">Reset</button>
-    <button class="tbtn primary" id="dl-btn"><svg width="14" height="14"><use href="#i-down"/></svg>Download HTML</button>
+    <button class="tbtn" id="comment-btn" hidden><svg width="14" height="14"><use href="#i-chat"/></svg>Comment</button>
+    <div class="menu-wrap">
+      <button class="tbtn" id="export-btn" aria-haspopup="menu" aria-expanded="false"><svg width="14" height="14"><use href="#i-down"/></svg>Export</button>
+      <div class="pop" id="export-pop" role="menu" hidden>
+        <button class="item" role="menuitem" data-export="html"><svg><use href="#i-doc2"/></svg><span><b>Presentation (.html)</b><small>This page with your edits. Opens in any browser.</small></span></button>
+        <button class="item" role="menuitem" data-export="csv"><svg><use href="#i-doc2"/></svg><span><b>Offers table (.csv)</b><small>Label, offer, description, code, expiry, category.</small></span></button>
+        <button class="item" role="menuitem" data-export="json"><svg><use href="#i-doc2"/></svg><span><b>Offer data (.json)</b><small>For developers wiring up the real page.</small></span></button>
+      </div>
+    </div>
+    <div class="menu-wrap">
+      <button class="tbtn primary" id="share-btn" aria-haspopup="menu" aria-expanded="false"><svg width="14" height="14"><use href="#i-share"/></svg>Share</button>
+      <div class="pop" id="share-pop" role="menu" hidden>
+        <button class="item" role="menuitem" id="publish-btn" hidden><svg><use href="#i-save"/></svg><span><b>Save edits for everyone</b><small id="publish-sub">Anyone with the link sees your current text and offers.</small></span></button>
+        <button class="item" role="menuitem" id="copy-btn"><svg><use href="#i-copy"/></svg><span><b>Copy summary</b><small>Offers as plain text, ready for Slack or email.</small></span></button>
+        <div class="note">To send the link, use <b>Share</b> at the top of this page in claude.ai. Comments and saved edits are visible to everyone you share it with.</div>
+      </div>
+    </div>
   </div>
 </div>
-<div class="hint">Edit mode: click any outlined text to change it. Desktop and mobile update together. Use ＋ / ↑ / ✕ on a card to add, move or remove offers. Changes are saved in this browser; use “Download HTML” to keep a copy.</div>
+<div data-src class="hint">Edit mode: click any outlined text to change it. Desktop and mobile update together. Use ＋ / ↑ / ✕ on a card to add, move or remove offers. Your edits stay in this browser until you choose Share → Save edits for everyone.</div>
 
-<main class="deck">
-  <section class="cover">
+<main data-src class="deck">
+  <section class="cover" id="cover" data-comment-target>
     <div>
       <div class="campaign" data-k="campaign"></div>
       <h1 style="margin-top:10px"><span data-k="navLabel"></span> <em>for traders</em></h1>
@@ -244,9 +282,9 @@
   <section>
     <div class="slide-head">
       <div><div class="kicker">01 · DESKTOP</div><h2>Trading area, offers selected</h2></div>
-      <p>New sidebar item with the gift icon and the active state. Offers sit in a three-column grid of ticket cards; the code lives on the tear-off stub.</p>
+      <div class="side"><p>New sidebar item with the gift icon and the active state. Offers sit in a three-column grid of ticket cards; the code lives on the tear-off stub.</p><button class="cbtn" data-comment-on="#desk-frame" hidden><svg><use href="#i-chat"/></svg>Comment on desktop</button></div>
     </div>
-    <div class="browser">
+    <div class="browser" id="desk-frame" data-comment-target>
       <div class="bar"><div class="dots"><i></i><i></i><i></i></div><div class="url">dashboard.fundingrock.com/offers</div></div>
       <div class="viewport" id="desk-vp"><div class="scaled" id="desk"></div></div>
     </div>
@@ -255,18 +293,19 @@
   <section>
     <div class="slide-head">
       <div><div class="kicker">02 · MOBILE</div><h2>Offers page and menu</h2></div>
-      <p>The sidebar becomes a menu behind the hamburger icon. Cards stack full width with a narrower stub; long offers wrap. The phones scroll.</p>
+      <div class="side"><p>The sidebar becomes a menu behind the hamburger icon. Cards stack full width with a narrower stub; long offers wrap. The phones scroll.</p><button class="cbtn" data-comment-on="#phones" hidden><svg><use href="#i-chat"/></svg>Comment on mobile</button></div>
     </div>
     <div class="phones" id="phones">
-      <div class="phone-wrap"><div class="phone-scale"><div class="phone"><div class="island"></div><div class="screen"><div class="status"><span>9:41</span><span class="sys"><svg width="17" height="11" viewBox="0 0 17 11" fill="#fff"><rect x="0" y="7" width="3" height="4" rx="1"/><rect x="4.5" y="5" width="3" height="6" rx="1"/><rect x="9" y="2.5" width="3" height="8.5" rx="1"/><rect x="13.5" y="0" width="3" height="11" rx="1"/></svg><svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x=".5" y=".5" width="21" height="11" rx="3.5" stroke="#fff" opacity=".4"/><rect x="2" y="2" width="16" height="8" rx="2" fill="#fff"/><path d="M23 4v4" stroke="#fff" stroke-width="1.5" stroke-linecap="round" opacity=".5"/></svg></span></div><div class="scroll" id="mob-page"></div></div></div></div><div class="cap">Offers page</div></div>
-      <div class="phone-wrap"><div class="phone-scale"><div class="phone"><div class="island"></div><div class="screen"><div class="status"><span>9:41</span><span class="sys"><svg width="17" height="11" viewBox="0 0 17 11" fill="#fff"><rect x="0" y="7" width="3" height="4" rx="1"/><rect x="4.5" y="5" width="3" height="6" rx="1"/><rect x="9" y="2.5" width="3" height="8.5" rx="1"/><rect x="13.5" y="0" width="3" height="11" rx="1"/></svg><svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x=".5" y=".5" width="21" height="11" rx="3.5" stroke="#fff" opacity=".4"/><rect x="2" y="2" width="16" height="8" rx="2" fill="#fff"/><path d="M23 4v4" stroke="#fff" stroke-width="1.5" stroke-linecap="round" opacity=".5"/></svg></span></div><div class="scroll" id="mob-menu"></div></div></div></div><div class="cap">Menu open, offers active</div></div>
+      <div class="phone-wrap" data-comment-target><div class="phone-scale"><div class="phone"><div class="island"></div><div class="screen"><div class="status"><span>9:41</span><span class="sys"><svg width="17" height="11" viewBox="0 0 17 11" fill="#fff"><rect x="0" y="7" width="3" height="4" rx="1"/><rect x="4.5" y="5" width="3" height="6" rx="1"/><rect x="9" y="2.5" width="3" height="8.5" rx="1"/><rect x="13.5" y="0" width="3" height="11" rx="1"/></svg><svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x=".5" y=".5" width="21" height="11" rx="3.5" stroke="#fff" opacity=".4"/><rect x="2" y="2" width="16" height="8" rx="2" fill="#fff"/><path d="M23 4v4" stroke="#fff" stroke-width="1.5" stroke-linecap="round" opacity=".5"/></svg></span></div><div class="scroll" id="mob-page"></div></div></div></div><div class="cap">Offers page</div></div>
+      <div class="phone-wrap" data-comment-target><div class="phone-scale"><div class="phone"><div class="island"></div><div class="screen"><div class="status"><span>9:41</span><span class="sys"><svg width="17" height="11" viewBox="0 0 17 11" fill="#fff"><rect x="0" y="7" width="3" height="4" rx="1"/><rect x="4.5" y="5" width="3" height="6" rx="1"/><rect x="9" y="2.5" width="3" height="8.5" rx="1"/><rect x="13.5" y="0" width="3" height="11" rx="1"/></svg><svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x=".5" y=".5" width="21" height="11" rx="3.5" stroke="#fff" opacity=".4"/><rect x="2" y="2" width="16" height="8" rx="2" fill="#fff"/><path d="M23 4v4" stroke="#fff" stroke-width="1.5" stroke-linecap="round" opacity=".5"/></svg></span></div><div class="scroll" id="mob-menu"></div></div></div></div><div class="cap">Menu open, offers active</div></div>
     </div>
   </section>
 </main>
 
-<div class="toast" id="toast"></div>
+<div data-src class="modal" id="modal" hidden><div class="box" role="dialog" aria-modal="true" aria-labelledby="modal-msg"><p id="modal-msg"></p><div class="row"><button class="tbtn" id="modal-no">Cancel</button><button class="tbtn primary" id="modal-yes">OK</button></div></div></div>
+<div data-src class="toast" id="toast" role="status" aria-live="polite"></div>
 
-<script id="model" type="application/json">
+<script data-src id="model" type="application/json">
 {
   "navLabel": "New Offers",
   "campaign": "BLACK NOVEMBER · PRE-SALE",
@@ -287,13 +326,31 @@
   ]
 }
 </script>
-<script>
+<script data-src>
 (() => {
+  // Canonical source: the authored nodes (marked data-src), captured before anything renders.
+  const SRC = [...document.querySelectorAll('[data-src]')].map(n => n === document.getElementById('model') ? null : n.outerHTML);
+  const RESET = ([...document.querySelectorAll('head style')].find(x => !x.hasAttribute('data-src')) || {}).textContent || '';
   const DEFAULT = JSON.parse(document.getElementById('model').textContent);
-  const KEY = 'fr-new-offers-presentation-v1';
-  let M;
-  try { M = JSON.parse(localStorage.getItem(KEY)) || structuredClone(DEFAULT); } catch (_) { M = structuredClone(DEFAULT); }
-  const save = () => { try { localStorage.setItem(KEY, JSON.stringify(M)); } catch (_) {} };
+  const BASE = JSON.stringify(DEFAULT);            // the published version this view loaded
+  const KEY = 'fr-new-offers-presentation-draft';
+  let M = structuredClone(DEFAULT);
+  try { const d = JSON.parse(localStorage.getItem(KEY)); if (d && d.base === BASE) M = d.model; } catch (_) {}
+  const save = () => { try { localStorage.setItem(KEY, JSON.stringify({base: BASE, model: M})); } catch (_) {} };
+  const dirty = () => JSON.stringify(M) !== BASE;
+  const pageHTML = model => {
+    const json = JSON.stringify(model, null, 2).replace(/</g, '\\u003c');
+    const body = SRC.map(h => h ?? `<script data-src id="model" type="application/json">\n${json}\n<\/script>`).join('\n');
+    return `<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>${RESET}</style></head><body>${body}</body></html>`;
+  };
+  const modal = document.getElementById('modal');
+  const ask = (msg, yes = 'OK') => new Promise(res => {
+    document.getElementById('modal-msg').textContent = msg;
+    const y = document.getElementById('modal-yes'), n = document.getElementById('modal-no');
+    y.textContent = yes; modal.hidden = false; y.focus();
+    const done = v => { modal.hidden = true; y.onclick = n.onclick = null; res(v); };
+    y.onclick = () => done(true); n.onclick = () => done(false);
+  });
   const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
   const CATS = [['bundle','Bundles'],['discount','Discounts'],['program','Programs']];
   const icon = (id, cls='') => `<svg class="${cls}"><use href="#${id}"/></svg>`;
@@ -312,7 +369,7 @@
       CATS.map(([c,l]) => `<div class="tab">${l} <span class="count">${counts[c]}</span></div>`).join('');
   };
   const cardHTML = (o, i) => `
-    <article class="offer" data-i="${i}">
+    <article class="offer" data-i="${i}" data-comment-target>
       <div class="card-tools">
         <select data-cat="${i}" title="Category">${CATS.map(([c,l]) => `<option value="${c}"${o.cat===c?' selected':''}>${l}</option>`).join('')}</select>
         <button data-act="up" data-i="${i}" title="Move earlier">↑</button>
@@ -428,7 +485,7 @@
     const b = e.target.closest?.('[data-act]'); if (!b) return;
     const i = +b.dataset.i, act = b.dataset.act;
     if (act === 'add') M.offers.push({title:'New offer',val:'20% OFF',desc:'Describe the offer',code:'NEWCODE',exp:'Until Nov 30, 2026',cat:'discount'});
-    if (act === 'del') { if (!confirm('Remove this offer?')) return; M.offers.splice(i, 1); }
+    if (act === 'del') { ask(`Remove the “${M.offers[i].val}” offer?`, 'Remove').then(ok => { if (ok) { M.offers.splice(i, 1); save(); render(); } }); return; }
     if (act === 'up' && i > 0) [M.offers[i-1], M.offers[i]] = [M.offers[i], M.offers[i-1]];
     if (act === 'live') M.offers[i].live = !M.offers[i].live;
     save(); render();
@@ -439,27 +496,90 @@
     toast('Opens My Offers');
   });
   document.querySelectorAll('[data-style]').forEach(b => b.addEventListener('click', () => { M.style = b.dataset.style; save(); render(); }));
-  document.getElementById('reset-btn').addEventListener('click', () => {
-    if (!confirm('Reset all text and offers to the original version?')) return;
-    M = structuredClone(DEFAULT); try { localStorage.removeItem(KEY); } catch (_) {} render(); toast('Reset to original');
+  document.getElementById('reset-btn').addEventListener('click', async () => {
+    if (!await ask('Discard your unsaved edits and go back to the saved version?', 'Discard edits')) return;
+    M = structuredClone(DEFAULT); try { localStorage.removeItem(KEY); } catch (_) {} render(); toast('Back to the saved version');
   });
 
-  // ---------- Download the edited presentation ----------
-  document.getElementById('dl-btn').addEventListener('click', () => {
-    const was = editing; if (was) document.getElementById('edit-btn').click();
-    const doc = document.documentElement.cloneNode(true);
-    doc.querySelector('#model').textContent = '\n' + JSON.stringify(M, null, 2) + '\n';
-    ['#desk','#mob-page','#mob-menu'].forEach(s => doc.querySelector(s).innerHTML = '');
-    doc.querySelector('body').className = 'style-lime';
-    doc.querySelectorAll('[style]').forEach(n => { if (n.matches('.phone-scale,.scaled,#desk-vp')) n.removeAttribute('style'); });
-    const html = '<!doctype html>\n' + doc.outerHTML.replace(KEY, KEY + '-' + Date.now().toString(36));
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(new Blob([html], {type:'text/html'}));
-    a.download = 'fundingrock-new-offers-presentation.html'; a.click();
-    setTimeout(() => URL.revokeObjectURL(a.href), 2000);
-    if (was) document.getElementById('edit-btn').click();
-    toast('Downloaded with your edits');
+  // ---------- Menus ----------
+  const menus = [['export-btn','export-pop'],['share-btn','share-pop']];
+  const closeMenus = () => menus.forEach(([b,p]) => { document.getElementById(p).hidden = true; document.getElementById(b).setAttribute('aria-expanded','false'); });
+  menus.forEach(([b,p]) => document.getElementById(b).addEventListener('click', e => {
+    e.stopPropagation(); const pop = document.getElementById(p), open = pop.hidden;
+    closeMenus(); pop.hidden = !open; e.currentTarget.setAttribute('aria-expanded', String(open));
+  }));
+  document.addEventListener('click', e => { if (!e.target.closest('.pop')) closeMenus(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeMenus(); if (!modal.hidden) document.getElementById('modal-no').click(); } });
+
+  // ---------- Export ----------
+  const csvCell = v => /[",\n]/.test(v) ? '"' + String(v).replace(/"/g, '""') + '"' : String(v);
+  const files = {
+    html: () => ['fundingrock-new-offers-presentation.html', pageHTML(M)],
+    csv: () => ['fundingrock-new-offers.csv', [['Label','Offer','Description','Code','Expiry','Category'], ...M.offers.map(o => [o.title,o.val,o.desc,o.code,o.exp,o.cat])].map(r => r.map(csvCell).join(',')).join('\n') + '\n'],
+    json: () => ['fundingrock-new-offers.json', JSON.stringify(M, null, 2) + '\n'],
+  };
+  let downloads = null;
+  async function saveFile(kind){
+    const [filename, data] = files[kind]();
+    if (!window.claude) {             // opened as a local file: plain browser download
+      const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([data])); a.download = filename; a.click();
+      setTimeout(() => URL.revokeObjectURL(a.href), 2000); return toast(`Saved ${filename}`);
+    }
+    if (!downloads) return toast('Exporting is not available in this view');
+    try { const r = await downloads.save({filename, data}); if (r.status === 'saved') toast(`Saved ${filename}`); }
+    catch (err) {
+      if (err.code === 'declined') return;
+      toast(err.code === 'rate_limited' ? 'A save is already waiting for you. Finish that one first.' : 'That export is not available here');
+    }
+  }
+  document.querySelectorAll('[data-export]').forEach(b => b.addEventListener('click', () => { closeMenus(); saveFile(b.dataset.export); }));
+
+  // ---------- Share ----------
+  document.getElementById('copy-btn').addEventListener('click', async () => {
+    closeMenus();
+    const text = `${M.campaign}\n${M.title}\n\n` + M.offers.map(o => `• ${o.val}: ${o.desc} (code ${o.code}, ${o.exp})`).join('\n');
+    try { await navigator.clipboard.writeText(text); toast('Summary copied'); }
+    catch (_) { toast('Copy is blocked here. Use Export → Offers table instead.'); }
   });
+  let artifact = null;
+  const pubBtn = document.getElementById('publish-btn');
+  pubBtn.addEventListener('click', async () => {
+    closeMenus();
+    if (!artifact) return;
+    if (!dirty()) return toast('Nothing new to save. Everyone already sees this version.');
+    if (editing) document.getElementById('edit-btn').click();
+    try { sessionStorage.setItem('fr-just-published', '1'); } catch (_) {}
+    try { await artifact.publish(pageHTML(M)); try { localStorage.removeItem(KEY); } catch (_) {} }
+    catch (err) {
+      try { sessionStorage.removeItem('fr-just-published'); } catch (_) {}
+      if (err.code === 'conflict') return toast('Someone saved a newer version. Loading it now.');
+      if (['not_writer','not_granted','not_declared','consent_required','capability_disabled'].includes(err.code)) {
+        pubBtn.disabled = true; document.getElementById('publish-sub').textContent = 'You can view this page but not save it. Ask the owner for edit access.';
+        return toast('This page is view-only for you');
+      }
+      toast(err.code === 'rate_limited' ? 'Saving too often. Wait a moment and try again.' : 'Could not save right now. Try again in a moment.');
+    }
+  });
+  try { if (sessionStorage.getItem('fr-just-published')) { sessionStorage.removeItem('fr-just-published'); setTimeout(() => toast('Saved. Everyone with the link now sees these edits.'), 400); } } catch (_) {}
+
+  // ---------- Comments (threads are shown by claude.ai's comment panel) ----------
+  let comments = null;
+  async function comment(el){
+    if (!comments || !el) return;
+    try { await comments.openComposer({element: el}); }
+    catch (err) {
+      if (err.code === 'unavailable' || err.code === 'not_granted') { document.querySelectorAll('#comment-btn,[data-comment-on]').forEach(b => b.hidden = true); toast('Commenting is off in this view'); }
+      else if (err.code === 'rate_limited') toast('One moment, then try again');
+    }
+  }
+  document.getElementById('comment-btn').addEventListener('click', () => comment(document.getElementById('cover')));
+  document.querySelectorAll('[data-comment-on]').forEach(b => b.addEventListener('click', () => comment(document.querySelector(b.dataset.commentOn))));
+
+  if (window.claude?.use) {
+    claude.use('comments').then(c => { comments = c; if (c) document.querySelectorAll('#comment-btn,[data-comment-on]').forEach(b => b.hidden = false); });
+    claude.use('downloads').then(d => { downloads = d; });
+    claude.use('artifact').then(a => { artifact = a; if (a) pubBtn.hidden = false; });
+  }
 
   const t = document.getElementById('toast'); let tt;
   function toast(msg){ t.textContent = msg; t.classList.add('show'); clearTimeout(tt); tt = setTimeout(() => t.classList.remove('show'), 1600); }
@@ -468,5 +588,3 @@
   document.fonts?.ready.then(fit);
 })();
 </script>
-</body>
-</html>
