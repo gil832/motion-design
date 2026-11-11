@@ -179,15 +179,17 @@
     body.lay-d .offer{padding:16px 14px 14px 16px}
   }
 
-  /* B+ · brand colours: bottom stub, each offer in its own brand colour (FundingRock Brand palette) */
-  body.brandcol .offer .main{background:radial-gradient(120% 110% at 0% 0%,color-mix(in srgb,var(--brand) 14%,transparent),transparent 60%)}
-  body.brandcol .offer .eb,body.brandcol .offer .eb svg{color:var(--brand)}
+  /* B+ · brand colours (soft): bottom stub, each offer tinted with its own brand colour (FundingRock Brand palette) */
+  body.brandcol .offer{--btxt:color-mix(in srgb,var(--brand) 80%,#fff);background:color-mix(in srgb,var(--brand) 4%,var(--card))}
+  body.brandcol .offer .main{background:radial-gradient(120% 110% at 0% 0%,color-mix(in srgb,var(--brand) 9%,transparent),transparent 60%)}
+  body.brandcol .offer .eb,body.brandcol .offer .eb svg{color:var(--btxt)}
   body.brandcol .offer .val{color:#fff}
-  body.brandcol .offer .stub{background:var(--brand);color:var(--ink);border-top-color:color-mix(in srgb,var(--ink) 30%,transparent)}
-  body.brandcol .offer .stub:hover{background:var(--brand);filter:brightness(1.06)}
-  body.brandcol .offer .stub small{color:color-mix(in srgb,var(--ink) 60%,transparent)}
-  body.brandcol .offer .stub .c{color:var(--ink)}
-  body.brandcol .offer .claim{background:#fff;color:#0a0a0a}
+  body.brandcol .offer .stub{background:color-mix(in srgb,var(--brand) 12%,var(--card));color:var(--btxt);border-top-color:color-mix(in srgb,var(--brand) 35%,transparent)}
+  body.brandcol .offer .stub:hover{background:color-mix(in srgb,var(--brand) 18%,var(--card))}
+  body.brandcol .offer .stub small{color:color-mix(in srgb,var(--brand) 65%,transparent)}
+  body.brandcol .offer .stub .c{color:var(--btxt)}
+  body.brandcol .offer .claim{background:color-mix(in srgb,var(--brand) 16%,var(--card));color:var(--btxt);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--brand) 40%,transparent)}
+  body.brandcol .offer .claim:hover{background:color-mix(in srgb,var(--brand) 24%,var(--card))}
 </style>
 </head>
 <body>
