@@ -63,8 +63,10 @@
   .phone-wrap .cap{color:var(--text-3);font-size:12px;font-weight:500}
   .phone{width:390px;height:844px;border-radius:52px;padding:12px;background:#050505;box-shadow:0 0 0 2px #2a2a2a,0 30px 80px -30px rgba(0,0,0,.9);position:relative;flex:none}
   .phone .screen{width:100%;height:100%;border-radius:40px;overflow:hidden;background:var(--bg);position:relative}
-  .phone .island{position:absolute;top:22px;left:50%;transform:translateX(-50%);width:110px;height:32px;border-radius:20px;background:#000;z-index:5}
-  .phone .scroll{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;scrollbar-width:none;padding-top:48px}
+  .phone .island{position:absolute;top:22px;z-index:6;left:50%;transform:translateX(-50%);width:110px;height:32px;border-radius:20px;background:#000}
+  .phone .status{position:absolute;top:0;left:0;right:0;height:52px;z-index:4;background:var(--topnav);display:flex;align-items:center;justify-content:space-between;padding:6px 30px 0 34px;font-weight:600;font-size:14px}
+  .phone .status .sys{display:flex;align-items:center;gap:6px}
+  .phone .scroll{position:absolute;top:52px;left:0;right:0;bottom:0;overflow-y:auto;overflow-x:hidden;scrollbar-width:none;overscroll-behavior:contain}
   .phone .scroll::-webkit-scrollbar{display:none}
   .phone-scale{transform-origin:top center}
   @media (max-width:900px){.phones{gap:24px}}
@@ -159,7 +161,7 @@
   .m .how{flex-direction:column;align-items:flex-start;gap:14px;border-radius:10px;padding:16px}
   .m .cta-box{border-radius:10px;padding:16px}
   .m .cta-box .btn-lime{width:100%;justify-content:center}
-  .m .menu{display:flex;flex-direction:column;gap:4px;padding:16px;min-height:calc(844px - 24px - 48px - 55px);background:var(--sidebar)}
+  .m .menu{display:flex;flex-direction:column;gap:4px;padding:16px;min-height:calc(844px - 24px - 52px - 55px);background:var(--sidebar)}
   .m .menu .spacer{flex:1}
   .m .menu .cta-box .btn-lime{font-size:12.5px}
 
@@ -249,8 +251,8 @@
       <p>The sidebar becomes a menu behind the hamburger icon. Cards stack full width with a narrower stub; long offers wrap. The phones scroll.</p>
     </div>
     <div class="phones" id="phones">
-      <div class="phone-wrap"><div class="phone-scale"><div class="phone"><div class="island"></div><div class="screen"><div class="scroll" id="mob-page"></div></div></div></div><div class="cap">Offers page</div></div>
-      <div class="phone-wrap"><div class="phone-scale"><div class="phone"><div class="island"></div><div class="screen"><div class="scroll" id="mob-menu"></div></div></div></div><div class="cap">Menu open, offers active</div></div>
+      <div class="phone-wrap"><div class="phone-scale"><div class="phone"><div class="island"></div><div class="screen"><div class="status"><span>9:41</span><span class="sys"><svg width="17" height="11" viewBox="0 0 17 11" fill="#fff"><rect x="0" y="7" width="3" height="4" rx="1"/><rect x="4.5" y="5" width="3" height="6" rx="1"/><rect x="9" y="2.5" width="3" height="8.5" rx="1"/><rect x="13.5" y="0" width="3" height="11" rx="1"/></svg><svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x=".5" y=".5" width="21" height="11" rx="3.5" stroke="#fff" opacity=".4"/><rect x="2" y="2" width="16" height="8" rx="2" fill="#fff"/><path d="M23 4v4" stroke="#fff" stroke-width="1.5" stroke-linecap="round" opacity=".5"/></svg></span></div><div class="scroll" id="mob-page"></div></div></div></div><div class="cap">Offers page</div></div>
+      <div class="phone-wrap"><div class="phone-scale"><div class="phone"><div class="island"></div><div class="screen"><div class="status"><span>9:41</span><span class="sys"><svg width="17" height="11" viewBox="0 0 17 11" fill="#fff"><rect x="0" y="7" width="3" height="4" rx="1"/><rect x="4.5" y="5" width="3" height="6" rx="1"/><rect x="9" y="2.5" width="3" height="8.5" rx="1"/><rect x="13.5" y="0" width="3" height="11" rx="1"/></svg><svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x=".5" y=".5" width="21" height="11" rx="3.5" stroke="#fff" opacity=".4"/><rect x="2" y="2" width="16" height="8" rx="2" fill="#fff"/><path d="M23 4v4" stroke="#fff" stroke-width="1.5" stroke-linecap="round" opacity=".5"/></svg></span></div><div class="scroll" id="mob-menu"></div></div></div></div><div class="cap">Menu open, offers active</div></div>
     </div>
   </section>
 </main>
