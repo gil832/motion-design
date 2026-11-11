@@ -249,53 +249,68 @@
     .offer::after{bottom:83px;right:-11px;left:auto;clip-path:inset(0 50% 0 0)}
   }
 
-  /* ================= Design versions (same structure and behaviour, different skin) ================= */
-  /* A · Colour: each offer in its brand colour; soft glow behind the value, tinted stub */
-  body.colr .offer{--btxt:color-mix(in srgb,var(--brand) 80%,#fff)}
-  body.colr .offer .main{background:radial-gradient(45% 45% at 24% 42%,color-mix(in srgb,var(--brand) 14%,transparent),transparent 70%)}
-  body.colr .offer .val{color:var(--btxt)}
-  body.colr .offer .eb svg{color:var(--btxt)}
-  body.colr .offer .stub,body.colr .offer .stub:hover{background:linear-gradient(180deg,color-mix(in srgb,var(--brand) 10%,#1a1a1a),color-mix(in srgb,var(--brand) 4%,#1a1a1a))}
-  body.colr .code-btn{border-color:color-mix(in srgb,var(--brand) 40%,#333)}
-  body.colr .code-btn .c{color:var(--btxt)!important}
 
-  /* E · Coupon: textured lime coupon with black text, side cut-outs, no separate stub panel */
-  body.cpn .offer{background:repeating-linear-gradient(-55deg,rgba(10,10,10,.05) 0 1px,transparent 1px 6px),radial-gradient(110% 150% at 0% 0%,rgba(240,255,140,.75) 0%,rgba(240,255,140,0) 55%),linear-gradient(90deg,rgba(150,185,0,0) 55%,rgba(150,185,0,.22) 100%),var(--lime);color:#0a0a0a}
-  body.cpn .offer:hover{background:repeating-linear-gradient(-55deg,rgba(10,10,10,.05) 0 1px,transparent 1px 6px),radial-gradient(110% 150% at 0% 0%,rgba(240,255,140,.75) 0%,rgba(240,255,140,0) 55%),linear-gradient(90deg,rgba(150,185,0,0) 55%,rgba(150,185,0,.22) 100%),var(--lime)}
-  body.cpn .offer .val,body.cpn .offer .desc{color:#0a0a0a}
-  body.cpn .offer .eb,body.cpn .offer .expiry{color:rgba(10,10,10,.6)}
-  body.cpn .offer .eb svg{color:#0a0a0a}
-  body.cpn .offer .stub,body.cpn .offer .stub:hover{background:none;border-left-color:rgba(10,10,10,.25)}
-  body.cpn .offer .code-label{color:rgba(10,10,10,.6)}
-  body.cpn .code-btn{border-color:rgba(10,10,10,.4);background:rgba(10,10,10,.05);color:#0a0a0a}
-  body.cpn .code-btn:hover{border-color:#0a0a0a;color:#0a0a0a}
-  body.cpn .code-btn .c{color:#0a0a0a!important}
-  body.cpn .offer .use{background:#0a0a0a;color:var(--lime)}
-  body.cpn .offer.copied .code-btn{border-color:#0a0a0a;background:rgba(10,10,10,.1)}
-  body.cpn .offer.copied .code-btn .ic-ok,body.cpn .offer.copied .code-label{color:#0a0a0a}
-  body.cpn .offer::before{top:50%;left:-11px;right:auto;transform:translateY(-50%);clip-path:inset(0 0 0 50%)}
-  body.cpn .offer::after{top:50%;bottom:auto;right:-11px;transform:translateY(-50%);clip-path:inset(0 50% 0 0)}
+  /* ================= Consolidated My Offers ================= */
+  .sec-title{font-size:16px;font-weight:600;letter-spacing:-.1px;margin:0 0 12px}
+  .content > .label{margin-bottom:-8px}
+  /* copied state lives on the chip's wrapper, so a card can hold several codes */
+  .code-wrap{display:flex;flex-direction:column;gap:6px}
+  .code-wrap .code-label{text-align:left}
+  .code-wrap.copied .code-btn{border-style:solid;border-color:var(--lime);background:rgba(217,255,0,.08)}
+  .code-wrap.copied .code-btn .ic-copy{display:none}
+  .code-wrap.copied .code-btn .ic-ok{display:block}
+  .code-wrap.copied .code-label{color:var(--lime)}
+  .offer .stub .code-wrap .code-label{text-align:center}
 
-  /* F · Brand gradient: landing-page palette; glass cards with a cyan edge, gradient value and code, featured 30% OFF */
-  body.grd .offer{--g:linear-gradient(90deg,#7ff3dc 0%,#00d8c3 35%,#78ff00 72%,#d9ff00 100%);background:linear-gradient(180deg,rgba(18,46,48,.55),rgba(7,18,20,.9));box-shadow:inset 0 0 0 1px rgba(127,243,220,.16)}
-  body.grd .offer:hover{background:linear-gradient(180deg,rgba(18,46,48,.55),rgba(7,18,20,.9))}
-  body.grd .offer .eb{color:#a6c4c6}
-  body.grd .offer .val{background:var(--g);-webkit-background-clip:text;background-clip:text;color:transparent}
-  body.grd .offer .desc{color:#cfe3e3}
-  body.grd .offer .expiry,body.grd .offer .code-label{color:#7c9a9b}
-  body.grd .offer .stub,body.grd .offer .stub:hover{background:rgba(0,216,195,.05);border-left-color:rgba(127,243,220,.25)}
-  body.grd .code-btn{border-color:rgba(127,243,220,.35);background:rgba(3,9,12,.5)}
-  body.grd .code-btn .c{background:var(--g);-webkit-background-clip:text;background-clip:text;color:transparent!important}
-  body.grd .offer .use{border-radius:999px}
-  body.grd .offer[data-cat="discount"]{background:linear-gradient(180deg,rgba(44,58,10,.5),rgba(10,16,6,.9));box-shadow:inset 0 0 0 1px rgba(217,255,0,.55)}
-  body.grd .offer[data-cat="discount"] .stub{background:rgba(217,255,0,.06);border-left-color:rgba(217,255,0,.35)}
+  /* standard offer cards (2 x 2) */
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .offer{min-height:176px}
+  .offer .title{font-size:24px;font-weight:700;letter-spacing:-.4px;line-height:1.15;margin:8px 0 0;color:#fff}
+  .offer .desc{max-width:42ch}
+  .offer .stub .nocode{text-align:center;color:var(--text-4)}
+  .offer .stub .btn-ghost{min-height:40px;padding:10px 8px;font-size:13px;gap:6px;white-space:nowrap}
 
+  /* featured campaign card */
+  .feature{--stub:220px;min-height:0;outline:1px solid rgba(217,255,0,.45);outline-offset:-1px}
+  .feature .main{padding:22px 24px 24px;gap:18px}
+  .ft-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px 24px;flex-wrap:wrap}
+  .cg-pill{display:inline-flex;align-items:center;gap:5px}
+  .ft-title{font-size:26px;font-weight:700;letter-spacing:-.3px;margin:10px 0 0}
+  .ft-sub{color:var(--text-3);font-weight:500;margin:4px 0 0}
+  .feature .ft-head .expiry{font-size:12.5px;color:var(--text-2);padding:7px 12px;border:1px solid #2a2a2a;border-radius:999px;background:#151515}
+  .deals{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+  .deal{display:flex;flex-direction:column;gap:6px;padding:16px;border-radius:12px;background:#1b1b1b;border:1px solid #242424}
+  .deal .val{margin-top:4px}
+  .deal .desc{font-size:13px;margin-bottom:6px}
+  .deal .code-wrap{margin-top:auto}
+  .deal .code-btn{justify-content:space-between}
+  .feature .stub{gap:14px;padding:20px 18px}
+  .offer.feature .stub .stub-note{color:var(--text-3);font-size:12.5px;font-weight:500;letter-spacing:0;text-transform:none;line-height:1.45;text-align:center}
+  .feature .use{min-height:44px;font-size:14px}
+
+  @media (max-width:1100px){
+    .grid{grid-template-columns:1fr}
+    .feature{--stub:200px}
+    .deals{grid-template-columns:1fr;gap:10px}
+    .deal{display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"eb code" "val code" "desc code";column-gap:16px;row-gap:4px;align-items:center}
+    .deal .eb{grid-area:eb}.deal .val{grid-area:val;margin:0}.deal .desc{grid-area:desc;margin:0}
+    .deal .code-wrap{grid-area:code;margin:0;min-width:170px}
+  }
   @media (max-width:560px){
-    body.cpn .offer .stub{border-top-color:rgba(10,10,10,.25)}
-    body.cpn .offer::before{top:auto;bottom:83px;transform:none}
-    body.cpn .offer::after{top:auto;bottom:83px;transform:none}
-    body.grd .offer .stub{border-top-color:rgba(127,243,220,.25)}
-    body.grd .offer[data-cat="discount"] .stub{border-top-color:rgba(217,255,0,.35)}
+    .feature .main{padding:18px 16px 16px}
+    .feature .ft-head .expiry{font-size:12px}
+    .deal{grid-template-columns:1fr;grid-template-areas:"eb" "val" "desc" "code"}
+    .deal .code-wrap{min-width:0}
+    .deal .code-btn{min-height:44px}
+    .feature .stub{display:flex;flex-direction:column;align-items:stretch;padding:14px 16px 16px;gap:10px}
+    .offer.feature .stub .stub-note{text-align:left}
+    .feature::before,.feature::after{bottom:95px}
+    .offer[data-kind="link"] .stub{grid-template-columns:1fr;grid-template-areas:"label" "use"}
+    .offer .stub .nocode{text-align:left}
+    .offer .stub .btn-ghost{min-height:44px}
+    .offer .stub .code-wrap{grid-area:code}
+    .offer .stub .code-wrap .code-label{text-align:left}
+    .offer[data-kind="coupon"] .stub{grid-template-areas:"code use";align-items:end}
   }
 </style>
 </head>
@@ -321,6 +336,11 @@
     <symbol id="o-pct" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M19 5 5 19"/><circle cx="7" cy="7" r="2.5"/><circle cx="17" cy="17" r="2.5"/></symbol>
     <symbol id="o-layers" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3 9 5-9 5-9-5z"/><path d="m3 13 9 5 9-5"/></symbol>
     <symbol id="o-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
+    <symbol id="o-rebuild" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 15.5-6.2L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-15.5 6.2L3 16"/><path d="M3 21v-5h5"/></symbol>
+    <symbol id="o-gem" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12l4 6-10 12L2 9z"/><path d="M2 9h20M12 21 8 9l2-6M12 21l4-12-2-6"/></symbol>
+    <symbol id="o-pass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 2.8 2.8L16.5 9.5"/></symbol>
+    <symbol id="o-skip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m4 6 8 6-8 6z"/><path d="m12 6 8 6-8 6z"/></symbol>
+    <symbol id="o-star" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3 2.6 5.6 6 .7-4.5 4.1 1.2 6L12 16.4 6.7 19.4l1.2-6L3.4 9.3l6-.7z"/></symbol>
     <symbol id="i-offer" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="4.5" rx="1"/><path d="M5 12.5V20h14v-7.5M12 8v12"/><path d="M12 8S10.6 3 7.8 3a2.3 2.3 0 0 0 0 5H12Zm0 0s1.4-5 4.2-5a2.3 2.3 0 0 1 0 5H12Z"/></symbol>
     <symbol id="i-gift" viewBox="0 0 24 24"><path fill="currentColor" d="M20 7h-2.2A3 3 0 0 0 12 4a3 3 0 0 0-5.8 3H4a1 1 0 0 0-1 1v3h8V7h2v4h8V8a1 1 0 0 0-1-1M9 7a1 1 0 1 1 1-1v1zm5 0V6a1 1 0 1 1 1 1zM4 13v6a1 1 0 0 0 1 1h6v-7zm9 7h6a1 1 0 0 0 1-1v-6h-7z"/></symbol>
     <symbol id="i-cert" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2 9.5 4H6v3.5L4 10l2 2.5V16h3.5l2.5 2 2.5-2H18v-3.5l2-2.5-2-2.5V4h-3.5z"/></symbol>
@@ -388,27 +408,23 @@
       <div class="page-header">
         <div>
           <h1>My Offers</h1>
-          <p>Offers available on your account. Copy a code, then use it at checkout.</p>
+          <p>Promotions, special deals and coupon codes available on your account.</p>
         </div>
       </div>
 
-      <section class="campaign-group" aria-labelledby="bn-title">
-        <header class="cg-head">
-          <div class="cg-titles">
-            <div class="cg-meta"><span class="cg-pill">Pre-sale</span><span id="count-label">3 offers</span></div>
-            <h2 class="cg-title" id="bn-title">Black November</h2>
-            <p class="cg-sub">Every order gets a bonus challenge. Bundles too.</p>
-          </div>
-          <div class="cg-ends"><svg width="14" height="14"><use href="#i-clock"/></svg>Ends Nov 30, 2026</div>
-        </header>
+      <div class="label" id="count-label">5 offers</div>
+      <div id="featured"></div>
+
+      <section class="more" aria-labelledby="more-title">
+        <h2 class="sec-title" id="more-title">More offers</h2>
         <div class="grid" id="grid"></div>
       </section>
 
       <section class="how" aria-label="How to redeem">
         <span class="label">How to redeem</span>
         <ol class="steps">
-          <li class="step"><span class="num">1</span><b>Copy your offer code</b></li>
-          <li class="step"><span class="num">2</span><b>Click Use Offer to start a challenge</b></li>
+          <li class="step"><span class="num">1</span><b>Copy the code, if the offer has one</b></li>
+          <li class="step"><span class="num">2</span><b>Click the offer's button to start</b></li>
           <li class="step"><span class="num">3</span><b>Paste the code at checkout</b></li>
         </ol>
       </section>
@@ -422,30 +438,74 @@
 <div class="toast" id="toast">Code copied</div>
 
 <script>
+  /* Featured campaign: one card, several deals. Each deal may carry its own code. */
+  const CAMPAIGN = {
+    title: 'Black November', sub: 'Every order gets a bonus challenge. Bundles too.', exp: 'Ends Nov 30, 2026', cta: 'Use Offer',
+    deals: [
+      {type:'Discount', icon:'o-pct',    val:'30% OFF', desc:'Every program and account size', code:'BLACKNOV30'},
+      {type:'Bundle',   icon:'o-layers', val:'2+1',     desc:'Buy 2 challenges, get 1 free',  code:'BUY2GET1'},
+      {type:'Bundle',   icon:'o-layers', val:'3+2',     desc:'Buy 3 challenges, get 2 free',  code:'BUY3GET2'},
+    ]
+  };
+  /* Individual offers. kind 'coupon' shows a code + Use Offer; kind 'link' needs no code and opens the offer. */
   const OFFERS = [
-    {type:'Discount', brand:'#d9ff00', icon:'o-pct',    val:'30% OFF', desc:'On every program and account size', code:'BLACKNOV30', exp:'Ends Nov 30, 2026', cat:'discount'},
-    {type:'Bundle',   brand:'#00d8c3', icon:'o-layers', val:'2+1',     desc:'Buy 2 challenges, get 1 free',      code:'BUY2GET1',   exp:'Ends Nov 30, 2026', cat:'bundle'},
-    {type:'Bundle',   brand:'#78ff00', icon:'o-layers', val:'3+2',     desc:'Buy 3 challenges, get 2 free',      code:'BUY3GET2',   exp:'Ends Nov 30, 2026', cat:'bundle'},
+    {kind:'coupon', type:'Coupon',        icon:'o-rebuild', title:'Breached Users',     desc:'A comeback offer for traders whose account was breached.', code:'REBUILD30', cta:'Use Offer'},
+    {kind:'link',   type:'New program',   icon:'o-gem',     title:'Kokuyō',             desc:'Live sale on the new Kokuyō program.',                     cta:'View Program'},
+    {kind:'link',   type:'Special offer', icon:'o-pass',    title:'Pay After You Pass', desc:'Start now, pay when you pass.',                            cta:'View Offer'},
+    {kind:'link',   type:'Special offer', icon:'o-skip',    title:'Skip the Challenge', desc:'Details for this offer are coming soon.',                  cta:'View Offer'},
   ];
-  const grid = document.getElementById('grid');
-  grid.innerHTML = OFFERS.map(o => `
-    <article class="offer" data-cat="${o.cat}" style="--brand:${o.brand}">
+  const codeChip = code => `
+        <div class="code-wrap">
+          <small class="code-label" aria-live="polite">Code</small>
+          <button class="code-btn" type="button" data-code="${code}" aria-label="Copy code ${code}">
+            <span class="c">${code}</span><svg class="ic-copy"><use href="#i-copy"/></svg><svg class="ic-ok"><use href="#o-check"/></svg>
+          </button>
+        </div>`;
+  const arrow = '<svg width="12" height="12"><use href="#i-arrow"/></svg>';
+
+  document.getElementById('featured').innerHTML = `
+    <article class="offer feature" aria-labelledby="bn-title">
       <div class="main">
-        <div class="eb"><svg><use href="#${o.icon}"/></svg><span class="ebt">${o.type}</span></div>
-        <div class="val">${o.val}</div>
-        <div class="desc">${o.desc}</div>
-        <div class="foot"><span class="expiry"><svg width="12" height="12"><use href="#i-clock"/></svg><span class="ext">${o.exp}</span></span></div>
+        <div class="ft-head">
+          <div>
+            <div class="cg-meta"><span class="cg-pill"><svg width="11" height="11"><use href="#o-star"/></svg>Featured</span><span>Pre-sale · ${CAMPAIGN.deals.length} deals</span></div>
+            <h2 class="ft-title" id="bn-title">${CAMPAIGN.title}</h2>
+            <p class="ft-sub">${CAMPAIGN.sub}</p>
+          </div>
+          <span class="expiry"><svg width="13" height="13"><use href="#i-clock"/></svg><span class="ext">${CAMPAIGN.exp}</span></span>
+        </div>
+        <div class="deals">
+          ${CAMPAIGN.deals.map(d => `
+          <div class="deal">
+            <div class="eb"><svg><use href="#${d.icon}"/></svg><span class="ebt">${d.type}</span></div>
+            <div class="val">${d.val}</div>
+            <div class="desc">${d.desc}</div>
+            ${codeChip(d.code)}
+          </div>`).join('')}
+        </div>
       </div>
       <div class="stub">
-        <small class="code-label" aria-live="polite">Code</small>
-        <button class="code-btn" type="button" data-code="${o.code}" aria-label="Copy code ${o.code}">
-          <span class="c">${o.code}</span><svg class="ic-copy"><use href="#i-copy"/></svg><svg class="ic-ok"><use href="#o-check"/></svg>
-        </button>
-        <button class="btn-lime use" type="button" data-code="${o.code}">Use Offer <svg width="12" height="12"><use href="#i-arrow"/></svg></button>
+        <small class="stub-note">Copy a code above, then start your challenge</small>
+        <button class="btn-lime use" type="button" data-go="${CAMPAIGN.title}">${CAMPAIGN.cta} ${arrow}</button>
+      </div>
+    </article>`;
+
+  document.getElementById('grid').innerHTML = OFFERS.map(o => `
+    <article class="offer" data-kind="${o.kind}">
+      <div class="main">
+        <div class="eb"><svg><use href="#${o.icon}"/></svg><span class="ebt">${o.type}</span></div>
+        <h3 class="title">${o.title}</h3>
+        <div class="desc">${o.desc}</div>
+        ${o.exp ? `<div class="foot"><span class="expiry"><svg width="12" height="12"><use href="#i-clock"/></svg><span class="ext">${o.exp}</span></span></div>` : ''}
+      </div>
+      <div class="stub">
+        ${o.kind === 'coupon' ? codeChip(o.code) : '<small class="code-label nocode">No code needed</small>'}
+        <button class="btn-ghost use" type="button" data-go="${o.title}" ${o.code ? `data-code="${o.code}"` : ''}>${o.cta} ${arrow}</button>
       </div>
     </article>`).join('');
-  // Gift badge and counts follow the number of offers
-  const n = OFFERS.length;
+
+  // Gift badge and counts follow the number of offers (the campaign counts as one)
+  const n = OFFERS.length + 1;
   document.querySelector('#gift-btn b').textContent = n;
   document.getElementById('gift-btn').setAttribute('aria-label', `My Offers, ${n} available`);
   document.getElementById('count-label').textContent = `${n} offers`;
@@ -461,16 +521,7 @@
     otherView.textContent = `${v} screen — unchanged, not part of this prototype.`;
   }));
 
-  // Filter tabs
-  document.querySelectorAll('.tab').forEach(tab => tab.addEventListener('click', () => {
-    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-    tab.classList.add('active');
-    const f = tab.dataset.filter; let n = 0;
-    document.querySelectorAll('.offer').forEach(c => { const show = f === 'all' || c.dataset.cat === f; c.hidden = !show; n += show; });
-    document.getElementById('count-label').textContent = `Available offers · ${n}`;
-  }));
-
-  // Copy code: clear inline feedback on the card ("Copied!" + check), plus a status toast
+  // Copy code: inline "Copied!" + check on the chip that was used, plus a status toast for CTAs
   const toast = document.getElementById('toast'); let tt;
   const say = msg => { toast.textContent = msg; toast.classList.add('show'); clearTimeout(tt); tt = setTimeout(() => toast.classList.remove('show'), 1800); };
   const copy = code => { try { navigator.clipboard?.writeText(code).catch(() => {}); } catch (_) {} };
@@ -478,14 +529,17 @@
     if (document.body.classList.contains('editing')) return;
     const chip = e.target.closest('.code-btn');
     if (chip) {
-      const card = chip.closest('.offer'), label = card.querySelector('.code-label');
+      const wrap = chip.closest('.code-wrap'), label = wrap.querySelector('.code-label');
       copy(chip.dataset.code);
-      card.classList.add('copied'); label.textContent = 'Copied!';
-      clearTimeout(card._t); card._t = setTimeout(() => { card.classList.remove('copied'); label.textContent = 'Code'; }, 1800);
+      wrap.classList.add('copied'); label.textContent = 'Copied!';
+      clearTimeout(wrap._t); wrap._t = setTimeout(() => { wrap.classList.remove('copied'); label.textContent = 'Code'; }, 1800);
       return;
     }
-    const use = e.target.closest('.use');
-    if (use) { copy(use.dataset.code); say(`${use.dataset.code} copied. Opening checkout…`); }
+    const go = e.target.closest('.use');
+    if (go) {
+      if (go.dataset.code) { copy(go.dataset.code); say(`${go.dataset.code} copied. Opening checkout…`); }
+      else say(`Opening ${go.dataset.go}…`);
+    }
   });
 
   // Mobile menu
@@ -511,7 +565,7 @@
    in edit mode each text element becomes contenteditable and changes go back to the shell, which saves them. */
 (function () {
   if (window.parent === window) return;
-  var SEL = ".page-header h1, .page-header p, .cg-title, .cg-sub, .nav-item.active .nl, .offer .ebt, .offer .val, .offer .desc, .offer .ext, .offer .code-btn .c, .how .step b, .sidebar-cta p";
+  var SEL = ".page-header h1, .page-header p, .ft-title, .ft-sub, .sec-title, .nav-item.active .nl, .offer .ebt, .offer .val, .offer .title, .offer .desc, .offer .ext, .offer .code-btn .c, .stub-note, .how .step b, .sidebar-cta p";
   var els = Array.prototype.slice.call(document.querySelectorAll(SEL)).filter(function (el) { return !el.querySelector("a, button, img, svg"); });
   function hash(t) { var h = 5381; for (var i = 0; i < t.length; i++) h = ((h << 5) + h + t.charCodeAt(i)) | 0; return (h >>> 0).toString(36); }
   var seen = {};
@@ -531,7 +585,7 @@
     })(t.content);
     var d = document.createElement("div"); d.appendChild(t.content); return d.innerHTML;
   }
-  function syncCode(el) { if (!el.matches(".code-btn .c")) return; var card = el.closest(".offer"), v = el.textContent.trim(); card.querySelectorAll("[data-code]").forEach(function (b) { b.setAttribute("data-code", v); }); }
+  function syncCode(el) { if (!el.matches(".code-btn .c")) return; var v = el.textContent.trim(), btn = el.closest(".code-btn"), card = el.closest(".offer"); btn.setAttribute("data-code", v); var use = card.querySelector(".use[data-code]"); if (use && card.querySelectorAll(".code-btn").length === 1) use.setAttribute("data-code", v); }
   var timers = {};
   function send(el) {
     var k = el.getAttribute("data-ek"); syncCode(el);
@@ -554,7 +608,6 @@
       var h = clean(d.map[k]); if (el.innerHTML !== h) { el.innerHTML = h; syncCode(el); }
     });
     if (d.t === "edit") setEdit(!!d.on);
-    if (d.t === "layout") { document.body.classList.toggle("colr", d.v === "colour"); document.body.classList.toggle("cpn", d.v === "coupon"); document.body.classList.toggle("grd", d.v === "gradient"); }
   });
   parent.postMessage({ fr: "mo", t: "ready" }, "*");
 })();
