@@ -281,10 +281,9 @@
   .deals{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
   .deal{display:flex;flex-direction:column;gap:6px;padding:16px;border-radius:12px;background:#1b1b1b;border:1px solid #242424}
   .deal .val{margin-top:4px}
-  .deal .desc{font-size:13px;margin-bottom:6px}
-  .deal .code-wrap{margin-top:auto}
-  .deal .code-btn{justify-content:space-between}
-  .feature .stub{gap:14px;padding:20px 18px}
+  .deal .desc{font-size:13px}
+  .feature .stub{gap:10px;padding:20px 18px}
+  .offer.feature .stub .stub-note{font-size:11.5px}
   .offer.feature .stub .stub-note{color:var(--text-3);font-size:12.5px;font-weight:500;letter-spacing:0;text-transform:none;line-height:1.45;text-align:center}
   .feature .use{min-height:44px;font-size:14px}
 
@@ -292,19 +291,16 @@
     .grid{grid-template-columns:1fr}
     .feature{--stub:200px}
     .deals{grid-template-columns:1fr;gap:10px}
-    .deal{display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"eb code" "val code" "desc code";column-gap:16px;row-gap:4px;align-items:center}
-    .deal .eb{grid-area:eb}.deal .val{grid-area:val;margin:0}.deal .desc{grid-area:desc;margin:0}
-    .deal .code-wrap{grid-area:code;margin:0;min-width:170px}
+    .deal{display:grid;grid-template-columns:auto minmax(0,1fr);grid-template-areas:"eb eb" "val desc";column-gap:18px;row-gap:4px;align-items:center}
+    .deal .eb{grid-area:eb}.deal .val{grid-area:val;margin:0;font-size:28px}.deal .desc{grid-area:desc;margin:0}
   }
   @media (max-width:560px){
     .feature .main{padding:18px 16px 16px}
     .feature .ft-head .expiry{font-size:12px}
-    .deal{grid-template-columns:1fr;grid-template-areas:"eb" "val" "desc" "code"}
-    .deal .code-wrap{min-width:0}
-    .deal .code-btn{min-height:44px}
-    .feature .stub{display:flex;flex-direction:column;align-items:stretch;padding:14px 16px 16px;gap:10px}
-    .offer.feature .stub .stub-note{text-align:left}
-    .feature::before,.feature::after{bottom:95px}
+    .deal{grid-template-columns:1fr;grid-template-areas:"eb" "val" "desc"}
+    .offer.feature .stub{grid-template-areas:"code use" "note note"}
+    .offer.feature .stub .stub-note{grid-area:note;text-align:left}
+    .feature::before,.feature::after{bottom:111px}
     .offer[data-kind="link"] .stub{grid-template-columns:1fr;grid-template-areas:"label" "use"}
     .offer .stub .nocode{text-align:left}
     .offer .stub .btn-ghost{min-height:44px}
@@ -312,6 +308,59 @@
     .offer .stub .code-wrap .code-label{text-align:left}
     .offer[data-kind="coupon"] .stub{grid-template-areas:"code use";align-items:end}
   }
+
+  /* ================= Design versions (same structure and behaviour, different skin) ================= */
+  /* A · Colour: each deal and offer in its own brand colour */
+  body.colr .offer,body.colr .deal{--btxt:color-mix(in srgb,var(--brand) 78%,#fff)}
+  body.colr .offer .main{background:radial-gradient(45% 60% at 18% 30%,color-mix(in srgb,var(--brand) 12%,transparent),transparent 70%)}
+  body.colr .offer.feature .main{background:none}
+  body.colr .offer .eb,body.colr .offer .eb svg{color:var(--btxt)}
+  body.colr .deal{background:linear-gradient(160deg,color-mix(in srgb,var(--brand) 9%,#1b1b1b),#1b1b1b 60%);border-color:color-mix(in srgb,var(--brand) 22%,#242424)}
+  body.colr .deal .val{color:var(--btxt)}
+  body.colr .offer .stub,body.colr .offer .stub:hover{background:linear-gradient(180deg,color-mix(in srgb,var(--brand) 9%,#1a1a1a),color-mix(in srgb,var(--brand) 3%,#1a1a1a))}
+  body.colr .code-btn{border-color:color-mix(in srgb,var(--brand) 45%,#333)}
+  body.colr .code-btn .c{color:var(--btxt)!important}
+  body.colr .offer .btn-ghost{border-color:color-mix(in srgb,var(--brand) 60%,transparent);color:var(--btxt)}
+
+  /* E · Coupon: textured lime coupons with black text; the featured campaign in lime, the others in dark with a lime stub */
+  body.cpn .offer.feature,body.cpn .offer.feature:hover{background:repeating-linear-gradient(-55deg,rgba(10,10,10,.05) 0 1px,transparent 1px 6px),radial-gradient(110% 150% at 0% 0%,rgba(240,255,140,.75) 0%,rgba(240,255,140,0) 55%),linear-gradient(90deg,rgba(150,185,0,0) 55%,rgba(150,185,0,.22) 100%),var(--lime);outline:0;color:#0a0a0a}
+  body.cpn .feature .ft-title,body.cpn .feature .deal .val,body.cpn .feature .deal .desc{color:#0a0a0a}
+  body.cpn .feature .ft-sub,body.cpn .feature .cg-meta,body.cpn .feature .eb{color:rgba(10,10,10,.6)}
+  body.cpn .feature .eb svg,body.cpn .feature .cg-pill{color:#0a0a0a}
+  body.cpn .feature .cg-pill{border-color:rgba(10,10,10,.45)}
+  body.cpn .feature .ft-head .expiry{color:#0a0a0a;background:rgba(10,10,10,.06);border-color:rgba(10,10,10,.2)}
+  body.cpn .feature .deal{background:rgba(10,10,10,.06);border-color:rgba(10,10,10,.12)}
+  body.cpn .offer.feature .stub,body.cpn .offer.feature .stub:hover{background:rgba(10,10,10,.04);border-color:rgba(10,10,10,.25)}
+  body.cpn .feature .code-label,body.cpn .offer.feature .stub .stub-note{color:rgba(10,10,10,.6)}
+  body.cpn .feature .code-btn{border-color:rgba(10,10,10,.4);background:rgba(10,10,10,.05);color:#0a0a0a}
+  body.cpn .feature .code-btn .c{color:#0a0a0a!important}
+  body.cpn .feature .use{background:#0a0a0a;color:var(--lime)}
+  body.cpn .feature .code-wrap.copied .code-btn{border-color:#0a0a0a;background:rgba(10,10,10,.1)}
+  body.cpn .feature .code-wrap.copied .code-btn .ic-ok,body.cpn .feature .code-wrap.copied .code-label{color:#0a0a0a}
+  body.cpn .grid .offer .stub,body.cpn .grid .offer .stub:hover{background:repeating-linear-gradient(-55deg,rgba(10,10,10,.05) 0 1px,transparent 1px 6px),var(--lime);border-color:rgba(10,10,10,.3)}
+  body.cpn .grid .offer .code-label{color:rgba(10,10,10,.6)}
+  body.cpn .grid .code-btn{border-color:rgba(10,10,10,.4);background:rgba(10,10,10,.05)}
+  body.cpn .grid .code-btn .c{color:#0a0a0a!important}
+  body.cpn .grid .code-btn svg{color:#0a0a0a}
+  body.cpn .grid .offer .btn-ghost{border-color:#0a0a0a;color:#0a0a0a}
+  body.cpn .grid .offer .btn-ghost:hover{background:rgba(10,10,10,.08)}
+  body.cpn .grid .code-wrap.copied .code-btn{border-color:#0a0a0a;background:rgba(10,10,10,.1)}
+  body.cpn .grid .code-wrap.copied .code-btn .ic-ok,body.cpn .grid .code-wrap.copied .code-label{color:#0a0a0a}
+
+  /* F · Brand gradient: landing-page palette; glass cards with a cyan edge, gradient values and codes, featured campaign in lime */
+  body.grd .offer{--g:linear-gradient(90deg,#7ff3dc 0%,#00d8c3 35%,#78ff00 72%,#d9ff00 100%);background:linear-gradient(180deg,rgba(18,46,48,.55),rgba(7,18,20,.9));box-shadow:inset 0 0 0 1px rgba(127,243,220,.16)}
+  body.grd .offer:hover{background:linear-gradient(180deg,rgba(18,46,48,.55),rgba(7,18,20,.9))}
+  body.grd .offer.feature,body.grd .offer.feature:hover{background:linear-gradient(180deg,rgba(44,58,10,.45),rgba(10,16,6,.9));box-shadow:none}
+  body.grd .offer .eb{color:#a6c4c6}
+  body.grd .deal{background:rgba(3,9,12,.45);border-color:rgba(127,243,220,.14)}
+  body.grd .deal .val,body.grd .offer .title{background:var(--g);-webkit-background-clip:text;background-clip:text;color:transparent}
+  body.grd .offer .desc{color:#cfe3e3}
+  body.grd .offer .code-label,body.grd .ft-sub{color:#7c9a9b}
+  body.grd .offer .stub,body.grd .offer .stub:hover{background:rgba(0,216,195,.05);border-color:rgba(127,243,220,.25)}
+  body.grd .offer.feature .stub{background:rgba(217,255,0,.05);border-color:rgba(217,255,0,.35)}
+  body.grd .code-btn{border-color:rgba(127,243,220,.35);background:rgba(3,9,12,.5)}
+  body.grd .code-btn .c{background:var(--g);-webkit-background-clip:text;background-clip:text;color:transparent!important}
+  body.grd .offer .use{border-radius:999px}
 </style>
 </head>
 <body>
@@ -440,19 +489,19 @@
 <script>
   /* Featured campaign: one card, several deals. Each deal may carry its own code. */
   const CAMPAIGN = {
-    title: 'Black November', sub: 'Every order gets a bonus challenge. Bundles too.', exp: 'Ends Nov 30, 2026', cta: 'Use Offer',
+    title: 'Black November', sub: 'Every order gets a bonus challenge. Bundles too.', exp: 'Ends Nov 30, 2026', cta: 'Use Offer', code: 'BLACKNOV',
     deals: [
-      {type:'Discount', icon:'o-pct',    val:'30% OFF', desc:'Every program and account size', code:'BLACKNOV30'},
-      {type:'Bundle',   icon:'o-layers', val:'2+1',     desc:'Buy 2 challenges, get 1 free',  code:'BUY2GET1'},
-      {type:'Bundle',   icon:'o-layers', val:'3+2',     desc:'Buy 3 challenges, get 2 free',  code:'BUY3GET2'},
+      {type:'Discount', icon:'o-pct',    val:'30% OFF', desc:'Every program and account size', brand:'#d9ff00'},
+      {type:'Bundle',   icon:'o-layers', val:'2+1',     desc:'Buy 2 challenges, get 1 free',  brand:'#00d8c3'},
+      {type:'Bundle',   icon:'o-layers', val:'3+2',     desc:'Buy 3 challenges, get 2 free',  brand:'#78ff00'},
     ]
   };
   /* Individual offers. kind 'coupon' shows a code + Use Offer; kind 'link' needs no code and opens the offer. */
   const OFFERS = [
-    {kind:'coupon', type:'Coupon',        icon:'o-rebuild', title:'Breached Users',     desc:'A comeback offer for traders whose account was breached.', code:'REBUILD30', cta:'Use Offer'},
-    {kind:'link',   type:'New program',   icon:'o-gem',     title:'Kokuyō',             desc:'Live sale on the new Kokuyō program.',                     cta:'View Program'},
-    {kind:'link',   type:'Special offer', icon:'o-pass',    title:'Pay After You Pass', desc:'Start now, pay when you pass.',                            cta:'View Offer'},
-    {kind:'link',   type:'Special offer', icon:'o-skip',    title:'Skip the Challenge', desc:'Details for this offer are coming soon.',                  cta:'View Offer'},
+    {kind:'coupon', type:'Coupon',        icon:'o-rebuild', title:'Breached Users',     desc:'A comeback offer for traders whose account was breached.', code:'REBUILD30', cta:'Use Offer',    brand:'#ff5c00'},
+    {kind:'link',   type:'New program',   icon:'o-gem',     title:'Kokuyō',             desc:'Live sale on the new Kokuyō program.',                     cta:'View Program', brand:'#8042ff'},
+    {kind:'link',   type:'Special offer', icon:'o-pass',    title:'Pay After You Pass', desc:'Start now, pay when you pass.',                            cta:'View Offer',   brand:'#00d8c3'},
+    {kind:'link',   type:'Special offer', icon:'o-skip',    title:'Skip the Challenge', desc:'Details for this offer are coming soon.',                  cta:'View Offer',   brand:'#ff2156'},
   ];
   const codeChip = code => `
         <div class="code-wrap">
@@ -464,7 +513,7 @@
   const arrow = '<svg width="12" height="12"><use href="#i-arrow"/></svg>';
 
   document.getElementById('featured').innerHTML = `
-    <article class="offer feature" aria-labelledby="bn-title">
+    <article class="offer feature" aria-labelledby="bn-title" style="--brand:#d9ff00">
       <div class="main">
         <div class="ft-head">
           <div>
@@ -476,22 +525,22 @@
         </div>
         <div class="deals">
           ${CAMPAIGN.deals.map(d => `
-          <div class="deal">
+          <div class="deal" style="--brand:${d.brand}">
             <div class="eb"><svg><use href="#${d.icon}"/></svg><span class="ebt">${d.type}</span></div>
             <div class="val">${d.val}</div>
             <div class="desc">${d.desc}</div>
-            ${codeChip(d.code)}
           </div>`).join('')}
         </div>
       </div>
       <div class="stub">
-        <small class="stub-note">Copy a code above, then start your challenge</small>
-        <button class="btn-lime use" type="button" data-go="${CAMPAIGN.title}">${CAMPAIGN.cta} ${arrow}</button>
+        ${codeChip(CAMPAIGN.code)}
+        <small class="stub-note">One code for all three deals</small>
+        <button class="btn-lime use" type="button" data-go="${CAMPAIGN.title}" data-code="${CAMPAIGN.code}">${CAMPAIGN.cta} ${arrow}</button>
       </div>
     </article>`;
 
   document.getElementById('grid').innerHTML = OFFERS.map(o => `
-    <article class="offer" data-kind="${o.kind}">
+    <article class="offer" data-kind="${o.kind}" style="--brand:${o.brand}">
       <div class="main">
         <div class="eb"><svg><use href="#${o.icon}"/></svg><span class="ebt">${o.type}</span></div>
         <h3 class="title">${o.title}</h3>
@@ -608,6 +657,7 @@
       var h = clean(d.map[k]); if (el.innerHTML !== h) { el.innerHTML = h; syncCode(el); }
     });
     if (d.t === "edit") setEdit(!!d.on);
+    if (d.t === "layout") { document.body.classList.toggle("colr", d.v === "colour"); document.body.classList.toggle("cpn", d.v === "coupon"); document.body.classList.toggle("grd", d.v === "gradient"); }
   });
   parent.postMessage({ fr: "mo", t: "ready" }, "*");
 })();
