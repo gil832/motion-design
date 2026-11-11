@@ -397,6 +397,66 @@
   body.cpn .feature .deal::before,body.cpn .feature .deal::after{content:"";position:absolute;top:50%;width:24px;height:24px;margin-top:-12px;border-radius:50%;background:#d6f700;box-shadow:0 0 0 1.5px var(--lime) inset}
   body.cpn .feature .deal::before{left:-12px;clip-path:inset(0 0 0 50%)}
   body.cpn .feature .deal::after{right:-12px;clip-path:inset(0 50% 0 0)}
+
+  /* ================= My Offers · A + C ================= */
+  .content{gap:18px}
+  .more .sec-title{margin-bottom:12px}
+  .code-wrap{display:flex;flex-direction:column;gap:4px;min-width:0}
+  .code-btn{min-height:38px;padding:7px 10px;justify-content:space-between}
+  .code-wrap .code-label{font-size:10px;letter-spacing:.4px;text-transform:none;font-weight:500;color:var(--text-4);text-align:left}
+
+  /* Featured: Black November, compact */
+  .bn{border-radius:14px;background:#141414;border:1px solid rgba(217,255,0,.35);padding:18px 20px 20px;display:flex;flex-direction:column;gap:14px}
+  .bn-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px 20px;flex-wrap:wrap}
+  .bn-title{font-size:22px;font-weight:700;letter-spacing:-.3px;margin:8px 0 0}
+  .bn-sub{color:var(--text-3);margin:2px 0 0;font-size:13px}
+  .bn-ends{display:inline-flex;align-items:center;gap:6px;color:var(--text-2);font-size:12px;font-weight:500;padding:6px 11px;border:1px solid #2a2a2a;border-radius:999px;background:#191919}
+  .bn-deals{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+  .bn-deal{display:flex;flex-direction:column;gap:12px;padding:14px;border-radius:12px;background:#1b1b1b;border:1px solid #242424}
+  .bn-deal .eb{display:flex;align-items:center;gap:6px;font-size:10px;letter-spacing:1.3px;text-transform:uppercase;color:var(--text-3);font-weight:600}
+  .bn-deal .eb svg{width:14px;height:14px;color:var(--lime)}
+  .bn-deal .val{font-size:26px;font-weight:800;letter-spacing:-.5px;line-height:1.1;color:var(--lime);margin-top:6px;white-space:nowrap}
+  .bn-deal .desc{font-size:12.5px;color:var(--text-2);margin-top:2px}
+  .bn-act{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:start;border-top:1px dashed #333;padding-top:12px}
+  .bn-act .use{min-height:38px;padding:8px 14px;font-size:13px;border-radius:8px;gap:6px}
+
+  /* Other offers: compact ticket cards, one colour each */
+  .ofc-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+  .ofc{--c:var(--lime);position:relative;display:flex;flex-direction:column;border-radius:14px;background:#161616;border:1px solid #242424;overflow:hidden}
+  .ofc-body{padding:16px 16px 14px;display:flex;flex-direction:column;gap:4px;flex:1;background:linear-gradient(180deg,color-mix(in srgb,var(--c) 7%,transparent),transparent 70%)}
+  .ofc-top{display:flex;align-items:center;gap:8px;font-size:10px;letter-spacing:1.3px;text-transform:uppercase;font-weight:600;color:color-mix(in srgb,var(--c) 85%,#fff)}
+  .ofc-ic{width:28px;height:28px;border-radius:8px;display:grid;place-items:center;background:color-mix(in srgb,var(--c) 14%,transparent);color:var(--c)}
+  .ofc-ic svg{width:16px;height:16px}
+  .ofc .title{font-size:18px;font-weight:700;letter-spacing:-.2px;margin:10px 0 0;color:#fff}
+  .ofc .desc{font-size:12.5px;color:var(--text-3);line-height:1.45;margin:0}
+  .ofc-stub{position:relative;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:start;padding:12px 14px 14px;border-top:1.5px dashed #2e2e2e;background:#131313}
+  .ofc-stub::before,.ofc-stub::after{content:"";position:absolute;top:-9px;width:16px;height:16px;border-radius:50%;background:var(--bg);border:1px solid #242424}
+  .ofc-stub::before{left:-9px}.ofc-stub::after{right:-9px}
+  .ofc .nocode{align-self:center;font-size:11.5px;color:var(--text-4)}
+  .ofc .code-btn .c{color:color-mix(in srgb,var(--c) 80%,#fff)!important}
+  .ofc .code-btn:hover{border-color:var(--c)}
+  .ofc-btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:38px;padding:8px 12px;border-radius:8px;border:1px solid color-mix(in srgb,var(--c) 55%,transparent);color:color-mix(in srgb,var(--c) 85%,#fff);font-weight:600;font-size:12.5px;white-space:nowrap}
+  .ofc-btn:hover{background:color-mix(in srgb,var(--c) 12%,transparent)}
+  .ofc-stub{min-height:76px}
+  .ofc[data-kind="link"] .ofc-stub{grid-template-columns:1fr auto;align-items:center}
+
+  @media (max-width:1280px){ .ofc-grid{grid-template-columns:repeat(2,minmax(0,1fr))} }
+  @media (max-width:1000px){
+    .bn-deals{grid-template-columns:1fr}
+    .bn-deal{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,300px);gap:14px;align-items:center}
+    .bn-act{border-top:0;padding-top:0}
+  }
+  @media (max-width:560px){
+    .bn{padding:14px 14px 14px;gap:12px}
+    .bn-title{font-size:20px}
+    .bn-deal{display:flex;flex-direction:column;align-items:stretch;gap:10px;padding:12px}
+    .bn-deal .val{font-size:22px}
+    .bn-act{border-top:1px dashed #333;padding-top:10px}
+    .ofc-grid{grid-template-columns:1fr;gap:10px}
+    .ofc-body{padding:14px 14px 12px}
+    .ofc .title{font-size:17px;margin-top:8px}
+    .code-btn,.bn-act .use,.ofc-btn{min-height:44px}
+  }
 </style>
 </head>
 <body>
@@ -497,12 +557,12 @@
         </div>
       </div>
 
-      <div class="label" id="count-label">4 offers</div>
-      <div class="coupons" id="coupons"></div>
+      <div class="label" id="count-label">5 offers</div>
+      <div id="bn"></div>
 
       <section class="more" aria-labelledby="more-title">
         <h2 class="sec-title" id="more-title">More offers</h2>
-        <div class="grid" id="grid"></div>
+        <div class="ofc-grid" id="grid"></div>
       </section>
 
       <section class="how" aria-label="How to redeem">
@@ -524,19 +584,19 @@
 
 <script>
   /* Each coupon = one card, one code, several deals inside it. */
-  const COUPONS = [
-    { id:'bn', featured:true, brand:'#d9ff00', meta:'Pre-sale', title:'Black November', sub:'Every order gets a bonus challenge. Bundles too.', exp:'Ends Nov 30, 2026', code:'BLACKNOV', cta:'Use Offer',
-      deals: [
-        {type:'Discount', icon:'o-pct',    val:'30% OFF', desc:'Every program and account size', brand:'#d9ff00'},
-        {type:'Bundle',   icon:'o-layers', val:'2+1',     desc:'Buy 2 challenges, get 1 free',  brand:'#00d8c3'},
-        {type:'Bundle',   icon:'o-layers', val:'3+2',     desc:'Buy 3 challenges, get 2 free',  brand:'#78ff00'},
-      ] },
-  ];
-  /* Individual coupons. kind 'coupon' shows a code + Use Offer; kind 'link' needs no code and opens the offer. */
+  /* Featured campaign: one card, three compact deals. Each deal has its own code and button. */
+  const CAMPAIGN = { title:'Black November', sub:'Every order gets a bonus challenge. Bundles too.', exp:'Ends Nov 30, 2026',
+    deals: [
+      {type:'Discount', icon:'o-pct',    val:'30% OFF',  desc:'Every program and account size', code:'BLACKNOV30'},
+      {type:'Bundle',   icon:'o-layers', val:'2+1 FREE', desc:'Buy 2 challenges, get 1 free',   code:'BUY2GET1'},
+      {type:'Bundle',   icon:'o-layers', val:'3+2 FREE', desc:'Buy 3 challenges, get 2 free',   code:'BUY3GET2'},
+    ] };
+  /* Other offers: each has its own colour. kind 'coupon' shows a code; kind 'link' needs no code. */
   const OFFERS = [
-    {kind:'coupon', type:'Coupon',        icon:'o-rebuild', title:'Breached Users',     desc:'A comeback offer for traders whose account was breached.', code:'REBUILD30', cta:'Use Offer',    brand:'#ff5c00'},
-    {kind:'link',   type:'New program',   icon:'o-gem',     title:'Kokuyō',             desc:'Live sale on the new Kokuyō program.',                     cta:'View Program', brand:'#8042ff'},
-    {kind:'link',   type:'Special offer', icon:'o-pass',    title:'Pay After You Pass', desc:'Start now, pay when you pass.',                            cta:'View Offer',   brand:'#00d8c3'},
+    {kind:'coupon', type:'Coupon',        icon:'o-rebuild', title:'Breached Users',     desc:'A comeback offer for traders whose account was breached.', code:'REBUILD30', cta:'Use Offer',    c:'#ff7a2e'},
+    {kind:'link',   type:'New program',   icon:'o-gem',     title:'Kokuyō',             desc:'Live sale on the new Kokuyō program.',                     cta:'View Program', c:'#a37bff'},
+    {kind:'link',   type:'Special offer', icon:'o-pass',    title:'Pay After You Pass', desc:'Start now, pay when you pass.',                            cta:'View Offer',   c:'#2fe0cf'},
+    {kind:'link',   type:'Special offer', icon:'o-skip',    title:'Skip the Challenge', desc:'Details for this offer are coming soon.',                  cta:'View Offer',   c:'#ff5c86'},
   ];
   const codeChip = code => `
         <div class="code-wrap">
@@ -547,48 +607,52 @@
         </div>`;
   const arrow = '<svg width="12" height="12"><use href="#i-arrow"/></svg>';
 
-  document.getElementById('coupons').innerHTML = COUPONS.map(c => `
-    <article class="offer feature${c.featured ? ' is-featured' : ' is-std'}" aria-labelledby="${c.id}-title" style="--brand:${c.brand}">
-      <div class="main">
-        <div class="ft-head">
-          <div>
-            <div class="cg-meta">${c.featured ? '<span class="cg-pill"><svg width="11" height="11"><use href="#o-star"/></svg>Featured</span>' : ''}<span>${c.meta} · ${c.deals.length} deals</span></div>
-            <h2 class="ft-title" id="${c.id}-title">${c.title}</h2>
-            <p class="ft-sub">${c.sub}</p>
-          </div>
-          ${c.exp ? `<span class="expiry"><svg width="13" height="13"><use href="#i-clock"/></svg><span class="ext">${c.exp}</span></span>` : ''}
+  const chip = code => `
+          <div class="code-wrap">
+            <button class="code-btn" type="button" data-code="${code}" aria-label="Copy code ${code}">
+              <span class="c">${code}</span><svg class="ic-copy"><use href="#i-copy"/></svg><svg class="ic-ok"><use href="#o-check"/></svg>
+            </button>
+            <small class="code-label" aria-live="polite">Tap to copy</small>
+          </div>`;
+
+  document.getElementById('bn').innerHTML = `
+    <article class="bn" aria-labelledby="bn-title">
+      <header class="bn-head">
+        <div class="bn-titles">
+          <div class="cg-meta"><span class="cg-pill"><svg width="11" height="11"><use href="#o-star"/></svg>Featured</span><span>${CAMPAIGN.deals.length} deals</span></div>
+          <h2 class="bn-title" id="bn-title">${CAMPAIGN.title}</h2>
+          <p class="bn-sub">${CAMPAIGN.sub}</p>
         </div>
-        <div class="deals">
-          ${c.deals.map(d => `
-          <div class="deal" style="--brand:${d.brand}">
+        <span class="bn-ends"><svg width="13" height="13"><use href="#i-clock"/></svg><span class="ext">${CAMPAIGN.exp}</span></span>
+      </header>
+      <div class="bn-deals">
+        ${CAMPAIGN.deals.map(d => `
+        <div class="bn-deal">
+          <div class="bn-info">
             <div class="eb"><svg><use href="#${d.icon}"/></svg><span class="ebt">${d.type}</span></div>
             <div class="val">${d.val}</div>
             <div class="desc">${d.desc}</div>
-          </div>`).join('')}
-        </div>
+          </div>
+          <div class="bn-act">${chip(d.code)}<button class="btn-lime use" type="button" data-go="${CAMPAIGN.title}" data-code="${d.code}">Use <svg width="12" height="12"><use href="#i-arrow"/></svg></button></div>
+        </div>`).join('')}
       </div>
-      <div class="stub">
-        ${codeChip(c.code)}
-        <small class="stub-note">One code for all ${c.deals.length} deals</small>
-        <button class="${c.featured ? 'btn-lime' : 'btn-ghost'} use" type="button" data-go="${c.title}" data-code="${c.code}">${c.cta} ${arrow}</button>
-      </div>
-    </article>`).join('');
+    </article>`;
 
   document.getElementById('grid').innerHTML = OFFERS.map(o => `
-    <article class="offer" data-kind="${o.kind}" style="--brand:${o.brand}">
-      <div class="main">
-        <div class="eb"><svg><use href="#${o.icon}"/></svg><span class="ebt">${o.type}</span></div>
+    <article class="ofc" data-kind="${o.kind}" style="--c:${o.c}">
+      <div class="ofc-body">
+        <div class="ofc-top"><span class="ofc-ic"><svg><use href="#${o.icon}"/></svg></span><span class="ebt">${o.type}</span></div>
         <h3 class="title">${o.title}</h3>
-        <div class="desc">${o.desc}</div>
+        <p class="desc">${o.desc}</p>
       </div>
-      <div class="stub">
-        ${o.kind === 'coupon' ? codeChip(o.code) : '<small class="code-label nocode">No code needed</small>'}
-        <button class="btn-ghost use" type="button" data-go="${o.title}" ${o.code ? `data-code="${o.code}"` : ''}>${o.cta} ${arrow}</button>
+      <div class="ofc-stub">
+        ${o.kind === 'coupon' ? chip(o.code) : '<span class="nocode">No code needed</span>'}
+        <button class="ofc-btn use" type="button" data-go="${o.title}" ${o.code ? `data-code="${o.code}"` : ''}>${o.cta} <svg width="12" height="12"><use href="#i-arrow"/></svg></button>
       </div>
     </article>`).join('');
 
   // Gift badge and counts follow the number of coupons
-  const n = COUPONS.length + OFFERS.length;
+  const n = 1 + OFFERS.length;
   document.querySelector('#gift-btn b').textContent = n;
   document.getElementById('gift-btn').setAttribute('aria-label', `My Offers, ${n} available`);
   document.getElementById('count-label').textContent = `${n} offers`;
@@ -615,7 +679,7 @@
       const wrap = chip.closest('.code-wrap'), label = wrap.querySelector('.code-label');
       copy(chip.dataset.code);
       wrap.classList.add('copied'); label.textContent = 'Copied!';
-      clearTimeout(wrap._t); wrap._t = setTimeout(() => { wrap.classList.remove('copied'); label.textContent = 'Code'; }, 1800);
+      clearTimeout(wrap._t); wrap._t = setTimeout(() => { wrap.classList.remove('copied'); label.textContent = 'Tap to copy'; }, 1800);
       return;
     }
     const go = e.target.closest('.use');
@@ -648,7 +712,7 @@
    in edit mode each text element becomes contenteditable and changes go back to the shell, which saves them. */
 (function () {
   if (window.parent === window) return;
-  var SEL = ".page-header h1, .page-header p, .ft-title, .ft-sub, .sec-title, .nav-item.active .nl, .offer .ebt, .offer .val, .offer .title, .offer .desc, .offer .ext, .offer .code-btn .c, .stub-note, .how .step b, .sidebar-cta p";
+  var SEL = ".page-header h1, .page-header p, .bn-title, .bn-sub, .sec-title, .nav-item.active .nl, .ebt, .val, .ofc .title, .desc, .ext, .code-btn .c, .how .step b, .sidebar-cta p";
   var els = Array.prototype.slice.call(document.querySelectorAll(SEL)).filter(function (el) { return !el.querySelector("a, button, img, svg"); });
   function hash(t) { var h = 5381; for (var i = 0; i < t.length; i++) h = ((h << 5) + h + t.charCodeAt(i)) | 0; return (h >>> 0).toString(36); }
   var seen = {};
@@ -668,7 +732,7 @@
     })(t.content);
     var d = document.createElement("div"); d.appendChild(t.content); return d.innerHTML;
   }
-  function syncCode(el) { if (!el.matches(".code-btn .c")) return; var v = el.textContent.trim(), btn = el.closest(".code-btn"), card = el.closest(".offer"); btn.setAttribute("data-code", v); var use = card.querySelector(".use[data-code]"); if (use && card.querySelectorAll(".code-btn").length === 1) use.setAttribute("data-code", v); }
+  function syncCode(el) { if (!el.matches(".code-btn .c")) return; var v = el.textContent.trim(), btn = el.closest(".code-btn"), box = el.closest(".bn-deal, .ofc"); btn.setAttribute("data-code", v); var use = box && box.querySelector(".use[data-code]"); if (use) use.setAttribute("data-code", v); }
   var timers = {};
   function send(el) {
     var k = el.getAttribute("data-ek"); syncCode(el);
