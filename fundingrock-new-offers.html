@@ -205,7 +205,7 @@
       </div>
       <div class="nav-right">
         <button class="btn-lime">Start Challenge</button>
-        <button class="gift-btn" id="gift-btn" title="My Offers" aria-label="My Offers, 5 available"><svg><use href="#i-offer"/></svg><b>5</b></button>
+        <button class="gift-btn" id="gift-btn" title="My Offers" aria-label="My Offers, 3 available"><svg><use href="#i-offer"/></svg><b>3</b></button>
         <span class="dot" style="width:6px;height:6px;border-radius:9px;background:var(--text-2)"></span>
         <span class="avatar">MC</span>
         <span class="user">Malik Coley</span>
@@ -221,15 +221,14 @@
           <p>Every order gets a bonus challenge. Bundles too. Copy a code and apply it at checkout.</p>
         </div>
         <div class="tabs" role="tablist">
-          <button class="tab active" data-filter="all" role="tab">All offers <span class="count">5</span></button>
+          <button class="tab active" data-filter="all" role="tab">All offers <span class="count">3</span></button>
           <button class="tab" data-filter="bundle" role="tab">Bundles <span class="count">2</span></button>
           <button class="tab" data-filter="discount" role="tab">Discounts <span class="count">1</span></button>
-          <button class="tab" data-filter="program" role="tab">Programs <span class="count">2</span></button>
         </div>
       </div>
 
 
-      <div class="label" id="count-label">Available offers · 5</div>
+      <div class="label" id="count-label">Available offers · 3</div>
 
       <div class="grid" id="grid"></div>
 
@@ -257,8 +256,6 @@
     {acc:'var(--lime)', title:'Bundle',         val:'3+2',                desc:'Buy 3 challenges, get 2 free',        code:'BUY3GET2',   exp:'Until Nov 30, 2026', cat:'bundle'},
     {acc:'var(--lime)', title:'Black November', val:'30% OFF',            desc:'Every program, every account size',   code:'BLACKNOV30', exp:'Until Nov 30, 2026', cat:'discount'},
     {acc:'var(--lime)', title:'Bundle',         val:'2+1',                desc:'Buy 2 challenges, get 1 free',        code:'BUY2GET1',   exp:'Until Nov 30, 2026', cat:'bundle'},
-    {acc:'var(--lime)', title:'+1 Offer',       val:'PAY AFTER YOU PASS', desc:'Start now, pay when you pass',        code:'PAYAFTER',   exp:'Until Nov 30, 2026', cat:'program'},
-    {acc:'var(--lime)', title:'New program',    val:'KOKUYŌ',             desc:'Live sale on the new Kokuyō program', code:'KOKUYO',     exp:'Live now',           cat:'program', live:true},
   ];
   const grid = document.getElementById('grid');
   grid.innerHTML = OFFERS.map(o => `

@@ -154,6 +154,29 @@
   body.colr .offer .main{background:radial-gradient(42% 38% at 26% 44%,color-mix(in srgb,var(--brand) 16%,transparent),transparent 70%),radial-gradient(120% 120% at 0% 0%,color-mix(in srgb,var(--brand) 6%,transparent),transparent 55%)}
   body.colr .offer .val{color:var(--btxt)}
   body.colr .offer .stub{background:linear-gradient(180deg,color-mix(in srgb,var(--brand) 11%,var(--card)),color-mix(in srgb,var(--brand) 4%,var(--card)))}
+  /* E · Coupon (option): one gray coupon with side cut-outs; offer left, big code + expiry right, Claim bottom-right */
+  body.cpn .offer{display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"val stub" "eb exp" "desc claim";column-gap:18px;row-gap:6px;align-items:start;
+    padding:24px 26px 20px;border-radius:14px;background:linear-gradient(135deg,#2a2a2a 0%,#1d1d1d 100%);box-shadow:0 10px 30px -12px rgba(0,0,0,.7)}
+  body.cpn .offer:hover{background:linear-gradient(135deg,#2f2f2f 0%,#202020 100%)}
+  body.cpn .offer .main,body.cpn .offer .foot{display:contents}
+  body.cpn .offer .val{grid-area:val;margin:0;color:#fff;font-size:30px}
+  body.cpn .offer .eb{grid-area:eb;color:var(--text-4);font-size:10.5px}
+  body.cpn .offer .desc{grid-area:desc;color:#fff;font-size:15px;font-weight:600;align-self:end}
+  body.cpn .offer .stub{grid-area:stub;justify-self:end;align-self:center;width:auto;flex-direction:row;gap:8px;padding:0;border:0;background:none;color:var(--text-3)}
+  body.cpn .offer .stub small{display:none}
+  body.cpn .offer .stub .c{writing-mode:horizontal-tb;transform:none;font-size:24px;font-weight:800;letter-spacing:.5px;color:var(--lime)}
+  body.cpn .offer .stub svg{width:15px;height:15px}
+  body.cpn .offer .expiry{grid-area:exp;justify-self:end;text-transform:uppercase;letter-spacing:1px;font-size:10.5px}
+  body.cpn .offer .expiry svg{display:none}
+  body.cpn .offer .claim{grid-area:claim;justify-self:end;align-self:end}
+  body.cpn .offer::before{top:50%;left:-11px;right:auto;transform:translateY(-50%);clip-path:inset(0 0 0 50%)}
+  body.cpn .offer::after{top:50%;bottom:auto;right:-11px;transform:translateY(-50%);clip-path:inset(0 50% 0 0)}
+  @media (max-width:860px){
+    body.cpn .offer{padding:20px 20px 18px;column-gap:12px}
+    body.cpn .offer .val{font-size:24px}
+    body.cpn .offer .stub .c{font-size:18px}
+    body.cpn .offer .desc{font-size:13.5px}
+  }
 </style>
 </head>
 <body>
@@ -215,7 +238,7 @@
       </div>
       <div class="nav-right">
         <button class="btn-lime">Start Challenge</button>
-        <button class="gift-btn" id="gift-btn" title="My Offers" aria-label="My Offers, 5 available"><svg><use href="#i-offer"/></svg><b>5</b></button>
+        <button class="gift-btn" id="gift-btn" title="My Offers" aria-label="My Offers, 3 available"><svg><use href="#i-offer"/></svg><b>3</b></button>
         <span class="dot" style="width:6px;height:6px;border-radius:9px;background:var(--text-2)"></span>
         <span class="avatar">MC</span>
         <span class="user">Malik Coley</span>
@@ -231,15 +254,14 @@
           <p>Every order gets a bonus challenge. Bundles too. Copy a code and apply it at checkout.</p>
         </div>
         <div class="tabs" role="tablist">
-          <button class="tab active" data-filter="all" role="tab">All offers <span class="count">5</span></button>
+          <button class="tab active" data-filter="all" role="tab">All offers <span class="count">3</span></button>
           <button class="tab" data-filter="bundle" role="tab">Bundles <span class="count">2</span></button>
           <button class="tab" data-filter="discount" role="tab">Discounts <span class="count">1</span></button>
-          <button class="tab" data-filter="program" role="tab">Programs <span class="count">2</span></button>
         </div>
       </div>
 
 
-      <div class="label" id="count-label">Available offers · 5</div>
+      <div class="label" id="count-label">Available offers · 3</div>
 
       <div class="grid" id="grid"></div>
 
@@ -263,8 +285,6 @@
     {acc:'var(--lime)', brand:'#78ff00', title:'Bundle',         val:'3+2',                desc:'Buy 3 challenges, get 2 free',        code:'BUY3GET2',   exp:'Until Nov 30, 2026', cat:'bundle'},
     {acc:'var(--lime)', brand:'#d9ff00', title:'Black November', val:'30% OFF',            desc:'Every program, every account size',   code:'BLACKNOV30', exp:'Until Nov 30, 2026', cat:'discount'},
     {acc:'var(--lime)', brand:'#00d8c3', title:'Bundle',         val:'2+1',                desc:'Buy 2 challenges, get 1 free',        code:'BUY2GET1',   exp:'Until Nov 30, 2026', cat:'bundle'},
-    {acc:'var(--lime)', brand:'#ff5c00', title:'+1 Offer',       val:'PAY AFTER YOU PASS', desc:'Start now, pay when you pass',        code:'PAYAFTER',   exp:'Until Nov 30, 2026', cat:'program'},
-    {acc:'var(--lime)', brand:'#8042ff', title:'New program',    val:'KOKUYŌ',             desc:'Live sale on the new Kokuyō program', code:'KOKUYO',     exp:'Live now',           cat:'program', live:true},
   ];
   const grid = document.getElementById('grid');
   grid.innerHTML = OFFERS.map(o => `
@@ -382,7 +402,7 @@
       var h = clean(d.map[k]); if (el.innerHTML !== h) { el.innerHTML = h; syncCode(el); }
     });
     if (d.t === "edit") setEdit(!!d.on);
-    if (d.t === "layout") document.body.classList.toggle("colr", d.v === "colour");
+    if (d.t === "layout") { document.body.classList.toggle("colr", d.v === "colour"); document.body.classList.toggle("cpn", d.v === "coupon"); }
   });
   parent.postMessage({ fr: "mo", t: "ready" }, "*");
 })();

@@ -315,9 +315,7 @@
   "offers": [
     {"title":"Bundle","val":"3+2","desc":"Buy 3 challenges, get 2 free","code":"BUY3GET2","exp":"Until Nov 30, 2026","cat":"bundle"},
     {"title":"Black November","val":"30% OFF","desc":"Every program, every account size","code":"BLACKNOV30","exp":"Until Nov 30, 2026","cat":"discount"},
-    {"title":"Bundle","val":"2+1","desc":"Buy 2 challenges, get 1 free","code":"BUY2GET1","exp":"Until Nov 30, 2026","cat":"bundle"},
-    {"title":"+1 Offer","val":"PAY AFTER YOU PASS","desc":"Start now, pay when you pass","code":"PAYAFTER","exp":"Until Nov 30, 2026","cat":"program"},
-    {"title":"New program","val":"KOKUYŌ","desc":"Live sale on the new Kokuyō program","code":"KOKUYO","exp":"Live now","cat":"program","live":true}
+    {"title":"Bundle","val":"2+1","desc":"Buy 2 challenges, get 1 free","code":"BUY2GET1","exp":"Until Nov 30, 2026","cat":"bundle"}
   ],
   "steps": [
     {"t":"Copy a code","s":"Tap the code stub on any offer"},
@@ -352,7 +350,7 @@
     y.onclick = () => done(true); n.onclick = () => done(false);
   });
   const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-  const CATS = [['bundle','Bundles'],['discount','Discounts'],['program','Programs']];
+  const CATS = [['bundle','Bundles'],['discount','Discounts']];
   const icon = (id, cls='') => `<svg class="${cls}"><use href="#${id}"/></svg>`;
   const E = (k, tag='span', cls='') => `<${tag} class="${cls}" data-k="${k}">${esc(get(k))}</${tag}>`;
   function get(path){ return path.split('.').reduce((o,p)=>o?.[p], M); }
