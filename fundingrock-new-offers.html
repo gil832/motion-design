@@ -72,7 +72,7 @@
   .offer:hover{transform:translateY(-2px);border-color:color-mix(in srgb,var(--acc) 45%,var(--line))}
   .offer[hidden]{display:none}
   .offer .main{flex:1;min-width:0;padding:18px 18px 16px;display:flex;flex-direction:column;gap:4px;border-radius:10px 0 0 10px;
-    background:radial-gradient(120% 120% at 0% 0%,color-mix(in srgb,var(--acc) 12%,transparent),transparent 55%)}
+    background:linear-gradient(90deg,color-mix(in srgb,var(--acc) 4.5%,transparent),transparent 50%)}
   .offer .eb{display:flex;align-items:center;gap:8px;font-size:10px;letter-spacing:1.2px;color:var(--text-4);font-weight:600;text-transform:uppercase}
   .offer .eb svg{width:14px;height:12px;color:var(--lime)}
   .offer .val{font-size:34px;font-weight:800;letter-spacing:-.5px;line-height:1.1;margin-top:6px;color:var(--acc)}
@@ -82,8 +82,8 @@
   .expiry.urgent{color:var(--pink)}
   .claim{padding:7px 12px;font-size:12px}
   .offer .stub{width:var(--stub);flex:none;border-left:2px dashed #262626;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:12px 8px;border-radius:0 10px 10px 0;
-    background:color-mix(in srgb,var(--acc) 6%,var(--card));color:var(--text-3)}
-  .offer .stub:hover{background:color-mix(in srgb,var(--acc) 12%,var(--card));color:var(--acc)}
+    background:#171717;color:var(--text-3)}
+  .offer .stub:hover{background:#1c1c1c;color:var(--acc)}
   .offer .stub small{font-size:9px;letter-spacing:1.2px;font-weight:600;color:var(--text-4)}
   .offer .stub .c{writing-mode:vertical-rl;transform:rotate(180deg);font-weight:700;letter-spacing:2px;font-size:13px;color:var(--acc);font-family:"Host Grotesk",sans-serif}
   .offer .stub svg{width:16px;height:16px}
@@ -194,7 +194,7 @@
 
       <section class="how">
         <span class="label">How to redeem</span>
-        <div class="step"><span class="num">1</span><div><b>Copy a code</b><small>Tap the code chip on any offer</small></div></div>
+        <div class="step"><span class="num">1</span><div><b>Copy a code</b><small>Tap the code stub on any offer</small></div></div>
         <div class="step"><span class="num">2</span><div><b>Start a challenge</b><small>Pick your account size and platform</small></div></div>
         <div class="step"><span class="num">3</span><div><b>Paste at checkout</b><small>Discount applies before payment</small></div></div>
       </section>
@@ -209,11 +209,11 @@
 <script>
   const OFFERS = [
     {acc:'var(--lime)',  title:'Challenge discount', val:'25% OFF',    desc:'All Simulation Rock challenges',          code:'ROCK25',    exp:'Until Nov 30, 2026', cat:'challenge'},
-    {acc:'var(--green)', title:'Welcome offer',      val:'40% OFF',    desc:'Your first challenge, any account size',  code:'FIRST40',   exp:'Until Dec 15, 2026', cat:'challenge'},
-    {acc:'var(--orange)',title:'Add-on',             val:'FREE RESET', desc:'With any $100K+ challenge',                code:'FREERESET', exp:'Until Dec 31, 2026', cat:'addon'},
-    {acc:'var(--blue)',  title:'Upgrade',            val:'90% SPLIT',  desc:'Profit split on your next funded account', code:'SPLIT90',   exp:'Until Jan 10, 2027', cat:'addon'},
-    {acc:'var(--purple)',title:'Bundle',             val:'15% OFF',    desc:'Buy any two challenges in one checkout',   code:'BUNDLE15',  exp:'Until Jan 31, 2027', cat:'challenge'},
-    {acc:'var(--pink)',  title:'Flash sale',         val:'10% OFF',    desc:'$50K Simulation Rock challenge',           code:'FLASH10',   exp:'Ends in 8h 12m',     cat:'expiring', urgent:true},
+    {acc:'var(--lime)',  title:'Welcome offer',      val:'40% OFF',    desc:'Your first challenge, any account size',  code:'FIRST40',   exp:'Until Dec 15, 2026', cat:'challenge'},
+    {acc:'var(--lime)',  title:'Add-on',             val:'FREE RESET', desc:'With any $100K+ challenge',                code:'FREERESET', exp:'Until Dec 31, 2026', cat:'addon'},
+    {acc:'var(--lime)',  title:'Upgrade',            val:'90% SPLIT',  desc:'Profit split on your next funded account', code:'SPLIT90',   exp:'Until Jan 10, 2027', cat:'addon'},
+    {acc:'var(--lime)',  title:'Bundle',             val:'15% OFF',    desc:'Buy any two challenges in one checkout',   code:'BUNDLE15',  exp:'Until Jan 31, 2027', cat:'challenge'},
+    {acc:'var(--lime)',  title:'Flash sale',         val:'10% OFF',    desc:'$50K Simulation Rock challenge',           code:'FLASH10',   exp:'Ends in 8h 12m',     cat:'expiring', urgent:true},
   ];
   const grid = document.getElementById('grid');
   grid.innerHTML = OFFERS.map(o => `
