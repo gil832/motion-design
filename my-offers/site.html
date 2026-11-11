@@ -1,0 +1,385 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>My Offers · FundingRock</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Host+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0a0a; --sidebar:#0d0d0d; --topnav:#0f0f0f; --card:#121212; --field:#161616;
+    --line:#1f1f1f; --line-2:#242424; --line-3:#262626;
+    --text:#ffffff; --text-2:#c4c4c4; --text-3:#9a9a9a; --text-4:#6f6f6f;
+    --lime:#d9ff00; --lime-bg:#141a06; --lime-deep:#2b3a08;
+    --green:#3ddc84; --orange:#f5a623; --blue:#5b9dff; --purple:#a78bfa; --pink:#ff5c7a;
+    --r:6px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  html{background:#0a0a0a}
+  body{background:var(--bg);color:var(--text);font-family:"Host Grotesk",system-ui,sans-serif;font-size:13px;-webkit-font-smoothing:antialiased}
+  button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+  svg{display:block;flex:none}
+
+  .app{display:flex;min-height:100vh}
+
+  /* ---------- Sidebar ---------- */
+  .sidebar{width:190px;flex:none;background:var(--sidebar);border-right:1px solid #1a1a1a;padding:16px 14px;display:flex;flex-direction:column;gap:4px;position:sticky;top:0;height:100vh}
+  .nav-item{display:flex;align-items:center;gap:12px;padding:10px;border-radius:var(--r);border:1px solid transparent;color:var(--text-2);font-weight:500;font-size:12.5px;text-align:left;width:100%}
+  .nav-item svg{width:17px;height:17px;color:var(--text-3)}
+  .nav-item:hover{background:#141414}
+  .nav-item.active{background:var(--lime-bg);border-color:var(--lime);color:var(--lime);font-weight:600}
+  .nav-item.active svg{color:var(--lime)}
+  .nav-item .chev{margin-left:auto;width:12px;height:12px}
+  .spacer{flex:1}
+  .sidebar-cta{background:#141414;border:1px solid var(--line-2);border-radius:var(--r);padding:14px 12px;display:flex;flex-direction:column;align-items:center;gap:10px}
+  .sidebar-cta p{font-weight:600;font-size:12.5px}
+
+  /* ---------- Main ---------- */
+  .main{flex:1;min-width:0;display:flex;flex-direction:column}
+  .topnav{height:66px;background:var(--topnav);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:14px 20px 14px 18px}
+  .brand{display:flex;align-items:center;gap:16px}
+  .brand .logo{display:flex;align-items:center;gap:6px;font-weight:800;font-size:16px;letter-spacing:1px}
+  .brand .page{font-weight:600;font-size:17px}
+  .nav-right{display:flex;align-items:center;gap:14px}
+  .btn-lime{background:var(--lime);color:var(--bg);font-weight:600;font-size:13px;border-radius:var(--r);padding:10px 16px;display:inline-flex;align-items:center;gap:7px;white-space:nowrap}
+  .btn-lime:hover{filter:brightness(1.08)}
+  .avatar{width:30px;height:30px;border-radius:999px;background:var(--lime-deep);color:var(--lime);font-weight:600;font-size:11px;display:grid;place-items:center}
+  .user{font-weight:500}
+
+  .content{padding:16px 20px 20px;display:flex;flex-direction:column;gap:16px}
+
+  /* header */
+  .page-header{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap}
+  .campaign{color:var(--lime);font-size:11px;font-weight:600;letter-spacing:3px;margin-bottom:6px}
+  .page-header h1{font-size:24px;font-weight:600;letter-spacing:-.4px}
+  .page-header p{color:var(--text-3);font-weight:500;margin-top:5px}
+  .tabs{display:flex;gap:4px;padding:4px;background:var(--card);border:1px solid var(--line);border-radius:var(--r)}
+  .tab{display:flex;align-items:center;gap:7px;padding:7px 12px;border-radius:var(--r);border:1px solid transparent;color:var(--text-3);font-weight:500;font-size:12.5px}
+  .tab .count{background:var(--line);border-radius:999px;padding:1px 6px;font-size:10.5px;font-weight:600}
+  .tab:hover{color:var(--text-2)}
+  .tab.active{background:var(--lime-bg);border-color:var(--lime);color:var(--lime);font-weight:600}
+  .tab.active .count{background:var(--lime-deep)}
+
+  .code-chip{display:inline-flex;align-items:center;gap:8px;padding:11px 14px;border:1px dashed var(--acc);border-radius:8px;background:rgba(10,10,10,.75);color:var(--acc);font-weight:700;font-size:13px;letter-spacing:1px;white-space:nowrap}
+  .code-chip.copied{border-style:solid}
+
+  .label{font-size:10px;font-weight:500;letter-spacing:1px;color:var(--text-4);text-transform:uppercase}
+
+  /* offer cards — ticket stub */
+  .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+  .offer{--acc:var(--lime);--stub:104px;position:relative;display:flex;min-height:172px;border-radius:10px;background:var(--card);transition:transform .15s,background .15s}
+  .offer:hover{transform:translateY(-2px);background:#151515}
+  .offer[hidden]{display:none}
+  .offer .main{flex:1;min-width:0;padding:18px 18px 16px;display:flex;flex-direction:column;gap:4px;border-radius:10px 0 0 10px;
+    background:linear-gradient(90deg,color-mix(in srgb,var(--acc) 4.5%,transparent),transparent 50%)}
+  .offer .eb{display:flex;align-items:center;gap:8px;font-size:10px;letter-spacing:1.2px;color:var(--text-4);font-weight:600;text-transform:uppercase}
+  .offer .eb svg{width:14px;height:12px;color:var(--lime)}
+  .offer .val{font-size:34px;font-weight:800;letter-spacing:-.5px;line-height:1.1;margin-top:6px;color:var(--acc)}
+  .offer .desc{color:var(--text-2);font-weight:500}
+  .offer .foot{margin-top:auto;padding-top:14px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+  .expiry{display:flex;align-items:center;gap:5px;color:var(--text-4);font-size:11px;font-weight:500;white-space:nowrap}
+  .expiry.urgent{color:var(--pink)}
+  .expiry.live{color:var(--lime)}
+  .claim{padding:7px 12px;font-size:12px}
+  .offer .stub{width:var(--stub);flex:none;border-left:2px dashed #262626;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:12px 8px;border-radius:0 10px 10px 0;
+    background:#171717;color:var(--text-3)}
+  .offer .stub:hover{background:#1c1c1c;color:var(--acc)}
+  .offer .stub small{font-size:9px;letter-spacing:1.2px;font-weight:600;color:var(--text-4)}
+  .offer .stub .c{writing-mode:vertical-rl;transform:rotate(180deg);font-weight:700;letter-spacing:2px;font-size:13px;color:var(--acc);font-family:"Host Grotesk",sans-serif}
+  .offer .stub svg{width:16px;height:16px}
+  .offer .stub.copied{background:color-mix(in srgb,var(--acc) 18%,var(--card))}
+  .offer .stub.copied small{color:var(--acc)}
+  .offer::before,.offer::after{content:"";position:absolute;right:calc(var(--stub) - 10px);width:20px;height:20px;border-radius:50%;background:var(--bg);clip-path:inset(50% 0 0 0)}
+  .offer::before{top:-11px}
+  .offer::after{bottom:-11px;clip-path:inset(0 0 50% 0)}
+
+  .how{display:flex;align-items:center;gap:28px;flex-wrap:wrap;padding:16px 20px;background:var(--card);border:1px solid var(--line);border-radius:var(--r)}
+  .step{display:flex;align-items:center;gap:10px}
+  .num{width:26px;height:26px;border-radius:999px;background:var(--lime-deep);color:var(--lime);display:grid;place-items:center;font-weight:600;font-size:11px}
+  .step b{display:block;font-weight:600;font-size:12.5px}
+  .step small{color:var(--text-3);font-size:11.5px;font-weight:500}
+
+  .placeholder{margin:40px 20px;padding:40px;border:1px dashed var(--line-3);border-radius:var(--r);color:var(--text-3);text-align:center}
+
+  .toast{position:fixed;bottom:24px;left:50%;transform:translate(-50%,20px);opacity:0;transition:.2s;background:var(--lime);color:var(--bg);font-weight:600;padding:10px 16px;border-radius:var(--r);pointer-events:none}
+  .toast.show{opacity:1;transform:translate(-50%,0)}
+
+  @media (max-width:1280px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  .menu-btn{display:none;color:#fff}
+  @media (max-width:860px){
+    .grid{grid-template-columns:1fr}
+    .sidebar{display:none;position:fixed;inset:57px 0 0 0;width:auto;height:auto;z-index:20;border-right:0}
+    body.menu-open .sidebar{display:flex}
+    body.menu-open{overflow:hidden}
+    .menu-btn{display:block}
+    .topnav{height:57px;padding:12px 16px;position:sticky;top:0;z-index:21}
+    .brand{gap:12px}.brand .logo{font-size:14px}.brand > svg,.brand .page{display:none}
+    .nav-right .btn-lime,.nav-right .user,.nav-right .dot,.nav-right > svg{display:none}
+    .content{padding:20px 16px 28px}
+    .page-header{flex-direction:column;align-items:stretch}
+    .page-header > *{min-width:0}
+    .tabs{max-width:100%;overflow-x:auto;background:none;border:0;padding:0;gap:6px;scrollbar-width:none}
+    .tab{border-radius:999px;background:var(--card);border-color:var(--line);white-space:nowrap}
+    .offer{--stub:76px}
+    .offer .main{padding:16px 14px 14px 16px}
+    .offer .val{font-size:26px}
+    .offer .desc{font-size:12.5px}
+    .offer .stub .c{font-size:12px}
+    .how{flex-direction:column;align-items:flex-start;gap:14px}
+    .switcher{left:16px;right:16px;bottom:12px;justify-content:center}
+  }
+
+  /* ---- card style variants (prototype switcher) ---- */
+  body.v1 .offer .eb{color:var(--lime)}
+  body.v1 .offer .val{color:#fff}
+  .switcher{position:fixed;right:20px;bottom:20px;display:flex;gap:4px;padding:4px;background:#121212;border:1px solid var(--line);border-radius:8px;z-index:10;box-shadow:0 8px 24px rgba(0,0,0,.5)}
+  .switcher span{align-self:center;padding:0 8px;color:var(--text-4);font-size:10px;letter-spacing:1px;font-weight:600}
+  .switcher button{padding:6px 10px;border-radius:6px;color:var(--text-3);font-weight:500;font-size:12px;border:1px solid transparent}
+  .switcher button.on{background:var(--lime-bg);border-color:var(--lime);color:var(--lime);font-weight:600}
+  .gift-btn{position:relative;width:37px;height:37px;border-radius:8px;background:#161616;border:1px solid #262626;display:grid;place-items:center;color:#e6e6e6;flex:none;cursor:pointer}
+  .gift-btn:hover{border-color:var(--lime);color:var(--lime)}
+  .gift-btn svg{width:18px;height:18px}
+  .gift-btn b{position:absolute;top:-7px;right:-7px;min-width:18px;height:18px;padding:0 5px;border-radius:999px;background:var(--lime);color:var(--bg);font-size:10.5px;font-weight:700;display:grid;place-items:center;box-shadow:0 0 0 2px var(--topnav)}
+  @keyframes navflash{0%,100%{box-shadow:none}50%{box-shadow:0 0 0 4px rgba(217,255,0,.35)}}
+  .nav-item.flash{animation:navflash .5s ease 2}
+  body.editing [data-ek]{outline:1px dashed rgba(217,255,0,.5);outline-offset:2px;border-radius:2px;cursor:text}
+  body.editing [data-ek]:hover{outline-color:var(--lime)}
+  body.editing [data-ek]:focus{outline:2px solid var(--lime);background:rgba(217,255,0,.08)}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-home" viewBox="0 0 24 24"><path fill="currentColor" d="M12 3 2 11h3v9h5v-6h4v6h5v-9h3z"/></symbol>
+    <symbol id="i-wallet" viewBox="0 0 24 24"><path fill="currentColor" d="M3 6a2 2 0 0 1 2-2h13v3H5v1h15a1 1 0 0 1 1 1v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm13 7a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3"/></symbol>
+    <symbol id="i-offer" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="8" width="18" height="4.5" rx="1.2"/><path d="M5 12.5V20a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-7.5M12 8v13"/><path stroke-linejoin="round" d="M12 8S10.6 3 7.8 3a2.3 2.3 0 0 0 0 5H12Zm0 0s1.4-5 4.2-5a2.3 2.3 0 0 1 0 5H12Z"/></symbol>
+    <symbol id="i-gift" viewBox="0 0 24 24"><path fill="currentColor" d="M20 7h-2.2A3 3 0 0 0 12 4a3 3 0 0 0-5.8 3H4a1 1 0 0 0-1 1v3h8V7h2v4h8V8a1 1 0 0 0-1-1M9 7a1 1 0 1 1 1-1v1zm5 0V6a1 1 0 1 1 1 1zM4 13v6a1 1 0 0 0 1 1h6v-7zm9 7h6a1 1 0 0 0 1-1v-6h-7z"/></symbol>
+    <symbol id="i-cert" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2 9.5 4H6v3.5L4 10l2 2.5V16h3.5l2.5 2 2.5-2H18v-3.5l2-2.5-2-2.5V4h-3.5z"/></symbol>
+    <symbol id="i-doc" viewBox="0 0 24 24"><path fill="currentColor" d="M6 2h8l5 5v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2m7 1.5V8h4.5z"/></symbol>
+    <symbol id="i-trophy" viewBox="0 0 24 24"><path fill="currentColor" d="M7 3h10v2h4v3a4 4 0 0 1-4 4h-.3A5 5 0 0 1 13 14.9V18h3v3H8v-3h3v-3.1A5 5 0 0 1 7.3 12H7a4 4 0 0 1-4-4V5h4zm0 4H5v1a2 2 0 0 0 2 2zm10 0v3a2 2 0 0 0 2-2V7z"/></symbol>
+    <symbol id="i-bars" viewBox="0 0 24 24"><path fill="currentColor" d="M4 20h17v1.5H4zM5 12h3v7H5zm5-6h3v13h-3zm5 4h3v9h-3z"/></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24"><path fill="currentColor" d="M6 2h12a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2"/></symbol>
+    <symbol id="i-card" viewBox="0 0 24 24"><path fill="currentColor" d="M3 6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v2H3zm0 4h18v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm3 5v2h5v-2z"/></symbol>
+    <symbol id="i-users" viewBox="0 0 24 24"><path fill="currentColor" d="M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8m8 0a3 3 0 1 0 0-6 3 3 0 0 0 0 6M1 20c0-3.3 3.6-6 8-6s8 2.7 8 6v1H1zm17.5-5.8c2.6.5 4.5 2.4 4.5 4.8v1h-4v-1c0-1.8-.2-3.4-.5-4.8"/></symbol>
+    <symbol id="i-gear" viewBox="0 0 24 24"><path fill="currentColor" d="m19.4 13 2-1.6-2-3.4-2.4.9a7 7 0 0 0-1.7-1L15 5h-4l-.3 2.9a7 7 0 0 0-1.7 1L6.6 8l-2 3.4 2 1.6a7 7 0 0 0 0 2l-2 1.6 2 3.4 2.4-.9a7 7 0 0 0 1.7 1L11 23h4l.3-2.9a7 7 0 0 0 1.7-1l2.4.9 2-3.4-2-1.6a7 7 0 0 0 0-2M13 17a3 3 0 1 1 0-6 3 3 0 0 1 0 6" transform="translate(-1 -2)"/></symbol>
+    <symbol id="i-help" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20m1 16h-2v-2h2zm2.1-7.7-.9.9c-.7.7-1.2 1.3-1.2 2.8h-2v-.5c0-1.1.5-2.1 1.2-2.8l1.2-1.3A2 2 0 1 0 10 8H8a4 4 0 1 1 7.1 2.3"/></symbol>
+    <symbol id="i-chev" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" d="m7 10 5 5 5-5"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="8" y="8" width="13" height="13" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-fr" viewBox="0 0 24 20" fill="currentColor"><path d="M10.0363 0C10.6661 0 10.981 0.762458 10.5335 1.20999L2.59401 9.1412H10.0363C10.6661 9.1412 10.981 9.90366 10.5335 10.3512L1.20999 19.6747C0.762458 20.1222 0 19.8073 0 19.1775V0.704444C0 0.314928 0.314928 0 0.704444 0H10.028H10.0363Z"/><path d="M18.0835 2.67029e-05C21.0753 2.67029e-05 23.5036 2.42829 23.5036 5.4201C23.5036 8.41192 21.0753 10.8402 18.0835 10.8402H15.1828L23.0312 18.6802C23.4787 19.1278 23.1638 19.8902 22.5339 19.8902H13.2104C12.8209 19.8902 12.506 19.5753 12.506 19.1858V0.704471C12.506 0.314955 12.8209 2.67029e-05 13.2104 2.67029e-05H18.0918H18.0835Z"/></symbol>
+  </defs>
+</svg>
+
+<div class="app">
+  <aside class="sidebar" aria-label="Main navigation">
+    <button class="nav-item" data-view="Overview"><svg><use href="#i-home"/></svg>Overview</button>
+    <button class="nav-item" data-view="Accounts"><svg><use href="#i-wallet"/></svg>Accounts</button>
+    <button class="nav-item active" data-view="My Offers" aria-current="page"><svg><use href="#i-offer"/></svg><span class="nl">My Offers</span></button>
+    <button class="nav-item" data-view="Rewards"><svg><use href="#i-gift"/></svg>Rewards</button>
+    <button class="nav-item" data-view="Certificates"><svg><use href="#i-cert"/></svg>Certificates</button>
+    <button class="nav-item" data-view="Contracts"><svg><use href="#i-doc"/></svg>Contracts</button>
+    <button class="nav-item" data-view="Competitions"><svg><use href="#i-trophy"/></svg>Competitions</button>
+    <button class="nav-item" data-view="Leaderboard"><svg><use href="#i-bars"/></svg>Leaderboard</button>
+    <button class="nav-item" data-view="Trading Resources"><svg><use href="#i-book"/></svg>Trading<br>Resources<svg class="chev"><use href="#i-chev"/></svg></button>
+    <button class="nav-item" data-view="Billing"><svg><use href="#i-card"/></svg>Billing</button>
+    <button class="nav-item" data-view="Affiliates"><svg><use href="#i-users"/></svg>Affiliates</button>
+    <button class="nav-item" data-view="Settings"><svg><use href="#i-gear"/></svg>Settings</button>
+    <button class="nav-item" data-view="Help Center"><svg><use href="#i-help"/></svg>Help Center</button>
+    <div class="spacer"></div>
+    <div class="sidebar-cta">
+      <p>Ready to trade?</p>
+      <button class="btn-lime" style="width:100%;justify-content:center;font-size:12.5px;padding:9px 0">Start Challenge</button>
+    </div>
+  </aside>
+
+  <div class="main">
+    <header class="topnav">
+      <div class="brand">
+        <button class="menu-btn" id="menu-btn" aria-label="Open menu"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+        <span class="logo">
+          <svg width="24" height="20" viewBox="0 0 24 20" fill="#d9ff00" aria-label="FundingRock"><path d="M10.0363 0C10.6661 0 10.981 0.762458 10.5335 1.20999L2.59401 9.1412H10.0363C10.6661 9.1412 10.981 9.90366 10.5335 10.3512L1.20999 19.6747C0.762458 20.1222 0 19.8073 0 19.1775V0.704444C0 0.314928 0.314928 0 0.704444 0H10.028H10.0363Z"/><path d="M18.0835 2.67029e-05C21.0753 2.67029e-05 23.5036 2.42829 23.5036 5.4201C23.5036 8.41192 21.0753 10.8402 18.0835 10.8402H15.1828L23.0312 18.6802C23.4787 19.1278 23.1638 19.8902 22.5339 19.8902H13.2104C12.8209 19.8902 12.506 19.5753 12.506 19.1858V0.704471C12.506 0.314955 12.8209 2.67029e-05 13.2104 2.67029e-05H18.0918H18.0835Z"/></svg>
+          FUNDINGROCK
+        </span>
+        <svg width="16" height="16" viewBox="0 0 24 24" style="color:var(--text-2)"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M5 7h14M5 12h14M5 17h14"/></svg>
+        <span class="page" id="page-title">My Offers</span>
+      </div>
+      <div class="nav-right">
+        <button class="btn-lime">Start Challenge</button>
+        <button class="gift-btn" id="gift-btn" title="My Offers" aria-label="My Offers, 5 available"><svg><use href="#i-offer"/></svg><b>5</b></button>
+        <span class="dot" style="width:6px;height:6px;border-radius:9px;background:var(--text-2)"></span>
+        <span class="avatar">MC</span>
+        <span class="user">Malik Coley</span>
+        <svg width="12" height="12" style="color:var(--text-3)"><use href="#i-chev"/></svg>
+      </div>
+    </header>
+
+    <main class="content" id="offers-view">
+      <div class="page-header">
+        <div>
+          <div class="campaign">BLACK NOVEMBER · PRE-SALE</div>
+          <h1>My Offers</h1>
+          <p>Every order gets a bonus challenge. Bundles too. Copy a code and apply it at checkout.</p>
+        </div>
+        <div class="tabs" role="tablist">
+          <button class="tab active" data-filter="all" role="tab">All offers <span class="count">5</span></button>
+          <button class="tab" data-filter="bundle" role="tab">Bundles <span class="count">2</span></button>
+          <button class="tab" data-filter="discount" role="tab">Discounts <span class="count">1</span></button>
+          <button class="tab" data-filter="program" role="tab">Programs <span class="count">2</span></button>
+        </div>
+      </div>
+
+
+      <div class="label" id="count-label">Available offers · 5</div>
+
+      <div class="grid" id="grid"></div>
+
+      <section class="how">
+        <span class="label">How to redeem</span>
+        <div class="step"><span class="num">1</span><div><b>Copy a code</b><small>Tap the code stub on any offer</small></div></div>
+        <div class="step"><span class="num">2</span><div><b>Start a challenge</b><small>Pick your account size and platform</small></div></div>
+        <div class="step"><span class="num">3</span><div><b>Paste at checkout</b><small>Discount applies before payment</small></div></div>
+      </section>
+    </main>
+
+    <div class="placeholder" id="other-view" hidden></div>
+  </div>
+</div>
+
+
+<div class="toast" id="toast">Code copied</div>
+
+<script>
+  const OFFERS = [
+    {acc:'var(--lime)', title:'Bundle',         val:'3+2',                desc:'Buy 3 challenges, get 2 free',        code:'BUY3GET2',   exp:'Until Nov 30, 2026', cat:'bundle'},
+    {acc:'var(--lime)', title:'Black November', val:'30% OFF',            desc:'Every program, every account size',   code:'BLACKNOV30', exp:'Until Nov 30, 2026', cat:'discount'},
+    {acc:'var(--lime)', title:'Bundle',         val:'2+1',                desc:'Buy 2 challenges, get 1 free',        code:'BUY2GET1',   exp:'Until Nov 30, 2026', cat:'bundle'},
+    {acc:'var(--lime)', title:'+1 Offer',       val:'PAY AFTER YOU PASS', desc:'Start now, pay when you pass',        code:'PAYAFTER',   exp:'Until Nov 30, 2026', cat:'program'},
+    {acc:'var(--lime)', title:'New program',    val:'KOKUYŌ',             desc:'Live sale on the new Kokuyō program', code:'KOKUYO',     exp:'Live now',           cat:'program', live:true},
+  ];
+  const grid = document.getElementById('grid');
+  grid.innerHTML = OFFERS.map(o => `
+    <article class="offer" data-cat="${o.cat}" style="--acc:${o.acc}">
+      <div class="main">
+        <div class="eb"><svg><use href="#i-fr"/></svg><span class="ebt">${o.title}</span></div>
+        <div class="val">${o.val}</div>
+        <div class="desc">${o.desc}</div>
+        <div class="foot">
+          <span class="expiry${o.urgent ? ' urgent' : ''}${o.live ? ' live' : ''}"><svg width="12" height="12"><use href="#i-clock"/></svg><span class="ext">${o.exp}</span></span>
+          <button class="btn-lime claim">Claim <svg width="12" height="12"><use href="#i-arrow"/></svg></button>
+        </div>
+      </div>
+      <button class="stub code-chip-t" data-code="${o.code}" aria-label="Copy code ${o.code}">
+        <small>CODE</small><span class="c">${o.code}</span><svg><use href="#i-copy"/></svg>
+      </button>
+    </article>`).join('');
+
+  // Sidebar active state
+  const offersView = document.getElementById('offers-view'), otherView = document.getElementById('other-view');
+  document.querySelectorAll('.nav-item').forEach(btn => btn.addEventListener('click', () => {
+    document.querySelectorAll('.nav-item').forEach(b => { b.classList.remove('active'); b.removeAttribute('aria-current'); });
+    btn.classList.add('active'); btn.setAttribute('aria-current', 'page');
+    const v = btn.dataset.view, isOffers = v === 'My Offers';
+    document.getElementById('page-title').textContent = v === 'Accounts' ? 'Account Details' : v;
+    offersView.hidden = !isOffers; otherView.hidden = isOffers;
+    otherView.textContent = `${v} screen — unchanged, not part of this prototype.`;
+  }));
+
+  // Filter tabs
+  document.querySelectorAll('.tab').forEach(tab => tab.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    const f = tab.dataset.filter; let n = 0;
+    document.querySelectorAll('.offer').forEach(c => { const show = f === 'all' || c.dataset.cat === f; c.hidden = !show; n += show; });
+    document.getElementById('count-label').textContent = `Available offers · ${n}`;
+  }));
+
+  // Copy code
+  const toast = document.getElementById('toast'); let tt;
+  document.addEventListener('click', e => {
+    const chip = e.target.closest('.code-chip, .code-chip-t'); if (!chip || document.body.classList.contains('editing')) return;
+    const code = chip.dataset.code;
+    try { navigator.clipboard?.writeText(code); } catch (_) {}
+    chip.classList.add('copied'); const sm = chip.querySelector('small'); if (sm) sm.textContent = 'COPIED';
+    setTimeout(() => { chip.classList.remove('copied'); if (sm) sm.textContent = 'CODE'; }, 1400);
+    toast.textContent = `Code ${code} copied`; toast.classList.add('show');
+    clearTimeout(tt); tt = setTimeout(() => toast.classList.remove('show'), 1600);
+  });
+
+
+  // Mobile menu
+  const mb = document.getElementById('menu-btn');
+  mb.addEventListener('click', () => {
+    const open = document.body.classList.toggle('menu-open');
+    mb.innerHTML = open
+      ? '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>'
+      : '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>';
+  });
+  document.querySelectorAll('.nav-item').forEach(b => b.addEventListener('click', () => { if (document.body.classList.contains('menu-open')) mb.click(); }));
+
+  // Top-bar gift shortcut -> offers
+  document.getElementById('gift-btn').addEventListener('click', () => {
+    const item = document.querySelector('.nav-item[data-view="My Offers"]');
+    item.click(); item.classList.remove('flash'); void item.offsetWidth; item.classList.add('flash');
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+</script>
+<script>
+/* Preview-shell bridge (same pattern as the non-prop LP).
+   Inside the shell: the value colour arrives as {t:"style"}; saved text edits arrive as {key: html} and are applied here;
+   in edit mode each text element becomes contenteditable and changes go back to the shell, which saves them. */
+(function () {
+  if (window.parent === window) return;
+  var SEL = ".campaign, .page-header h1, .page-header p, .nav-item.active .nl, .offer .ebt, .offer .val, .offer .desc, .offer .ext, .offer .stub .c, .how .step b, .how .step small, .sidebar-cta p";
+  var els = Array.prototype.slice.call(document.querySelectorAll(SEL)).filter(function (el) { return !el.querySelector("a, button, img, svg"); });
+  function hash(t) { var h = 5381; for (var i = 0; i < t.length; i++) h = ((h << 5) + h + t.charCodeAt(i)) | 0; return (h >>> 0).toString(36); }
+  var seen = {};
+  els.forEach(function (el) { var b = "h" + hash(el.innerHTML.replace(/\s+/g, " ").trim()); seen[b] = (seen[b] || 0) + 1; el.setAttribute("data-ek", b + (seen[b] > 1 ? "-" + seen[b] : "")); });
+  var byKey = {}; els.forEach(function (el) { byKey[el.getAttribute("data-ek")] = el; });
+  var ALLOW = { B: 1, EM: 1, S: 1, SPAN: 1, BR: 1, I: 1, STRONG: 1 };
+  function clean(html) {
+    var t = document.createElement("template"); t.innerHTML = html;
+    (function walk(n) {
+      Array.prototype.slice.call(n.childNodes).forEach(function (c) {
+        if (c.nodeType === 1) {
+          if (!ALLOW[c.tagName]) { walk(c); while (c.firstChild) n.insertBefore(c.firstChild, c); n.removeChild(c); return; }
+          Array.prototype.slice.call(c.attributes).forEach(function (a) { if (a.name !== "class") c.removeAttribute(a.name); });
+          walk(c);
+        } else if (c.nodeType !== 3) n.removeChild(c);
+      });
+    })(t.content);
+    var d = document.createElement("div"); d.appendChild(t.content); return d.innerHTML;
+  }
+  function syncCode(el) { var b = el.closest(".stub"); if (b) b.setAttribute("data-code", el.textContent.trim()); }
+  var timers = {};
+  function send(el) {
+    var k = el.getAttribute("data-ek"); syncCode(el);
+    clearTimeout(timers[k]);
+    timers[k] = setTimeout(function () { parent.postMessage({ fr: "mo", t: "chg", k: k, html: clean(el.innerHTML) }, "*"); }, 500);
+  }
+  function setEdit(on) {
+    document.body.classList.toggle("editing", on);
+    els.forEach(function (el) { if (on) el.setAttribute("contenteditable", "true"); else el.removeAttribute("contenteditable"); });
+  }
+  els.forEach(function (el) {
+    el.addEventListener("input", function () { send(el); });
+    el.addEventListener("click", function (e) { if (document.body.classList.contains("editing")) { e.preventDefault(); e.stopPropagation(); } });
+    el.addEventListener("keydown", function (e) { if (e.key === "Enter" && document.body.classList.contains("editing")) { e.preventDefault(); el.blur(); } });
+  });
+  addEventListener("message", function (e) {
+    var d = e.data; if (e.source !== parent || !d || d.fr !== "mo") return;
+    if (d.t === "ov" && d.map) Object.keys(d.map).forEach(function (k) {
+      var el = byKey[k]; if (!el || el === document.activeElement || typeof d.map[k] !== "string") return;
+      var h = clean(d.map[k]); if (el.innerHTML !== h) { el.innerHTML = h; syncCode(el); }
+    });
+    if (d.t === "edit") setEdit(!!d.on);
+    if (d.t === "style") document.body.classList.toggle("v1", d.v === "white");
+  });
+  parent.postMessage({ fr: "mo", t: "ready" }, "*");
+})();
+</script>
+</body>
+</html>

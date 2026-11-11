@@ -1,0 +1,148 @@
+<title>FundingRock My Offers</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Host+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* Preview shell: the My Offers trading-area page in a desktop browser frame or a phone frame,
+   same pattern as the non-prop LP. Deliberately dark, like the product. */
+:root { --bg: #0a0a0a; --panel: #121212; --line: rgba(255,255,255,.1); --fg: #fff; --mute: #9a9a9a; --lime: #d9ff00; --ink: #0a0a0a; color-scheme: dark; }
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html, body { height: 100%; }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 14px "Host Grotesk", "Helvetica Neue", Arial, sans-serif; overflow: hidden; }
+.app { display: grid; grid-template-rows: auto 1fr; height: 100%; }
+.bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+  padding-block: 10px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  border-bottom: 1px solid var(--line); }
+.bar b { font-weight: 600; display: flex; align-items: center; gap: 8px; }
+.bar b svg { width: 20px; height: 17px; color: var(--lime); }
+.bar b span { color: var(--mute); font-weight: 400; }
+.groups { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+.seg { display: inline-flex; padding: 3px; border: 1px solid var(--line); border-radius: 999px; background: var(--panel); }
+.seg button { appearance: none; border: 0; background: transparent; color: var(--mute); font: inherit; font-size: 13px; font-weight: 500; padding: 7px 16px; border-radius: 999px; cursor: pointer; }
+.seg button[aria-pressed="true"] { background: var(--lime); color: var(--ink); }
+.seg button:focus-visible, a:focus-visible, .open:focus-visible { outline: 2px solid var(--lime); outline-offset: 2px; }
+.tools { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.open { color: var(--fg); text-decoration: none; border: 1px solid var(--line); border-radius: 999px; padding: 7px 14px; font: inherit; font-size: 13px; background: var(--panel); cursor: pointer; }
+.open:hover { border-color: rgba(255,255,255,.25); }
+.edt[aria-pressed="true"] { background: var(--lime); color: var(--ink); border-color: var(--lime); }
+.est { font-size: 12px; color: var(--mute); }
+.stage { position: relative; overflow: hidden; background: radial-gradient(900px 500px at 50% 0%, rgba(217,255,0,.07), transparent 70%), var(--bg); }
+.browser { position: absolute; left: 0; top: 0; transform-origin: 0 0; border-radius: 14px; overflow: hidden; border: 1px solid var(--line); background: #000; box-shadow: 0 40px 120px -30px rgba(0,0,0,.9); }
+.browser .chrome { height: 40px; display: flex; align-items: center; gap: 14px; padding: 0 16px; background: #161616; border-bottom: 1px solid var(--line); }
+.dots { display: flex; gap: 7px; } .dots i { width: 11px; height: 11px; border-radius: 50%; background: #333; display: block; }
+.url { flex: 1; max-width: 520px; margin: 0 auto; height: 26px; border-radius: 8px; background: #0d0d0d; color: var(--mute); font-size: 13px; display: flex; align-items: center; justify-content: center; }
+.browser iframe { display: block; width: 1440px; border: 0; background: var(--bg); }
+.phone { position: absolute; left: 0; top: 0; width: 420px; height: 880px; transform-origin: 0 0; border-radius: 64px; padding: 14px; background: linear-gradient(145deg, #3a3a3a, #121212 40%, #2a2a2a); box-shadow: 0 0 0 2px #0d0d0d, 0 50px 120px -30px rgba(0,0,0,.95), inset 0 0 0 2px rgba(255,255,255,.08); }
+.screen { position: relative; width: 392px; height: 852px; border-radius: 52px; overflow: hidden; clip-path: inset(0 round 52px); background: var(--bg); }
+.island { position: absolute; left: 50%; top: 11px; width: 112px; height: 32px; transform: translateX(-50%); background: #000; border-radius: 20px; z-index: 4; }
+.sbar { position: absolute; left: 0; right: 0; top: 0; height: 50px; z-index: 3; background: #0f0f0f; display: flex; justify-content: space-between; align-items: center; padding: 6px 30px 0 34px; font-size: 15px; font-weight: 600; }
+.sbar svg { display: block; }
+.phone iframe { position: absolute; left: 0; top: 50px; width: 390px; height: 802px; border: 0; background: var(--bg); }
+.bare .phone { border-radius: 0; padding: 0; background: none; box-shadow: none; width: 100%; height: 100%; transform: none !important; }
+.bare .screen { width: 100%; height: 100%; border-radius: 0; clip-path: none; }
+.bare .sbar, .bare .island { display: none; }
+.bare .phone iframe { top: 0; width: 100%; height: 100%; }
+@media (max-width: 560px) { .bar { display: none; } .app { grid-template-rows: 1fr; } }
+</style>
+
+<div class="app" id="app">
+  <header class="bar">
+    <b><svg viewBox="0 0 24 20" fill="currentColor" aria-hidden="true"><path d="M10.0363 0C10.6661 0 10.981 0.762458 10.5335 1.20999L2.59401 9.1412H10.0363C10.6661 9.1412 10.981 9.90366 10.5335 10.3512L1.20999 19.6747C0.762458 20.1222 0 19.8073 0 19.1775V0.704444C0 0.314928 0.314928 0 0.704444 0H10.0363Z"/><path d="M18.0835 0C21.0753 0 23.5036 2.42829 23.5036 5.4201C23.5036 8.41192 21.0753 10.8402 18.0835 10.8402H15.1828L23.0312 18.6802C23.4787 19.1278 23.1638 19.8902 22.5339 19.8902H13.2104C12.8209 19.8902 12.506 19.5753 12.506 19.1858V0.704471C12.506 0.314955 12.8209 0 13.2104 0H18.0835Z"/></svg>My Offers<span>Trading area</span></b>
+    <div class="groups">
+      <div class="seg" role="group" aria-label="Preview size"><button id="bDesk" type="button" aria-pressed="true">Desktop</button><button id="bMob" type="button" aria-pressed="false">Mobile</button></div>
+      <div class="seg" role="group" aria-label="Offer value colour" id="valSeg"><button type="button" data-v="lime" aria-pressed="true">Lime value</button><button type="button" data-v="white" aria-pressed="false">White value</button></div>
+    </div>
+    <div class="tools">
+      <span class="est" id="est" aria-live="polite"></span>
+      <button class="open edt" id="edt" type="button" aria-pressed="false" hidden>Edit text</button>
+      <button class="open" id="cmt" type="button" hidden>Comment</button>
+      <a class="open" href="site.html" target="_blank" rel="noopener">Open full page</a>
+    </div>
+  </header>
+  <section class="stage" id="stage" data-comment-target>
+    <div class="browser" id="browser"><div class="chrome"><div class="dots"><i></i><i></i><i></i></div><div class="url">dashboard.fundingrock.com/offers</div><div style="width:50px"></div></div><iframe id="fDesk" title="My Offers page, desktop" src="site.html"></iframe></div>
+    <div class="phone" id="phone" hidden><div class="screen"><div class="sbar"><span>9:41</span><svg width="44" height="12" viewBox="0 0 44 12" fill="#fff" aria-hidden="true"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="4.5" y="6" width="3" height="6" rx="1"/><rect x="9" y="3.5" width="3" height="8.5" rx="1"/><rect x="13.5" y="1" width="3" height="11" rx="1"/><rect x="20.5" y=".5" width="20" height="11" rx="3.5" fill="none" stroke="#fff" opacity=".4"/><rect x="22" y="2" width="15" height="8" rx="2"/></svg></div><div class="island"></div><iframe id="fMob" title="My Offers page, mobile" data-src="site.html"></iframe></div></div>
+  </section>
+</div>
+
+<script>
+/* Desktop / Mobile toggle: the same site.html, at 1440 px in a browser frame or at 390 px in a phone. */
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var stage = $("stage"), browser = $("browser"), phone = $("phone"), mode = "desktop";
+  function narrow() { return innerWidth <= 560; }
+  function fit() {
+    var w = stage.clientWidth, h = stage.clientHeight, pad = 20;
+    if (mode === "desktop") { var s = Math.min(1, (w - pad * 2) / 1440); $("fDesk").style.height = Math.max(300, Math.floor((h - pad * 2) / s) - 40) + "px"; browser.style.transform = "scale(" + s + ")"; browser.style.left = Math.max(pad, (w - 1440 * s) / 2) + "px"; browser.style.top = pad + "px"; }
+    else if (!narrow()) { var s2 = Math.min(1, (h - pad * 2) / 880, (w - pad * 2) / 420); phone.style.transform = "scale(" + s2 + ")"; phone.style.left = Math.max(0, (w - 420 * s2) / 2) + "px"; phone.style.top = Math.max(pad, (h - 880 * s2) / 2) + "px"; }
+  }
+  function set(m) {
+    mode = m; $("bDesk").setAttribute("aria-pressed", m === "desktop"); $("bMob").setAttribute("aria-pressed", m === "mobile");
+    browser.hidden = m !== "desktop"; phone.hidden = m !== "mobile";
+    if (m === "mobile" && !$("fMob").getAttribute("src")) $("fMob").setAttribute("src", $("fMob").getAttribute("data-src"));
+    $("app").classList.toggle("bare", m === "mobile" && narrow()); fit();
+  }
+  $("bDesk").addEventListener("click", function () { set("desktop"); });
+  $("bMob").addEventListener("click", function () { set("mobile"); });
+  addEventListener("resize", function () { set(mode); });
+  set(narrow() ? "mobile" : "desktop");
+})();
+
+/* Value colour, text editing and comments.
+   People who can edit this artifact turn on "Edit text", click any text on the page and type.
+   Edits are saved to the artifact's shared database (doc content/text) and shown to every viewer of this preview. */
+(function () {
+  var frames = [document.getElementById("fDesk"), document.getElementById("fMob")];
+  var btn = document.getElementById("edt"), est = document.getElementById("est"), cmt = document.getElementById("cmt");
+  var val = "lime";
+  Array.prototype.slice.call(document.querySelectorAll("#valSeg button")).forEach(function (b) {
+    b.addEventListener("click", function () {
+      val = b.getAttribute("data-v");
+      Array.prototype.slice.call(document.querySelectorAll("#valSeg button")).forEach(function (x) { x.setAttribute("aria-pressed", x === b); });
+      all({ fr: "mo", t: "style", v: val });
+    });
+  });
+  var map = {}, editing = false, ref = null, timer = 0, saving = false, again = false, pend = false;
+  function post(win, m) { try { win.postMessage(m, "*"); } catch (e) {} }
+  function all(m) { frames.forEach(function (f) { if (f.contentWindow) post(f.contentWindow, m); }); }
+  function status(t) { est.textContent = t; }
+  addEventListener("message", function (e) {
+    var d = e.data; if (!d || d.fr !== "mo") return;
+    if (!frames.some(function (f) { return f.contentWindow === e.source; })) return;
+    if (d.t === "ready") { post(e.source, { fr: "mo", t: "ov", map: map }); post(e.source, { fr: "mo", t: "edit", on: editing }); post(e.source, { fr: "mo", t: "style", v: val }); }
+    if (d.t === "chg" && editing && ref && typeof d.k === "string" && typeof d.html === "string" && d.html.length < 4000) {
+      map[d.k] = d.html; pend = true; status("Saving…"); clearTimeout(timer); timer = setTimeout(save, 700);
+      frames.forEach(function (f) { if (f.contentWindow && f.contentWindow !== e.source) post(f.contentWindow, { fr: "mo", t: "ov", map: map }); });
+    }
+  });
+  function save() {
+    if (saving) { again = true; return; }
+    saving = true; pend = false;
+    var copy = {}; for (var k in map) copy[k] = map[k];
+    ref.set({ map: copy, updatedAt: Date.now() }).then(function () { status("Saved"); }, function () { status("Not saved: you may not have edit access"); })
+      .then(function () { saving = false; if (again) { again = false; save(); } });
+  }
+  btn.addEventListener("click", function () {
+    editing = !editing; btn.setAttribute("aria-pressed", editing); btn.textContent = editing ? "Done editing" : "Edit text";
+    status(editing ? "Click any text to edit it" : ""); all({ fr: "mo", t: "edit", on: editing });
+  });
+  if (!window.claude || !window.claude.use) return;
+  Promise.all([claude.use("db"), claude.use("user")]).then(function (r) {
+    var db = r[0], user = r[1]; if (!db) return;
+    ref = db.doc("content/text");
+    ref.onSnapshot(function (s) { if (pend || saving) return; var d = s.exists ? s.data() : null; map = {}; if (d && d.map) for (var k in d.map) map[k] = d.map[k]; all({ fr: "mo", t: "ov", map: map }); }, function () {});
+    if (user) user.canEdit().then(function (ok) { if (ok) btn.hidden = false; });
+  });
+  claude.use("comments").then(function (c) {
+    if (!c) return;
+    cmt.hidden = false;
+    cmt.addEventListener("click", function () {
+      c.openComposer({ element: document.getElementById("stage") }).catch(function (err) {
+        if (err && (err.code === "unavailable" || err.code === "not_granted")) { cmt.hidden = true; status("Commenting is off in this view"); }
+      });
+    });
+  });
+})();
+</script>
