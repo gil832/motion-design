@@ -107,7 +107,29 @@
   .toast.show{opacity:1;transform:translate(-50%,0)}
 
   @media (max-width:1280px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-  @media (max-width:860px){.grid{grid-template-columns:1fr}.sidebar{display:none}.nav-right .user,.nav-right .dot{display:none}}
+  .menu-btn{display:none;color:#fff}
+  @media (max-width:860px){
+    .grid{grid-template-columns:1fr}
+    .sidebar{display:none;position:fixed;inset:57px 0 0 0;width:auto;height:auto;z-index:20;border-right:0}
+    body.menu-open .sidebar{display:flex}
+    body.menu-open{overflow:hidden}
+    .menu-btn{display:block}
+    .topnav{height:57px;padding:12px 16px;position:sticky;top:0;z-index:21}
+    .brand{gap:12px}.brand .logo{font-size:14px}.brand > svg,.brand .page{display:none}
+    .nav-right .btn-lime,.nav-right .user,.nav-right .dot,.nav-right > svg{display:none}
+    .content{padding:20px 16px 28px}
+    .page-header{flex-direction:column;align-items:stretch}
+    .page-header > *{min-width:0}
+    .tabs{max-width:100%;overflow-x:auto;background:none;border:0;padding:0;gap:6px;scrollbar-width:none}
+    .tab{border-radius:999px;background:var(--card);border-color:var(--line);white-space:nowrap}
+    .offer{--stub:76px}
+    .offer .main{padding:16px 14px 14px 16px}
+    .offer .val{font-size:26px}
+    .offer .desc{font-size:12.5px}
+    .offer .stub .c{font-size:12px}
+    .how{flex-direction:column;align-items:flex-start;gap:14px}
+    .switcher{left:16px;right:16px;bottom:12px;justify-content:center}
+  }
 
   /* ---- card style variants (prototype switcher) ---- */
   body.v1 .offer .eb{color:var(--lime)}
@@ -167,6 +189,7 @@
   <div class="main">
     <header class="topnav">
       <div class="brand">
+        <button class="menu-btn" id="menu-btn" aria-label="Open menu"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
         <span class="logo">
           <svg width="24" height="20" viewBox="0 0 24 20"><path fill="#d9ff00" d="M0 0h11v5H5v3h5v4H5v8H0zM13 0h6a5 5 0 0 1 2.2 9.5L24 20h-5.5l-2.3-9H18V20h-5z"/></svg>
           FUNDINGROCK
@@ -287,6 +310,16 @@
   };
   document.querySelectorAll('.switcher button').forEach(b => b.addEventListener('click', () => setStyle(b.dataset.style)));
   setStyle(new URLSearchParams(location.search).get('style') === 'v1' ? 'v1' : '');
+
+  // Mobile menu
+  const mb = document.getElementById('menu-btn');
+  mb.addEventListener('click', () => {
+    const open = document.body.classList.toggle('menu-open');
+    mb.innerHTML = open
+      ? '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>'
+      : '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>';
+  });
+  document.querySelectorAll('.nav-item').forEach(b => b.addEventListener('click', () => { if (document.body.classList.contains('menu-open')) mb.click(); }));
 </script>
 </body>
 </html>
