@@ -363,7 +363,18 @@
   body.grd .offer .use{border-radius:999px}
 
   /* two coupons stacked; only the featured one gets the lime edge */
-  .coupons{display:flex;flex-direction:column;gap:16px}
+  .coupons{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;align-items:stretch}
+  /* half-width coupons: deals stack as rows, narrower stub */
+  .coupons .offer.feature{--stub:180px}
+  .coupons .feature .main{padding:20px 20px 20px;gap:16px}
+  .coupons .ft-title{font-size:23px}
+  .coupons .deals{grid-template-columns:1fr;gap:8px}
+  .coupons .deal{display:grid;grid-template-columns:minmax(0,1fr);grid-template-areas:"eb" "val" "desc";row-gap:2px;padding:12px 14px}
+  .coupons .deal .val{font-size:24px;margin:2px 0 0;line-height:1.15}
+  .coupons .is-std .deal .val{font-size:20px}
+  .coupons .deal .desc{font-size:12.5px}
+  .coupons .ft-head .expiry{font-size:12px;padding:6px 10px}
+  @media (max-width:1180px){ .coupons{grid-template-columns:1fr} .coupons .offer.feature{--stub:200px} }
   .offer.feature.is-std{outline:0;box-shadow:none}
   .is-std .deal .val{font-size:24px;line-height:1.15}
   .offer.feature .stub .btn-ghost{min-height:44px;font-size:14px}
