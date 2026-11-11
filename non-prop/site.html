@@ -608,6 +608,16 @@ body.hcv .co-x span { font-size: 12.5px; }
 body.hcv .co-ex p { font-size: clamp(14px, 1.2vw, 16px); }
 @media (max-width: 900px) { body.hcv .acc { grid-template-columns: repeat(3, 1fr); } body.hcv .cc-vs { margin: -10px 0; } }
 
+/* 71x strip, simplified: two clean rows */
+.co-row { display: grid; grid-template-columns: 7.5em auto 1fr; align-items: baseline; gap: 14px; padding: 8px 0; border-top: 1px solid rgba(255,255,255,.08); }
+.co-row:first-of-type { border-top: 0; }
+.co-row > span { font-size: 14px; font-weight: 600; }
+.co-row b { font-size: clamp(22px, 2.2vw, 30px); font-weight: 600; letter-spacing: -.03em; color: #fff; }
+.co-row b.g { color: var(--lime); }
+.co-row em { font-style: normal; font-size: 13.5px; color: var(--mute); text-align: right; }
+body.hcv .co-row b { font-size: clamp(18px, 1.7vw, 24px); }
+@media (max-width: 600px) { .co-row { grid-template-columns: 1fr auto; gap: 2px 10px; } .co-row em { grid-column: 1 / -1; text-align: left; } }
+
 /* program tabs */
 .ptabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: 1080px; margin: 0 auto 18px; }
 .pt { appearance: none; cursor: pointer; text-align: left; padding: 20px 22px; border-radius: 22px; border: 1px solid rgba(143,243,232,.22); background: linear-gradient(170deg, rgba(10,44,50,.8), rgba(4,16,20,.92)); color: #fff; font: inherit; transition: transform .3s var(--ease), border-color .3s, background .3s, box-shadow .3s; }
@@ -1178,11 +1188,11 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
         </article>
       </div>
       <div class="cmp-out rv">
-        <div class="co-x"><b class="tnum" id="cX">143×</b><span>less money on the line</span></div>
+        <div class="co-x"><b class="tnum" id="cX">143×</b><span>less money at risk</span></div>
         <div class="co-ex">
-          <span class="co-k">Example: a +10% month</span>
-          <p><span class="r">Broker:</span> <b class="tnum" id="cExBk">+$5,000</b>, after putting in <b class="tnum" id="cExBkIn">$50,000</b> of your own money.</p>
-          <p><span class="g">FundingRock:</span> <b class="g tnum" id="cExFr">$4,000 Reward</b>, after paying a <b class="tnum" id="cExFrIn">$350</b> fee.</p>
+          <span class="co-k">A +10% month</span>
+          <div class="co-row"><span class="r">Broker</span><b class="tnum" id="cExBk">+$5,000</b><em>you risk <span class="tnum" id="cExBkIn">$50,000</span></em></div>
+          <div class="co-row"><span class="g">FundingRock</span><b class="g tnum" id="cExFr">+$4,000</b><em>you risk <span class="tnum" id="cExFrIn">$350</span></em></div>
         </div>
       </div>
       <p class="cmp-note">Simulated trading. Rewards are not guaranteed. Example for illustration.</p>
@@ -1799,7 +1809,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
     $("#cBkRisk").textContent = fmt(a); $("#cFrRisk").textContent = fmt(f) + ", one time"; $("#cFrTag").textContent = "Only " + fmt(f) + " at risk";
     $("#cX").textContent = Math.round(a / f) + "×";
     $("#cExBk").textContent = "+" + fmt(a * .1); $("#cExBkIn").textContent = fmt(a);
-    $("#cExFr").textContent = fmt(a * .1 * .8) + " Reward"; $("#cExFrIn").textContent = fmt(f);
+    $("#cExFr").textContent = "+" + fmt(a * .1 * .8); $("#cExFrIn").textContent = fmt(f);
     if (cIn) { $("#cBkBar").style.width = "100%"; $("#cFrBar").style.width = Math.max(f / a * 100, 1.2).toFixed(2) + "%"; }
   }
   $$("#cSizes .ac").forEach(function (b, i) { b.addEventListener("click", function () { cI = i; $$("#cSizes .ac").forEach(function (c, j) { c.setAttribute("aria-pressed", j === i); }); cRender(true); }); });
