@@ -148,6 +148,46 @@
     .offer{--stub:118px}
     .offer .stub .c{font-size:12px;letter-spacing:1px}
   }
+  /* ---- Axcera dashboard look (matches the live trading area) ---- */
+  :root{--bg:#0d0d0d;--sidebar:#0d0d0d;--topnav:#0d0d0d;--card:#161616;--line:#262626}
+  body{background:var(--bg)}
+  .sidebar{width:260px;padding:22px 14px 18px;gap:6px;border-right:1px solid #1c1c1c}
+  .side-logo{display:flex;align-items:center;gap:8px;font-weight:700;font-size:20px;letter-spacing:.3px;color:#fff;padding:0 6px 22px}
+  .nav-item{gap:14px;padding:11px 14px;border-radius:8px;color:#e6e6e6;font-size:14.5px;font-weight:500;white-space:nowrap}
+  .nav-item svg{width:20px;height:20px;color:#d9d9d9}
+  .nav-item:hover{background:#151515}
+  .nav-item.active{background:#0f0f0f;border-color:var(--lime);color:var(--lime);font-weight:600;box-shadow:0 0 18px -6px rgba(217,255,0,.45)}
+  .nav-item .chev{width:16px;height:16px}
+  .sidebar-cta{align-items:flex-start;gap:12px;padding:16px 18px 18px;border-radius:12px;border-color:#2a2a2a;background:#111}
+  .sidebar-cta p{font-size:14px}
+  .sidebar-cta .btn-lime{padding:11px 18px;font-size:14px;border-radius:8px}
+  .topnav{height:64px;background:var(--topnav);border-bottom:1px solid #1c1c1c;padding:12px 20px}
+  .brand{gap:22px}
+  .brand .logo{display:none}
+  .brand .ham{color:#d9d9d9}
+  .brand .page{font-size:18px;font-weight:500}
+  .nav-right{gap:18px}
+  .nav-right .btn-lime{padding:11px 20px;font-size:14px;border-radius:8px}
+  .nav-right .sun{color:#d9d9d9}
+  .avatar{width:36px;height:36px;background:var(--lime);color:#0a0a0a;font-size:14px;font-weight:700}
+  .nav-right .user{font-size:14.5px;font-weight:500}
+  .nav-right .uchev{color:#d9d9d9;margin-left:-8px}
+  .gift-btn{border-radius:8px;background:#141414;border-color:#2a2a2a;box-shadow:none}
+  .tabs{border-radius:12px;border-color:#2a2a2a;background:#141414}
+  .how{border-radius:14px;border-color:#2a2a2a;background:#141414}
+  .offer{border-radius:14px}
+  .offer .main{border-radius:14px 0 0 14px}
+  .offer .stub{border-radius:0 14px 14px 0}
+  @media (max-width:860px){
+    .sidebar{inset:57px 0 0 0;width:auto;padding:16px}
+    .side-logo{display:none}
+    .brand .logo{display:flex}
+    .brand .ham{display:none}
+    .topnav{height:57px;padding:12px 16px}
+    .nav-right .sun,.nav-right .uchev{display:none}
+    .avatar{width:32px;height:32px;font-size:12px}
+  }
+
   /* A · Colour (option): wide side stub with horizontal code (same shape as C); each offer in its brand colour with a soft glow behind the value */
   body.colr .offer{--btxt:color-mix(in srgb,var(--brand) 80%,#fff)}
   body.colr .offer .stub .c{color:var(--btxt)}
@@ -201,7 +241,21 @@
   <defs>
     <symbol id="i-home" viewBox="0 0 24 24"><path fill="currentColor" d="M12 3 2 11h3v9h5v-6h4v6h5v-9h3z"/></symbol>
     <symbol id="i-wallet" viewBox="0 0 24 24"><path fill="currentColor" d="M3 6a2 2 0 0 1 2-2h13v3H5v1h15a1 1 0 0 1 1 1v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm13 7a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3"/></symbol>
-    <symbol id="i-offer" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linejoin="round" d="M2 9a3 3 0 0 0 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 0 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/><path stroke-linecap="round" d="m9 15 6-6"/><circle cx="9.5" cy="9.5" r="1.1" fill="currentColor" stroke="none"/><circle cx="14.5" cy="14.5" r="1.1" fill="currentColor" stroke="none"/></symbol>
+    <symbol id="o-home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V20h5v-6h4v6h5V9.5"/></symbol>
+    <symbol id="o-card" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 10h18M7 15h4"/></symbol>
+    <symbol id="o-bill" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="6" width="19" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/><path d="M6 9.5v5M18 9.5v5"/></symbol>
+    <symbol id="o-cap" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m2 9 10-5 10 5-10 5z"/><path d="M6 11v5c0 1.5 2.7 3 6 3s6-1.5 6-3v-5M22 9v6"/></symbol>
+    <symbol id="o-doc" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8l5 5v13H6z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></symbol>
+    <symbol id="o-trophy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4h8v5a4 4 0 0 1-8 0z"/><path d="M8 6H5a3 3 0 0 0 3 4M16 6h3a3 3 0 0 1-3 4M12 13v4M9 17h6v4H9z"/></symbol>
+    <symbol id="o-bars" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="13" width="4" height="7" rx="1"/><rect x="10" y="8" width="4" height="12" rx="1"/><rect x="16" y="4" width="4" height="16" rx="1"/></symbol>
+    <symbol id="o-book" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5.5C5.5 4 9 4 12 6c3-2 6.5-2 9-.5V19c-2.5-1.5-6-1.5-9 .5-3-2-6.5-2-9-.5z"/><path d="M12 6v13.5"/></symbol>
+    <symbol id="o-gift" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="4.5" rx="1"/><path d="M5 12.5V20h14v-7.5M12 8v12"/><path d="M12 8S10.6 3 7.8 3a2.3 2.3 0 0 0 0 5H12Zm0 0s1.4-5 4.2-5a2.3 2.3 0 0 1 0 5H12Z"/></symbol>
+    <symbol id="o-gear" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></symbol>
+    <symbol id="o-help" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.5V14M12 17.5v.01"/></symbol>
+    <symbol id="o-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+    <symbol id="o-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></symbol>
+    <symbol id="o-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+    <symbol id="i-offer" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="4.5" rx="1"/><path d="M5 12.5V20h14v-7.5M12 8v12"/><path d="M12 8S10.6 3 7.8 3a2.3 2.3 0 0 0 0 5H12Zm0 0s1.4-5 4.2-5a2.3 2.3 0 0 1 0 5H12Z"/></symbol>
     <symbol id="i-gift" viewBox="0 0 24 24"><path fill="currentColor" d="M20 7h-2.2A3 3 0 0 0 12 4a3 3 0 0 0-5.8 3H4a1 1 0 0 0-1 1v3h8V7h2v4h8V8a1 1 0 0 0-1-1M9 7a1 1 0 1 1 1-1v1zm5 0V6a1 1 0 1 1 1 1zM4 13v6a1 1 0 0 0 1 1h6v-7zm9 7h6a1 1 0 0 0 1-1v-6h-7z"/></symbol>
     <symbol id="i-cert" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2 9.5 4H6v3.5L4 10l2 2.5V16h3.5l2.5 2 2.5-2H18v-3.5l2-2.5-2-2.5V4h-3.5z"/></symbol>
     <symbol id="i-doc" viewBox="0 0 24 24"><path fill="currentColor" d="M6 2h8l5 5v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2m7 1.5V8h4.5z"/></symbol>
@@ -222,23 +276,24 @@
 
 <div class="app">
   <aside class="sidebar" aria-label="Main navigation">
-    <button class="nav-item" data-view="Overview"><svg><use href="#i-home"/></svg>Overview</button>
-    <button class="nav-item" data-view="Accounts"><svg><use href="#i-wallet"/></svg>Accounts</button>
+    <div class="side-logo"><svg width="26" height="22" viewBox="0 0 24 20" fill="#d9ff00" aria-hidden="true"><path d="M10.0363 0C10.6661 0 10.981 0.762458 10.5335 1.20999L2.59401 9.1412H10.0363C10.6661 9.1412 10.981 9.90366 10.5335 10.3512L1.20999 19.6747C0.762458 20.1222 0 19.8073 0 19.1775V0.704444C0 0.314928 0.314928 0 0.704444 0H10.0363Z"/><path d="M18.0835 0C21.0753 0 23.5036 2.42829 23.5036 5.4201C23.5036 8.41192 21.0753 10.8402 18.0835 10.8402H15.1828L23.0312 18.6802C23.4787 19.1278 23.1638 19.8902 22.5339 19.8902H13.2104C12.8209 19.8902 12.506 19.5753 12.506 19.1858V0.704471C12.506 0.314955 12.8209 0 13.2104 0H18.0835Z"/></svg>FUNDINGROCK</div>
+    <button class="nav-item" data-view="Overview"><svg><use href="#o-home"/></svg>Overview</button>
+    <button class="nav-item" data-view="Accounts"><svg><use href="#o-card"/></svg>Accounts</button>
     <button class="nav-item active" data-view="My Offers" aria-current="page"><svg><use href="#i-offer"/></svg><span class="nl">My Offers</span></button>
-    <button class="nav-item" data-view="Rewards"><svg><use href="#i-gift"/></svg>Rewards</button>
-    <button class="nav-item" data-view="Certificates"><svg><use href="#i-cert"/></svg>Certificates</button>
-    <button class="nav-item" data-view="Contracts"><svg><use href="#i-doc"/></svg>Contracts</button>
-    <button class="nav-item" data-view="Competitions"><svg><use href="#i-trophy"/></svg>Competitions</button>
-    <button class="nav-item" data-view="Leaderboard"><svg><use href="#i-bars"/></svg>Leaderboard</button>
-    <button class="nav-item" data-view="Trading Resources"><svg><use href="#i-book"/></svg>Trading<br>Resources<svg class="chev"><use href="#i-chev"/></svg></button>
-    <button class="nav-item" data-view="Billing"><svg><use href="#i-card"/></svg>Billing</button>
-    <button class="nav-item" data-view="Affiliates"><svg><use href="#i-users"/></svg>Affiliates</button>
-    <button class="nav-item" data-view="Settings"><svg><use href="#i-gear"/></svg>Settings</button>
-    <button class="nav-item" data-view="Help Center"><svg><use href="#i-help"/></svg>Help Center</button>
+    <button class="nav-item" data-view="Rewards"><svg><use href="#o-bill"/></svg>Rewards</button>
+    <button class="nav-item" data-view="Certificates"><svg><use href="#o-cap"/></svg>Certificates</button>
+    <button class="nav-item" data-view="Contracts"><svg><use href="#o-doc"/></svg>Contracts</button>
+    <button class="nav-item" data-view="Competitions"><svg><use href="#o-trophy"/></svg>Competitions</button>
+    <button class="nav-item" data-view="Leaderboard"><svg><use href="#o-bars"/></svg>Leaderboard</button>
+    <button class="nav-item" data-view="Trading Resources"><svg><use href="#o-book"/></svg>Trading Resources<svg class="chev"><use href="#o-chev"/></svg></button>
+    <button class="nav-item" data-view="Billing"><svg><use href="#o-bill"/></svg>Billing</button>
+    <button class="nav-item" data-view="Affiliates"><svg><use href="#o-gift"/></svg>Affiliates</button>
+    <button class="nav-item" data-view="Settings"><svg><use href="#o-gear"/></svg>Settings</button>
+    <button class="nav-item" data-view="Help Center"><svg><use href="#o-help"/></svg>Help Center</button>
     <div class="spacer"></div>
     <div class="sidebar-cta">
       <p>Ready to trade?</p>
-      <button class="btn-lime" style="width:100%;justify-content:center;font-size:12.5px;padding:9px 0">Start Challenge</button>
+      <button class="btn-lime">Start Challenge</button>
     </div>
   </aside>
 
@@ -250,16 +305,16 @@
           <svg width="24" height="20" viewBox="0 0 24 20" fill="#d9ff00" aria-label="FundingRock"><path d="M10.0363 0C10.6661 0 10.981 0.762458 10.5335 1.20999L2.59401 9.1412H10.0363C10.6661 9.1412 10.981 9.90366 10.5335 10.3512L1.20999 19.6747C0.762458 20.1222 0 19.8073 0 19.1775V0.704444C0 0.314928 0.314928 0 0.704444 0H10.028H10.0363Z"/><path d="M18.0835 2.67029e-05C21.0753 2.67029e-05 23.5036 2.42829 23.5036 5.4201C23.5036 8.41192 21.0753 10.8402 18.0835 10.8402H15.1828L23.0312 18.6802C23.4787 19.1278 23.1638 19.8902 22.5339 19.8902H13.2104C12.8209 19.8902 12.506 19.5753 12.506 19.1858V0.704471C12.506 0.314955 12.8209 2.67029e-05 13.2104 2.67029e-05H18.0918H18.0835Z"/></svg>
           FUNDINGROCK
         </span>
-        <svg width="16" height="16" viewBox="0 0 24 24" style="color:var(--text-2)"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M5 7h14M5 12h14M5 17h14"/></svg>
+        <svg class="ham" width="22" height="22"><use href="#o-menu"/></svg>
         <span class="page" id="page-title">My Offers</span>
       </div>
       <div class="nav-right">
         <button class="btn-lime">Start Challenge</button>
         <button class="gift-btn" id="gift-btn" title="My Offers" aria-label="My Offers, 3 available"><svg><use href="#i-offer"/></svg><b>3</b></button>
-        <span class="dot" style="width:6px;height:6px;border-radius:9px;background:var(--text-2)"></span>
+        <svg class="dot sun" width="20" height="20"><use href="#o-sun"/></svg>
         <span class="avatar">MC</span>
         <span class="user">Malik Coley</span>
-        <svg width="12" height="12" style="color:var(--text-3)"><use href="#i-chev"/></svg>
+        <svg class="uchev" width="16" height="16"><use href="#o-chev"/></svg>
       </div>
     </header>
 
@@ -269,11 +324,6 @@
           <div class="campaign">BLACK NOVEMBER · PRE-SALE</div>
           <h1>My Offers</h1>
           <p>Every order gets a bonus challenge. Bundles too. Copy a code and apply it at checkout.</p>
-        </div>
-        <div class="tabs" role="tablist">
-          <button class="tab active" data-filter="all" role="tab">All offers <span class="count">3</span></button>
-          <button class="tab" data-filter="bundle" role="tab">Bundles <span class="count">2</span></button>
-          <button class="tab" data-filter="discount" role="tab">Discounts <span class="count">1</span></button>
         </div>
       </div>
 
