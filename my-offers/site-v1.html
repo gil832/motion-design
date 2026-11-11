@@ -433,6 +433,39 @@
   .offer.feature.in-grid .stub{box-shadow:inset -1px 0 0 rgba(217,255,0,.45),inset 0 1px 0 rgba(217,255,0,.45),inset 0 -1px 0 rgba(217,255,0,.45)}
   @media (max-width:560px){ .offer.feature.in-grid .stub{box-shadow:inset -1px 0 0 rgba(217,255,0,.45),inset 1px 0 0 rgba(217,255,0,.45),inset 0 -1px 0 rgba(217,255,0,.45)} }
   @media (max-width:560px){ .offer .stub::before{top:12px;left:auto;right:16px;transform:none} .offer.feature.in-grid .stub{padding-top:32px} .offer.feature.in-grid::before,.offer.feature.in-grid::after{bottom:129px} }
+
+  /* ================= D · Ticket: textured lime "Your ticket to Prime" style ================= */
+  body.tkt .offer,body.tkt .offer:hover,body.tkt .offer.feature,body.tkt .offer.feature:hover{background:repeating-linear-gradient(-55deg,rgba(10,10,10,.05) 0 1px,transparent 1px 6px),radial-gradient(110% 150% at 0% 0%,rgba(240,255,140,.75) 0%,rgba(240,255,140,0) 55%),linear-gradient(90deg,rgba(150,185,0,0) 55%,rgba(150,185,0,.22) 100%),#d9ff00;color:#0a0a0a;outline:0;box-shadow:none;border-radius:16px}
+  body.tkt .offer .main{position:relative;padding-top:44px;background:none}
+  body.tkt .offer .main::before{content:"FUNDINGROCK";position:absolute;top:18px;left:18px;padding-left:19px;background:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2020%22%20fill%3D%22%230a0a0a%22%3E%3Cpath%20d%3D%22M10.04%200c.63%200%20.94.76.5%201.21L2.59%209.14h7.45c.63%200%20.94.76.5%201.21L1.21%2019.67c-.45.45-1.21.14-1.21-.5V.7C0%20.31.31%200%20.7%200z%22/%3E%3Cpath%20d%3D%22M18.08%200a5.42%205.42%200%200%201%200%2010.84h-2.9l7.85%207.84c.45.45.13%201.21-.5%201.21H13.2a.7.7%200%200%201-.7-.7V.7c0-.39.31-.7.7-.7z%22/%3E%3C/svg%3E") left center/14px 12px no-repeat;font-size:10px;font-weight:700;letter-spacing:1.8px;color:#0a0a0a}
+  body.tkt .offer .eb,body.tkt .offer .cg-meta{color:rgba(10,10,10,.6)}
+  body.tkt .offer .eb svg{color:#0a0a0a}
+  body.tkt .offer .title,body.tkt .offer .ft-title{color:#0a0a0a;letter-spacing:-.8px}
+  body.tkt .offer .title{font-size:28px}
+  body.tkt .offer .desc{color:rgba(10,10,10,.75)}
+  body.tkt .cg-pill{position:absolute;top:14px;right:18px;color:#0a0a0a;border:1.5px solid #0a0a0a;font-weight:700}
+  body.tkt .cg-pill svg{display:none}
+  body.tkt .feature .ft-head .expiry{color:#0a0a0a;background:transparent;border-color:rgba(10,10,10,.3)}
+  body.tkt .in-grid .deal .val{color:#0a0a0a}
+  body.tkt .in-grid .deal .desc{color:rgba(10,10,10,.7)}
+  body.tkt .in-grid .deal + .deal{border-top-color:rgba(10,10,10,.15)}
+  body.tkt .offer .stub,body.tkt .offer .stub:hover,body.tkt .offer.feature .stub{background:none;border-left-color:rgba(10,10,10,.35);box-shadow:none}
+  body.tkt .offer .stub::before{content:"";position:absolute;top:auto;bottom:14px;left:14px;right:14px;transform:none;padding:0;height:22px;background:repeating-linear-gradient(90deg,#0a0a0a 0 2px,transparent 2px 4px,#0a0a0a 4px 5px,transparent 5px 8px,#0a0a0a 8px 11px,transparent 11px 12px);opacity:.85}
+  body.tkt .offer .stub{padding-bottom:46px}
+  body.tkt .offer .code-label,body.tkt .offer.feature .stub .stub-note{color:rgba(10,10,10,.6)}
+  body.tkt .code-btn{border-color:rgba(10,10,10,.45);background:rgba(10,10,10,.05);color:#0a0a0a}
+  body.tkt .code-btn:hover{border-color:#0a0a0a;color:#0a0a0a}
+  body.tkt .code-btn .c{color:#0a0a0a!important}
+  body.tkt .offer .use,body.tkt .offer .btn-ghost{background:#0a0a0a;color:#fff;border-color:#0a0a0a;border-radius:999px}
+  body.tkt .code-wrap.copied .code-btn,body.tkt .offer.copied .code-btn{border-color:#0a0a0a;background:rgba(10,10,10,.1)}
+  body.tkt .code-wrap.copied .code-btn .ic-ok,body.tkt .code-wrap.copied .code-label{color:#0a0a0a}
+  body.tkt .offer::before,body.tkt .offer::after,body.tkt .offer.feature.in-grid::before,body.tkt .offer.feature.in-grid::after{border:0}
+  @media (max-width:560px){
+    body.tkt .offer .stub{border-top-color:rgba(10,10,10,.35);padding-bottom:16px}
+    body.tkt .offer .stub::before{display:none}
+    body.tkt .offer.feature.in-grid .stub{padding-top:12px}
+    body.tkt .offer.feature.in-grid::before,body.tkt .offer.feature.in-grid::after{bottom:111px}
+  }
 </style>
 </head>
 <body>
@@ -722,7 +755,7 @@
       var h = clean(d.map[k]); if (el.innerHTML !== h) { el.innerHTML = h; syncCode(el); }
     });
     if (d.t === "edit") setEdit(!!d.on);
-    if (d.t === "layout") { document.body.classList.toggle("colr", d.v === "colour"); document.body.classList.toggle("cpn", d.v === "coupon"); document.body.classList.toggle("grd", d.v === "gradient"); }
+    if (d.t === "layout") { document.body.classList.toggle("colr", d.v === "colour"); document.body.classList.toggle("cpn", d.v === "coupon"); document.body.classList.toggle("grd", d.v === "gradient"); document.body.classList.toggle("tkt", d.v === "ticket"); }
   });
   parent.postMessage({ fr: "mo", t: "ready" }, "*");
 })();
