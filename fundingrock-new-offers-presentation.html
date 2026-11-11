@@ -1,0 +1,458 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>New Offers Presentation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Host+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0a0a; --sidebar:#0d0d0d; --topnav:#0f0f0f; --card:#121212; --line:#1f1f1f; --line-2:#242424;
+    --text:#fff; --text-2:#c4c4c4; --text-3:#9a9a9a; --text-4:#6f6f6f;
+    --lime:#d9ff00; --lime-bg:#141a06; --lime-deep:#2b3a08; --pink:#ff5c7a;
+    --stage:#161616;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--stage)}
+  body{color:var(--text);font-family:"Host Grotesk",system-ui,sans-serif;font-size:13px;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+  svg{display:block;flex:none}
+
+  /* ================= Presentation chrome ================= */
+  .toolbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;
+    padding:12px 24px;background:rgba(16,16,16,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  .toolbar .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:13px;letter-spacing:.5px}
+  .toolbar .brand small{color:var(--text-4);font-weight:500;letter-spacing:0}
+  .tools{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  .tbtn{display:inline-flex;align-items:center;gap:6px;padding:7px 12px;border-radius:6px;border:1px solid var(--line-2);background:#121212;color:var(--text-2);font-weight:500;font-size:12px;white-space:nowrap}
+  .tbtn:hover{border-color:#3a3a3a;color:#fff}
+  .tbtn.on{background:var(--lime-bg);border-color:var(--lime);color:var(--lime);font-weight:600}
+  .tbtn.primary{background:var(--lime);border-color:var(--lime);color:var(--bg);font-weight:600}
+  .seg{display:flex;gap:2px;padding:2px;border:1px solid var(--line-2);border-radius:7px;background:#121212}
+  .seg .tbtn{border:0;background:none;padding:6px 10px}
+  .seg .tbtn.on{background:var(--lime-bg);box-shadow:inset 0 0 0 1px var(--lime)}
+  .hint{display:none;padding:10px 24px;background:var(--lime-bg);border-bottom:1px solid #2b3a08;color:var(--lime);font-size:12px;font-weight:500}
+  body.editing .hint{display:block}
+
+  .deck{max-width:1440px;margin:0 auto;padding:40px 24px 80px;display:flex;flex-direction:column;gap:56px}
+  .slide-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:18px}
+  .kicker{color:var(--lime);font-weight:600;font-size:11px;letter-spacing:3px}
+  .slide-head h2{font-size:26px;font-weight:600;letter-spacing:-.4px;margin-top:6px}
+  .slide-head p{color:var(--text-3);max-width:520px;line-height:1.5}
+  .cover{padding:28px;border:1px solid var(--line);border-radius:14px;background:
+    radial-gradient(60% 120% at 100% 0%,rgba(217,255,0,.08),transparent 60%),#101010;display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;align-items:flex-end}
+  .cover h1{font-size:40px;font-weight:800;letter-spacing:-.8px;line-height:1.05}
+  .cover h1 em{font-style:normal;color:var(--lime)}
+  .cover p{color:var(--text-3);margin-top:10px;max-width:560px;line-height:1.55}
+  .cover .meta{display:flex;gap:8px;flex-wrap:wrap}
+  .cover .meta span{padding:6px 10px;border:1px solid var(--line-2);border-radius:999px;color:var(--text-3);font-size:11.5px}
+
+  /* browser frame */
+  .browser{border-radius:12px;overflow:hidden;border:1px solid #2a2a2a;background:#1b1b1b;box-shadow:0 30px 80px -30px rgba(0,0,0,.8)}
+  .browser .bar{display:flex;align-items:center;gap:8px;padding:10px 14px;background:#1b1b1b;border-bottom:1px solid #2a2a2a}
+  .browser .dots{display:flex;gap:6px}.browser .dots i{width:10px;height:10px;border-radius:50%;background:#3a3a3a}
+  .browser .url{flex:1;max-width:420px;margin:0 auto;padding:5px 12px;border-radius:6px;background:#111;color:var(--text-4);font-size:11.5px;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .viewport{position:relative;overflow:hidden;background:var(--bg)}
+  .viewport > .scaled{position:absolute;left:0;top:0;width:1440px;transform-origin:0 0}
+
+  /* phones */
+  .phones{display:flex;gap:40px;justify-content:center;flex-wrap:wrap}
+  .phone-wrap{display:flex;flex-direction:column;align-items:center;gap:14px}
+  .phone-wrap .cap{color:var(--text-3);font-size:12px;font-weight:500}
+  .phone{width:390px;height:844px;border-radius:52px;padding:12px;background:#050505;box-shadow:0 0 0 2px #2a2a2a,0 30px 80px -30px rgba(0,0,0,.9);position:relative;flex:none}
+  .phone .screen{width:100%;height:100%;border-radius:40px;overflow:hidden;background:var(--bg);position:relative}
+  .phone .island{position:absolute;top:22px;left:50%;transform:translateX(-50%);width:110px;height:32px;border-radius:20px;background:#000;z-index:5}
+  .phone .scroll{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;scrollbar-width:none;padding-top:48px}
+  .phone .scroll::-webkit-scrollbar{display:none}
+  .phone-scale{transform-origin:top center}
+  @media (max-width:900px){.phones{gap:24px}}
+
+  /* ================= Shared product UI ================= */
+  .ui{background:var(--bg);color:var(--text)}
+  .btn-lime{background:var(--lime);color:var(--bg);font-weight:600;font-size:13px;border-radius:6px;padding:10px 16px;display:inline-flex;align-items:center;gap:7px;white-space:nowrap}
+  .avatar{width:30px;height:30px;border-radius:999px;background:var(--lime-deep);color:var(--lime);font-weight:600;font-size:11px;display:grid;place-items:center;flex:none}
+  .logo{display:flex;align-items:center;gap:7px;font-weight:800;letter-spacing:1px}
+  .nav-item{display:flex;align-items:center;gap:12px;padding:10px;border-radius:6px;border:1px solid transparent;color:var(--text-2);font-weight:500;font-size:12.5px;width:100%;text-align:left}
+  .nav-item svg{width:17px;height:17px;color:var(--text-3)}
+  .nav-item.active{background:var(--lime-bg);border-color:var(--lime);color:var(--lime);font-weight:600}
+  .nav-item.active svg{color:var(--lime)}
+  .nav-item .chev{margin-left:auto;width:12px;height:12px}
+  .cta-box{background:#141414;border:1px solid var(--line-2);border-radius:6px;padding:14px 12px;display:flex;flex-direction:column;align-items:center;gap:10px}
+  .cta-box p{font-weight:600;font-size:12.5px}
+
+  .campaign{color:var(--lime);font-size:11px;font-weight:600;letter-spacing:3px}
+  .h1{font-size:24px;font-weight:600;letter-spacing:-.4px}
+  .sub{color:var(--text-3);font-weight:500;line-height:1.45}
+  .tabs{display:flex;gap:4px}
+  .tab{display:flex;align-items:center;gap:7px;padding:7px 12px;border-radius:6px;border:1px solid transparent;color:var(--text-3);font-weight:500;font-size:12.5px;white-space:nowrap}
+  .tab .count{background:var(--line);border-radius:999px;padding:1px 6px;font-size:10.5px;font-weight:600}
+  .tab.active{background:var(--lime-bg);border-color:var(--lime);color:var(--lime);font-weight:600}
+  .tab.active .count{background:var(--lime-deep)}
+  .label{font-size:10px;font-weight:500;letter-spacing:1px;color:var(--text-4);text-transform:uppercase}
+
+  /* ticket */
+  .offer{--stub:104px;position:relative;display:flex;border-radius:10px;background:var(--card);border:1px solid var(--line)}
+  .offer .main{flex:1;min-width:0;padding:18px 18px 16px;display:flex;flex-direction:column;gap:4px;border-radius:10px 0 0 10px;background:linear-gradient(90deg,rgba(217,255,0,.045),transparent 50%)}
+  .offer .eb{display:flex;align-items:center;gap:8px;font-size:10px;letter-spacing:1.2px;color:var(--text-4);font-weight:600;text-transform:uppercase}
+  .offer .eb svg{width:14px;height:12px;color:var(--lime)}
+  .offer .val{font-size:34px;font-weight:800;letter-spacing:-.5px;line-height:1.1;margin-top:6px;color:var(--lime);overflow-wrap:anywhere}
+  .offer .desc{color:var(--text-2);font-weight:500}
+  .offer .foot{margin-top:auto;padding-top:14px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+  .expiry{display:flex;align-items:center;gap:5px;color:var(--text-4);font-size:11px;font-weight:500;white-space:nowrap;min-width:0}
+  .expiry.live{color:var(--lime)}
+  .claim{padding:7px 12px;font-size:12px}
+  .offer .stub{width:var(--stub);flex:none;border-left:2px dashed #262626;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:12px 8px;border-radius:0 10px 10px 0;background:#171717;color:var(--text-3)}
+  .offer .stub small{font-size:9px;letter-spacing:1.2px;font-weight:600;color:var(--text-4)}
+  .offer .stub .c{writing-mode:vertical-rl;transform:rotate(180deg);font-weight:700;letter-spacing:2px;font-size:13px;color:var(--lime)}
+  .offer .stub svg{width:16px;height:16px}
+  .offer::before,.offer::after{content:"";position:absolute;right:calc(var(--stub) - 10px);width:20px;height:20px;border-radius:50%;background:var(--bg);border:1px solid var(--line)}
+  .offer::before{top:-11px;clip-path:inset(50% 0 0 0)}
+  .offer::after{bottom:-11px;clip-path:inset(0 0 50% 0)}
+  body.style-white .offer .eb{color:var(--lime)}
+  body.style-white .offer .val{color:#fff}
+  .how{display:flex;align-items:center;gap:28px;padding:16px 20px;background:var(--card);border:1px solid var(--line);border-radius:6px}
+  .step{display:flex;align-items:center;gap:10px}
+  .num{width:26px;height:26px;border-radius:999px;background:var(--lime-deep);color:var(--lime);display:grid;place-items:center;font-weight:600;font-size:11px;flex:none}
+  .step b{display:block;font-weight:600;font-size:12.5px}
+  .step small{color:var(--text-3);font-size:11.5px;font-weight:500}
+
+  /* desktop screen */
+  .d{display:flex;width:1440px;min-height:900px}
+  .d .sidebar{width:190px;flex:none;background:var(--sidebar);border-right:1px solid #1a1a1a;padding:16px 14px;display:flex;flex-direction:column;gap:4px}
+  .d .spacer{flex:1}
+  .d .main{flex:1;min-width:0;display:flex;flex-direction:column}
+  .d .topnav{height:66px;background:var(--topnav);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:14px 20px 14px 18px}
+  .d .topnav .left{display:flex;align-items:center;gap:16px}
+  .d .topnav .logo{font-size:16px}
+  .d .topnav .page{font-weight:600;font-size:17px}
+  .d .topnav .right{display:flex;align-items:center;gap:14px}
+  .d .content{padding:16px 20px 20px;display:flex;flex-direction:column;gap:16px}
+  .d .head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px}
+  .d .head .campaign{margin-bottom:6px}
+  .d .head .sub{margin-top:5px}
+  .d .tabs{padding:4px;background:var(--card);border:1px solid var(--line);border-radius:6px}
+  .d .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+  .d .offer{min-height:172px}
+
+  /* mobile screen */
+  .m .topbar{position:sticky;top:0;z-index:3;display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:var(--topnav);border-bottom:1px solid var(--line)}
+  .m .topbar .left{display:flex;align-items:center;gap:12px}
+  .m .topbar .logo{font-size:14px}
+  .m .content{padding:20px 16px 28px;display:flex;flex-direction:column;gap:16px}
+  .m .head{display:flex;flex-direction:column;gap:6px}
+  .m .campaign{font-size:10.5px;letter-spacing:2.5px}
+  .m .tabs{gap:6px;overflow-x:auto;scrollbar-width:none;margin-right:-16px;padding-right:16px}
+  .m .tabs::-webkit-scrollbar{display:none}
+  .m .tab{border-radius:999px;background:var(--card);border-color:var(--line);padding:8px 12px}
+  .m .tab.active{background:var(--lime-bg);border-color:var(--lime)}
+  .m .list{display:flex;flex-direction:column;gap:12px}
+  .m .offer{--stub:76px}
+  .m .offer .main{padding:16px 14px 14px 16px}
+  .m .offer .eb{font-size:9.5px}
+  .m .offer .val{font-size:26px;margin-top:4px}
+  .m .offer .desc{font-size:12.5px}
+  .m .offer .foot{padding-top:10px}
+  .m .offer .stub .c{font-size:12px;letter-spacing:1.6px}
+  .m .offer::before,.m .offer::after{width:18px;height:18px;right:calc(var(--stub) - 9px)}
+  .m .how{flex-direction:column;align-items:flex-start;gap:14px;border-radius:10px;padding:16px}
+  .m .cta-box{border-radius:10px;padding:16px}
+  .m .cta-box .btn-lime{width:100%;justify-content:center}
+  .m .menu{display:flex;flex-direction:column;gap:4px;padding:16px;min-height:calc(844px - 24px - 48px - 55px);background:var(--sidebar)}
+  .m .menu .spacer{flex:1}
+  .m .menu .cta-box .btn-lime{font-size:12.5px}
+
+  /* ================= Edit mode ================= */
+  body.editing [data-k]{outline:1px dashed rgba(217,255,0,.45);outline-offset:2px;border-radius:2px;cursor:text}
+  body.editing [data-k]:hover{outline-color:var(--lime);background:rgba(217,255,0,.06)}
+  body.editing [data-k]:focus{outline:2px solid var(--lime);background:rgba(217,255,0,.1)}
+  .card-tools{display:none;position:absolute;top:-13px;right:calc(var(--stub) + 14px);gap:3px;z-index:4;padding:2px;border-radius:8px;background:#0a0a0a;border:1px solid #2a2a2a}
+  body.editing .card-tools{display:flex}
+  .card-tools button{width:22px;height:22px;border-radius:6px;background:#161616;border:1px solid #2a2a2a;color:var(--text-2);display:grid;place-items:center;font-size:13px;line-height:1}
+  .card-tools button:hover{border-color:var(--lime);color:var(--lime)}
+  .card-tools .del:hover{border-color:var(--pink);color:var(--pink)}
+  .card-tools select{height:22px;border-radius:6px;background:#0a0a0a;border:1px solid #333;color:var(--text-2);font:inherit;font-size:11px;padding:0 4px}
+  .add-card{display:none;align-items:center;justify-content:center;gap:8px;min-height:120px;border:1px dashed #3a3a3a;border-radius:10px;color:var(--text-3);font-weight:500}
+  .add-card:hover{border-color:var(--lime);color:var(--lime)}
+  body.editing .add-card{display:flex}
+
+  .toast{position:fixed;bottom:20px;left:50%;transform:translate(-50%,20px);opacity:0;transition:.2s;background:var(--lime);color:var(--bg);font-weight:600;padding:10px 16px;border-radius:6px;pointer-events:none;z-index:60}
+  .toast.show{opacity:1;transform:translate(-50%,0)}
+  @media (max-width:640px){.deck{padding:24px 16px 60px}.toolbar{padding:10px 16px}.cover h1{font-size:30px}.cover{padding:20px}}
+</style>
+</head>
+<body class="style-lime">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <symbol id="i-fr" viewBox="0 0 24 20" fill="currentColor"><path d="M10.0363 0C10.6661 0 10.981 0.762458 10.5335 1.20999L2.59401 9.1412H10.0363C10.6661 9.1412 10.981 9.90366 10.5335 10.3512L1.20999 19.6747C0.762458 20.1222 0 19.8073 0 19.1775V0.704444C0 0.314928 0.314928 0 0.704444 0H10.028H10.0363Z"/><path d="M18.0835 2.67029e-05C21.0753 2.67029e-05 23.5036 2.42829 23.5036 5.4201C23.5036 8.41192 21.0753 10.8402 18.0835 10.8402H15.1828L23.0312 18.6802C23.4787 19.1278 23.1638 19.8902 22.5339 19.8902H13.2104C12.8209 19.8902 12.506 19.5753 12.506 19.1858V0.704471C12.506 0.314955 12.8209 2.67029e-05 13.2104 2.67029e-05H18.0918H18.0835Z"/></symbol>
+  <symbol id="i-home" viewBox="0 0 24 24"><path fill="currentColor" d="M12 3 2 11h3v9h5v-6h4v6h5v-9h3z"/></symbol>
+  <symbol id="i-wallet" viewBox="0 0 24 24"><path fill="currentColor" d="M3 6a2 2 0 0 1 2-2h13v3H5v1h15a1 1 0 0 1 1 1v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm13 7a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3"/></symbol>
+  <symbol id="i-offer" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="8" width="18" height="4.5" rx="1.2"/><path d="M5 12.5V20a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-7.5M12 8v13"/><path stroke-linejoin="round" d="M12 8S10.6 3 7.8 3a2.3 2.3 0 0 0 0 5H12Zm0 0s1.4-5 4.2-5a2.3 2.3 0 0 1 0 5H12Z"/></symbol>
+  <symbol id="i-gift" viewBox="0 0 24 24"><path fill="currentColor" d="M20 7h-2.2A3 3 0 0 0 12 4a3 3 0 0 0-5.8 3H4a1 1 0 0 0-1 1v3h8V7h2v4h8V8a1 1 0 0 0-1-1M9 7a1 1 0 1 1 1-1v1zm5 0V6a1 1 0 1 1 1 1zM4 13v6a1 1 0 0 0 1 1h6v-7zm9 7h6a1 1 0 0 0 1-1v-6h-7z"/></symbol>
+  <symbol id="i-cert" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2 9.5 4H6v3.5L4 10l2 2.5V16h3.5l2.5 2 2.5-2H18v-3.5l2-2.5-2-2.5V4h-3.5z"/></symbol>
+  <symbol id="i-doc" viewBox="0 0 24 24"><path fill="currentColor" d="M6 2h8l5 5v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2m7 1.5V8h4.5z"/></symbol>
+  <symbol id="i-trophy" viewBox="0 0 24 24"><path fill="currentColor" d="M7 3h10v2h4v3a4 4 0 0 1-4 4h-.3A5 5 0 0 1 13 14.9V18h3v3H8v-3h3v-3.1A5 5 0 0 1 7.3 12H7a4 4 0 0 1-4-4V5h4zm0 4H5v1a2 2 0 0 0 2 2zm10 0v3a2 2 0 0 0 2-2V7z"/></symbol>
+  <symbol id="i-bars" viewBox="0 0 24 24"><path fill="currentColor" d="M4 20h17v1.5H4zM5 12h3v7H5zm5-6h3v13h-3zm5 4h3v9h-3z"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24"><path fill="currentColor" d="M6 2h12a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2"/></symbol>
+  <symbol id="i-card" viewBox="0 0 24 24"><path fill="currentColor" d="M3 6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v2H3zm0 4h18v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm3 5v2h5v-2z"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24"><path fill="currentColor" d="M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8m8 0a3 3 0 1 0 0-6 3 3 0 0 0 0 6M1 20c0-3.3 3.6-6 8-6s8 2.7 8 6v1H1zm17.5-5.8c2.6.5 4.5 2.4 4.5 4.8v1h-4v-1c0-1.8-.2-3.4-.5-4.8"/></symbol>
+  <symbol id="i-gear" viewBox="0 0 24 24"><path fill="currentColor" d="m19.4 13 2-1.6-2-3.4-2.4.9a7 7 0 0 0-1.7-1L15 5h-4l-.3 2.9a7 7 0 0 0-1.7 1L6.6 8l-2 3.4 2 1.6a7 7 0 0 0 0 2l-2 1.6 2 3.4 2.4-.9a7 7 0 0 0 1.7 1L11 23h4l.3-2.9a7 7 0 0 0 1.7-1l2.4.9 2-3.4-2-1.6a7 7 0 0 0 0-2M13 17a3 3 0 1 1 0-6 3 3 0 0 1 0 6" transform="translate(-1 -2)"/></symbol>
+  <symbol id="i-help" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20m1 16h-2v-2h2zm2.1-7.7-.9.9c-.7.7-1.2 1.3-1.2 2.8h-2v-.5c0-1.1.5-2.1 1.2-2.8l1.2-1.3A2 2 0 1 0 10 8H8a4 4 0 1 1 7.1 2.3"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" d="m7 10 5 5 5-5"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="8" y="8" width="13" height="13" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+  <symbol id="i-pen" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></symbol>
+  <symbol id="i-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v12M6 10l6 6 6-6M5 20h14"/></symbol>
+</defs></svg>
+
+<div class="toolbar">
+  <div class="brand"><svg width="22" height="18" style="color:var(--lime)"><use href="#i-fr"/></svg>FUNDINGROCK <small>· New Offers · Desktop &amp; Mobile</small></div>
+  <div class="tools">
+    <div class="seg" role="group" aria-label="Offer value colour">
+      <button class="tbtn" data-style="lime">Lime value</button>
+      <button class="tbtn" data-style="white">White value</button>
+    </div>
+    <button class="tbtn" id="edit-btn"><svg width="14" height="14"><use href="#i-pen"/></svg>Edit</button>
+    <button class="tbtn" id="reset-btn">Reset</button>
+    <button class="tbtn primary" id="dl-btn"><svg width="14" height="14"><use href="#i-down"/></svg>Download HTML</button>
+  </div>
+</div>
+<div class="hint">Edit mode: click any outlined text to change it. Desktop and mobile update together. Use ＋ / ↑ / ✕ on a card to add, move or remove offers. Changes are saved in this browser; use “Download HTML” to keep a copy.</div>
+
+<main class="deck">
+  <section class="cover">
+    <div>
+      <div class="campaign" data-k="campaign"></div>
+      <h1 style="margin-top:10px"><span data-k="navLabel"></span> <em>for traders</em></h1>
+      <p>A new sidebar section in the FundingRock trading area with ticket-style offer cards. Shown on desktop (1440 px) and mobile (390 px), using the trading-area design system: Host Grotesk, lime #D9FF00 on near-black.</p>
+    </div>
+    <div class="meta"><span>01 · Desktop</span><span>02 · Mobile</span><span>03 · Mobile menu</span></div>
+  </section>
+
+  <section>
+    <div class="slide-head">
+      <div><div class="kicker">01 · DESKTOP</div><h2>Trading area, offers selected</h2></div>
+      <p>New sidebar item with the gift icon and the active state. Offers sit in a three-column grid of ticket cards; the code lives on the tear-off stub.</p>
+    </div>
+    <div class="browser">
+      <div class="bar"><div class="dots"><i></i><i></i><i></i></div><div class="url">dashboard.fundingrock.com/offers</div></div>
+      <div class="viewport" id="desk-vp"><div class="scaled" id="desk"></div></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="slide-head">
+      <div><div class="kicker">02 · MOBILE</div><h2>Offers page and menu</h2></div>
+      <p>The sidebar becomes a menu behind the hamburger icon. Cards stack full width with a narrower stub; long offers wrap. The phones scroll.</p>
+    </div>
+    <div class="phones" id="phones">
+      <div class="phone-wrap"><div class="phone-scale"><div class="phone"><div class="island"></div><div class="screen"><div class="scroll" id="mob-page"></div></div></div></div><div class="cap">Offers page</div></div>
+      <div class="phone-wrap"><div class="phone-scale"><div class="phone"><div class="island"></div><div class="screen"><div class="scroll" id="mob-menu"></div></div></div></div><div class="cap">Menu open, offers active</div></div>
+    </div>
+  </section>
+</main>
+
+<div class="toast" id="toast"></div>
+
+<script id="model" type="application/json">
+{
+  "navLabel": "New Offers",
+  "campaign": "BLACK NOVEMBER · PRE-SALE",
+  "title": "New Offers",
+  "subtitle": "Every order gets a bonus challenge. Bundles too. Copy a code and apply it at checkout.",
+  "style": "lime",
+  "offers": [
+    {"title":"Bundle","val":"3+2","desc":"Buy 3 challenges, get 2 free","code":"BUY3GET2","exp":"Until Nov 30, 2026","cat":"bundle"},
+    {"title":"Black November","val":"30% OFF","desc":"Every program, every account size","code":"BLACKNOV30","exp":"Until Nov 30, 2026","cat":"discount"},
+    {"title":"Bundle","val":"2+1","desc":"Buy 2 challenges, get 1 free","code":"BUY2GET1","exp":"Until Nov 30, 2026","cat":"bundle"},
+    {"title":"+1 Offer","val":"PAY AFTER YOU PASS","desc":"Start now, pay when you pass","code":"PAYAFTER","exp":"Until Nov 30, 2026","cat":"program"},
+    {"title":"New program","val":"KOKUYŌ","desc":"Live sale on the new Kokuyō program","code":"KOKUYO","exp":"Live now","cat":"program","live":true}
+  ],
+  "steps": [
+    {"t":"Copy a code","s":"Tap the code stub on any offer"},
+    {"t":"Start a challenge","s":"Pick your account size and platform"},
+    {"t":"Paste at checkout","s":"Discount applies before payment"}
+  ]
+}
+</script>
+<script>
+(() => {
+  const DEFAULT = JSON.parse(document.getElementById('model').textContent);
+  const KEY = 'fr-new-offers-presentation-v1';
+  let M;
+  try { M = JSON.parse(localStorage.getItem(KEY)) || structuredClone(DEFAULT); } catch (_) { M = structuredClone(DEFAULT); }
+  const save = () => { try { localStorage.setItem(KEY, JSON.stringify(M)); } catch (_) {} };
+  const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  const CATS = [['bundle','Bundles'],['discount','Discounts'],['program','Programs']];
+  const icon = (id, cls='') => `<svg class="${cls}"><use href="#${id}"/></svg>`;
+  const E = (k, tag='span', cls='') => `<${tag} class="${cls}" data-k="${k}">${esc(get(k))}</${tag}>`;
+  function get(path){ return path.split('.').reduce((o,p)=>o?.[p], M); }
+  function set(path, v){ const ps = path.split('.'); const last = ps.pop(); ps.reduce((o,p)=>o[p], M)[last] = v; }
+
+  const NAV = [['i-home','Overview'],['i-wallet','Accounts'],['OFFERS'],['i-gift','Rewards'],['i-cert','Certificates'],['i-doc','Contracts'],['i-trophy','Competitions'],['i-bars','Leaderboard'],['i-book','Trading<br>Resources',true],['i-card','Billing'],['i-users','Affiliates'],['i-gear','Settings'],['i-help','Help Center']];
+  const navHTML = () => NAV.map(([ic,l,ch]) => ic === 'OFFERS'
+    ? `<div class="nav-item active">${icon('i-offer')}${E('navLabel')}</div>`
+    : `<div class="nav-item">${icon(ic)}${l}${ch ? icon('i-chev','chev') : ''}</div>`).join('');
+
+  const tabsHTML = () => {
+    const counts = Object.fromEntries(CATS.map(([c]) => [c, M.offers.filter(o => o.cat === c).length]));
+    return `<div class="tab active">All offers <span class="count">${M.offers.length}</span></div>` +
+      CATS.map(([c,l]) => `<div class="tab">${l} <span class="count">${counts[c]}</span></div>`).join('');
+  };
+  const cardHTML = (o, i) => `
+    <article class="offer" data-i="${i}">
+      <div class="card-tools">
+        <select data-cat="${i}" title="Category">${CATS.map(([c,l]) => `<option value="${c}"${o.cat===c?' selected':''}>${l}</option>`).join('')}</select>
+        <button data-act="up" data-i="${i}" title="Move earlier">↑</button>
+        <button data-act="live" data-i="${i}" title="Toggle lime 'live' expiry">●</button>
+        <button class="del" data-act="del" data-i="${i}" title="Remove offer">✕</button>
+      </div>
+      <div class="main">
+        <div class="eb">${icon('i-fr')}${E(`offers.${i}.title`)}</div>
+        ${E(`offers.${i}.val`,'div','val')}
+        ${E(`offers.${i}.desc`,'div','desc')}
+        <div class="foot">
+          <span class="expiry${o.live ? ' live' : ''}"><svg width="12" height="12"><use href="#i-clock"/></svg>${E(`offers.${i}.exp`)}</span>
+          <span class="btn-lime claim">Claim <svg width="12" height="12"><use href="#i-arrow"/></svg></span>
+        </div>
+      </div>
+      <div class="stub"><small>CODE</small>${E(`offers.${i}.code`,'span','c')}${icon('i-copy')}</div>
+    </article>`;
+  const addHTML = `<button class="add-card" data-act="add">＋ Add offer</button>`;
+  const howHTML = () => `<span class="label">How to redeem</span>` + M.steps.map((s,i) =>
+    `<div class="step"><span class="num">${i+1}</span><div>${E(`steps.${i}.t`,'b')}${E(`steps.${i}.s`,'small')}</div></div>`).join('');
+  const headHTML = () => `<div>${E('campaign','div','campaign')}${E('title','div','h1')}${E('subtitle','div','sub')}</div>`;
+
+  function renderDesktop(){
+    document.getElementById('desk').innerHTML = `
+      <div class="ui d">
+        <aside class="sidebar">${navHTML()}<div class="spacer"></div>
+          <div class="cta-box"><p>Ready to trade?</p><span class="btn-lime" style="width:100%;justify-content:center;font-size:12.5px;padding:9px 0">Start Challenge</span></div></aside>
+        <div class="main">
+          <header class="topnav">
+            <div class="left"><span class="logo"><svg width="24" height="20" style="color:var(--lime)"><use href="#i-fr"/></svg>FUNDINGROCK</span>
+              <svg width="16" height="16" style="color:var(--text-2)"><use href="#i-menu"/></svg>${E('title','span','page')}</div>
+            <div class="right"><span class="btn-lime">Start Challenge</span><span style="width:6px;height:6px;border-radius:9px;background:var(--text-2)"></span><span class="avatar">MC</span><span style="font-weight:500">Malik Coley</span><svg width="12" height="12" style="color:var(--text-3)"><use href="#i-chev"/></svg></div>
+          </header>
+          <div class="content">
+            <div class="head">${headHTML()}<div class="tabs">${tabsHTML()}</div></div>
+            <div class="label">Available offers · ${M.offers.length}</div>
+            <div class="grid">${M.offers.map(cardHTML).join('')}${addHTML}</div>
+            <div class="how">${howHTML()}</div>
+          </div>
+        </div>
+      </div>`;
+  }
+  function renderMobile(){
+    const top = close => `<div class="topbar"><div class="left"><svg width="22" height="22"><use href="#${close?'i-close':'i-menu'}"/></svg><span class="logo"><svg width="20" height="17" style="color:var(--lime)"><use href="#i-fr"/></svg>FUNDINGROCK</span></div><span class="avatar">MC</span></div>`;
+    document.getElementById('mob-page').innerHTML = `
+      <div class="ui m">${top(false)}
+        <div class="content">
+          <div class="head">${E('campaign','div','campaign')}${E('title','div','h1')}${E('subtitle','div','sub')}</div>
+          <div class="tabs">${tabsHTML()}</div>
+          <div class="label">Available offers · ${M.offers.length}</div>
+          <div class="list">${M.offers.map(cardHTML).join('')}${addHTML}</div>
+          <div class="how">${howHTML()}</div>
+          <div class="cta-box"><p>Ready to trade?</p><span class="btn-lime">Start Challenge</span></div>
+        </div></div>`;
+    document.getElementById('mob-menu').innerHTML = `
+      <div class="ui m">${top(true)}<nav class="menu">${navHTML()}<div class="spacer"></div>
+        <div class="cta-box"><p>Ready to trade?</p><span class="btn-lime">Start Challenge</span></div></nav></div>`;
+  }
+  function render(){
+    renderDesktop(); renderMobile();
+    document.querySelectorAll('.cover [data-k]').forEach(el => { el.textContent = get(el.dataset.k); });
+    document.body.classList.toggle('style-white', M.style === 'white');
+    document.querySelectorAll('[data-style]').forEach(b => b.classList.toggle('on', b.dataset.style === M.style));
+    applyEditable(); fit();
+  }
+
+  // ---------- Fit desktop + phones to available width ----------
+  function fit(){
+    const vp = document.getElementById('desk-vp'), inner = document.getElementById('desk');
+    const s = vp.clientWidth / 1440;
+    inner.style.transform = `scale(${s})`;
+    vp.style.height = (inner.scrollHeight * s) + 'px';
+    const avail = document.getElementById('phones').clientWidth;
+    const ps = Math.min(1, (avail - 0) / 414);
+    document.querySelectorAll('.phone-scale').forEach(el => {
+      el.style.transform = ps < 1 ? `scale(${ps})` : '';
+      el.style.height = ps < 1 ? (844 * ps) + 'px' : '';
+      el.style.width = ps < 1 ? (390 * ps) + 'px' : '';
+    });
+  }
+  new ResizeObserver(fit).observe(document.querySelector('.deck'));
+
+  // ---------- Editing ----------
+  let editing = false;
+  function applyEditable(){
+    document.querySelectorAll('[data-k]').forEach(el => {
+      if (editing) { el.setAttribute('contenteditable', 'plaintext-only'); el.spellcheck = false; }
+      else el.removeAttribute('contenteditable');
+    });
+  }
+  document.getElementById('edit-btn').addEventListener('click', e => {
+    editing = !editing;
+    document.body.classList.toggle('editing', editing);
+    e.currentTarget.classList.toggle('on', editing);
+    e.currentTarget.lastChild.textContent = editing ? 'Done' : 'Edit';
+    applyEditable(); fit();
+  });
+  document.addEventListener('input', e => {
+    const el = e.target.closest?.('[data-k]'); if (!el) return;
+    const k = el.dataset.k, v = el.textContent;
+    set(k, v); save();
+    document.querySelectorAll(`[data-k="${k}"]`).forEach(o => { if (o !== el) o.textContent = v; });
+    fit();
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && e.target.closest?.('[data-k]')) { e.preventDefault(); e.target.blur(); }
+  });
+  document.addEventListener('change', e => {
+    const s = e.target.closest?.('[data-cat]'); if (!s) return;
+    M.offers[+s.dataset.cat].cat = s.value; save(); render();
+  });
+  document.addEventListener('click', e => {
+    const b = e.target.closest?.('[data-act]'); if (!b) return;
+    const i = +b.dataset.i, act = b.dataset.act;
+    if (act === 'add') M.offers.push({title:'New offer',val:'20% OFF',desc:'Describe the offer',code:'NEWCODE',exp:'Until Nov 30, 2026',cat:'discount'});
+    if (act === 'del') { if (!confirm('Remove this offer?')) return; M.offers.splice(i, 1); }
+    if (act === 'up' && i > 0) [M.offers[i-1], M.offers[i]] = [M.offers[i], M.offers[i-1]];
+    if (act === 'live') M.offers[i].live = !M.offers[i].live;
+    save(); render();
+  });
+  document.querySelectorAll('[data-style]').forEach(b => b.addEventListener('click', () => { M.style = b.dataset.style; save(); render(); }));
+  document.getElementById('reset-btn').addEventListener('click', () => {
+    if (!confirm('Reset all text and offers to the original version?')) return;
+    M = structuredClone(DEFAULT); try { localStorage.removeItem(KEY); } catch (_) {} render(); toast('Reset to original');
+  });
+
+  // ---------- Download the edited presentation ----------
+  document.getElementById('dl-btn').addEventListener('click', () => {
+    const was = editing; if (was) document.getElementById('edit-btn').click();
+    const doc = document.documentElement.cloneNode(true);
+    doc.querySelector('#model').textContent = '\n' + JSON.stringify(M, null, 2) + '\n';
+    ['#desk','#mob-page','#mob-menu'].forEach(s => doc.querySelector(s).innerHTML = '');
+    doc.querySelector('body').className = 'style-lime';
+    doc.querySelectorAll('[style]').forEach(n => { if (n.matches('.phone-scale,.scaled,#desk-vp')) n.removeAttribute('style'); });
+    const html = '<!doctype html>\n' + doc.outerHTML.replace(KEY, KEY + '-' + Date.now().toString(36));
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([html], {type:'text/html'}));
+    a.download = 'fundingrock-new-offers-presentation.html'; a.click();
+    setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+    if (was) document.getElementById('edit-btn').click();
+    toast('Downloaded with your edits');
+  });
+
+  const t = document.getElementById('toast'); let tt;
+  function toast(msg){ t.textContent = msg; t.classList.add('show'); clearTimeout(tt); tt = setTimeout(() => t.classList.remove('show'), 1600); }
+
+  render();
+  document.fonts?.ready.then(fit);
+})();
+</script>
+</body>
+</html>
