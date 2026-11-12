@@ -42,3 +42,12 @@ Keyframe 4 (paddle) and 9 (studio, back angle) completed late. Both OK.
 | 8 reveal C, Cinema Studio, end = front studio (8s) | 1c52d48c-bfe0-4a11-87e3-f9d9194f7e84 |
 
 Note: the creator plan caps concurrent jobs at 8. Submitting more than that returns a 429.
+
+## Round 2: wide sim-room shots and game-to-real transitions
+| Shot | Job |
+|---|---|
+| W1 wide from behind, platform moving (6s) | 193b090c-b3b4-4737-999c-46f2e8199dad |
+| W2 wide from the front, platform moving (6s) | 49b9d08c-6f77-4f3d-b0a9-9c65590fa3ab |
+| T1 finish line pulls back into the screens, then the room (6s) | b8326723-5ab5-4236-b065-20971ba3ee02 |
+| T2 visor reflections turn into screen glow, helmet off (5s) | d36673f0-755e-491f-ad81-86cf664c9844 |
+| T3 chase on track glides round to the rig from the front (6s) | 6d18d92f-9666-4bf9-a591-6624b0203812 |
