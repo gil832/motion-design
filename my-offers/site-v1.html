@@ -466,6 +466,10 @@
     body.tkt .offer.feature.in-grid .stub{padding-top:12px}
     body.tkt .offer.feature.in-grid::before,body.tkt .offer.feature.in-grid::after{bottom:111px}
   }
+
+  /* notches always paint above the stub, so the outline follows the full half-circle */
+  .offer .stub{z-index:1}
+  .offer::before,.offer::after{z-index:2}
 </style>
 </head>
 <body>
