@@ -22,3 +22,23 @@ Driver reference upload: 507797a5-e429-4a79-ae9c-e06e90a6aaac
 | 8 reveal END, front angle dark | 251d0d36-404b-4786-8a44-a95c7f303395 |
 | 9 helmet off | 024d6f69-fd32-4ae4-8d67-33d29e837bac |
 | 10 reward display | 35e73cec-b768-45e9-ba8d-179bf8b21f41 |
+
+Keyframe 4 (paddle) and 9 (studio, back angle) completed late. Both OK.
+
+## Video takes (round 1, silent, Cinema Studio Video pro)
+| Shot | Job |
+|---|---|
+| 1 asphalt macro (5s) | c6a354e1-683b-43b8-bcdd-c511c5e8a85c |
+| 2 hairpin (5s) | 09a60865-cb97-4c45-ae7f-39d2f0e79236 |
+| 3 visor (4s) | d6866d6d-310a-492b-a0b9-c14f65b763c5 |
+| 4 paddle (3s) | e30d7b98-5058-44f3-8089-362281ea1568 |
+| 5 chase (5s) | bca66be3-4318-4949-8f62-da0087036c25 |
+| 6 overtake (5s) | 838022c1-e803-466e-8de1-90c606ee18e0 |
+| 7 finish, slow-mo (4s) | bcbe27d7-a72f-4dbc-9072-566261888680 |
+| 9 helmet off (5s) | adae7f6d-b537-4dd2-ab1b-8f5c776f3373 |
+| 10 reward screen (3s) | 80619140-1265-48c6-9434-344c7f8b16c2 |
+| 8 reveal A, FLUX 3 1080p, end = back studio (8s) | 81211e4a-dfd1-4d45-b8e4-0ad91bc0a1a4 |
+| 8 reveal B, Cinema Studio, end = back studio (8s) | be7e1b9d-bcd6-4a4f-be43-1592a870ecec |
+| 8 reveal C, Cinema Studio, end = front studio (8s) | 1c52d48c-bfe0-4a11-87e3-f9d9194f7e84 |
+
+Note: the creator plan caps concurrent jobs at 8. Submitting more than that returns a 429.
