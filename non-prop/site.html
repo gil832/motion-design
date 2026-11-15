@@ -1031,6 +1031,28 @@ body.hcv .co-row b { font-size: clamp(18px, 1.7vw, 24px); }
 .ft .pay { margin-top: 18px; }
 .ft-b { margin-top: 40px; padding-top: 22px; border-top: 1px solid var(--line); font-size: 12.5px; color: var(--dim); line-height: 1.6; }
 .ft-b p { margin: 0 0 10px; }
+/* Robinhood-style close: a lime footer, a chrome FR object that builds itself, and the wordmark set huge */
+footer.ft { background: var(--lime); color: rgba(10,15,0,.72); border-top: 0; margin-top: clamp(60px, 8vw, 110px); padding-block: 0; overflow: hidden; position: relative; }
+footer.ft .ft-g p, footer.ft .ft-g p a { color: rgba(10,15,0,.72); }
+footer.ft a, footer.ft .ft-g a { color: rgba(10,15,0,.78); }
+footer.ft .ft-g a:hover { color: #000; }
+footer.ft .ft-g h4 { color: #0a0f00; }
+footer.ft .ft-g > div > img { filter: brightness(0); }
+footer.ft .ft-b { border-top-color: rgba(10,15,0,.18); color: rgba(10,15,0,.62); }
+footer.ft .pay img { filter: grayscale(1) contrast(1.2); opacity: .8; }
+footer.ft .ft-stage { position: relative; height: clamp(300px, 34vw, 460px); margin: 0 auto 10px; display: grid; place-items: center; }
+#frCv { position: absolute; inset: 0; width: 100%; height: 100%; }
+footer.ft .ft-line { position: absolute; left: 0; bottom: 14%; display: grid; font-size: clamp(28px, 3.4vw, 52px); line-height: 1; letter-spacing: -0.02em; color: #0a0f00; text-transform: uppercase; }
+footer.ft .ft-line span { font-weight: 250; }
+footer.ft .ft-line b { font-weight: 700; letter-spacing: -0.04em; }
+footer.ft .ft-g { padding-top: 10px; }
+footer.ft .ft-word { margin-top: clamp(20px, 3vw, 40px); padding-inline: max(16px, env(safe-area-inset-left, 0px)); line-height: 0; }
+footer.ft .ft-word img { display: block; width: 100%; height: auto; filter: brightness(0); transform: translateY(42%); transition: transform 1.4s cubic-bezier(.16,1,.3,1); }
+footer.ft .ft-word.in img { transform: translateY(8%); }
+@media (max-width: 700px) { footer.ft .ft-stage { height: 360px; } footer.ft .ft-line { bottom: 0; font-size: 26px; } #frCv { height: 82%; } }
+@media (prefers-reduced-motion: reduce) { .ft-word img { transform: none; transition: none; } }
+
+
 @media (max-width: 760px) { .ft-g { grid-template-columns: 1fr 1fr; } .ft-g > div:first-child { grid-column: 1 / -1; } }
 
 /* sticky mobile buy bar */
@@ -1510,6 +1532,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
 
 <footer class="ft">
   <div class="wrap">
+    <div class="ft-stage" id="ftStage"><canvas id="frCv" aria-hidden="true"></canvas><div class="ft-line"><span>Same race.</span><b>Simulated.</b></div></div>
     <div class="ft-g">
       <div><img src="assets/logo.svg" alt="FundingRock" width="182" height="24"><p>401/2 Ayias Elenis 36, Nicosia 1061, Cyprus<br>support@fundingrock.com</p>
         <div class="pay"><img src="assets/foot/pay-visa.svg" alt="Visa"><img src="assets/foot/pay-mastercard.svg" alt="Mastercard"><img src="assets/foot/pay-discover.svg" alt="Discover"><img src="assets/foot/pay-bitcoin.svg" alt="Bitcoin"><img src="assets/foot/pay-usdt.svg" alt="USDT"><img src="assets/foot/pay-rise.svg" alt="Riseworks"></div></div>
@@ -1521,6 +1544,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
       <p>FundingRock (fundingrock.com) is a trade name of Mindwave Training Limited (HE 471803), 401/2 Ayias Elenis 36, Nicosia 1061, Cyprus. All accounts are simulated. No real funds are traded and we take no deposits. Rewards are based on simulated performance and are not guaranteed. FundingRock is not a broker and does not give financial advice. Past performance does not indicate future results.</p>
     </div>
   </div>
+  <div class="ft-word" aria-hidden="true"><img src="assets/logo.svg" alt="" id="ftWord"></div>
 </footer>
 
 <script>
@@ -1873,6 +1897,57 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
     svg.innerHTML = out;
     new IntersectionObserver(function (es, ob) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("in"); ob.unobserve(e.target); } }); }, { threshold: .25 }).observe(svg);
     if (mx) new IntersectionObserver(function (es, ob) { if (es[0].isIntersecting) { mx.classList.add("in"); ob.disconnect(); } }, { threshold: .4 }).observe(mx);
+  })();
+
+  /* footer: wordmark rises in; the chrome FR object (three.js, loaded only near the footer) assembles and turns */
+  (function () {
+    var word = $(".ft-word"), stage = $("#ftStage"), cv = $("#frCv"); if (!stage || !cv) return;
+    var started = false;
+    new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting && word) word.classList.add("in"); }); }, { threshold: .2 }).observe(word);
+    new IntersectionObserver(function (es) { if (es[0].isIntersecting && !started) { started = true; load(); } }, { rootMargin: "400px" }).observe(stage);
+    function load() { if (window.THREE) return build(); var sc = document.createElement("script"); sc.src = "https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"; sc.onload = build; document.head.appendChild(sc); }
+    function build() {
+      var T = window.THREE; if (!T) return;
+      var r = new T.WebGLRenderer({ canvas: cv, antialias: true, alpha: true }); r.setPixelRatio(Math.min(devicePixelRatio || 1, 2));
+      r.outputEncoding = T.sRGBEncoding; r.toneMapping = T.ACESFilmicToneMapping; r.toneMappingExposure = 1.1;
+      var scene = new T.Scene(), cam = new T.PerspectiveCamera(30, 1, .1, 500); cam.position.set(0, 0, 78);
+      /* studio reflections: a soft room of white and teal light panels, baked into an environment map */
+      var env = new T.Scene(); env.background = new T.Color(0x050606);
+      function panel(w, h, c, x, y, z, ry) { var m = new T.Mesh(new T.PlaneGeometry(w, h), new T.MeshBasicMaterial({ color: c, side: T.DoubleSide })); m.position.set(x, y, z); m.rotation.y = ry || 0; env.add(m); }
+      panel(70, 14, 0xffffff, 0, 26, -6); panel(16, 60, 0xffffff, -30, 0, 0, Math.PI / 2); panel(16, 60, 0x8ff3e8, 30, 0, 0, -Math.PI / 2); panel(80, 10, 0xffffff, 0, -24, 10); panel(40, 6, 0xffffff, 0, 12, 40); panel(6, 40, 0xffffff, -20, 0, 40);
+      /* a tall gradient sheet facing the object, so flat faces pick up a chrome sweep */
+      (function () { var gg = new T.PlaneGeometry(120, 80, 1, 8), cols = [], pos = gg.attributes.position; for (var i = 0; i < pos.count; i++) { var y = (pos.getY(i) + 40) / 80, v = Math.pow(Math.max(0, Math.sin(y * Math.PI * 1.15 - .2)), 2.2) * .95 + .03; cols.push(v, v, v); } gg.setAttribute("color", new T.Float32BufferAttribute(cols, 3)); var sh = new T.Mesh(gg, new T.MeshBasicMaterial({ vertexColors: true, side: T.DoubleSide })); sh.position.set(0, 0, 70); sh.rotation.x = .25; env.add(sh); })();
+      var pm = new T.PMREMGenerator(r); scene.environment = pm.fromScene(env, .02).texture;
+      var mat = new T.MeshStandardMaterial({ color: 0x0c0d0d, metalness: 1, roughness: .12 });
+      var key = new T.DirectionalLight(0xffffff, 1.4); key.position.set(-30, 40, 60); scene.add(key); scene.add(new T.AmbientLight(0xffffff, .15));
+      /* the FR icon (brand mark geometry, 28.36 x 24 units), extruded with a rounded bevel */
+      function F() { var s = new T.Shape(); s.moveTo(0, 0); s.lineTo(12.9, .25); s.lineTo(3.2, 10.95); s.lineTo(12.9, 11.25); s.lineTo(.35, 23.9); s.lineTo(0, 23.4); s.closePath(); return s; }
+      function R() { var s = new T.Shape(); s.moveTo(15.47, 0); s.lineTo(21.82, 0); var cx = 21.82, cy = 6.54, rr = 6.54; for (var a = -90; a <= 90; a += 10) { var t = a * Math.PI / 180; s.lineTo(cx + rr * Math.cos(t), cy + rr * Math.sin(t)); } s.lineTo(18.32, 13.08); s.lineTo(28.2, 22.95); s.lineTo(27.6, 24); s.lineTo(16.1, 24); s.lineTo(15.47, 23.4); s.closePath(); return s; }
+      var opt = { depth: 3.6, bevelEnabled: true, bevelThickness: .7, bevelSize: .55, bevelSegments: 6, curveSegments: 12 };
+      var g = new T.Group(); scene.add(g);
+      var parts = [F(), R()].map(function (sh, i) {
+        var geo = new T.ExtrudeGeometry(sh, opt); geo.translate(-14.18, -12, -1.8); geo.scale(1, -1, 1); geo.computeVertexNormals();
+        var m = new T.Mesh(geo, mat); g.add(m);
+        return { m: m, from: { x: i ? 26 : -26, y: i ? -18 : 18, rz: i ? .9 : -.9, ry: i ? -1.4 : 1.4 } };
+      });
+      g.scale.setScalar(.95);
+      function size() { var w = stage.clientWidth, h = stage.clientHeight; r.setSize(w, h, false); cam.aspect = w / h; cam.updateProjectionMatrix(); }
+      size(); if (window.ResizeObserver) new ResizeObserver(size).observe(stage);
+      var mx = 0, my = 0, t0 = null, vis = true;
+      stage.addEventListener("pointermove", function (e) { var b = stage.getBoundingClientRect(); mx = (e.clientX - b.left) / b.width - .5; my = (e.clientY - b.top) / b.height - .5; });
+      new IntersectionObserver(function (es) { vis = es[0].isIntersecting; if (vis && t0 === null) t0 = performance.now(); }, { threshold: .3 }).observe(stage);
+      function ease(t) { return 1 - Math.pow(1 - Math.min(Math.max(t, 0), 1), 4); }
+      function frame(now) {
+        requestAnimationFrame(frame); if (!vis && t0 !== null) return;
+        var k = t0 === null ? 0 : (reduce ? 1 : ease((now - t0) / 1800));
+        parts.forEach(function (p, i) { var kk = t0 === null ? 0 : (reduce ? 1 : ease((now - t0 - i * 160) / 1800)); p.m.position.set(p.from.x * (1 - kk), p.from.y * (1 - kk), 0); p.m.rotation.set(0, p.from.ry * (1 - kk), p.from.rz * (1 - kk)); });
+        var tt = now / 1000;
+        g.rotation.y = (reduce ? 0 : Math.sin(tt * .45) * .38) + mx * .5;
+        g.rotation.x = (reduce ? 0 : Math.sin(tt * .3) * .08) + my * .3;
+        r.render(scene, cam);
+      }
+      requestAnimationFrame(frame);
+    }
   })();
 
   /* comparison details toggle (C/D) */
