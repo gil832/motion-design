@@ -709,6 +709,32 @@ body.hcv .co-row b { font-size: clamp(18px, 1.7vw, 24px); }
 .trk.in .rl { stroke-dashoffset: 0; }
 @media (prefers-reduced-motion: reduce) { .hc-caret, .hc-c2, .hc-c2::before, .hc-c2::after, .gc { animation: none !important; } .mx > span { opacity: 1; transform: none; } .trk .rl { stroke-dashoffset: 0; transition: none; } }
 
+/* pricing: bigger, higher-contrast text (desktop + tablet) */
+@media (min-width: 701px) {
+  .pt span { font-size: 16px; margin-top: 8px; }
+  #ways .way .for { font-size: 13.5px; padding: 8px 14px; }
+  #ways .way h3 { font-size: clamp(32px, 3.2vw, 44px); }
+  #ways .way .chip { font-size: 15.5px; padding: 10px 14px; }
+  #ways .way.solo .chips { flex-wrap: nowrap; gap: 6px; }
+  #ways .fee .s { font-size: 17px; }
+  #ways .obj > div { padding: 18px 20px; }
+  #ways .obj dt { font-size: 15.5px; }
+  #ways .obj dd { font-size: 28px; margin-top: 6px; }
+  #ways .obj dd small { font-size: 16px; }
+  #ways .gets { font-size: 18.5px; gap: 16px; margin-top: 26px; }
+  #ways .gets li::before { margin-top: 8px; }
+  #ways .buy.lg { font-size: 18px; padding-block: 20px; }
+  #ways .under { font-size: 15px; }
+}
+#ways .pt span, #ways .obj dt, #ways .obj dd small, #ways .fee .s, #ways .under, #ways .way .chip { color: rgba(255,255,255,.74); }
+#ways .pt[aria-selected="true"] span { color: #0a0a0a; }
+#ways .way .chip[aria-pressed="true"] { color: #0a0a0a; }
+@media (max-width: 700px) { .pt span { font-size: 13.5px; } #ways .gets { font-size: 15.5px; } #ways .obj dt { font-size: 13.5px; } #ways .way.solo .under { font-size: 13px; } }
+
+/* panel 03: Reward card beside his phone hand, never on his face */
+.tp.rw .st-reward { top: auto; bottom: 30%; right: 3%; }
+@media (max-width: 860px) { .tp.rw .st-reward { top: 4%; bottom: auto; right: auto; left: 4%; } .tp.rw .st-stack { display: none; } }
+
 /* program tabs */
 .ptabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: 1080px; margin: 0 auto 18px; }
 .pt { appearance: none; cursor: pointer; text-align: left; padding: 20px 22px; border-radius: 22px; border: 1px solid rgba(143,243,232,.22); background: linear-gradient(170deg, rgba(10,44,50,.8), rgba(4,16,20,.92)); color: #fff; font: inherit; transition: transform .3s var(--ease), border-color .3s, background .3s, box-shadow .3s; }
@@ -1218,7 +1244,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
         <div class="tp-body"><span class="tp-n">02</span><div class="tp-txt"><span class="tp-k">The difference</span><h3>Simulated account.<br><span class="grad">Your savings stay put.</span></h3><p>Trade $5K to $200K in simulated capital from your desk. One fee, paid once. Nothing else at risk.</p></div></div>
       </article>
       <article class="tp rw" tabindex="0" data-i="2">
-        <div class="tp-media"><div class="st-img st-glowbg"></div><canvas class="st-tri" id="stTri" aria-hidden="true"></canvas><div class="st-stack" id="stStack" aria-hidden="true"></div><img class="st-person" src="assets/prove.webp" alt="" loading="lazy"><div class="st-reward liquid"><span><i></i>Reward · Approved</span><b class="tnum">+$800</b><em>80% of $1,000 simulated profit</em></div></div>
+        <div class="tp-media"><div class="st-img st-glowbg"></div><canvas class="st-tri" id="stTri" aria-hidden="true"></canvas><div class="st-stack" id="stStack" aria-hidden="true"></div><img class="st-person" src="assets/trader-phone.webp" alt="" loading="lazy"><div class="st-reward liquid"><span><i></i>Reward · Approved</span><b class="tnum">+$800</b><em>80% of $1,000 simulated profit</em></div></div>
         <div class="tp-body"><span class="tp-n">03</span><div class="tp-txt"><span class="tp-k">The payoff</span><h3>Perform.<br><span class="grad">Get rewarded.</span></h3><p>In profit? Request a Reward and keep up to 95%. Processed within 48 hours.</p></div></div>
       </article>
       </div>
@@ -1750,7 +1776,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
       for (var i = 0; i < LW * LH; i++) { var a = d[i * 4 + 3] / 255; lum[i] = a * (.35 + .65 * (d[i * 4] * .3 + d[i * 4 + 1] * .59 + d[i * 4 + 2] * .11) / 255); }
       size(); draw(performance.now());
     };
-    img.src = "assets/prove.webp";
+    img.src = "assets/trader-phone.webp";
     function size() { var r = cv.getBoundingClientRect(); if (!r.width) return; W = Math.round(r.width * dpr); H = Math.round(r.height * dpr); cv.width = W; cv.height = H; cell = Math.max(14, Math.round(Math.min(W, H) / 44)); }
     function sample(px, py) {
       /* the silhouette is placed where the person image sits (right side, bottom aligned, ~92% tall), scaled up a little so the matrix frames him */
