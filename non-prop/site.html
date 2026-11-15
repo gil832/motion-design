@@ -655,6 +655,60 @@ body.hcv .co-row b { font-size: clamp(18px, 1.7vw, 24px); }
 .hc-sub span { color: rgba(255,255,255,.82); }
 @media (max-width: 600px) { .hero .lede, .hc-sub { font-size: 17px; } }
 
+/* x.ai-style typing kicker above the C/D title */
+.hc-type { margin: 0 0 18px; font-size: clamp(16px, 1.35vw, 19px); color: var(--mute); letter-spacing: -0.005em; min-height: 1.4em; }
+.hc-type b { color: var(--lime); font-weight: 500; }
+.hc-caret { display: inline-block; width: 2px; height: 1.05em; margin-left: 2px; vertical-align: -0.15em; background: var(--lime); animation: caret 1s steps(1) infinite; }
+@keyframes caret { 50% { opacity: 0; } }
+@media (max-width: 600px) { .hc-type { font-size: 15px; margin-bottom: 12px; } }
+
+/* Framer-style: the +$800 Reward card breathes lime light as the hero's focal point */
+.hc-c2 { width: 250px; border-color: rgba(217,255,0,.5) !important; animation: bob 6s ease-in-out infinite, rwBreathe 3.6s ease-in-out infinite !important; }
+.hc-c2::before { content: ""; position: absolute; inset: -1px; border-radius: inherit; padding: 1px; background: conic-gradient(from var(--rwA, 0deg), transparent 0 62%, rgba(217,255,0,.95) 75%, transparent 88%); -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; animation: rwSpin 4.5s linear infinite; pointer-events: none; }
+.hc-c2::after { content: ""; position: absolute; inset: 18% 10%; z-index: -1; border-radius: 50%; background: radial-gradient(closest-side, rgba(217,255,0,.55), transparent); filter: blur(28px); animation: rwHalo 3.6s ease-in-out infinite; pointer-events: none; }
+@property --rwA { syntax: "<angle>"; inherits: false; initial-value: 0deg; }
+@keyframes rwSpin { to { --rwA: 360deg; } }
+@keyframes rwBreathe { 0%,100% { box-shadow: 0 20px 50px -20px rgba(0,0,0,.9), 0 0 24px -8px rgba(217,255,0,.35); } 50% { box-shadow: 0 20px 50px -20px rgba(0,0,0,.9), 0 0 60px -6px rgba(217,255,0,.6); } }
+@keyframes rwHalo { 0%,100% { opacity: .35; transform: scale(.9); } 50% { opacity: .8; transform: scale(1.12); } }
+@media (max-width: 900px) { .hc-c2 { width: 170px; animation: rwBreathe 3.6s ease-in-out infinite !important; } }
+
+/* Superhuman-style glass chips around the trader (story panel 02), at different depths */
+.tp-chips { position: absolute; inset: 0; z-index: 1; pointer-events: none; opacity: 0; transition: opacity .7s .25s var(--ease); }
+.tp.on .tp-chips { opacity: 1; }
+.gc { position: absolute; display: grid; gap: 4px; padding: 11px 14px; border-radius: 14px; color: #fff; font-size: 12px; background: linear-gradient(160deg, rgba(255,255,255,.16), rgba(255,255,255,.04)); border: 1px solid rgba(255,255,255,.22); box-shadow: inset 0 1px 0 rgba(255,255,255,.3), 0 24px 40px -18px rgba(0,0,0,.85); -webkit-backdrop-filter: blur(14px) saturate(1.3); backdrop-filter: blur(14px) saturate(1.3); transform: translate3d(var(--px, 0), var(--py, 0), 0); transition: transform .9s cubic-bezier(.16,1,.3,1); animation: gcBob 7s ease-in-out infinite; white-space: nowrap; }
+.gc-k { display: flex; align-items: center; gap: 6px; font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.7); }
+.gc-k i { width: 6px; height: 6px; border-radius: 50%; background: var(--lime); box-shadow: 0 0 8px var(--lime); }
+.gc b { font-size: 20px; font-weight: 600; letter-spacing: -0.02em; line-height: 1.1; }
+.gc b.up { color: var(--lime); }
+.gc em { font-style: normal; font-size: 11px; color: rgba(255,255,255,.62); }
+.gc-bar { width: 132px; height: 5px; border-radius: 4px; background: rgba(255,255,255,.14); overflow: hidden; }
+.gc-bar i { display: block; height: 100%; border-radius: inherit; background: var(--teal); }
+.gc.d1 { animation-delay: -1s; }
+.gc.d2 { scale: .82; filter: blur(.6px); opacity: .85; animation-duration: 9s; animation-delay: -3s; }
+.gc.d3 { scale: .92; animation-duration: 8s; animation-delay: -5s; }
+.gc.d4 { scale: .78; filter: blur(.6px); opacity: .8; animation-duration: 10s; animation-delay: -2s; }
+@keyframes gcBob { 0%,100% { translate: 0 0; } 50% { translate: 0 -8px; } }
+@media (max-width: 860px) { .gc.d2, .gc.d4, .gc.d3 { display: none; } .gc { padding: 8px 11px; } .gc b { font-size: 16px; } .gc.d1 { top: 8% !important; } }
+
+/* Lando-style statement: thin and heavy words, the heavy ones brighten in on scroll */
+.sh h2.mx { font-weight: 300; letter-spacing: -0.03em; text-transform: uppercase; font-size: clamp(36px, 5.6vw, 82px); line-height: .98; }
+.mx .t { font-weight: 250; color: rgba(255,255,255,.55); }
+.mx .h { font-weight: 700; letter-spacing: -0.04em; }
+.mx .lime { color: var(--lime); }
+.mx > span { display: inline-block; opacity: .15; transform: translateY(14px); transition: opacity .8s var(--ease), transform .9s var(--ease); }
+.mx.in > span { opacity: 1; transform: none; }
+.mx.in > span:nth-child(2) { transition-delay: .12s; } .mx.in > span:nth-child(3) { transition-delay: .26s; } .mx.in > span:nth-child(4) { transition-delay: .4s; }
+
+/* track lines (contours of a circuit) behind the 01-02-03 story; the lime racing line draws itself */
+.story { overflow: hidden; }
+.story > .wrap { position: relative; z-index: 1; }
+.trk { position: absolute; left: 0; right: 0; top: 30%; bottom: 0; width: 100%; height: 70%; pointer-events: none; -webkit-mask-image: linear-gradient(180deg, transparent, #000 22%, #000 80%, transparent); mask-image: linear-gradient(180deg, transparent, #000 22%, #000 80%, transparent); }
+.trk path { fill: none; vector-effect: non-scaling-stroke; }
+.trk .c { stroke: rgba(143,243,232,.11); stroke-width: 1; }
+.trk .rl { stroke: var(--lime); stroke-width: 1.6; stroke-linecap: round; filter: drop-shadow(0 0 6px rgba(217,255,0,.7)); stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 3.2s cubic-bezier(.45,0,.55,1); }
+.trk.in .rl { stroke-dashoffset: 0; }
+@media (prefers-reduced-motion: reduce) { .hc-caret, .hc-c2, .hc-c2::before, .hc-c2::after, .gc { animation: none !important; } .mx > span { opacity: 1; transform: none; } .trk .rl { stroke-dashoffset: 0; transition: none; } }
+
 /* program tabs */
 .ptabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: 1080px; margin: 0 auto 18px; }
 .pt { appearance: none; cursor: pointer; text-align: left; padding: 20px 22px; border-radius: 22px; border: 1px solid rgba(143,243,232,.22); background: linear-gradient(170deg, rgba(10,44,50,.8), rgba(4,16,20,.92)); color: #fff; font: inherit; transition: transform .3s var(--ease), border-color .3s, background .3s, box-shadow .3s; }
@@ -1047,7 +1101,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
           <ul class="ticks"><li>No deposits</li><li>Up to $200K simulated</li><li>Rewards processed within 48h</li></ul>
         </div>
         <div class="hero-copy hero-b">
-          <h1><span class="ln"><span>Trade a $10K Simulated Account.</span></span><span class="ln"><span class="grad">For Just $100.</span></span></h1>
+          <h1><span class="ln"><span>Trade a $10K Simulated Account.</span></span><span class="ln"><span class="grad">For Just $120.</span></span></h1>
           <p class="lede">Enjoy trading in a simulated environment, keep your savings out of the market, and qualify for a share of your simulated profits.</p>
           <div class="cta">
             <a class="buy lg" href="#ways" data-pick="0,1">Start Your Challenge <span class="ar" aria-hidden="true">→</span></a>
@@ -1073,7 +1127,8 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
       <div class="hc">
         <div class="hc-grid">
           <div class="hc-copy">
-            <h1 class="hc-h"><span class="hc-l1">$10K Simulated Trading Account.</span><span class="hc-l2 grad">For Just $100.</span></h1>
+            <p class="hc-type" aria-label="Trade gold, indices, forex and crypto without touching your savings"><span aria-hidden="true">Trade <b id="hcType">gold</b><i class="hc-caret"></i> without touching your savings.</span></p>
+            <h1 class="hc-h"><span class="hc-l1">$10K Simulated Trading Account.</span><span class="hc-l2 grad">For Just $120.</span></h1>
             <p class="hc-sub"><span>Trade in a simulated environment, keep your savings out of the market, and qualify for Rewards on your profits.</span></p>
             <div class="hc-cta">
               <a class="hc-btn" href="#ways" data-pick="0,1">Get Access</a>
@@ -1095,7 +1150,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
               <div class="hc-ct"><span><i></i>Simulated</span><b>Live</b></div>
               <div class="hc-ring"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg></div>
               <div class="hc-cs">Savings protected</div>
-              <div class="hc-cg"><div><span>Account</span><b>$10,000</b><em>Simulated</em></div><div><span>Your risk</span><b>$100</b><em>One-time fee</em></div></div>
+              <div class="hc-cg"><div><span>Account</span><b>$10,000</b><em>Simulated</em></div><div><span>Your risk</span><b>$120</b><em>One-time fee</em></div></div>
             </div>
             <div class="hc-card hc-c2 liquid" aria-hidden="true">
               <div class="hc-ct"><span><i></i>Reward request</span><b>Approved</b></div>
@@ -1150,15 +1205,16 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
   <!-- 2. pain point comparison: scroll drives a bad stretch, the cap line holds -->
   <!-- pinned scroll story: the screen holds, scenes swap as you scroll -->
   <section class="sec story" id="story" aria-label="How it feels">
+    <svg class="trk" id="stTrk" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true"></svg>
     <div class="wrap">
-      <div class="sh rv"><span class="eyebrow">Same race. Simulated.</span><h2>Feel it. Trade it. <span class="grad">Get rewarded.</span></h2></div>
+      <div class="sh rv"><span class="eyebrow">Same race. Simulated.</span><h2 class="mx" id="stMx"><span class="t">Full</span> <span class="h">speed.</span> <span class="t">Your savings</span> <span class="h lime">stay parked.</span></h2></div>
       <div class="tri3 rv" id="tri3">
       <article class="tp on" tabindex="0" data-i="0">
         <div class="tp-media"><div class="st-img" style="background-image:url(assets/hc/side.jpg);background-position:46% 40%"></div></div>
         <div class="tp-body"><span class="tp-n">01</span><div class="tp-txt"><span class="tp-k">The feeling</span><h3>The thrill of trading.<br><span class="grad">None of the risk.</span></h3><p>Fast charts, sharp decisions, full focus. All of it on a simulated account, so your own money never enters the race.</p></div></div>
       </article>
       <article class="tp" tabindex="0" data-i="1">
-        <div class="tp-media"><div class="st-img" style="background-image:url(assets/hc/desk2.jpg);background-position:38% 40%"></div></div>
+        <div class="tp-media"><div class="st-img" style="background-image:url(assets/hc/desk3.jpg);background-position:30% 35%"></div><div class="tp-chips" aria-hidden="true"><div class="gc d1" data-z="1" style="right:4%;top:49%"><span class="gc-k"><i></i>Simulated account</span><b class="tnum">$10,000</b><em>One-time fee $120</em></div><div class="gc d2" data-z=".55" style="right:40%;top:5%"><span class="gc-k">XAU/USD</span><b class="tnum up">+0.8%</b></div><div class="gc d3" data-z=".8" style="right:4%;top:71%"><span class="gc-k">Daily loss limit</span><div class="gc-bar"><i style="width:28%"></i></div><em>1.1% of 4% used</em></div><div class="gc d4" data-z=".35" style="right:7%;top:4%"><span class="gc-k">Savings at risk</span><b class="tnum">$0</b></div></div></div>
         <div class="tp-body"><span class="tp-n">02</span><div class="tp-txt"><span class="tp-k">The difference</span><h3>Simulated account.<br><span class="grad">Your savings stay put.</span></h3><p>Trade $5K to $200K in simulated capital from your desk. One fee, paid once. Nothing else at risk.</p></div></div>
       </article>
       <article class="tp rw" tabindex="0" data-i="2">
@@ -1754,6 +1810,43 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
         '<header><b>' + r[0] + '</b><span>' + r[1] + '</span><em' + (r[2].indexOf("minus") > 0 ? ' class="dn"' : "") + '>' + r[2] + '</em></header>' + r[3] +
         '<footer><span>' + r[4] + '</span><span>' + r[5] + '</span></footer></div>';
     }).join("") + '<div class="st-ticket"><i>BUY</i>XAU/USD · simulated <em>+$420</em></div></div>';
+  })();
+
+  /* typing kicker: cycles the markets shown on the page */
+  (function () {
+    var el = $("#hcType"); if (!el || reduce) return;
+    var W = ["gold", "indices", "forex", "crypto"], wi = 0, txt = "gold", del = false;
+    setTimeout(function tick() {
+      var w = W[wi], d = 70;
+      if (!del && txt === w) { del = true; d = 1700; }
+      else if (del && txt === "") { del = false; wi = (wi + 1) % W.length; d = 260; }
+      else { txt = del ? txt.slice(0, -1) : w.slice(0, txt.length + 1); d = del ? 45 : 85; }
+      el.textContent = txt; setTimeout(tick, d);
+    }, 1800);
+  })();
+
+  /* glass chips around the trader follow the pointer by depth */
+  (function () {
+    var tp = $$(".tp")[1]; if (!tp || reduce || !matchMedia("(pointer: fine)").matches) return;
+    var chips = tp.querySelectorAll(".gc");
+    tp.addEventListener("pointermove", function (e) {
+      var r = tp.getBoundingClientRect(), x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
+      chips.forEach(function (c) { var z = +c.getAttribute("data-z") || 1; c.style.setProperty("--px", (x * 26 * z).toFixed(1) + "px"); c.style.setProperty("--py", (y * 18 * z).toFixed(1) + "px"); });
+    });
+    tp.addEventListener("pointerleave", function () { chips.forEach(function (c) { c.style.setProperty("--px", "0px"); c.style.setProperty("--py", "0px"); }); });
+  })();
+
+  /* story: circuit contour lines + the statement's words brighten in */
+  (function () {
+    var svg = $("#stTrk"), mx = $("#stMx"); if (!svg) return;
+    /* one circuit shape, repeated as offset contours like a topographic map of a track */
+    var base = "M260 620 C200 520 240 380 360 330 C470 285 560 360 660 300 C760 240 760 140 880 120 C1010 98 1130 170 1220 250 C1330 350 1420 420 1380 540 C1345 650 1210 690 1090 660 C980 632 920 560 800 590 C680 620 640 730 520 750 C400 770 310 700 260 620 Z";
+    var out = "";
+    for (var i = 0; i < 9; i++) { var k = 1 + i * .085; out += '<path class="c" d="' + base + '" transform="translate(800 450) scale(' + k.toFixed(3) + ') translate(-800 -450)"/>'; }
+    out += '<path class="rl" pathLength="1" d="' + base + '" transform="translate(800 450) scale(1.255) translate(-800 -450)"/>';
+    svg.innerHTML = out;
+    new IntersectionObserver(function (es, ob) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("in"); ob.unobserve(e.target); } }); }, { threshold: .25 }).observe(svg);
+    if (mx) new IntersectionObserver(function (es, ob) { if (es[0].isIntersecting) { mx.classList.add("in"); ob.disconnect(); } }, { threshold: .4 }).observe(mx);
   })();
 
   /* comparison details toggle (C/D) */
