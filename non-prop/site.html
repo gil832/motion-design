@@ -1253,7 +1253,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
   <!-- how it works -->
   <section class="sec" id="how" style="padding-top:0">
     <div class="wrap">
-      <div class="sh rv"><span class="eyebrow">How it works</span><h2 id="hwH">Easier than you think. <span class="grad">Pick. Trade. Get rewarded.</span></h2></div>
+      <div class="sh rv"><span class="eyebrow">How it works</span><h2 id="hwH">Pick. Trade. <span class="grad">Get rewarded.</span></h2><p>Easier than you think.</p></div>
       <div class="ptabs mini rv" role="tablist" aria-label="Program" id="hwTabs"></div>
       <div class="hw three" id="hw">
         <article class="hs glass rv" data-spot="460,.14">
@@ -1553,7 +1553,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
   function howFor(g) {
     hwProg = g;
     $$("#hwTabs .pt").forEach(function (b) { b.setAttribute("aria-selected", b.getAttribute("data-p") === g.id); });
-    $("#hwH").innerHTML = 'Easier than you think. <span class="grad">Pick. Trade. Get rewarded.</span>';
+    $("#hwH").innerHTML = 'Pick. Trade. <span class="grad">Get rewarded.</span>';
     var lo = g.sizes[0][0], hi = g.sizes[g.sizes.length - 1][0];
     $("#hwP1").innerHTML = "From <b>" + fmt(lo) + "</b> to <b>" + fmt(hi) + "</b> in simulated capital. Pay one fee, once.";
     ladUser = false; buildLad(g.sizes, g.def);
