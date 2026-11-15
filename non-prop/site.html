@@ -745,6 +745,13 @@ body.hcv .co-row b { font-size: clamp(18px, 1.7vw, 24px); }
   .hw.three:has(> article.hs:hover) > article.hs:not(:hover) { opacity: .6; filter: saturate(.7); }
 }
 
+/* How it works: no flip; each card shows only its front, clean */
+#hw .hs.flip { cursor: default; perspective: none; }
+#hw .hs.flip .fl-in, #hw .hs.flip:hover .fl-in, #hw .hs.flip.on .fl-in, #hw .hs.flip:focus-visible .fl-in { transform: none !important; transition: none; }
+#hw .fl-b, #hw .fl-hint { display: none !important; }
+#hw .fl-f { -webkit-backface-visibility: visible; backface-visibility: visible; }
+@media (min-width: 901px) and (hover: hover) { .hw.three:has(> article.hs:hover) > article.hs:not(:hover) { opacity: .78; filter: none; } }
+
 /* program tabs */
 .ptabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: 1080px; margin: 0 auto 18px; }
 .pt { appearance: none; cursor: pointer; text-align: left; padding: 20px 22px; border-radius: 22px; border: 1px solid rgba(143,243,232,.22); background: linear-gradient(170deg, rgba(10,44,50,.8), rgba(4,16,20,.92)); color: #fff; font: inherit; transition: transform .3s var(--ease), border-color .3s, background .3s, box-shadow .3s; }
@@ -1320,7 +1327,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
           <div class="lad" id="lad" role="group" aria-label="Account sizes and fees"></div>
         </article>
         <div class="hw-ar" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
-        <article class="hs flip rv" tabindex="0" aria-label="Step 2. Activate to see the rules">
+        <article class="hs flip rv" aria-label="Step 2">
           <div class="fl-in">
             <div class="fl-f glass">
               <div class="hs-t"><span class="hn">2</span><div><h3>Trade in a safe, simulated space</h3><p>Trade on a simulated account. Your savings never touch the market.</p></div></div>
@@ -1342,7 +1349,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
           </div>
         </article>
         <div class="hw-ar hw-ar2" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
-        <article class="hs flip rv" tabindex="0" aria-label="Step 3. Activate to see how Rewards work">
+        <article class="hs flip rv" aria-label="Step 3">
           <div class="fl-in">
             <div class="fl-f glass">
               <div class="hs-t"><span class="hn">3</span><div><h3>Trade and qualify for Rewards</h3><p>In profit? Request a Reward and keep <b>80%</b>, or <b>95%</b> with the add-on.</p></div></div>
