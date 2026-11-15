@@ -752,6 +752,34 @@ body.hcv .co-row b { font-size: clamp(18px, 1.7vw, 24px); }
 #hw .fl-f { -webkit-backface-visibility: visible; backface-visibility: visible; }
 @media (min-width: 901px) and (hover: hover) { .hw.three:has(> article.hs:hover) > article.hs:not(:hover) { opacity: .78; filter: none; } }
 
+/* Hero D opener: light first, then the subject, then the words, then the actions (one easing family) */
+body.hdv.d-in { --de: cubic-bezier(.16,1,.3,1); }
+@keyframes dVis { from { opacity: 0; filter: blur(16px) brightness(.35); transform: scale(1.07); } to { opacity: 1; filter: none; transform: none; } }
+@keyframes dUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+@keyframes dLine { from { opacity: 0; transform: translateY(55%); clip-path: inset(0 0 100% 0); } to { opacity: 1; transform: none; clip-path: inset(-10% -5% -20% -5%); } }
+@keyframes dCard { from { opacity: 0; translate: 26px 0; filter: blur(8px); } to { opacity: 1; translate: 0 0; filter: none; } }
+@keyframes dPop { 0% { opacity: 0; scale: .86; filter: blur(6px); } 60% { opacity: 1; scale: 1.03; filter: none; } 100% { opacity: 1; scale: 1; } }
+@keyframes dShine { from { transform: translateX(-120%) skewX(-18deg); } to { transform: translateX(260%) skewX(-18deg); } }
+@keyframes dGlow { 0% { opacity: 0; } 30% { opacity: 1; filter: drop-shadow(0 0 14px rgba(217,255,0,.9)); } 100% { opacity: 1; filter: none; } }
+body.hdv.d-in .hc-vis { animation: dVis 1.4s var(--de) both; }
+body.hdv.d-in .hs-line { animation: dGlow 2.2s var(--de) .4s both; }
+body.hdv.d-in .hc-type { animation: dUp .8s var(--de) .35s both; }
+body.hdv.d-in .hc-h span { animation: dLine 1.05s var(--de) both !important; }
+body.hdv.d-in .hc-h .hc-l1 { animation-delay: .55s !important; }
+body.hdv.d-in .hc-h .hc-l2 { animation-delay: .69s !important; }
+body.hdv.d-in .hc-sub { animation: dUp .9s var(--de) 1s both; }
+body.hdv.d-in .hc-btn { position: relative; overflow: hidden; animation: dUp .8s var(--de) 1.3s both; }
+body.hdv.d-in .hc-btn::after { content: ""; position: absolute; top: 0; bottom: 0; left: 0; width: 40%; background: linear-gradient(90deg, transparent, rgba(255,255,255,.75), transparent); transform: translateX(-120%) skewX(-18deg); animation: dShine .9s cubic-bezier(.45,0,.55,1) 1.75s both; pointer-events: none; }
+body.hdv.d-in .hc-proof { animation: dUp .8s var(--de) 1.45s both; }
+body.hdv.d-in .hc-c1 { animation: dCard 1s var(--de) 1.3s both; }
+body.hdv.d-in .hc-c2 { animation: dPop 1.1s var(--de) 1.6s both, bob 6s ease-in-out 2.7s infinite, rwBreathe 3.6s ease-in-out 2.7s infinite !important; }
+body.hdv.d-in .hc-hint { animation: dUp .6s var(--de) 2.5s both; }
+body.hdv.d-in .hc-stats > div { animation: dUp .8s var(--de) both; }
+body.hdv.d-in .hc-stats > div:nth-child(1) { animation-delay: 1.75s; } body.hdv.d-in .hc-stats > div:nth-child(2) { animation-delay: 1.84s; }
+body.hdv.d-in .hc-stats > div:nth-child(3) { animation-delay: 1.93s; } body.hdv.d-in .hc-stats > div:nth-child(4) { animation-delay: 2.02s; }
+@media (max-width: 900px) { body.hdv.d-in .hc-c2 { animation: dPop 1.1s var(--de) 1.6s both, rwBreathe 3.6s ease-in-out 2.7s infinite !important; } }
+@media (prefers-reduced-motion: reduce) { body.hdv.d-in *, body.hdv.d-in .hc-vis { animation: none !important; } }
+
 /* program tabs */
 .ptabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: 1080px; margin: 0 auto 18px; }
 .pt { appearance: none; cursor: pointer; text-align: left; padding: 20px 22px; border-radius: 22px; border: 1px solid rgba(143,243,232,.22); background: linear-gradient(170deg, rgba(10,44,50,.8), rgba(4,16,20,.92)); color: #fff; font: inherit; transition: transform .3s var(--ease), border-color .3s, background .3s, box-shadow .3s; }
@@ -1577,6 +1605,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
       else if (certsHome) { certsHome.parentNode.insertBefore(certs, certsHome); certs.style.paddingTop = "0"; }
     }
     if (window.npHeroShow) window.npHeroShow();
+    document.dispatchEvent(new CustomEvent("np-hero", { detail: v }));
   }
   var hq = (location.search.match(/[?&]hero=([abcd])\b/) || [])[1];
   if (hq) document.addEventListener("DOMContentLoaded", function () { setHero(hq); });
@@ -1761,9 +1790,17 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
   /* Hero C: a split-line reveal. A thin lime line follows the pointer; left of it is the trader at his desk, right of it the driver. */
   (function () {
     var vis = $("#hcVis"), sp = $("#hcSplit"); if (!vis || !sp) return;
-    var x = .62, tx = .62, user = false, t0 = performance.now(), on = true;
+    var x = .62, tx = .62, user = false, t0 = performance.now(), on = true, intro = 0;
     function set(v) { sp.style.setProperty("--x", (v * 100).toFixed(2) + "%"); }
+    /* opener: start fully on the driver, sweep the line across to reveal the trader, then hand over to the idle sway */
+    window.npSplitIntro = function () { if (reduce) return; intro = performance.now(); user = false; x = tx = .03; set(x); if (!on) { on = true; requestAnimationFrame(frame); } };
     function frame(now) {
+      if (intro) {
+        var k = Math.min(Math.max((now - intro - 500) / 1700, 0), 1), e = 1 - Math.pow(1 - k, 4);
+        x = tx = .03 + (.62 - .03) * e; set(x);
+        if (k >= 1) { intro = 0; t0 = now - Math.asin((.62 - .5) / .26) * 2600; }
+        if (on) requestAnimationFrame(frame); return;
+      }
       if (!user && !reduce) tx = .5 + Math.sin((now - t0) / 2600) * .26;
       x += (tx - x) * (user ? .12 : .05); set(x);
       if (on) requestAnimationFrame(frame);
@@ -1965,6 +2002,30 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
       }
       requestAnimationFrame(frame);
     }
+  })();
+
+  /* Hero D opener: replay the whole sequence whenever Hero D is shown; count the stats up */
+  (function () {
+    var stats = $$(".hc-stats b"); var orig = stats.map(function (b) { return b.textContent; });
+    function count() {
+      if (reduce) return;
+      stats.forEach(function (b, i) {
+        var m = orig[i].match(/^([^\d]*)([\d.]+)(.*)$/); if (!m) return;
+        var to = parseFloat(m[2]), dec = (m[2].split(".")[1] || "").length, st = null, delay = 1750 + i * 90;
+        b.textContent = m[1] + (0).toFixed(dec) + m[3];
+        setTimeout(function () { requestAnimationFrame(function step(now) { if (st === null) st = now; var k = Math.min((now - st) / 1300, 1), e = 1 - Math.pow(1 - k, 3); b.textContent = m[1] + (to * e).toFixed(dec) + m[3]; if (k < 1) requestAnimationFrame(step); else b.textContent = orig[i]; }); }, delay);
+      });
+    }
+    function play() {
+      var b = document.body;
+      b.classList.toggle("d-in", false);
+      if (!b.classList.contains("hdv")) return;
+      void b.offsetWidth; b.classList.add("d-in");
+      if (window.npSplitIntro) window.npSplitIntro();
+      count();
+    }
+    document.addEventListener("np-hero", play);
+    if (document.body.classList.contains("hdv")) play();
   })();
 
   /* comparison details toggle (C/D) */
