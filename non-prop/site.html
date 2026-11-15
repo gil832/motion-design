@@ -704,8 +704,8 @@ body.hcv .co-row b { font-size: clamp(18px, 1.7vw, 24px); }
 .story > .wrap { position: relative; z-index: 1; }
 .trk { position: absolute; left: 0; right: 0; top: 30%; bottom: 0; width: 100%; height: 70%; pointer-events: none; -webkit-mask-image: linear-gradient(180deg, transparent, #000 22%, #000 80%, transparent); mask-image: linear-gradient(180deg, transparent, #000 22%, #000 80%, transparent); }
 .trk path { fill: none; vector-effect: non-scaling-stroke; }
-.trk .c { stroke: rgba(143,243,232,.11); stroke-width: 1; }
-.trk .rl { stroke: var(--lime); stroke-width: 1.6; stroke-linecap: round; filter: drop-shadow(0 0 6px rgba(217,255,0,.7)); stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 3.2s cubic-bezier(.45,0,.55,1); }
+.trk .c { stroke: rgba(143,243,232,.07); stroke-width: 1; }
+.trk .rl { stroke: rgba(217,255,0,.55); stroke-width: 1.2; stroke-linecap: round; filter: drop-shadow(0 0 6px rgba(217,255,0,.7)); stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 3.2s cubic-bezier(.45,0,.55,1); }
 .trk.in .rl { stroke-dashoffset: 0; }
 @media (prefers-reduced-motion: reduce) { .hc-caret, .hc-c2, .hc-c2::before, .hc-c2::after, .gc { animation: none !important; } .mx > span { opacity: 1; transform: none; } .trk .rl { stroke-dashoffset: 0; transition: none; } }
 
@@ -1214,7 +1214,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
         <div class="tp-body"><span class="tp-n">01</span><div class="tp-txt"><span class="tp-k">The feeling</span><h3>The thrill of trading.<br><span class="grad">None of the risk.</span></h3><p>Fast charts, sharp decisions, full focus. All of it on a simulated account, so your own money never enters the race.</p></div></div>
       </article>
       <article class="tp" tabindex="0" data-i="1">
-        <div class="tp-media"><div class="st-img" style="background-image:url(assets/hc/desk3.jpg);background-position:30% 35%"></div><div class="tp-chips" aria-hidden="true"><div class="gc d1" data-z="1" style="right:4%;top:49%"><span class="gc-k"><i></i>Simulated account</span><b class="tnum">$10,000</b><em>One-time fee $120</em></div><div class="gc d2" data-z=".55" style="right:40%;top:5%"><span class="gc-k">XAU/USD</span><b class="tnum up">+0.8%</b></div><div class="gc d3" data-z=".8" style="right:4%;top:71%"><span class="gc-k">Daily loss limit</span><div class="gc-bar"><i style="width:28%"></i></div><em>1.1% of 4% used</em></div><div class="gc d4" data-z=".35" style="right:7%;top:4%"><span class="gc-k">Savings at risk</span><b class="tnum">$0</b></div></div></div>
+        <div class="tp-media"><div class="st-img" style="background-image:url(assets/hc/desk3.jpg);background-position:30% 35%"></div><div class="tp-chips" aria-hidden="true"><div class="gc d1" data-z="1" style="right:5%;top:52%"><span class="gc-k"><i></i>Simulated account</span><b class="tnum">$10,000</b><em>One-time fee $120</em></div></div></div>
         <div class="tp-body"><span class="tp-n">02</span><div class="tp-txt"><span class="tp-k">The difference</span><h3>Simulated account.<br><span class="grad">Your savings stay put.</span></h3><p>Trade $5K to $200K in simulated capital from your desk. One fee, paid once. Nothing else at risk.</p></div></div>
       </article>
       <article class="tp rw" tabindex="0" data-i="2">
@@ -1842,7 +1842,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
     /* one circuit shape, repeated as offset contours like a topographic map of a track */
     var base = "M260 620 C200 520 240 380 360 330 C470 285 560 360 660 300 C760 240 760 140 880 120 C1010 98 1130 170 1220 250 C1330 350 1420 420 1380 540 C1345 650 1210 690 1090 660 C980 632 920 560 800 590 C680 620 640 730 520 750 C400 770 310 700 260 620 Z";
     var out = "";
-    for (var i = 0; i < 9; i++) { var k = 1 + i * .085; out += '<path class="c" d="' + base + '" transform="translate(800 450) scale(' + k.toFixed(3) + ') translate(-800 -450)"/>'; }
+    for (var i = 0; i < 4; i++) { var k = 1.06 + i * .1; out += '<path class="c" d="' + base + '" transform="translate(800 450) scale(' + k.toFixed(3) + ') translate(-800 -450)"/>'; }
     out += '<path class="rl" pathLength="1" d="' + base + '" transform="translate(800 450) scale(1.255) translate(-800 -450)"/>';
     svg.innerHTML = out;
     new IntersectionObserver(function (es, ob) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("in"); ob.unobserve(e.target); } }); }, { threshold: .25 }).observe(svg);
