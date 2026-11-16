@@ -51,3 +51,18 @@ Note: the creator plan caps concurrent jobs at 8. Submitting more than that retu
 | T1 finish line pulls back into the screens, then the room (6s) | b8326723-5ab5-4236-b065-20971ba3ee02 |
 | T2 visor reflections turn into screen glow, helmet off (5s) | d36673f0-755e-491f-ad81-86cf664c9844 |
 | T3 chase on track glides round to the rig from the front (6s) | 6d18d92f-9666-4bf9-a591-6624b0203812 |
+
+## Round 3: the sim room turns into a trading room
+Stills:
+| Still | Job |
+|---|---|
+| Trading room from behind (matches sim still 9) | e526c838-5dc2-450d-9581-6afcd2974430 |
+| Trading room from the front (matches sim still 10) | 7db261b7-cc51-4d36-8eac-7861ef2bec14 |
+| Trading desk, over the shoulder | 4c9c7dda-1eff-4ff1-8026-06ec8e1cd62e |
+
+Morph videos (6s):
+| Shot | Job |
+|---|---|
+| M1 from behind, the rig folds into the desk | 89ec87c1-b285-4de7-af91-48ac292f97dc |
+| M2 from the front, the cockpit becomes the desk and the helmet comes off | 323d50d8-fbaf-4b19-92b4-d8ce3efe4e67 |
+| M3 from behind, a lime light-line wipe changes the room | aa1a92a0-80d1-4d85-ba5c-8ae25f946d66 |
