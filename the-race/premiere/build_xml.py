@@ -127,6 +127,24 @@ class Doc:
                 f"<value>{scale:.3f}</value></parameter></effect></filter></clipitem>")
 
 
+AUDIO = "THE_RACE_sfx_mix.wav"
+
+
+def audio_xml(doc, total):
+    """A1: the synthesized SFX mix (from the-race/audio), starting at 00:00."""
+    url = "file://localhost" + quote(f"{doc.gfx_dir.rstrip('/')}/{AUDIO}")
+    secs = total  # mix is cut to the sequence length
+    return ("<audio><format><samplecharacteristics><depth>16</depth><samplerate>48000</samplerate>"
+            "</samplecharacteristics></format><track>"
+            f'<clipitem id="clipitem-audio-1"><name>{AUDIO}</name><enabled>TRUE</enabled>'
+            f"<duration>{secs}</duration>{rate()}<start>0</start><end>{secs}</end><in>0</in><out>{secs}</out>"
+            f'<file id="file-{AUDIO}"><name>{AUDIO}</name><pathurl>{url}</pathurl>{rate()}'
+            f"<duration>{secs}</duration><media><audio><samplecharacteristics><depth>16</depth>"
+            "<samplerate>48000</samplerate></samplecharacteristics><channelcount>2</channelcount>"
+            "</audio></media></file><sourcetrack><mediatype>audio</mediatype><trackindex>1</trackindex>"
+            "</sourcetrack></clipitem><enabled>TRUE</enabled><locked>FALSE</locked></track></audio>")
+
+
 def build(clips_dir, gfx_dir):
     doc = Doc(clips_dir, gfx_dir)
     v1 = layout(V1, REC_START)
@@ -190,7 +208,7 @@ def build(clips_dir, gfx_dir):
             "<media><video><format><samplecharacteristics>"
             f"{rate()}<width>{SEQ_W}</width><height>{SEQ_H}</height><pixelaspectratio>square</pixelaspectratio>"
             "<fielddominance>none</fielddominance></samplecharacteristics></format>"
-            f"{track(t1)}{track(t2)}{track(t3)}</video><audio/></media>{mk}</sequence></xmeml>\n"), v1, total
+            f"{track(t1)}{track(t2)}{track(t3)}</video>{audio_xml(doc, total)}</media>{mk}</sequence></xmeml>\n"), v1, total
 
 
 if __name__ == "__main__":
