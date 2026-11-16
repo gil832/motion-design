@@ -841,6 +841,33 @@ body.hb .ph-bs .s { background: rgba(255,107,122,.14); color: #ff8a96; }
 body.hb .ph-bs .b { background: rgba(0,216,195,.16); color: #8ff3e8; }
 @media (max-width: 900px) { body.hb .hx-acc { width: 240px; } }
 
+/* Instant pricing: one card per account size, one CTA each */
+.icards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; max-width: 1120px; margin: 0 auto; }
+.ic { position: relative; display: flex; flex-direction: column; gap: 6px; padding: 26px 26px 22px; border-radius: 22px; background: linear-gradient(170deg, rgba(12,44,48,.75), rgba(4,14,17,.92)); border: 1px solid rgba(143,243,232,.16); transition: transform .5s cubic-bezier(.16,1,.3,1), border-color .4s, box-shadow .5s; min-width: 0; }
+.ic:hover { transform: translateY(-4px); border-color: rgba(217,255,0,.5); box-shadow: 0 30px 60px -30px rgba(0,0,0,.9), 0 0 40px -20px rgba(217,255,0,.45); }
+.ic-k { font-size: 13px; letter-spacing: .12em; text-transform: uppercase; color: var(--iris); }
+.ic-a { font-size: clamp(40px, 3.8vw, 54px); font-weight: 600; letter-spacing: -.05em; line-height: 1; color: #fff; }
+.ic-a small { font-size: 16px; font-weight: 400; letter-spacing: 0; color: rgba(255,255,255,.7); margin-left: 6px; }
+.ic-f { margin-top: 10px; display: flex; align-items: baseline; gap: 8px; font-size: 16px; color: rgba(255,255,255,.72); }
+.ic-f b { font-size: 30px; font-weight: 600; letter-spacing: -.03em; color: var(--lime); }
+.ic-l { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 6px; font-size: 14.5px; color: rgba(255,255,255,.8); }
+.ic-l li { display: flex; gap: 10px; align-items: baseline; }
+.ic-l li::before { content: ""; flex: none; width: 10px; height: 6px; border-left: 2px solid var(--lime); border-bottom: 2px solid var(--lime); transform: rotate(-45deg) translateY(-2px); }
+.ic .buy { margin-top: 18px; width: 100%; justify-content: center; }
+.irules { max-width: 1120px; margin: 16px auto 0; padding: 22px 26px; border-radius: 22px; display: grid; gap: 14px; }
+.irules-k { font-size: 13px; letter-spacing: .12em; text-transform: uppercase; color: var(--iris); }
+.irules-l { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+.irules-l li { display: grid; gap: 2px; }
+.irules-l b { font-size: 28px; font-weight: 600; letter-spacing: -.03em; color: #fff; }
+.irules-l span { font-size: 14.5px; color: rgba(255,255,255,.72); }
+.irules-n { margin: 0; font-size: 14px; line-height: 1.55; color: rgba(255,255,255,.62); }
+.journey { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 8px 10px; margin: 6px auto 30px; max-width: 900px; }
+.journey span { padding: 9px 16px; border-radius: 999px; border: 1px solid rgba(143,243,232,.25); background: rgba(255,255,255,.03); font-size: 15px; color: #fff; }
+.journey span:last-child { background: var(--lime); border-color: var(--lime); color: #0a0a0a; font-weight: 600; }
+.journey i { font-style: normal; color: var(--lime); }
+@media (max-width: 960px) { .icards { grid-template-columns: repeat(2, minmax(0, 1fr)); } .irules-l { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 600px) { .icards { grid-template-columns: 1fr; gap: 10px; } .ic { padding: 20px; } .irules { padding: 20px; } .journey span { font-size: 13.5px; padding: 8px 12px; } }
+
 /* program tabs */
 .ptabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: 1080px; margin: 0 auto 18px; }
 .pt { appearance: none; cursor: pointer; text-align: left; padding: 20px 22px; border-radius: 22px; border: 1px solid rgba(143,243,232,.22); background: linear-gradient(170deg, rgba(10,44,50,.8), rgba(4,16,20,.92)); color: #fff; font: inherit; transition: transform .3s var(--ease), border-color .3s, background .3s, box-shadow .3s; }
@@ -1258,7 +1285,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
           <h1><span class="ln"><span>Trade a $10K Simulated Account.</span></span><span class="ln"><span class="grad">For Just $120.</span></span></h1>
           <p class="lede">Enjoy trading in a simulated environment, keep your savings out of the market, and qualify for a share of your simulated profits.</p>
           <div class="cta">
-            <a class="buy lg" href="#ways" data-pick="0,1">Start Your Challenge <span class="ar" aria-hidden="true">→</span></a>
+            <a class="buy lg" href="#ways">Start Trading <span class="ar" aria-hidden="true">→</span></a>
             <a class="ghost" href="#how">See How Easy It Is <span class="ar" aria-hidden="true">→</span></a>
           </div>
           <p class="under">Simulated trading. Reward eligibility, program rules and loss limits apply.</p>
@@ -1285,7 +1312,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
             <h1 class="hc-h"><span class="hc-l1">$10K Simulated Trading Account.</span><span class="hc-l2 grad">For Just $120.</span></h1>
             <p class="hc-sub"><span>Trade in a simulated market, without putting your savings on the line. Meet the program requirements and qualify for performance-based Rewards.</span></p>
             <div class="hc-cta">
-              <a class="hc-btn" href="#ways" data-pick="0,1">Get Access</a>
+              <a class="hc-btn" href="#ways">Get Access</a>
               <div class="hc-proof" aria-label="Rated 4.9 out of 5 on Google">
                 <svg class="hc-g" viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.6-.4-3.9z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-7.9l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.6-.4-3.9z"/></svg><span class="hc-r">Rated 4.9</span><span class="hc-st"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.9 6.9L22 9.6l-5.5 4.7L18.2 22 12 18.1 5.8 22l1.7-7.7L2 9.6l7.1-.7z" fill="#fff"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.9 6.9L22 9.6l-5.5 4.7L18.2 22 12 18.1 5.8 22l1.7-7.7L2 9.6l7.1-.7z" fill="#fff"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.9 6.9L22 9.6l-5.5 4.7L18.2 22 12 18.1 5.8 22l1.7-7.7L2 9.6l7.1-.7z" fill="#fff"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.9 6.9L22 9.6l-5.5 4.7L18.2 22 12 18.1 5.8 22l1.7-7.7L2 9.6l7.1-.7z" fill="#fff"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><defs><linearGradient id="hcHalf"><stop offset=".55" stop-color="#fff"/><stop offset=".55" stop-color="rgba(255,255,255,.28)"/></linearGradient></defs><path d="M12 2l2.9 6.9L22 9.6l-5.5 4.7L18.2 22 12 18.1 5.8 22l1.7-7.7L2 9.6l7.1-.7z" fill="url(#hcHalf)"/></svg></span>
                 <span class="hc-av"><img src="assets/traders/ben.webp" alt=""><img src="assets/traders/andrea.webp" alt=""><img src="assets/traders/noam.webp" alt=""><img src="assets/traders/brian.webp" alt=""></span>
@@ -1383,42 +1410,35 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
         <div class="tp-body"><span class="tp-n">03</span><div class="tp-txt"><span class="tp-k">The payoff</span><h3>Perform.<br><span class="grad">Get rewarded.</span></h3><p>Meet the program requirements, then request a Reward: 80% of your simulated profit, 95% with the add-on. Approved Rewards are processed within 48 hours.</p></div></div>
       </article>
       </div>
-      <div class="tri3-cta rv"><a class="buy lg" href="#ways">Pick your program <span class="ar" aria-hidden="true">→</span></a></div>
+      <div class="tri3-cta rv"><a class="buy lg" href="#ways">Choose your account <span class="ar" aria-hidden="true">→</span></a></div>
     </div>
   </section>
 
   <!-- pick your way in -->
   <section class="sec" id="ways">
     <div class="wrap">
-      <div class="sh rv"><span class="eyebrow">Pick your program</span><h2>Small fee. <span class="grad">Big account.</span></h2><p>Three ways in, each with a one-time program fee. Pick the one that fits how you trade, then qualify for Rewards based on your simulated performance.</p></div>
-      <div class="ptabs rv" role="tablist" aria-label="Programs" id="ptabs"></div>
-      <article class="way solo glass rv on" id="wayOwn" data-spot="620,.14" role="tabpanel">
-        <div class="solo-l">
-          <span class="for" id="pFor">Instant account</span>
-          <h3 id="pH3">No challenge. Trade from day one.</h3>
-          <div class="chips" role="group" aria-label="Account size" id="inSizes"></div>
-          <div class="fee"><span class="n tnum" id="inFee">$350</span><span class="s"><b>One-time fee</b><span id="inAcct">$50,000 simulated account</span></span></div>
-          <div class="go">
-            <a class="buy lg" id="inBuy" href="https://checkout.fundingrock.com/onboarding" target="_blank" rel="noopener">Get my $50K Instant for $350 <span class="ar" aria-hidden="true">→</span></a>
-            <p class="under" id="pUnder">One-time fee. 14-day refund if you haven't placed a trade.</p>
-          </div>
-        </div>
-        <div class="solo-r">
-          <dl class="obj" id="pRules"></dl>
-          <ul class="gets" id="pGets"></ul>
-        </div>
-      </article>
+      <div class="sh rv"><span class="eyebrow">FundingRock Instant</span><h2>Small fee. <span class="grad">Big account.</span></h2><p>Pick your simulated account size and pay once. No challenge to pass first: you start trading right away.</p></div>
+      <div class="icards rv" id="icards"></div>
+      <div class="irules glass rv">
+        <span class="irules-k">Same simple rules on every size</span>
+        <ul class="irules-l">
+          <li><b>4%</b><span>Daily loss limit</span></li>
+          <li><b>8%</b><span>Max loss, trailing</span></li>
+          <li><b>None</b><span>Profit target</span></li>
+          <li><b>80%</b><span>Reward Share, 95% with add-on</span></li>
+        </ul>
+        <p class="irules-n">News trading and EAs allowed · Trade on TradeLocker or cTrader · Approved Rewards processed within 48h, minimum $100 · 14-day refund if you haven't placed a trade.</p>
+      </div>
     </div>
   </section>
 
   <!-- how it works -->
   <section class="sec" id="how" style="padding-top:0">
     <div class="wrap">
-      <div class="sh rv"><span class="eyebrow">How it works</span><h2 id="hwH">Pick. Trade. <span class="grad">Get rewarded.</span></h2><p>Easier than you think.</p></div>
-      <div class="ptabs mini rv" role="tablist" aria-label="Program" id="hwTabs"></div>
+      <div class="sh rv"><span class="eyebrow">How it works</span><h2 id="hwH">Pick. Trade. <span class="grad">Get rewarded.</span></h2><p>Choose your account, pay once, start trading, and become eligible for Rewards.</p></div>
       <div class="hw three" id="hw">
         <article class="hs glass rv" data-spot="460,.14">
-          <div class="hs-t"><span class="hn">1</span><div><h3>Pick an account size</h3><p id="hwP1">From <b>$5,000</b> to <b>$200,000</b> in simulated capital. Pay one fee, once.</p></div></div>
+          <div class="hs-t"><span class="hn">1</span><div><h3>Choose your account, pay once</h3><p id="hwP1">From <b>$5,000</b> to <b>$200,000</b> in simulated capital. Pay one fee, once.</p></div></div>
           <div class="lad-v"><span class="tnum" id="ladA">$50K</span> simulated <i>·</i> <b class="tnum" id="ladF">$350</b> fee</div>
           <div class="lad" id="lad" role="group" aria-label="Account sizes and fees"></div>
         </article>
@@ -1426,7 +1446,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
         <article class="hs flip rv" aria-label="Step 2">
           <div class="fl-in">
             <div class="fl-f glass">
-              <div class="hs-t"><span class="hn">2</span><div><h3>Trade in a safe, simulated space</h3><p>Trade on a simulated account. Your savings never touch the market.</p></div></div>
+              <div class="hs-t"><span class="hn">2</span><div><h3>Start trading right away</h3><p>Trade a simulated account from day one. Loss limits apply. Your savings never touch the market.</p></div></div>
               <div class="safe">
                 <div class="term" aria-hidden="true">
                   <div class="term-h"><b>XAU/USD</b><span>5m</span><em class="term-px tnum" id="tmPx">2,384.20</em><i class="term-sim">Simulated</i></div>
@@ -1448,7 +1468,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
         <article class="hs flip rv" aria-label="Step 3">
           <div class="fl-in">
             <div class="fl-f glass">
-              <div class="hs-t"><span class="hn">3</span><div><h3>Trade and qualify for Rewards</h3><p>Meet the program requirements and request a Reward: <b>80%</b> of your simulated profit, or <b>95%</b> with the add-on.</p></div></div>
+              <div class="hs-t"><span class="hn">3</span><div><h3>Become eligible for Rewards</h3><p>Meet the program requirements and request a Reward: <b>80%</b> of your simulated profit, or <b>95%</b> with the add-on.</p></div></div>
               <div class="rwd" id="split">
                 <div class="rwd-top"><span>Reward request</span><i id="rwStat">Approved</i></div>
                 <div class="rwd-amt tnum" id="rwAmt">$800.00</div>
@@ -1466,7 +1486,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
           </div>
         </article>
       </div>
-      <ul class="hw-foot rv" id="hwFoot"><li>No profit target</li><li>No minimum days</li><li>Approved Rewards processed within 48h</li><li>Minimum Reward $100</li></ul>
+      <ul class="hw-foot rv" id="hwFoot"><li>No challenge to pass</li><li>No profit target</li><li>Loss limits apply</li><li>Approved Rewards processed within 48h</li></ul>
     </div>
   </section>
 
@@ -1497,7 +1517,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
         <h2><span class="ekp">Same</span> <span class="tnum" id="cA">$5K</span> <span class="ekp">account.</span> <span class="grad"><span class="ekp">Two very different deals.</span></span></h2>
         <p>Here's the model: you trade a simulated account, not your own money. Meet the program requirements and your simulated profit can earn real Rewards: 80% of it, or 95% with the add-on.</p>
       </div>
-      <div class="cmp-ctl rv"><div class="cmp-prog"><i aria-hidden="true"></i>Prices shown: <b>Instant program</b><em>No evaluation · trade from day one</em></div><span>Pick an account size</span><div class="acc" role="group" aria-label="Account size" id="cSizes"></div></div>
+      <div class="cmp-ctl rv"><span>Pick an account size</span><div class="acc" role="group" aria-label="Account size" id="cSizes"></div></div>
       <div class="cmp rv" id="cmp">
         <article class="cc bad">
           <header><b>Broker's account</b><span>Your own money</span></header>
@@ -1513,8 +1533,8 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
         </article>
         <div class="cc-vs" aria-hidden="true">VS</div>
         <article class="cc good">
-          <header><b>FundingRock simulated account</b><span>Instant program</span></header>
-          <div class="cc-k">Instant program fee</div>
+          <header><b>FundingRock Instant</b><span>Simulated account</span></header>
+          <div class="cc-k">One-time fee</div>
           <div class="cc-n tnum" id="cFr">$70</div>
           <div class="cc-bar"><i id="cFrBar"></i><span class="cc-tag" id="cFrTag">Only $350 at risk</span></div>
           <button type="button" class="cc-more" aria-expanded="false">See details <span aria-hidden="true">+</span></button>
@@ -1580,14 +1600,14 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
         <article class="rk"><span class="rk-k">Consistency</span><div class="rk-v"><b class="tnum">15%</b></div><p>When you request a Reward, no single day can be more than 15% of your total profit.</p><div class="rk-b"><span>Your broker</span><i>None</i></div></article>
         <article class="rk"><span class="rk-k">Weekend holding</span><div class="rk-v"><b class="tnum">+$53</b><em class="tnum">add-on</em></div><p>15% of the fee, if you want to hold over the weekend.</p><div class="rk-b"><span>Your broker</span><i>Yes</i></div></article>
         <article class="rk"><span class="rk-k">Your share</span><div class="rk-v"><b class="tnum">80%</b><em class="tnum">Reward Share</em></div><p>95% with the add-on.</p><div class="rk-b"><span>Your broker</span><i>100%, of your own money</i></div></article>
-        <article class="rk rk-max"><div><span class="rk-k">Most you can lose</span><div class="rk-v"><b class="tnum">$350</b><em>one-time fee, $50K Instant</em></div><p class="rk-note">Each program and account size has its own fee and rules.</p></div><div class="rk-b"><span>Your broker</span><i>Everything you deposit</i></div></article>
+        <article class="rk rk-max"><div><span class="rk-k">Most you can lose</span><div class="rk-v"><b class="tnum">$350</b><em>one-time fee, $50K Instant</em></div><p class="rk-note">Each account size has its own fee. Loss limits scale with the account.</p></div><div class="rk-b"><span>Your broker</span><i>Everything you deposit</i></div></article>
       </div>
     </div>
   </section>
 
   <!-- certificates -->
   <section class="sec certs" id="rewards" style="padding-top:0">
-    <div class="sh wrap rv"><span class="eyebrow">Reward certificates</span><h2>Real traders. <span class="grad">Real Rewards.</span></h2><p>Every certificate is a Reward paid to a FundingRock trader from their Prime Account.</p></div>
+    <div class="sh wrap rv"><span class="eyebrow">Reward certificates</span><h2>Real traders. <span class="grad">Real Rewards.</span></h2><p>Every certificate is a Reward paid to a FundingRock trader.</p></div>
     <div class="rows rv">
       <div class="mrow mask-x" id="certA" style="--dur:150s"></div>
     </div>
@@ -1605,7 +1625,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
     <div class="wrap">
       <div class="sh rv"><span class="eyebrow">Straight answers</span><h2>Questions, <span class="grad">answered.</span></h2></div>
       <div class="faq">
-        <details><summary>Why pay a fee to trade a simulated account?<i aria-hidden="true"></i></summary><div class="a">The fee is your entry. You trade a simulated account with set rules. Stay in profit and inside the rules, and you can request Rewards. Break a rule and the account ends. The fee is the most you can lose.</div></details>
+        <details><summary>Why pay a fee to trade a simulated account?<i aria-hidden="true"></i></summary><div class="a">The fee is your entry to FundingRock Instant: you get a simulated account right away, with no challenge to pass first. Follow the rules and meet the Reward requirements, and you can request Rewards. Break a rule and the account ends. The fee is the most you can lose.</div></details>
         <details><summary>Where do Rewards come from?<i aria-hidden="true"></i></summary><div class="a">FundingRock pays them from its own funds, based on your simulated results. You never deposit money, and your trades never go to a real market.</div></details>
         <details><summary>Is FundingRock legit?<i aria-hidden="true"></i></summary><div class="a">FundingRock is a trade name of Mindwave Training Limited, a company registered in Cyprus (HE 471803). You trade on TradeLocker or cTrader. Rewards are paid via Riseworks or crypto. On Trustpilot we have 3.8 out of 5 from 215 reviews.</div></details>
         <details><summary>What if I lose?<i aria-hidden="true"></i></summary><div class="a">If you break a rule, the account ends and the fee is gone. You owe nothing more. If you haven't placed a trade, you can get a full refund within 14 days.</div></details>
@@ -1640,7 +1660,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
     <div class="ft-g">
       <div><img src="assets/logo.svg" alt="FundingRock" width="182" height="24"><p>401/2 Ayias Elenis 36, Nicosia 1061, Cyprus<br>support@fundingrock.com</p>
         <div class="pay"><img src="assets/foot/pay-visa.svg" alt="Visa"><img src="assets/foot/pay-mastercard.svg" alt="Mastercard"><img src="assets/foot/pay-discover.svg" alt="Discover"><img src="assets/foot/pay-bitcoin.svg" alt="Bitcoin"><img src="assets/foot/pay-usdt.svg" alt="USDT"><img src="assets/foot/pay-rise.svg" alt="Riseworks"></div></div>
-      <div><h4>Programs</h4><a href="https://fundingrock.com/instant/" target="_blank" rel="noopener">Instant</a><a href="https://fundingrock.com/1-step/" target="_blank" rel="noopener">1-Step Challenge</a><a href="https://fundingrock.com/2-step/" target="_blank" rel="noopener">2-Step Challenge</a></div>
+      <div><h4>Program</h4><a href="https://fundingrock.com/instant/" target="_blank" rel="noopener">Instant</a></div>
       <div><h4>Company</h4><a href="https://fundingrock.com/about-us/" target="_blank" rel="noopener">About us</a><a href="https://fundingrock.com/affiliates/" target="_blank" rel="noopener">Affiliates</a><a href="https://fundingrock.com/contact-us/" target="_blank" rel="noopener">Contact us</a></div>
       <div><h4>Legal</h4><a href="https://fundingrock.com/terms/" target="_blank" rel="noopener">Terms</a><a href="https://fundingrock.com/privacy/" target="_blank" rel="noopener">Privacy</a><a href="https://fundingrock.com/risk-disclosure/" target="_blank" rel="noopener">Risk disclosure</a></div>
     </div>
@@ -1710,7 +1730,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
     $$("#hwTabs .pt").forEach(function (b) { b.setAttribute("aria-selected", b.getAttribute("data-p") === g.id); });
     $("#hwH").innerHTML = 'Pick. Trade. <span class="grad">Get rewarded.</span>';
     var lo = g.sizes[0][0], hi = g.sizes[g.sizes.length - 1][0];
-    $("#hwP1").innerHTML = "From <b>" + fmt(lo) + "</b> to <b>" + fmt(hi) + "</b> in simulated capital. Pay one fee, once.";
+    $("#hwP1").innerHTML = "From <b>" + fmt(lo) + "</b> to <b>" + fmt(hi) + "</b> in simulated capital. Pay one fee, once. No challenge to pass first.";
     ladUser = false; buildLad(g.sizes, g.def);
     var row = function (r) { return "<div><dt>" + r[0] + "</dt><dd>" + r[1] + "</dd></div>"; };
     $("#rbK").textContent = "The rules · " + g.name;
@@ -1719,7 +1739,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
       : [["Phases", "2"], ["Time limit", "None"]];
     $("#rbList").innerHTML = g.rules.filter(function (r) { return !/Reward/.test(r[0]); }).map(function (r) { return [r[0], r[1]]; }).concat(extra).map(row).join("");
     $("#rwList").innerHTML = (g.id === "instant" ? [] : [["Rewards start", "After you pass"]]).concat([["Reward Share", "80%, or 95% add-on"], ["Minimum Reward", "$100"], ["Processed", "Within 48h, weekdays"], ["Paid via", "Riseworks or crypto"]]).map(row).join("");
-    $("#hwFoot").innerHTML = (g.id === "instant" ? ["No profit target", "No minimum days", "Approved Rewards processed within 48h", "Minimum Reward $100"] : ["No time limit", "No minimum days", "Approved Rewards processed within 48h", "Minimum Reward $100"]).map(function (t) { return "<li>" + t + "</li>"; }).join("");
+    $("#hwFoot").innerHTML = (g.id === "instant" ? ["No challenge to pass", "No profit target", "Loss limits apply", "Approved Rewards processed within 48h"] : ["No time limit", "No minimum days", "Approved Rewards processed within 48h", "Minimum Reward $100"]).map(function (t) { return "<li>" + t + "</li>"; }).join("");
   }
   $$(".hs.flip").forEach(function (c) {
     c.addEventListener("click", function () { if (!document.body.classList.contains("editing")) c.classList.toggle("on"); });
@@ -2258,49 +2278,16 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
   /* ---------- prices ---------- */
   var K = function (a) { return "$" + (a / 1000) + "K"; };
   /* programs: sizes [simulated account, one-time fee], rules [label, value, share of account or null, note] */
-  var PROGS = [
-    { id: "instant", name: "Instant", tag: "No challenge", forL: "Instant account", h3: "No challenge. Trade from day one.", def: 3, buy: "Instant",
-      sizes: [[5000, 70], [10000, 120], [25000, 200], [50000, 350], [100000, 600], [200000, 1100]],
-      rules: [["Daily loss limit", "4%", .04], ["Max loss (trailing)", "8%", .08], ["Profit target", "None"], ["Reward Share", "80%", null, "95% add-on"]],
-      gets: ["No minimum trading days", "News trading and EAs allowed", "Approved Rewards processed within 48h, minimum $100", "Weekend holding as an add-on, +15% of the fee", "Trade on TradeLocker or cTrader"],
-      under: "One-time fee. 14-day refund if you haven't placed a trade." },
-    { id: "one", name: "1-Step", tag: "One phase", forL: "1-Step Challenge", h3: "One phase. Hit 10% and you're in.", def: 2, buy: "1-Step",
-      sizes: [[5000, 50], [10000, 80], [25000, 155], [50000, 270], [100000, 450]],
-      rules: [["Profit target", "10%", .10], ["Daily loss limit", "3%", .03], ["Max loss (trailing)", "6%", .06], ["Minimum days", "0"]],
-      gets: ["No time limit", "Pass once, then trade your Prime account", "80% Reward Share, 95% with the add-on", "Leverage up to 1:30", "Trade on TradeLocker or cTrader"],
-      under: "One-time fee for a simulated account." },
-    { id: "two", name: "2-Step", tag: "Two phases", forL: "2-Step Challenge", h3: "Two phases. 6% each. The lowest fee.", def: 2, buy: "2-Step",
-      sizes: [[5000, 40], [10000, 60], [25000, 120], [50000, 210], [100000, 350]],
-      rules: [["Profit target, each phase", "6%", .06], ["Daily loss limit", "3%", .03], ["Max loss (static)", "6%", .06], ["Minimum days", "0"]],
-      gets: ["No time limit on either phase", "Static max loss: it never moves", "Pass both, then trade your Prime account", "80% Reward Share, 95% with the add-on", "Leverage up to 1:100"],
-      under: "One-time fee for a simulated account." }
-  ];
-  var pI = 0, inI = PROGS[0].def, inShown = PROGS[0].sizes[inI][1];
-  $("#ptabs").innerHTML = PROGS.map(function (g, i) { return '<button type="button" class="pt" role="tab" aria-selected="' + (i === pI) + '"><b>' + g.name + "</b><span>" + g.tag + " · from <em>" + fmt(g.sizes[0][1]) + "</em></span></button>"; }).join("");
-  function pickIn(i) {
-    var g = PROGS[pI]; inI = i; var s = g.sizes[i];
-    $$("#inSizes .chip").forEach(function (b, j) { b.setAttribute("aria-pressed", j === i); });
-    tween(inShown, s[1], 650, function (v) { $("#inFee").textContent = fmt(v); }); inShown = s[1];
-    $("#pRules").innerHTML = g.rules.map(function (r) { return "<div><dt>" + r[0] + '</dt><dd class="tnum">' + r[1] + (r[2] ? "<small>" + fmt(s[0] * r[2]) + "</small>" : r[3] ? "<small>" + r[3] + "</small>" : "") + "</dd></div>"; }).join("");
-    $("#inAcct").textContent = fmt(s[0]) + " simulated account";
-    $("#inBuy").innerHTML = (g.id === "instant" ? "Get my " + K(s[0]) + " Instant for " : "Start the " + K(s[0]) + " " + g.buy + " for ") + fmt(s[1]) + ' <span class="ar" aria-hidden="true">→</span>';
-  }
-  function pickProg(n, anim) {
-    pI = n; var g = PROGS[n];
-    $$("#ptabs .pt").forEach(function (b, j) { b.setAttribute("aria-selected", j === n); });
-    $("#pFor").textContent = g.forL; $("#pH3").textContent = g.h3; $("#pUnder").textContent = g.under;
-    $("#pGets").innerHTML = g.gets.map(function (t) { return "<li>" + t + "</li>"; }).join("");
-    $("#inSizes").innerHTML = g.sizes.map(function (s, i) { return '<button type="button" class="chip" aria-pressed="false">' + K(s[0]) + "</button>"; }).join("");
-    $$("#inSizes .chip").forEach(function (b, i) { b.addEventListener("click", function () { pickIn(i); }); });
-    pickIn(g.def);
-    howFor(g);
-    if (anim && !reduce) { var w = $("#wayOwn"); w.classList.remove("swap"); void w.offsetWidth; w.classList.add("swap"); }
-  }
-  $$("#ptabs .pt").forEach(function (b, i) { b.addEventListener("click", function () { pickProg(i, true); }); });
-  $("#hwTabs").innerHTML = PROGS.map(function (g) { return '<button type="button" class="pt" role="tab" data-p="' + g.id + '" aria-selected="false"><b>' + g.name + "</b><span></span></button>"; }).join("");
-  $$("#hwTabs .pt").forEach(function (b, i) { b.addEventListener("click", function () { pickProg(i, true); }); });
-  pickProg(0, false);
-  $$("[data-pick]").forEach(function (a) { a.addEventListener("click", function () { var v = a.getAttribute("data-pick").split(","); pickProg(+v[0], true); pickIn(+v[1]); }); });
+  var INSTANT = { id: "instant", name: "Instant", def: 3, sizes: [[5000, 70], [10000, 120], [25000, 200], [50000, 350], [100000, 600], [200000, 1100]],
+    rules: [["Daily loss limit", "4%", .04], ["Max loss (trailing)", "8%", .08], ["Profit target", "None"], ["Reward Share", "80%", null, "95% add-on"]] };
+  var CO = "https://checkout.fundingrock.com/onboarding";
+  $("#icards").innerHTML = INSTANT.sizes.map(function (s) {
+    return '<article class="ic"><span class="ic-k">Simulated account</span><div class="ic-a tnum">' + K(s[0]) + '</div>' +
+      '<div class="ic-f">One-time fee <b class="tnum">' + fmt(s[1]) + '</b></div>' +
+      '<ul class="ic-l"><li>Daily loss limit ' + fmt(s[0] * .04) + '</li><li>Max loss ' + fmt(s[0] * .08) + ', trailing</li><li>No profit target</li></ul>' +
+      '<a class="buy" href="' + CO + '" target="_blank" rel="noopener">Get the ' + K(s[0]) + ' account <span class="ar" aria-hidden="true">→</span></a></article>';
+  }).join("");
+  howFor(INSTANT);
 
   /* ---------- press, traders, certificates, reviews ---------- */
   var PR = [["forbes", "Forbes"], ["investing", "Investing.com"], ["bloomberg", "Bloomberg"], ["marketsinsiders", "Markets Insider"], ["yahoofinance", "Yahoo Finance"], ["benzinga", "Benzinga"]];
@@ -2369,8 +2356,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
     ["Tewodros Hailye", "June 2025", "3 Rewards received", "I have received 3 payouts from Funding Rock, all in under 24 hours. It's a genuine firm with minimum rules."],
     ["Simon", "Sep 14, 2026", "Fast and helpful Customer Care", "He was always quick to reply and followed up. Great service and the Dashboard is very good."],
     ["Kabeer khadav", "Aug 12, 2026", "Best for beginners", "Right now the best Prop firm for beginner's. The best pricing, offer, rules and support team."],
-    ["sokor", "Sep 8, 2025", "Lowest spreads on XAUUSD", "Very simple rules, great spreads. I noticed almost near zero spreads on XAUUSD. Lowest spreads I've seen."],
-    ["eaglestrade", "Sep 7, 2026", "I enjoyed trading with fundingrock", "I enjoyed trading with fundingrock and passed my evaluation on first trial."]];
+    ["sokor", "Sep 8, 2025", "Lowest spreads on XAUUSD", "Very simple rules, great spreads. I noticed almost near zero spreads on XAUUSD. Lowest spreads I've seen."]];
   function rv(r) { return '<article class="rv-c"><span class="stars">' + five + "</span><h3>" + r[2] + "</h3><p>" + r[3] + '</p><footer><b>' + r[0] + "</b> · " + r[1] + "</footer></article>"; }
   $("#rvA").innerHTML = dup(RV.slice(0, 4).map(rv).join("") + RV.slice(0, 4).map(rv).join(""));
   $("#rvB").innerHTML = dup(RV.slice(4).map(rv).join("") + RV.slice(4).map(rv).join(""));
