@@ -66,3 +66,6 @@ Morph videos (6s):
 | M1 from behind, the rig folds into the desk | 89ec87c1-b285-4de7-af91-48ac292f97dc |
 | M2 from the front, the cockpit becomes the desk and the helmet comes off | 323d50d8-fbaf-4b19-92b4-d8ce3efe4e67 |
 | M3 from behind, a lime light-line wipe changes the room | aa1a92a0-80d1-4d85-ba5c-8ae25f946d66 |
+| TD trading desk payoff, push in (5s) | 91991d42-391e-4e48-8547-d64b1f0e97a4 |
+
+All round-3 jobs completed 2026-11-16. Account balance after round 3: 565.66 credits. Higgsfield is paused until credits renew on Nov 21.
