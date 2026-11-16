@@ -844,6 +844,7 @@ body.hb .ph-bs .b { background: rgba(0,216,195,.16); color: #8ff3e8; }
 /* Instant pricing: one card per account size, one CTA each */
 .icards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; max-width: 1120px; margin: 0 auto; }
 .ic { position: relative; display: flex; flex-direction: column; gap: 6px; padding: 26px 26px 22px; border-radius: 22px; background: linear-gradient(170deg, rgba(12,44,48,.75), rgba(4,14,17,.92)); border: 1px solid rgba(143,243,232,.16); transition: transform .5s cubic-bezier(.16,1,.3,1), border-color .4s, box-shadow .5s; min-width: 0; }
+.ic.ic-hl { border-color: rgba(217,255,0,.6); box-shadow: 0 0 0 1px rgba(217,255,0,.25), 0 30px 70px -36px rgba(217,255,0,.45); }
 .ic:hover { transform: translateY(-4px); border-color: rgba(217,255,0,.5); box-shadow: 0 30px 60px -30px rgba(0,0,0,.9), 0 0 40px -20px rgba(217,255,0,.45); }
 .ic-k { font-size: 13px; letter-spacing: .12em; text-transform: uppercase; color: var(--iris); }
 .ic-a { font-size: clamp(40px, 3.8vw, 54px); font-weight: 600; letter-spacing: -.05em; line-height: 1; color: #fff; }
@@ -1417,7 +1418,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
   <!-- pick your way in -->
   <section class="sec" id="ways">
     <div class="wrap">
-      <div class="sh rv"><span class="eyebrow">FundingRock Instant</span><h2>Small fee. <span class="grad">Big account.</span></h2><p>Pick your simulated account size and pay once. No challenge to pass first: you start trading right away.</p></div>
+      <div class="sh rv"><span class="eyebrow">FundingRock Instant</span><h2>$10K Simulated Trading Account. <span class="grad">For Just $120.</span></h2><p>Or pick any size from $5K to $200K and pay once. No challenge to pass first: you start trading right away.</p></div>
       <div class="icards rv" id="icards"></div>
       <div class="irules glass rv">
         <span class="irules-k">Same simple rules on every size</span>
@@ -2282,7 +2283,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
     rules: [["Daily loss limit", "4%", .04], ["Max loss (trailing)", "8%", .08], ["Profit target", "None"], ["Reward Share", "80%", null, "95% add-on"]] };
   var CO = "https://checkout.fundingrock.com/onboarding";
   $("#icards").innerHTML = INSTANT.sizes.map(function (s) {
-    return '<article class="ic"><span class="ic-k">Simulated account</span><div class="ic-a tnum">' + K(s[0]) + '</div>' +
+    return '<article class="ic' + (s[0] === 10000 ? ' ic-hl' : '') + '"><span class="ic-k">Simulated account</span><div class="ic-a tnum">' + K(s[0]) + '</div>' +
       '<div class="ic-f">One-time fee <b class="tnum">' + fmt(s[1]) + '</b></div>' +
       '<ul class="ic-l"><li>Daily loss limit ' + fmt(s[0] * .04) + '</li><li>Max loss ' + fmt(s[0] * .08) + ', trailing</li><li>No profit target</li></ul>' +
       '<a class="buy" href="' + CO + '" target="_blank" rel="noopener">Get the ' + K(s[0]) + ' account <span class="ar" aria-hidden="true">→</span></a></article>';
