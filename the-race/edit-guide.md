@@ -53,3 +53,13 @@ Spare clips: 08A/B/C (alternative reveals), W2, T2 (visor to helmet off; good fo
 ## After Nov 21 (Higgsfield credits back)
 - Upscale only the final takes to 1080p.
 - Optional: about 8 extra 3s race inserts (~50 credits) if the build-up still feels thin.
+
+## Graphics files (made locally, no AI)
+All in `the-race/graphics/out/`: 1920×1080, 24 fps, ProRes 4444 with alpha, plus `_preview.mp4` copies to look at. Regenerate with `python3 the-race/graphics/make_graphics.py the-race/graphics/out`.
+
+| File | Length | Use |
+|---|---|---|
+| `endcard.mov` | 5s, opaque black | Line 1 cuts on, line 2 decodes with a lime scan line ("REAL." in lime with glow), then the FundingRock lock-up. **The wordmark is set in Inter as a placeholder; drop the official logo over it in AE.** |
+| `telemetry_overlay.mov` | 2s, alpha | Over the 8-frame overtake freeze: OVERTAKE tag, gear 7, km/h counting to 312, throttle bar, delta, LAP 58/58. Racing data only. |
+| `reward_ui.mov` | 3s, alpha | PERFORMANCE REWARD EARNED panel with a check that draws itself on. Corner-pin it onto the monitor in shot 10, or use it full-screen. |
+| `lime_wipe.mov` | 1s, alpha | Lime light line sweeping left to right. Lay it over M3, or use it as the transition into the trading room. Blend mode Screen or Add. |
