@@ -338,7 +338,13 @@ def lime_wipe(f, n=24):
     return img
 
 
+def lime_flash(f):
+    """2-frame lime hit for gear shifts and impacts (blend: Screen)."""
+    return Image.new("RGBA", (W, H), LIME + (200 if f == 0 else 110,))
+
+
 JOBS = {
+    "lime_flash": (lime_flash, 2, True),
     "endcard": (end_card, 120, False),
     "telemetry_overlay": (telemetry, 48, True),
     "reward_ui": (reward_ui, 72, True),
