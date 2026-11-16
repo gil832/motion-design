@@ -812,6 +812,35 @@ body.hdv.d-in .hc-stats > div:nth-child(3) { animation-delay: 1.93s; } body.hdv.
 
 .rk-max .rk-note { margin: 10px 0 0; font-size: 14.5px; color: rgba(10,15,0,.7); max-width: none; }
 
+/* Hero B: the middle card becomes a phone with a live simulated trade on screen */
+.ph-ui { display: none; }
+body.hb .hx-acc { width: clamp(230px, 19vw, 270px); padding: 12px 16px 16px; border-radius: 42px; border: 1px solid rgba(255,255,255,.18); background: linear-gradient(180deg, #071315, #040b0d); box-shadow: inset 0 0 0 7px #0b0f10, inset 0 0 0 8px rgba(255,255,255,.08), 0 50px 100px -40px rgba(0,0,0,.95), 0 0 60px -20px rgba(0,216,195,.4); }
+body.hb .hx-acc .hx-spark, body.hb .hx-acc .hx-sizes { display: none; }
+body.hb .hx-acc .ph-ui { display: contents; }
+body.hb .ph-bar { order: -2; display: flex; align-items: center; justify-content: space-between; padding: 6px 10px 10px; font-size: 11px; font-weight: 600; color: #fff; }
+body.hb .ph-isl { width: 62px; height: 18px; border-radius: 12px; background: #000; }
+body.hb .ph-sig { display: flex; gap: 2px; align-items: flex-end; }
+body.hb .ph-sig b { width: 3px; border-radius: 1px; background: #fff; } body.hb .ph-sig b:nth-child(1) { height: 5px; } body.hb .ph-sig b:nth-child(2) { height: 7px; } body.hb .ph-sig b:nth-child(3) { height: 9px; }
+body.hb .hx-acc { display: flex; flex-direction: column; }
+body.hb .hx-acc .hx-top { order: -1; padding: 0 4px; }
+body.hb .hx-acc > b { font-size: clamp(34px, 3vw, 42px); margin: 4px 4px 0; }
+body.hb .hx-acc > .hx-s { margin: 2px 4px 0; font-size: 12px; }
+body.hb .ph-mk { display: flex; justify-content: space-between; align-items: baseline; margin: 14px 4px 4px; font-size: 12px; color: var(--mute); }
+body.hb .hx-acc .ph-ui b { display: inline; margin: 0; font-size: inherit; letter-spacing: 0; line-height: inherit; background: none; -webkit-text-fill-color: currentColor; color: inherit; }
+body.hb .hx-acc .ph-sig b { display: block; background: #fff; }
+body.hb .hx-acc .ph-mk b { color: #fff; font-weight: 600; margin-right: 4px; }
+body.hb .ph-mk em { font-style: normal; color: var(--lime); font-weight: 600; font-size: 13px; transition: color .3s; }
+body.hb .ph-mk em.dn { color: #ff6b7a; }
+body.hb .ph-ch { width: 100%; height: 96px; display: block; border-radius: 10px; background: linear-gradient(180deg, rgba(143,243,232,.05), transparent); }
+body.hb .ph-pos { display: flex; align-items: center; gap: 8px; margin-top: 10px; padding: 9px 10px; border-radius: 12px; background: rgba(217,255,0,.08); border: 1px solid rgba(217,255,0,.3); font-size: 12px; color: var(--mute); }
+body.hb .ph-buy { padding: 2px 6px; border-radius: 5px; background: var(--lime); color: #0a0a0a; font-weight: 700; font-size: 10.5px; letter-spacing: .04em; }
+body.hb .hx-acc .ph-pos b { margin-left: auto; color: var(--lime); font-weight: 600; font-size: 14px; }
+body.hb .ph-bs { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 8px; }
+body.hb .ph-bs span { padding: 9px 0; text-align: center; border-radius: 10px; font-size: 12.5px; font-weight: 600; }
+body.hb .ph-bs .s { background: rgba(255,107,122,.14); color: #ff8a96; }
+body.hb .ph-bs .b { background: rgba(0,216,195,.16); color: #8ff3e8; }
+@media (max-width: 900px) { body.hb .hx-acc { width: 240px; } }
+
 /* program tabs */
 .ptabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: 1080px; margin: 0 auto 18px; }
 .pt { appearance: none; cursor: pointer; text-align: left; padding: 20px 22px; border-radius: 22px; border: 1px solid rgba(143,243,232,.22); background: linear-gradient(170deg, rgba(10,44,50,.8), rgba(4,16,20,.92)); color: #fff; font: inherit; transition: transform .3s var(--ease), border-color .3s, background .3s, box-shadow .3s; }
@@ -1305,6 +1334,13 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
             <span class="hx-s">Simulated account · Instant</span>
             <svg class="hx-spark" viewBox="0 0 300 70" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="hxG" x1="0" x2="1"><stop offset="0" stop-color="#8ff3e8"/><stop offset="1" stop-color="#d9ff00"/></linearGradient><linearGradient id="hxA" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#d9ff00" stop-opacity=".22"/><stop offset="1" stop-color="#d9ff00" stop-opacity="0"/></linearGradient></defs><path id="hxArea" fill="url(#hxA)"/><path id="hxLine" fill="none" stroke="url(#hxG)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
             <div class="hx-sizes" id="hxSizes"></div>
+            <div class="ph-ui" aria-hidden="true">
+              <div class="ph-bar"><span>9:41</span><i class="ph-isl"></i><span class="ph-sig"><b></b><b></b><b></b></span></div>
+              <div class="ph-mk"><span><b>XAU/USD</b> 5m</span><em class="tnum" id="phPx">2,384.20</em></div>
+              <svg class="ph-ch" id="phCh" viewBox="0 0 200 90" preserveAspectRatio="none"></svg>
+              <div class="ph-pos"><span class="ph-buy">BUY</span><span class="ph-sz">1.00 lot</span><b class="tnum" id="phPl">+$412.60</b></div>
+              <div class="ph-bs"><span class="s">Sell</span><span class="b">Buy</span></div>
+            </div>
           </div>
           <div class="hx-ar hx-ar3" aria-hidden="true"><i></i><span></span></div>
           <div class="hx-rw">
@@ -2055,6 +2091,32 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
   /* rule tiles: cursor-lit glow */
   $$(".rk").forEach(function (t) { t.addEventListener("pointermove", function (e) { var r = t.getBoundingClientRect(); t.style.setProperty("--mx", (e.clientX - r.left) + "px"); t.style.setProperty("--my", (e.clientY - r.top) + "px"); }); });
 
+  /* Hero B phone: a small live candlestick chart and an open simulated trade whose P&L ticks */
+  (function () {
+    var svg = $("#phCh"), px = $("#phPx"), pl = $("#phPl"); if (!svg) return;
+    var c = [], p = 2384.2, entry = 2380.08, n = 22, live = true;
+    for (var i = 0; i < n; i++) { var o = p, cl = o + (Math.random() - .42) * 2.2; c.push([o, cl, Math.max(o, cl) + Math.random() * .8, Math.min(o, cl) - Math.random() * .8]); p = cl; }
+    function draw() {
+      var hi = -1e9, lo = 1e9; c.forEach(function (k) { hi = Math.max(hi, k[2]); lo = Math.min(lo, k[3]); });
+      var w = 200 / n, y = function (v) { return 84 - (v - lo) / (hi - lo || 1) * 76; }, out = '';
+      c.forEach(function (k, i) { var x = i * w + w / 2, up = k[1] >= k[0], col = up ? "#8ff3e8" : "#ff6b7a";
+        out += '<line x1="' + x + '" x2="' + x + '" y1="' + y(k[2]) + '" y2="' + y(k[3]) + '" stroke="' + col + '" stroke-width=".8"/>' +
+               '<rect x="' + (x - w * .32) + '" width="' + (w * .64) + '" y="' + Math.min(y(k[0]), y(k[1])) + '" height="' + Math.max(1, Math.abs(y(k[0]) - y(k[1]))) + '" fill="' + col + '" rx=".6"/>'; });
+      var ly = y(c[c.length - 1][1]); out += '<line x1="0" x2="200" y1="' + ly + '" y2="' + ly + '" stroke="#d9ff00" stroke-width=".6" stroke-dasharray="3 3" opacity=".7"/>';
+      svg.innerHTML = out;
+    }
+    function tick() {
+      var k = c[c.length - 1], prev = k[1]; k[1] = k[1] + (Math.random() - .5) * .9 + (entry + 4.5 - k[1]) * .04; k[2] = Math.max(k[2], k[1]); k[3] = Math.min(k[3], k[1]);
+      if (Math.random() < .14) { c.shift(); c.push([k[1], k[1], k[1], k[1]]); }
+      var v = c[c.length - 1][1]; px.textContent = v.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 }); px.classList.toggle("dn", v < prev);
+      var g = (v - entry) * 100; pl.textContent = (g >= 0 ? "+$" : "−$") + Math.abs(g).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","); pl.style.color = g >= 0 ? "" : "#ff8a96";
+      draw();
+    }
+    draw();
+    new IntersectionObserver(function (es) { live = es[0].isIntersecting; }).observe(svg);
+    if (!reduce) setInterval(function () { if (live && !document.hidden && document.body.classList.contains("hb")) tick(); }, 700);
+  })();
+
   /* comparison details toggle (C/D) */
   $$(".cc-more").forEach(function (b) { b.addEventListener("click", function () { var c = b.closest(".cc"), o = !c.classList.contains("open"); c.classList.toggle("open", o); b.setAttribute("aria-expanded", o); b.firstChild.nodeValue = o ? "Hide details " : "See details "; }); });
 
@@ -2075,7 +2137,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
     }
     function show(i) {
       hi = i; var a = HX[i][0], f = HX[i][1];
-      if (document.body.classList.contains("hb")) { a = 10000; f = 100; }
+      if (document.body.classList.contains("hb")) { a = 10000; f = 120; }
       bars.forEach(function (b, j) { b.classList.toggle("on", j <= i); });
       tween(shownA, a, 900, function (v) { accEl.textContent = fmt(v); }); shownA = a;
       tween(shownF, f, 900, function (v) { feeEl.textContent = fmt(v); }); shownF = f;
