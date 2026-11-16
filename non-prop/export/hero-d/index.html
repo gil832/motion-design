@@ -874,6 +874,22 @@ body.hb .ph-bs .b { background: rgba(0,216,195,.16); color: #8ff3e8; }
 /* hero C/D: no floating cards over the image */
 .hc-vis .hc-card { display: none !important; }
 
+/* pricing: simple cards, rules behind one expander */
+.irules { gap: 0; }
+.irules[open] { gap: 16px; }
+.irules > summary { list-style: none; cursor: pointer; display: flex; align-items: center; gap: 14px; flex-wrap: wrap; font-size: 15px; letter-spacing: .1em; color: #fff; }
+.irules > summary::-webkit-details-marker { display: none; }
+.irules-s { margin-left: 12px; font-size: 14.5px; letter-spacing: 0; text-transform: none; color: rgba(255,255,255,.62); }
+.irules > summary i { margin-left: auto; width: 26px; height: 26px; border-radius: 50%; border: 1px solid rgba(255,255,255,.25); display: grid; place-items: center; transition: transform .4s var(--pop), background .3s; }
+.irules > summary i::before { content: "+"; font-style: normal; font-size: 16px; line-height: 1; color: #fff; }
+.irules[open] > summary i { transform: rotate(45deg); background: var(--lime); border-color: var(--lime); }
+.irules[open] > summary i::before { color: #0a0a0a; }
+.irules > summary:focus-visible { outline: 2px solid var(--lime); outline-offset: 4px; border-radius: 8px; }
+.irules-l li span small { display: block; color: rgba(255,255,255,.5); }
+.irules[open] .irules-l { margin-top: 18px; } .irules[open] .irules-n { margin-top: 18px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,.08); }
+.irules > summary { flex-wrap: nowrap; } .irules > summary i { flex: none; }
+@media (max-width: 600px) { .irules > summary { align-items: flex-start; } .irules-s { display: block; margin: 6px 0 0; } .irules > summary > :first-child { display: block; } }
+
 /* program tabs */
 .ptabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: 1080px; margin: 0 auto 18px; }
 .pt { appearance: none; cursor: pointer; text-align: left; padding: 20px 22px; border-radius: 22px; border: 1px solid rgba(143,243,232,.22); background: linear-gradient(170deg, rgba(10,44,50,.8), rgba(4,16,20,.92)); color: #fff; font: inherit; transition: transform .3s var(--ease), border-color .3s, background .3s, box-shadow .3s; }
@@ -1425,8 +1441,8 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
     <div class="wrap">
       <div class="sh rv"><span class="eyebrow">FundingRock Instant</span><h2>$10K Simulated Trading Account. <span class="grad">For Just $120.</span></h2><p>Or pick any size from $5K to $200K and pay once. No challenge to pass first: you start trading right away.</p></div>
       <div class="icards rv" id="icards"></div>
-      <div class="irules glass rv">
-        <span class="irules-k">Same simple rules on every size</span>
+      <details class="irules glass rv">
+        <summary class="irules-k"><span>See the rules<span class="irules-s"> Same simple rules on every account size</span></span><i aria-hidden="true"></i></summary>
         <ul class="irules-l">
           <li><b>4%</b><span>Daily loss limit</span></li>
           <li><b>8%</b><span>Max loss, trailing</span></li>
@@ -1434,7 +1450,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
           <li><b>80%</b><span>Reward Share, 95% with add-on</span></li>
         </ul>
         <p class="irules-n">News trading and EAs allowed · Trade on TradeLocker or cTrader · Approved Rewards processed within 48h, minimum $100 · 14-day refund if you haven't placed a trade.</p>
-      </div>
+      </details>
     </div>
   </section>
 
@@ -2290,7 +2306,6 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
   $("#icards").innerHTML = INSTANT.sizes.map(function (s) {
     return '<article class="ic' + (s[0] === 10000 ? ' ic-hl' : '') + '"><span class="ic-k">Simulated account</span><div class="ic-a tnum">' + K(s[0]) + '</div>' +
       '<div class="ic-f">One-time fee <b class="tnum">' + fmt(s[1]) + '</b></div>' +
-      '<ul class="ic-l"><li>Daily loss limit ' + fmt(s[0] * .04) + '</li><li>Max loss ' + fmt(s[0] * .08) + ', trailing</li><li>No profit target</li></ul>' +
       '<a class="buy" href="' + CO + '" target="_blank" rel="noopener">Get the ' + K(s[0]) + ' account <span class="ar" aria-hidden="true">→</span></a></article>';
   }).join("");
   howFor(INSTANT);
