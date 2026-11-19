@@ -2396,15 +2396,15 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
     window.npSimple = function (on) {
       if (!orig) orig = SW.map(function (r) { var e = $(r[0]); return e ? e.innerHTML : null; });
       SW.forEach(function (r, i) { var e = $(r[0]); if (!e || orig[i] === null) return; e.innerHTML = on ? r[1] : orig[i]; });
-      var ways = $("#ways"), top = $("#top");
-      if (!waysHome) waysHome = ways.nextElementSibling;
+      var ways = $("#ways"), top = $("#top"), story = $("#story");
+      if (!waysHome) { waysHome = ways.nextElementSibling; storyHome = story.nextElementSibling; }
       setTimeout(function () {
-        if (on) top.parentNode.insertBefore(ways, top.nextElementSibling);
-        else if (waysHome) waysHome.parentNode.insertBefore(ways, waysHome);
+        if (on) { top.parentNode.insertBefore(story, top.nextElementSibling); story.parentNode.insertBefore(ways, story.nextElementSibling); }
+        else { if (waysHome) waysHome.parentNode.insertBefore(ways, waysHome); if (storyHome) storyHome.parentNode.insertBefore(story, storyHome); }
       }, 0);
       reels(on);
     };
-    var waysHome = null, spin = 0, cur = 0;
+    var waysHome = null, storyHome = null, spin = 0, cur = 0;
     function reels(on) {
       clearInterval(spin); if (!on) return;
       var cols = $$("#ways .slot i"), n = 3, step = 0;
