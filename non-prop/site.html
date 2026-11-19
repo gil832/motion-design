@@ -898,7 +898,7 @@ body.hcv .hc-copy { max-width: 640px; }
 
 /* ================= Hero E: simplified page (less noise, bigger messages) ================= */
 body.hev .eyebrow, body.hev .hc-type, body.hev .hs-tag, body.hev .hc-proof .hc-av,
-body.hev .tp-k, body.hev .tp-n, body.hev .tp-chips, body.hev .st-stack, body.hev .st-tri, body.hev .mx-sub,
+body.hev .tp-k, body.hev .tp-n, body.hev .tp-chips, body.hev .st-stack, body.hev .st-tri,
 body.hev .ic-k, body.hev .safe-p, body.hev #hwFoot, body.hev .rwd-pills, body.hev .rwd-st,
 body.hev .cmp-out, body.hev .cc-more, body.hev .cc-r, body.hev .rk-b, body.hev .rk p:not(.rk-note),
 body.hev #rvB, body.hev .end-ph .tag, body.hev .hw-ar, body.hev .trk { display: none !important; }
@@ -1029,6 +1029,31 @@ body.hev #hw { display: none !important; }
 .h3c p b { color: #fff; font-weight: 600; }
 @media (max-width: 900px) { body.hev .hw3 { grid-template-columns: 1fr; gap: 14px; } .h3c { min-height: 0; } .h3n { margin-top: 18px; font-size: 72px; } .h3c h3 { margin-top: 20px; } .h3c p { padding-top: 14px; } }
 @media (prefers-reduced-motion: reduce) { .h3c { transition: none; } }
+
+/* Hero E: comparison as "the old way vs the new way" */
+.ow { display: none; }
+body.hev .ow { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1.15fr); align-items: stretch; gap: 22px; max-width: 1120px; margin: 0 auto; }
+body.hev #cmp, body.hev .cmp-ctl > span { display: none !important; }
+.ow-c { display: flex; flex-direction: column; gap: 6px; padding: clamp(28px, 3.2vw, 46px); border-radius: 30px; border: 1px solid; min-width: 0; }
+.ow-c.old { background: linear-gradient(170deg, rgba(255,255,255,.04), rgba(255,255,255,.01)); border-color: rgba(255,255,255,.1); }
+.ow-c.new { background: linear-gradient(160deg, rgba(217,255,0,.18), rgba(6,14,12,.95) 62%); border-color: rgba(217,255,0,.5); box-shadow: 0 40px 90px -40px rgba(217,255,0,.45); }
+.ow-k { font-size: 18px; font-weight: 500; color: rgba(255,255,255,.55); }
+.ow-c.new .ow-k { color: var(--lime); }
+.ow-n { margin-top: 18px; font-size: clamp(60px, 6.4vw, 100px); font-weight: 600; letter-spacing: -.05em; line-height: .95; }
+.ow-c.old .ow-n { color: rgba(255,255,255,.42); text-decoration: line-through; text-decoration-thickness: .06em; text-decoration-color: rgba(255,107,138,.8); }
+.ow-c.new .ow-n { background: linear-gradient(180deg, #f6ffc0, #d9ff00); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.ow-s { font-size: 18px; color: rgba(255,255,255,.6); }
+.ow-c.new .ow-s { color: rgba(255,255,255,.86); }
+.ow-s b { color: #fff; font-weight: 600; }
+.ow-c ul { list-style: none; margin: auto 0 0; padding: 30px 0 0; display: grid; gap: 12px; font-size: 17.5px; }
+.ow-c li { display: flex; gap: 12px; align-items: baseline; }
+.ow-c.old li { color: rgba(255,255,255,.5); }
+.ow-c.old li::before { content: "×"; color: rgba(255,107,138,.85); font-weight: 600; }
+.ow-c.new li { color: #fff; }
+.ow-c.new li::before { content: ""; flex: none; width: 12px; height: 7px; border-left: 2px solid var(--lime); border-bottom: 2px solid var(--lime); transform: rotate(-45deg) translateY(-3px); }
+.ow-arrow { align-self: center; width: 56px; height: 56px; border-radius: 50%; display: grid; place-items: center; font-size: 24px; color: #0a0a0a; background: var(--lime); box-shadow: 0 0 40px -6px rgba(217,255,0,.7); }
+body.hev .cmp-ctl { margin-bottom: 30px; }
+@media (max-width: 900px) { body.hev .ow { grid-template-columns: 1fr; gap: 12px; } .ow-arrow { justify-self: center; transform: rotate(90deg); width: 44px; height: 44px; } .ow-n { font-size: 56px; } .ow-c ul { padding-top: 18px; } }
 
 /* program tabs */
 .ptabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: 1080px; margin: 0 auto 18px; }
@@ -1703,6 +1728,21 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
         <p>Here's the model: you trade a simulated account, not your own money. Meet the program requirements and your simulated profit can earn real Rewards: 80% of it, or 95% with the add-on.</p>
       </div>
       <div class="cmp-ctl rv"><span>Pick an account size</span><div class="acc" role="group" aria-label="Account size" id="cSizes"></div></div>
+      <div class="ow rv" id="ow">
+        <article class="ow-c old">
+          <span class="ow-k">The old way</span>
+          <b class="ow-n tnum" id="owA">$5,000</b>
+          <span class="ow-s">of your own money, just to start</span>
+          <ul><li>Deposit your savings</li><li>Your money is in the market</li><li>Losses come out of your pocket</li></ul>
+        </article>
+        <div class="ow-arrow" aria-hidden="true">→</div>
+        <article class="ow-c new">
+          <span class="ow-k">The new way · FundingRock Instant</span>
+          <b class="ow-n tnum" id="owF">$70</b>
+          <span class="ow-s">one-time fee for a <b id="owS">$5K</b> simulated account</span>
+          <ul><li>No trading deposit</li><li>Your money stays out of the market</li><li>Qualify for real Rewards</li></ul>
+        </article>
+      </div>
       <div class="cmp rv" id="cmp">
         <article class="cc bad">
           <header><b>Broker's account</b><span>Your own money</span></header>
@@ -2327,6 +2367,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
     var SW = [
       [".hc-h", '<span class="hc-l1">You Don\'t Need Thousands</span><span class="hc-l2 grad">to Start Trading.</span>'],
       [".hc-sub", "<span>Pay a one-time fee to trade in a simulated market, with the opportunity to qualify for real performance-based Rewards.</span>"],
+      [".mx-sub", "The markets are simulated. The Rewards are real. Follow the rules, play it well, and qualify for a share. Getting started has never been this affordable."],
       ["#stMx", '<span class="t">Play</span> <span class="h">the markets.</span><br><span class="t">Keep</span> <span class="h lime">your money out.</span>'],
       ["#ways .sh h2", '<span class="slot" data-r="0"><i><b>$10K</b><b>$25K</b><b>$50K</b><b>$10K</b><b>$25K</b><b>$50K</b><b>$10K</b><b>$25K</b><b>$50K</b><b>$10K</b><b>$25K</b><b>$50K</b><b>$10K</b><b>$25K</b><b>$50K</b><b>$10K</b><b>$25K</b><b>$50K</b></i></span> Simulated Trading Account.<br><span class="sl-p">For Just <span class="slot" data-r="1"><i><b>$120</b><b>$200</b><b>$350</b><b>$120</b><b>$200</b><b>$350</b><b>$120</b><b>$200</b><b>$350</b><b>$120</b><b>$200</b><b>$350</b><b>$120</b><b>$200</b><b>$350</b><b>$120</b><b>$200</b><b>$350</b></i></span>.</span>'],
       ["#ways .sh p", "Or pick any size from $5K to $200K. Pay once. No test to pass first."],
@@ -2334,7 +2375,8 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
       ["#how .sh p", ""],
       ["#rewards .sh h2", 'They played it well. <span class="grad">They got rewarded.</span>'],
       ["#rewards .sh p", "Each one is a real Reward, paid to a FundingRock trader as their share of a strong simulated performance."],
-      ["#drop .sh p", "Trade the same size without putting your own money in."],
+      ["#drop .sh h2", 'Trading has never been <span class="grad">this easy to start.</span>'],
+      ["#drop .sh p", "Same account size. A very different starting point."],
       ["#rules .sh h2", 'The rules. <span class="grad">Short and simple.</span>'],
       ["#rules .sh p", "Two loss limits and no target. Break a limit, and the account closes."],
       ["#end h2", 'Start trading. <span class="grad">Today.</span>'],
@@ -2376,6 +2418,17 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
       }, 3600);
     }
     if (document.body.classList.contains("hev")) window.npSimple(true);
+  })();
+
+  /* Hero E: old way vs new way follows the size buttons */
+  (function () {
+    var ow = $("#ow"); if (!ow) return;
+    var SZ = [[5000, 70], [10000, 120], [25000, 200], [50000, 350], [100000, 600], [200000, 1100]], a0 = 5000, f0 = 70;
+    function upd(i) { var s = SZ[i]; if (!s) return;
+      tween(a0, s[0], 600, function (v) { $("#owA").textContent = fmt(v); }); a0 = s[0];
+      tween(f0, s[1], 600, function (v) { $("#owF").textContent = fmt(v); }); f0 = s[1];
+      $("#owS").textContent = "$" + (s[0] / 1000) + "K"; }
+    $("#cSizes").addEventListener("click", function (e) { var b = e.target.closest(".ac"); if (!b) return; upd($$("#cSizes .ac").indexOf(b)); });
   })();
 
   /* comparison details toggle (C/D) */
@@ -2501,7 +2554,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
   $("#cSizes").innerHTML = CS.map(function (c, i) { return '<button type="button" class="ac" aria-pressed="' + (i === cI) + '"><b>$' + (c[0] / 1000) + "K</b><small>Fee <em>$" + c[1].toLocaleString("en-US") + "</em></small></button>"; }).join("");
   function cRender(anim) {
     var a = CS[cI][0], f = CS[cI][1], K = "$" + (a / 1000) + "K";
-    $("#cA").textContent = K;
+    var cA = $("#cA"); if (cA) cA.textContent = K;
     var from = cShown; cShown = [a, f];
     tween(anim ? from[0] : a, a, 700, function (v) { $("#cBk").textContent = fmt(v); });
     tween(anim ? from[1] : f, f, 700, function (v) { $("#cFr").textContent = fmt(v); });
