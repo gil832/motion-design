@@ -1238,6 +1238,22 @@ body.hev .ow { display: none !important; }
 footer.ft .ft-g > div:not(:first-child) { display: none !important; }
 footer.ft .ft-g { grid-template-columns: 1fr !important; }
 
+/* Hero E: pain points (section 2) */
+.pain { display: none; }
+body.hev .pain { display: block; }
+.pn-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; max-width: 1180px; margin: 0 auto; }
+.pn { position: relative; display: flex; flex-direction: column; padding: clamp(28px, 3vw, 42px); border-radius: 28px; background: linear-gradient(170deg, rgba(255,90,110,.10), rgba(10,8,10,.92) 55%); border: 1px solid rgba(255,107,138,.22); min-width: 0; }
+.pn-x { position: absolute; top: 24px; right: 26px; width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; font-size: 22px; color: #ff7a8f; border: 1px solid rgba(255,107,138,.45); }
+.pn-n { font-size: clamp(56px, 5.6vw, 84px); font-weight: 600; letter-spacing: -.05em; line-height: .95; color: rgba(255,255,255,.92); }
+.pn h3 { margin: 26px 0 0; font-size: clamp(22px, 2vw, 28px); font-weight: 600; letter-spacing: -.02em; line-height: 1.15; color: #fff; }
+.pn p { margin: 12px 0 0; font-size: clamp(16px, 1.3vw, 18px); line-height: 1.5; color: rgba(255,255,255,.7); }
+.pn-next { display: flex; width: fit-content; align-items: center; gap: 14px; margin: 40px auto 0; padding: 16px 26px; border-radius: 999px; border: 1px solid rgba(217,255,0,.5); background: rgba(217,255,0,.08); color: #fff; text-decoration: none; font-size: clamp(18px, 1.5vw, 22px); font-weight: 500; transition: background .3s, transform .4s cubic-bezier(.16,1,.3,1); }
+.pn-next:hover { background: rgba(217,255,0,.16); transform: translateY(-2px); }
+.pn-next i { font-style: normal; width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; background: var(--lime); color: #0a0a0a; animation: pnBob 2s ease-in-out infinite; }
+@keyframes pnBob { 50% { transform: translateY(4px); } }
+@media (max-width: 900px) { .pn-grid { grid-template-columns: 1fr; gap: 12px; } .pn h3 { margin-top: 16px; } .pn-next { font-size: 16px; padding: 14px 20px; } }
+@media (prefers-reduced-motion: reduce) { .pn-next i { animation: none; } }
+
 /* program tabs */
 .ptabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: 1080px; margin: 0 auto 18px; }
 .pt { appearance: none; cursor: pointer; text-align: left; padding: 20px 22px; border-radius: 22px; border: 1px solid rgba(143,243,232,.22); background: linear-gradient(170deg, rgba(10,44,50,.8), rgba(4,16,20,.92)); color: #fff; font: inherit; transition: transform .3s var(--ease), border-color .3s, background .3s, box-shadow .3s; }
@@ -1762,6 +1778,18 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
 
   <!-- 2. pain point comparison: scroll drives a bad stretch, the cap line holds -->
   <!-- pinned scroll story: the screen holds, scenes swap as you scroll -->
+  <section class="sec pain" id="pain" aria-label="Why trading feels out of reach">
+    <div class="wrap">
+      <div class="sh rv"><h2>Trading Shouldn't <span class="grad">Cost You Your Savings.</span></h2><p>The usual way to trade asks a lot before you even start.</p></div>
+      <div class="pn-grid rv">
+        <article class="pn"><span class="pn-x" aria-hidden="true">×</span><b class="pn-n">$10K</b><h3>To Trade $10K, You Need $10K.</h3><p>With a broker, the account size is your own money.</p></article>
+        <article class="pn"><span class="pn-x" aria-hidden="true">×</span><b class="pn-n">100%</b><h3>Every Loss Is Yours.</h3><p>Losses come straight out of your savings.</p></article>
+        <article class="pn"><span class="pn-x" aria-hidden="true">×</span><b class="pn-n">Small</b><h3>Small Savings, Small Trades.</h3><p>Without capital, it's hard to trade at a size that matters.</p></article>
+      </div>
+      <a class="pn-next rv" href="#story"><span>FundingRock Instant changes that.</span><i aria-hidden="true">↓</i></a>
+    </div>
+  </section>
+
   <section class="sec story" id="story" aria-label="How it feels">
     <svg class="trk" id="stTrk" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true"></svg>
     <div class="wrap">
@@ -2598,7 +2626,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
   /* Hero E: the simplified page. Swaps a few lines of copy; everything else is CSS under body.hev */
   (function () {
     var SW = [
-      [".hc-h", '<span class="hc-l1">You Don\'t Need Thousands</span><span class="hc-l2 grad">to Start Trading.</span>'],
+      [".hc-h", '<span class="hc-l1">You Don\'t Need A Fortune</span><span class="hc-l2 grad">To Start Trading.</span>'],
       [".hc-sub", "<span>Pay a one-time fee to trade in a simulated market, with the opportunity to qualify for real performance-based Rewards.</span>"],
       [".mx-sub", "A whole new way to experience trading."],
       ["#stMx", '<span class="t">Big</span> <span class="h">opportunity.</span><br><span class="t">Small</span> <span class="h lime">price to start.</span>'],
@@ -2626,7 +2654,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
       var ways = $("#ways"), top = $("#top"), story = $("#story");
       if (!waysHome) { waysHome = ways.nextElementSibling; storyHome = story.nextElementSibling; }
       setTimeout(function () {
-        if (on) { top.parentNode.insertBefore(story, top.nextElementSibling); story.parentNode.insertBefore(ways, story.nextElementSibling); }
+        if (on) { top.parentNode.insertBefore(story, top.nextElementSibling); story.parentNode.insertBefore(ways, story.nextElementSibling); var pn = $("#pain"); if (pn) top.parentNode.insertBefore(pn, top.nextElementSibling); }
         else { if (waysHome) waysHome.parentNode.insertBefore(ways, waysHome); if (storyHome) storyHome.parentNode.insertBefore(story, storyHome); }
       }, 0);
       reels(on);
@@ -2673,7 +2701,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
 
   /* Hero E: Title Case on headings, subtitles, labels, buttons and short lines (originals restored when leaving E) */
   (function () {
-    var SEL = "h1, h2, h3, .sh p, .hc-sub, .mx-sub, .buy, .hc-btn, .nav-r a, .ow-k, .ow-s, .ow-c li, .h3k, .tp-txt h3, .pc1-k, .pc1-go p, .pc1-rules span, .pc1-rules em, .irules-k, .rk-k, .rk-note, .rk-v em, .hc-stats span, .faq summary, #endP, .cc header, .cc-k, .ic-f, .tpsum a, .ft-g h4, .ft-g a, .ac-t b, .ac-t em, .ac-lt b, .ac-lt em, .gm-l, .gm-chips i, .gm-t b, .gm-t em, .gm-lives small, .ac-mk, .vt-row > span, .vt-c b, .vt-c small";
+    var SEL = "h1, h2, h3, .sh p, .hc-sub, .mx-sub, .buy, .hc-btn, .nav-r a, .ow-k, .ow-s, .ow-c li, .h3k, .tp-txt h3, .pc1-k, .pc1-go p, .pc1-rules span, .pc1-rules em, .irules-k, .rk-k, .rk-note, .rk-v em, .hc-stats span, .faq summary, #endP, .cc header, .cc-k, .ic-f, .tpsum a, .ft-g h4, .ft-g a, .ac-t b, .ac-t em, .ac-lt b, .ac-lt em, .gm-l, .gm-chips i, .gm-t b, .gm-t em, .gm-lives small, .ac-mk, .vt-row > span, .vt-c b, .vt-c small, .pn-next span";
     var SMALL = /^(a|an|and|as|at|but|by|for|in|of|on|or|the|to|vs|via|per|from|with)$/i;
     var saved = [];
     function title(t, first) {
@@ -2687,7 +2715,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
     window.npTitle = function (on) {
       if (!on) { saved.forEach(function (r) { if (r[0].isConnected) r[0].nodeValue = r[1]; }); saved = []; return; }
       $$(SEL).forEach(function (el) {
-        if (el.closest(".ft-b, .cmp-note, .irules-n, #hcType, .rk p:not(.rk-note)")) return;
+        if (el.closest(".ft-b, .cmp-note, .irules-n, #hcType, .hc-h, .rk p:not(.rk-note)")) return;
         var w = document.createTreeWalker(el, NodeFilter.SHOW_TEXT), n, first = true;
         while ((n = w.nextNode())) {
           if (!/[A-Za-z]/.test(n.nodeValue)) { if (/[.!?:]\s*$/.test(n.nodeValue)) first = true; continue; }
