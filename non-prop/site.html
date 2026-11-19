@@ -930,7 +930,7 @@ body.hev .cmp-note { font-size: 15px; color: rgba(255,255,255,.7); }
   body.hev .sh h2 { font-size: 40px; }
   body.hev .sh h2.mx { font-size: 30px; }
   body.hev .hero h1.hc-h { font-size: 44px !important; }
-  body.hev .hc-stats { grid-template-columns: 1fr 1fr 1fr; } body.hev .hc-stats b { font-size: 32px; } body.hev .hc-stats span { font-size: 12.5px; }
+  body.hev .hc-stats { grid-template-columns: repeat(3, minmax(0, 1fr)); } body.hev .hc-stats > div { padding: 22px 8px; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; text-align: center; min-width: 0; } body.hev .hc-stats b { font-size: clamp(26px, 8vw, 32px); } body.hev .hc-stats span { font-size: 12.5px; line-height: 1.35; margin-top: 8px; max-width: 12ch; }
 }
 
 /* Hero E: centred hero, title over the image */
