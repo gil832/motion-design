@@ -970,6 +970,46 @@ body.hev .rk.rk-max { align-items: flex-end; text-align: left; }
 body.hev .rk-max .rk-v { justify-content: flex-start; }
 @media (max-width: 600px) { body.hev .rk.rk-max { align-items: flex-start; } }
 
+/* Hero E: single pricing component instead of six cards */
+.pc1 { display: none; }
+body.hev .pc1 { display: grid; gap: 28px; max-width: 1120px; margin: 0 auto; padding: clamp(24px, 3.4vw, 44px); border-radius: 30px; }
+body.hev #icards, body.hev .irules .irules-l { display: none !important; }
+body.hev .pc1 { grid-template-columns: minmax(0, 1fr); } .pc1 > *, .pc1-top > *, .pc1-rules > * { min-width: 0; }
+body.hev .irules { margin-top: 14px; }
+.pc1-top { display: grid; grid-template-columns: auto auto 1fr; gap: clamp(24px, 4vw, 64px); align-items: end; }
+.pc1-k { display: block; font-size: 14px; letter-spacing: .14em; text-transform: uppercase; color: rgba(255,255,255,.6); }
+.pc1-v b { display: block; margin-top: 8px; font-size: clamp(48px, 6vw, 88px); font-weight: 600; letter-spacing: -.045em; line-height: .95; color: #fff; }
+.pc1-v b.lime { color: var(--lime); }
+.pc1-go { justify-self: end; text-align: center; }
+.pc1-go .buy { min-width: 250px; justify-content: center; }
+.pc1-go p { margin: 10px 0 0; font-size: 15px; color: rgba(255,255,255,.7); }
+.pc1-sz { display: flex; align-items: center; gap: 10px; }
+.pc1-chips { display: flex; gap: 8px; flex: 1; overflow-x: auto; scrollbar-width: none; }
+.pc1-chips::-webkit-scrollbar { display: none; }
+.pc1-chips .chip { flex: 1 0 auto; font-size: 16px; padding: 12px 16px; }
+.pc1-ar { flex: none; width: 46px; height: 46px; border-radius: 50%; border: 1px solid rgba(255,255,255,.2); background: rgba(255,255,255,.04); color: #fff; font-size: 24px; line-height: 1; cursor: pointer; transition: background .3s, border-color .3s; }
+.pc1-ar:hover { border-color: var(--lime); color: var(--lime); }
+.pc1-ar:focus-visible, .pc1-chips .chip:focus-visible { outline: 2px solid var(--lime); outline-offset: 2px; }
+.pc1-rules { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid rgba(255,255,255,.1); padding-top: 26px; }
+.pc1-rules > div { padding: 0 18px; border-left: 1px solid rgba(255,255,255,.1); display: grid; gap: 6px; align-content: start; }
+.pc1-rules > div:first-child { padding-left: 0; border-left: 0; }
+.pc1-rules span { font-size: 13px; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.6); }
+.pc1-rules b { font-size: clamp(24px, 2.2vw, 32px); font-weight: 600; letter-spacing: -.03em; color: #fff; }
+.pc1-rules em { font-style: normal; font-size: 14.5px; color: rgba(255,255,255,.65); }
+@media (max-width: 900px) {
+  .pc1-top { grid-template-columns: 1fr 1fr; align-items: start; }
+  .pc1-go { grid-column: 1 / -1; justify-self: stretch; }
+  .pc1-go .buy { width: 100%; min-width: 0; }
+  .pc1-rules { grid-template-columns: 1fr 1fr; gap: 22px 0; }
+  .pc1-rules > div:nth-child(3) { padding-left: 0; border-left: 0; }
+}
+@media (max-width: 600px) {
+  .pc1-v b { font-size: 34px; } .pc1-k { font-size: 12px; } .pc1-top { gap: 18px; }
+  .pc1-ar { display: none; }
+  .pc1-chips .chip { flex: 0 0 auto; }
+  .pc1-rules b { font-size: 19px; } .pc1-rules span { font-size: 11.5px; } .pc1-rules > div { padding: 0 12px; }
+}
+
 /* program tabs */
 .ptabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: 1080px; margin: 0 auto 18px; }
 .pt { appearance: none; cursor: pointer; text-align: left; padding: 20px 22px; border-radius: 22px; border: 1px solid rgba(143,243,232,.22); background: linear-gradient(170deg, rgba(10,44,50,.8), rgba(4,16,20,.92)); color: #fff; font: inherit; transition: transform .3s var(--ease), border-color .3s, background .3s, box-shadow .3s; }
@@ -1521,8 +1561,26 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
     <div class="wrap">
       <div class="sh rv"><span class="eyebrow">FundingRock Instant</span><h2>$10K Simulated Trading Account. <span class="grad">For Just $120.</span></h2><p>Or pick any size from $5K to $200K and pay once. No challenge to pass first: you start trading right away.</p></div>
       <div class="icards rv" id="icards"></div>
+      <div class="pc1 glass rv" id="pc1">
+        <div class="pc1-top">
+          <div class="pc1-v"><span class="pc1-k">Simulated account</span><b class="tnum" id="pcA">$10,000</b></div>
+          <div class="pc1-v"><span class="pc1-k">One-time fee</span><b class="tnum lime" id="pcF">$120</b></div>
+          <div class="pc1-go"><a class="buy lg" id="pcBuy" href="https://checkout.fundingrock.com/onboarding" target="_blank" rel="noopener">Get the $10K account <span class="ar" aria-hidden="true">→</span></a><p>Pay once. No challenge to pass first.</p></div>
+        </div>
+        <div class="pc1-sz">
+          <button type="button" class="pc1-ar" id="pcPrev" aria-label="Smaller account">‹</button>
+          <div class="pc1-chips" role="group" aria-label="Account size" id="pcChips"></div>
+          <button type="button" class="pc1-ar" id="pcNext" aria-label="Bigger account">›</button>
+        </div>
+        <div class="pc1-rules">
+          <div><span>Profit target</span><b>None</b></div>
+          <div><span>Daily loss limit</span><b class="tnum" id="pcD">4% · $400</b></div>
+          <div><span>Max loss</span><b class="tnum" id="pcM">8% · $800</b><em>Trailing</em></div>
+          <div><span>Your Reward Share</span><b>80%</b><em>95% with add-on</em></div>
+        </div>
+      </div>
       <details class="irules glass rv">
-        <summary class="irules-k"><span>See the rules<span class="irules-s"> Same simple rules on every account size</span></span><i aria-hidden="true"></i></summary>
+        <summary class="irules-k"><span>See all the rules<span class="irules-s"> Same simple rules on every account size</span></span><i aria-hidden="true"></i></summary>
         <ul class="irules-l">
           <li><b>4%</b><span>Daily loss limit</span></li>
           <li><b>8%</b><span>Max loss, trailing</span></li>
@@ -2445,6 +2503,28 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
       '<a class="buy" href="' + CO + '" target="_blank" rel="noopener">Get the ' + K(s[0]) + ' account <span class="ar" aria-hidden="true">→</span></a></article>';
   }).join("");
   howFor(INSTANT);
+  /* Hero E: one pricing component. Pick a size; numbers, button and limits update in place */
+  (function () {
+    var box = $("#pc1"); if (!box) return;
+    var S = INSTANT.sizes, i = 1, sA = S[1][0], sF = S[1][1];
+    $("#pcChips").innerHTML = S.map(function (s, j) { return '<button type="button" class="chip" aria-pressed="' + (j === i) + '">' + K(s[0]) + '</button>'; }).join("");
+    var chips = $$("#pcChips .chip");
+    function set(j) {
+      i = (j + S.length) % S.length; var a = S[i][0], f = S[i][1];
+      chips.forEach(function (c, k) { c.setAttribute("aria-pressed", k === i); });
+      tween(sA, a, 500, function (v) { $("#pcA").textContent = fmt(v); }); sA = a;
+      tween(sF, f, 500, function (v) { $("#pcF").textContent = fmt(v); }); sF = f;
+      $("#pcD").textContent = "4% · " + fmt(a * .04); $("#pcM").textContent = "8% · " + fmt(a * .08);
+      $("#pcBuy").innerHTML = "Get the " + K(a) + ' account <span class="ar" aria-hidden="true">→</span>';
+      var c = chips[i]; if (c && c.scrollIntoView && innerWidth < 700) c.parentNode.scrollTo({ left: c.offsetLeft - c.parentNode.clientWidth / 2 + c.clientWidth / 2, behavior: "smooth" });
+    }
+    chips.forEach(function (c, k) { c.addEventListener("click", function () { set(k); }); });
+    $("#pcPrev").addEventListener("click", function () { set(i - 1); });
+    $("#pcNext").addEventListener("click", function () { set(i + 1); });
+    var x0 = null;
+    box.addEventListener("touchstart", function (e) { x0 = e.touches[0].clientX; }, { passive: true });
+    box.addEventListener("touchend", function (e) { if (x0 === null) return; var dx = e.changedTouches[0].clientX - x0; if (Math.abs(dx) > 50) set(i + (dx < 0 ? 1 : -1)); x0 = null; }, { passive: true });
+  })();
 
   /* ---------- press, traders, certificates, reviews ---------- */
   var PR = [["forbes", "Forbes"], ["investing", "Investing.com"], ["bloomberg", "Bloomberg"], ["marketsinsiders", "Markets Insider"], ["yahoofinance", "Yahoo Finance"], ["benzinga", "Benzinga"]];
