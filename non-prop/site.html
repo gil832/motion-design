@@ -2576,6 +2576,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
         else { if (waysHome) waysHome.parentNode.insertBefore(ways, waysHome); if (storyHome) storyHome.parentNode.insertBefore(story, storyHome); }
       }, 0);
       reels(on);
+      if (window.npFeat) window.npFeat(on);
       if (on) setTimeout(function () { if (window.npTitle) { window.npTitle(false); window.npTitle(true); } }, 60);
     };
     var waysHome = null, storyHome = null, spin = 0, cur = 0;
@@ -2856,6 +2857,11 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
     v.appendChild(f);
   }
   $("#featPlay").addEventListener("click", playFeat);
+  /* Hero E features Anthony; the other versions keep Ben */
+  window.npFeat = function (on) {
+    var a = TR[3]; feature(on ? [a[0], a[1], "How he grew his trading with FundingRock", a[3]] : TR[0], false);
+  };
+  if (document.body.classList.contains("hev")) window.npFeat(true);
   document.addEventListener("click", function (e) {
     var a = e.target.closest && e.target.closest(".ug[data-i]"); if (!a) return;
     e.preventDefault(); feature(TR[+a.getAttribute("data-i")], true);
