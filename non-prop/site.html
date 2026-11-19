@@ -2404,6 +2404,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
     ];
     var orig = null;
     window.npSimple = function (on) {
+      if (!on && window.npTitle) window.npTitle(false);
       if (!orig) orig = SW.map(function (r) { var e = $(r[0]); return e ? e.innerHTML : null; });
       SW.forEach(function (r, i) { var e = $(r[0]); if (!e || orig[i] === null) return; e.innerHTML = on ? r[1] : orig[i]; });
       var ways = $("#ways"), top = $("#top"), story = $("#story");
@@ -2413,6 +2414,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
         else { if (waysHome) waysHome.parentNode.insertBefore(ways, waysHome); if (storyHome) storyHome.parentNode.insertBefore(story, storyHome); }
       }, 0);
       reels(on);
+      if (on) setTimeout(function () { if (window.npTitle) { window.npTitle(false); window.npTitle(true); } }, 60);
     };
     var waysHome = null, storyHome = null, spin = 0, cur = 0;
     function reels(on) {
@@ -2449,6 +2451,33 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
       tween(f0, s[1], 600, function (v) { $("#owF").textContent = fmt(v); }); f0 = s[1];
       $("#owS").textContent = "$" + (s[0] / 1000) + "K"; }
     $("#cSizes").addEventListener("click", function (e) { var b = e.target.closest(".ac"); if (!b) return; upd($$("#cSizes .ac").indexOf(b)); });
+  })();
+
+  /* Hero E: Title Case on headings, subtitles, labels, buttons and short lines (originals restored when leaving E) */
+  (function () {
+    var SEL = "h1, h2, h3, .sh p, .hc-sub, .mx-sub, .buy, .hc-btn, .nav-r a, .ow-k, .ow-s, .ow-c li, .h3k, .tp-txt h3, .pc1-k, .pc1-go p, .pc1-rules span, .pc1-rules em, .irules-k, .rk-k, .rk-note, .rk-v em, .hc-stats span, .faq summary, #endP, .cc header, .cc-k, .ic-f, .tpsum a, .ft-g h4, .ft-g a";
+    var SMALL = /^(a|an|and|as|at|but|by|for|in|of|on|or|the|to|vs|via|per|from|with)$/i;
+    var saved = [];
+    function title(t, first) {
+      return t.replace(/[A-Za-z][A-Za-z'’]*/g, function (w, i) {
+        var start = (first && /^\s*$/.test(t.slice(0, i))) || /[.!?:]\s+$/.test(t.slice(0, i));
+        var end = /^[^A-Za-z]*([.!?:]|$)/.test(t.slice(i + w.length));
+        if (!start && !end && SMALL.test(w)) return w.toLowerCase();
+        return w.charAt(0).toUpperCase() + w.slice(1);
+      });
+    }
+    window.npTitle = function (on) {
+      if (!on) { saved.forEach(function (r) { if (r[0].isConnected) r[0].nodeValue = r[1]; }); saved = []; return; }
+      $$(SEL).forEach(function (el) {
+        if (el.closest(".ft-b, .cmp-note, .irules-n, #hcType, .rk p:not(.rk-note)")) return;
+        var w = document.createTreeWalker(el, NodeFilter.SHOW_TEXT), n, first = true;
+        while ((n = w.nextNode())) {
+          if (!/[A-Za-z]/.test(n.nodeValue)) { if (/[.!?:]\s*$/.test(n.nodeValue)) first = true; continue; }
+          var v = title(n.nodeValue, first); first = /[.!?:]\s*$/.test(n.nodeValue);
+          if (v !== n.nodeValue) { saved.push([n, n.nodeValue]); n.nodeValue = v; }
+        }
+      });
+    };
   })();
 
   /* comparison details toggle (C/D) */
@@ -2613,7 +2642,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
       tween(sA, a, 500, function (v) { $("#pcA").textContent = fmt(v); }); sA = a;
       tween(sF, f, 500, function (v) { $("#pcF").textContent = fmt(v); }); sF = f;
       $("#pcD").textContent = "4% · " + fmt(a * .04); $("#pcM").textContent = "8% · " + fmt(a * .08);
-      $("#pcBuy").innerHTML = "Get the " + K(a) + ' account <span class="ar" aria-hidden="true">→</span>';
+      $("#pcBuy").innerHTML = (document.body.classList.contains("hev") ? "Get the " + K(a) + " Account" : "Get the " + K(a) + " account") + ' <span class="ar" aria-hidden="true">→</span>';
       var c = chips[i]; if (c && c.scrollIntoView && innerWidth < 700) c.parentNode.scrollTo({ left: c.offsetLeft - c.parentNode.clientWidth / 2 + c.clientWidth / 2, behavior: "smooth" });
     }
     chips.forEach(function (c, k) { c.addEventListener("click", function () { set(k); }); });
