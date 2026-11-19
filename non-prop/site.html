@@ -896,6 +896,42 @@ body.hcv .hc-copy { max-width: 640px; }
 .mx-sub { margin: 18px auto 0; max-width: 56ch; font-size: 18px; line-height: 1.5; color: rgba(255,255,255,.72); text-align: center; }
 @media (max-width: 600px) { .mx-sub { font-size: 16px; } .sh h2.mx { font-size: 31px; } }
 
+/* ================= Hero E: simplified page (less noise, bigger messages) ================= */
+body.hev .eyebrow, body.hev .hc-type, body.hev .hs-tag, body.hev .hc-proof .hc-av,
+body.hev .tp-k, body.hev .tp-n, body.hev .tp-chips, body.hev .st-stack, body.hev .st-tri, body.hev .mx-sub,
+body.hev .ic-k, body.hev .safe-p, body.hev #hwFoot, body.hev .rwd-pills, body.hev .rwd-st,
+body.hev .cmp-out, body.hev .cc-more, body.hev .cc-r, body.hev .rk-b, body.hev .rk p:not(.rk-note),
+body.hev #rvB, body.hev .end-ph .tag, body.hev .hw-ar, body.hev .trk { display: none !important; }
+body.hev .sh h2 { font-size: clamp(44px, 6.4vw, 96px); letter-spacing: -0.03em; line-height: 1; }
+body.hev .sh p { font-size: clamp(18px, 1.5vw, 22px); color: rgba(255,255,255,.78); max-width: 40ch; }
+body.hev .sh p:empty { display: none; }
+body.hev .sec { padding-block: clamp(80px, 11vw, 160px); }
+body.hev .hero h1.hc-h { font-size: clamp(44px, 5vw, 72px) !important; }
+body.hev .hc-copy { max-width: 680px; }
+body.hev .hw.three, body.hev .hw.three:has(> article.hs:hover) { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; gap: 18px; }
+body.hev .hw.three > article.hs { opacity: 1 !important; filter: none !important; }
+body.hev .mq-tr .ug { } body.hev #traders .mq { display: none; }
+body.hev .hc-sub { font-size: clamp(19px, 1.5vw, 22px); max-width: 32ch; }
+body.hev .hc-sub span { color: rgba(255,255,255,.82); }
+body.hev .hc-stats > div:nth-child(3) { display: none; }
+body.hev .hc-stats { grid-template-columns: repeat(3, 1fr); }
+body.hev .hc-stats > div:nth-child(4)::before { display: block; }
+body.hev .tp h3 { font-size: clamp(30px, 3vw, 48px); }
+body.hev .tp p { font-size: 18px; }
+body.hev .ic { padding: 32px 30px 26px; }
+body.hev .ic-a { font-size: clamp(48px, 4.6vw, 66px); }
+body.hev .hs h3 { font-size: clamp(26px, 2.4vw, 34px) !important; }
+body.hev .hs p { font-size: 18px; color: rgba(255,255,255,.78); }
+body.hev .rk-k { font-size: clamp(20px, 1.7vw, 24px); }
+body.hev .faq summary { font-size: clamp(19px, 1.6vw, 22px); }
+body.hev .ft-b { font-size: 14px; color: rgba(10,15,0,.74); }
+body.hev .cmp-note { font-size: 15px; color: rgba(255,255,255,.7); }
+@media (max-width: 600px) {
+  body.hev .sh h2 { font-size: 40px; }
+  body.hev .hero h1.hc-h { font-size: 44px !important; }
+  body.hev .hc-stats { grid-template-columns: 1fr 1fr 1fr; } body.hev .hc-stats b { font-size: 32px; } body.hev .hc-stats span { font-size: 12.5px; }
+}
+
 /* program tabs */
 .ptabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: 1080px; margin: 0 auto 18px; }
 .pt { appearance: none; cursor: pointer; text-align: left; padding: 20px 22px; border-radius: 22px; border: 1px solid rgba(143,243,232,.22); background: linear-gradient(170deg, rgba(10,44,50,.8), rgba(4,16,20,.92)); color: #fff; font: inherit; transition: transform .3s var(--ease), border-color .3s, background .3s, box-shadow .3s; }
@@ -1705,16 +1741,16 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
   var certs = null, certsHome = null;
   function setHero(v) {
     var b = document.body;
-    b.classList.toggle("hb", v === "b"); b.classList.toggle("hcv", v === "c" || v === "d"); b.classList.toggle("hdv", v === "d");
+    b.classList.toggle("hb", v === "b"); b.classList.toggle("hcv", v === "c" || v === "d" || v === "e"); b.classList.toggle("hdv", v === "d" || v === "e"); b.classList.toggle("hev", v === "e"); if (window.npSimple) window.npSimple(v === "e");
     if (!certs) { certs = document.getElementById("rewards"); certsHome = certs && certs.nextElementSibling; }
     if (certs) {
-      if (v === "c" || v === "d") { var hero = document.getElementById("top"); hero.parentNode.insertBefore(certs, hero.nextElementSibling); certs.style.paddingTop = "clamp(40px, 6vw, 80px)"; }
+      if (v === "c" || v === "d" || v === "e") { var hero = document.getElementById("top"); hero.parentNode.insertBefore(certs, hero.nextElementSibling); certs.style.paddingTop = "clamp(40px, 6vw, 80px)"; }
       else if (certsHome) { certsHome.parentNode.insertBefore(certs, certsHome); certs.style.paddingTop = "0"; }
     }
     if (window.npHeroShow) window.npHeroShow();
     document.dispatchEvent(new CustomEvent("np-hero", { detail: v }));
   }
-  var hq = (location.search.match(/[?&]hero=([abcd])\b/) || [])[1];
+  var hq = (location.search.match(/[?&]hero=([abcde])\b/) || [])[1];
   if (hq) document.addEventListener("DOMContentLoaded", function () { setHero(hq); });
   addEventListener("message", function (e) { var d = e.data; if (e.source === parent && d && d.fr === "np" && d.t === "hero") setHero(d.v); });
 })();
@@ -2163,6 +2199,30 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
     draw();
     new IntersectionObserver(function (es) { live = es[0].isIntersecting; }).observe(svg);
     if (!reduce) setInterval(function () { if (live && !document.hidden && document.body.classList.contains("hb")) tick(); }, 700);
+  })();
+
+  /* Hero E: the simplified page. Swaps a few lines of copy; everything else is CSS under body.hev */
+  (function () {
+    var SW = [
+      [".hc-h", '<span class="hc-l1">You Don\'t Need Thousands</span><span class="hc-l2 grad">to Start Trading.</span>'],
+      [".hc-sub", "<span>Get a $10K simulated account for $120. Start trading right away. Your own money stays out of the market.</span>"],
+      ["#stMx", '<span class="t">Play</span> <span class="h">the markets.</span><br><span class="t">Keep</span> <span class="h lime">your money out.</span>'],
+      ["#ways .sh h2", 'Pick your account. <span class="grad">Pay once.</span>'],
+      ["#ways .sh p", "Every size, one simple fee. No test to pass first."],
+      ["#hwH", 'Three steps. <span class="grad">That\'s it.</span>'],
+      ["#how .sh p", ""],
+      ["#drop .sh p", "Trade the same size without putting your own money in."],
+      ["#rules .sh h2", 'The rules. <span class="grad">Short and simple.</span>'],
+      ["#rules .sh p", ""],
+      ["#end h2", 'Start trading. <span class="grad">Today.</span>'],
+      ["#endP", "Pick an account, pay once, and trade right away."]
+    ];
+    var orig = null;
+    window.npSimple = function (on) {
+      if (!orig) orig = SW.map(function (r) { var e = $(r[0]); return e ? e.innerHTML : null; });
+      SW.forEach(function (r, i) { var e = $(r[0]); if (!e || orig[i] === null) return; e.innerHTML = on ? r[1] : orig[i]; });
+    };
+    if (document.body.classList.contains("hev")) window.npSimple(true);
   })();
 
   /* comparison details toggle (C/D) */
