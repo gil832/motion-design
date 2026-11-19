@@ -1157,6 +1157,10 @@ body.hev #tri3 { display: none !important; }
 }
 @media (prefers-reduced-motion: reduce) { .gm-s, .gm-s::before, .gm-hud { transition: none; } .gm-t.on .gm-bar.run { animation: none; } }
 
+.gm-big i { font-style: normal; opacity: .45; margin: 0 .03em; }
+.gm-s[data-i="2"] .gm-big { font-size: clamp(60px, 6vw, 92px); }
+@media (max-width: 900px) { .gm-s[data-i="2"] .gm-big { font-size: min(64px, 15vw); } }
+
 /* program tabs */
 .ptabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: 1080px; margin: 0 auto 18px; }
 .pt { appearance: none; cursor: pointer; text-align: left; padding: 20px 22px; border-radius: 22px; border: 1px solid rgba(143,243,232,.22); background: linear-gradient(170deg, rgba(10,44,50,.8), rgba(4,16,20,.92)); color: #fff; font: inherit; transition: transform .3s var(--ease), border-color .3s, background .3s, box-shadow .3s; }
@@ -1694,7 +1698,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
             <div class="gm-hud"><span class="gm-k">Level 2 · Your Game</span><b class="gm-big">+1.84%</b><span class="gm-l">Play the markets on a simulated account, right away</span><div class="gm-lives"><span>Lives</span><em><i></i><i></i><i></i><i></i></em><small>Daily limit 4% · Max 8%</small></div></div>
           </div>
           <div class="gm-s" data-i="2" style="--img:url(assets/hc/desk.jpg);--pos:50% 30%">
-            <div class="gm-hud"><span class="gm-k">Level 3 · Your Prize</span><b class="gm-big lime">80%</b><span class="gm-l">Reward Share when you qualify, <b>95%</b> with the add-on</span><div class="gm-chips"><i class="on">Reward unlocked</i><i>Paid in real money</i></div></div>
+            <div class="gm-hud"><span class="gm-k">Level 3 · Your Prize</span><b class="gm-big lime">80%<i>/</i>95%</b><span class="gm-l">Reward Share when you qualify, 95% with the add-on</span><div class="gm-chips"><i class="on">Reward unlocked</i><i>Paid in real money</i></div></div>
           </div>
         </div>
         <div class="gm-tabs" role="tablist" aria-label="How the game works">
