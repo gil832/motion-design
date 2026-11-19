@@ -950,6 +950,15 @@ body.hev .cmp-note { font-size: 15px; color: rgba(255,255,255,.7); }
   body.hev .hc-stats { margin-top: 0; }
 }
 
+/* Hero E: slot-machine numbers in the pricing title */
+#ways .slot { display: inline-block; height: 1.04em; overflow: hidden; vertical-align: top; text-align: center; }
+#ways .slot i { display: block; font-style: normal; will-change: transform; }
+#ways .slot b { display: block; height: 1.04em; line-height: 1.04em; font-weight: inherit; }
+#ways .sl-p { color: var(--lime); }
+#ways .sl-p .slot b { color: var(--lime); }
+#ways .slot[data-r="0"] b { color: #fff; }
+body.hev #ways .sh h2 { line-height: 1.04; }
+
 /* program tabs */
 .ptabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: 1080px; margin: 0 auto 18px; }
 .pt { appearance: none; cursor: pointer; text-align: left; padding: 20px 22px; border-radius: 22px; border: 1px solid rgba(143,243,232,.22); background: linear-gradient(170deg, rgba(10,44,50,.8), rgba(4,16,20,.92)); color: #fff; font: inherit; transition: transform .3s var(--ease), border-color .3s, background .3s, box-shadow .3s; }
@@ -2225,8 +2234,8 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
       [".hc-h", '<span class="hc-l1">You Don\'t Need Thousands</span><span class="hc-l2 grad">to Start Trading.</span>'],
       [".hc-sub", "<span>Pay a one-time fee to trade in a simulated market, with the opportunity to qualify for real performance-based Rewards.</span>"],
       ["#stMx", '<span class="t">Play</span> <span class="h">the markets.</span><br><span class="t">Keep</span> <span class="h lime">your money out.</span>'],
-      ["#ways .sh h2", 'Pick your account. <span class="grad">Pay once.</span>'],
-      ["#ways .sh p", "Every size, one simple fee. No test to pass first."],
+      ["#ways .sh h2", '<span class="slot" data-r="0"><i><b>$10K</b><b>$25K</b><b>$50K</b><b>$10K</b><b>$25K</b><b>$50K</b><b>$10K</b><b>$25K</b><b>$50K</b><b>$10K</b><b>$25K</b><b>$50K</b><b>$10K</b><b>$25K</b><b>$50K</b><b>$10K</b><b>$25K</b><b>$50K</b></i></span> Simulated Trading Account.<br><span class="sl-p">For Just <span class="slot" data-r="1"><i><b>$120</b><b>$200</b><b>$350</b><b>$120</b><b>$200</b><b>$350</b><b>$120</b><b>$200</b><b>$350</b><b>$120</b><b>$200</b><b>$350</b><b>$120</b><b>$200</b><b>$350</b><b>$120</b><b>$200</b><b>$350</b></i></span>.</span>'],
+      ["#ways .sh p", "Or pick any size from $5K to $200K. Pay once. No test to pass first."],
       ["#hwH", 'Three steps. <span class="grad">That\'s it.</span>'],
       ["#how .sh p", ""],
       ["#drop .sh p", "Trade the same size without putting your own money in."],
@@ -2239,7 +2248,37 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
     window.npSimple = function (on) {
       if (!orig) orig = SW.map(function (r) { var e = $(r[0]); return e ? e.innerHTML : null; });
       SW.forEach(function (r, i) { var e = $(r[0]); if (!e || orig[i] === null) return; e.innerHTML = on ? r[1] : orig[i]; });
+      var ways = $("#ways"), top = $("#top");
+      if (!waysHome) waysHome = ways.nextElementSibling;
+      setTimeout(function () {
+        if (on) top.parentNode.insertBefore(ways, top.nextElementSibling);
+        else if (waysHome) waysHome.parentNode.insertBefore(ways, waysHome);
+      }, 0);
+      reels(on);
     };
+    var waysHome = null, spin = 0, cur = 0;
+    function reels(on) {
+      clearInterval(spin); if (!on) return;
+      var cols = $$("#ways .slot i"), n = 3, step = 0;
+      function go(k, anim) {
+        cols.forEach(function (c, j) {
+          var b = c.firstElementChild; if (!b) return; var hgt = b.getBoundingClientRect().height;
+          c.style.transition = anim ? "transform " + (1.3 + j * .25) + "s cubic-bezier(.15,.85,.25,1.02)" : "none";
+          c.style.transform = "translateY(" + (-k * hgt) + "px)";
+        });
+      }
+      go(0, false);
+      $$("#icards .ic").forEach(function (c, j) { c.classList.toggle("ic-hl", j === 1); });
+      if (reduce) return;
+      spin = setInterval(function () {
+        if (document.hidden) return;
+        cur = (cur + 1) % n; step = cur + n * 4;
+        go(step, true);
+        var idx = [1, 2, 3][cur];
+        $$("#icards .ic").forEach(function (c, j) { c.classList.toggle("ic-hl", j === idx); });
+        setTimeout(function () { go(cur, false); }, 1900);
+      }, 3200);
+    }
     if (document.body.classList.contains("hev")) window.npSimple(true);
   })();
 
