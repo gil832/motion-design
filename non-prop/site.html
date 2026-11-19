@@ -1105,6 +1105,8 @@ body.hev .academy { display: block; }
 @media (max-width: 900px) { .ac-grid { grid-template-columns: 1fr; gap: 14px; } .ac-links { grid-template-columns: 1fr; gap: 12px; } .ac-l { padding: 20px 22px; } .ac-ic { width: 52px; height: 52px; } }
 @media (prefers-reduced-motion: reduce) { .ac-v, .ac-l, .ac-im img, .ac-play { transition: none; } }
 
+.ac-n { font-style: normal; font-size: 13px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--lime); }
+
 /* program tabs */
 .ptabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: 1080px; margin: 0 auto 18px; }
 .pt { appearance: none; cursor: pointer; text-align: left; padding: 20px 22px; border-radius: 22px; border: 1px solid rgba(143,243,232,.22); background: linear-gradient(170deg, rgba(10,44,50,.8), rgba(4,16,20,.92)); color: #fff; font: inherit; transition: transform .3s var(--ease), border-color .3s, background .3s, box-shadow .3s; }
@@ -1898,15 +1900,15 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
 
   <section class="sec academy" id="academy" aria-label="FundingRock Academy">
     <div class="wrap">
-      <div class="sh rv"><span class="eyebrow">FR Academy</span><h2>We teach. <span class="grad">You trade.</span></h2><p>Free videos, walkthroughs and a community of traders, so you never start alone.</p></div>
+      <div class="sh rv"><span class="eyebrow">FR Academy</span><h2>You won't start alone. <span class="grad">We'll show you how.</span></h2><p>From your first login to your first trade, we walk you through it step by step, with a team and a community behind you.</p></div>
       <div class="ac-grid rv">
-        <a class="ac-v" href="https://www.youtube.com/watch?v=32PV7Zbm8U4" target="_blank" rel="noopener"><span class="ac-im"><img src="assets/academy/a1.jpg" alt="" loading="lazy" width="420" height="237"><i class="ac-play" aria-hidden="true"></i></span><span class="ac-t"><b>Into FundingRock</b><em>The FundingRock team on how it all works.</em></span></a>
-        <a class="ac-v" href="https://www.youtube.com/watch?v=OJdGo4NPG5I" target="_blank" rel="noopener"><span class="ac-im"><img src="assets/academy/a2.jpg" alt="" loading="lazy" width="420" height="237"><i class="ac-play" aria-hidden="true"></i></span><span class="ac-t"><b>Prop Trading Explained</b><em>Alexander Kriss on the basics, in plain words.</em></span></a>
-        <a class="ac-v" href="https://www.youtube.com/watch?v=VGK8PCvrb50" target="_blank" rel="noopener"><span class="ac-im"><img src="assets/academy/a3.jpg" alt="" loading="lazy" width="420" height="237"><i class="ac-play" aria-hidden="true"></i></span><span class="ac-t"><b>Entering Trade Orders</b><em>A quick tour of the trading platform.</em></span></a>
+        <a class="ac-v" href="https://www.youtube.com/watch?v=32PV7Zbm8U4" target="_blank" rel="noopener"><span class="ac-im"><img src="assets/academy/a1.jpg" alt="" loading="lazy" width="420" height="237"><i class="ac-play" aria-hidden="true"></i></span><span class="ac-t"><i class="ac-n">1 · Start here</i><b>Into FundingRock</b><em>Our team shows you how everything works.</em></span></a>
+        <a class="ac-v" href="https://www.youtube.com/watch?v=OJdGo4NPG5I" target="_blank" rel="noopener"><span class="ac-im"><img src="assets/academy/a2.jpg" alt="" loading="lazy" width="420" height="237"><i class="ac-play" aria-hidden="true"></i></span><span class="ac-t"><i class="ac-n">2 · Learn the basics</i><b>Prop Trading Explained</b><em>The model in plain words, before you trade.</em></span></a>
+        <a class="ac-v" href="https://www.youtube.com/watch?v=VGK8PCvrb50" target="_blank" rel="noopener"><span class="ac-im"><img src="assets/academy/a3.jpg" alt="" loading="lazy" width="420" height="237"><i class="ac-play" aria-hidden="true"></i></span><span class="ac-t"><i class="ac-n">3 · Your first trade</i><b>Entering Trade Orders</b><em>We walk you through placing it on the platform.</em></span></a>
       </div>
       <div class="ac-links rv">
-        <a class="ac-l dc" href="https://discord.gg/ayHcCy7wTG" target="_blank" rel="noopener"><span class="ac-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M20.3 4.4A19.6 19.6 0 0 0 15.4 3l-.6 1.3a18 18 0 0 0-5.6 0L8.6 3a19.5 19.5 0 0 0-4.9 1.5C.6 9.1-.3 13.6.1 18.1a19.8 19.8 0 0 0 6 3l1.3-2.1a12.8 12.8 0 0 1-2-1l.5-.4a14 14 0 0 0 12.1 0l.5.4a12.8 12.8 0 0 1-2 1l1.3 2.1a19.7 19.7 0 0 0 6-3c.5-5.2-.9-9.7-3.5-13.7ZM8 15.3c-1.2 0-2.2-1.1-2.2-2.4S6.8 10.5 8 10.5s2.2 1.1 2.2 2.4S9.2 15.3 8 15.3Zm8 0c-1.2 0-2.2-1.1-2.2-2.4s1-2.4 2.2-2.4 2.2 1.1 2.2 2.4-1 2.4-2.2 2.4Z"/></svg></span><span class="ac-lt"><em>Discord</em><b>Join the Trader Lounge</b></span><i class="ac-ar" aria-hidden="true">↗</i></a>
-        <a class="ac-l yt" href="https://www.youtube.com/@FundingRockprop" target="_blank" rel="noopener"><span class="ac-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M9.5 8.2v7.6L16 12z"/></svg></span><span class="ac-lt"><em>YouTube</em><b>Watch the Academy</b></span><i class="ac-ar" aria-hidden="true">↗</i></a>
+        <a class="ac-l dc" href="https://discord.gg/ayHcCy7wTG" target="_blank" rel="noopener"><span class="ac-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M20.3 4.4A19.6 19.6 0 0 0 15.4 3l-.6 1.3a18 18 0 0 0-5.6 0L8.6 3a19.5 19.5 0 0 0-4.9 1.5C.6 9.1-.3 13.6.1 18.1a19.8 19.8 0 0 0 6 3l1.3-2.1a12.8 12.8 0 0 1-2-1l.5-.4a14 14 0 0 0 12.1 0l.5.4a12.8 12.8 0 0 1-2 1l1.3 2.1a19.7 19.7 0 0 0 6-3c.5-5.2-.9-9.7-3.5-13.7ZM8 15.3c-1.2 0-2.2-1.1-2.2-2.4S6.8 10.5 8 10.5s2.2 1.1 2.2 2.4S9.2 15.3 8 15.3Zm8 0c-1.2 0-2.2-1.1-2.2-2.4s1-2.4 2.2-2.4 2.2 1.1 2.2 2.4-1 2.4-2.2 2.4Z"/></svg></span><span class="ac-lt"><em>Discord community</em><b>Ask Traders and Our Team</b></span><i class="ac-ar" aria-hidden="true">↗</i></a>
+        <a class="ac-l yt" href="https://www.youtube.com/@FundingRockprop" target="_blank" rel="noopener"><span class="ac-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M9.5 8.2v7.6L16 12z"/></svg></span><span class="ac-lt"><em>YouTube Academy</em><b>Watch Every Walkthrough</b></span><i class="ac-ar" aria-hidden="true">↗</i></a>
       </div>
     </div>
   </section>
@@ -2501,7 +2503,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
 
   /* Hero E: Title Case on headings, subtitles, labels, buttons and short lines (originals restored when leaving E) */
   (function () {
-    var SEL = "h1, h2, h3, .sh p, .hc-sub, .mx-sub, .buy, .hc-btn, .nav-r a, .ow-k, .ow-s, .ow-c li, .h3k, .tp-txt h3, .pc1-k, .pc1-go p, .pc1-rules span, .pc1-rules em, .irules-k, .rk-k, .rk-note, .rk-v em, .hc-stats span, .faq summary, #endP, .cc header, .cc-k, .ic-f, .tpsum a, .ft-g h4, .ft-g a, .ac-t b, .ac-t em, .ac-lt b";
+    var SEL = "h1, h2, h3, .sh p, .hc-sub, .mx-sub, .buy, .hc-btn, .nav-r a, .ow-k, .ow-s, .ow-c li, .h3k, .tp-txt h3, .pc1-k, .pc1-go p, .pc1-rules span, .pc1-rules em, .irules-k, .rk-k, .rk-note, .rk-v em, .hc-stats span, .faq summary, #endP, .cc header, .cc-k, .ic-f, .tpsum a, .ft-g h4, .ft-g a, .ac-t b, .ac-t em, .ac-lt b, .ac-lt em";
     var SMALL = /^(a|an|and|as|at|but|by|for|in|of|on|or|the|to|vs|via|per|from|with)$/i;
     var saved = [];
     function title(t, first) {
