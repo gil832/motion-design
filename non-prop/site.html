@@ -1182,6 +1182,17 @@ body.hev #tri3 { display: none !important; }
 .gm-t em { font-size: clamp(16px, 1.3vw, 19px); }
 @media (max-width: 900px) { .gm-l { font-size: 19px; } .gm-chips i { font-size: 15px; padding: 8px 14px; } .gm-t b { font-size: 16px; } .gm-k { font-size: 14px; } }
 
+/* footer back to the main dark theme; the big wordmark stays as a quiet outline */
+footer.ft { background: transparent !important; color: var(--mute) !important; border-top: 1px solid var(--line) !important; padding-top: 60px !important; }
+footer.ft a, footer.ft .ft-g a, footer.ft .ft-g p, footer.ft .ft-g p a { color: var(--mute) !important; }
+footer.ft .ft-g a:hover { color: var(--lime) !important; }
+footer.ft .ft-g h4 { color: #fff !important; }
+footer.ft .ft-g > div > img { filter: none !important; }
+footer.ft .ft-b { border-top-color: var(--line) !important; color: rgba(255,255,255,.6) !important; }
+footer.ft .pay img { filter: none !important; opacity: 1 !important; }
+footer.ft .ft-word img { filter: brightness(0) invert(1) !important; opacity: .07; }
+footer.ft .ft-g { padding-top: 0 !important; }
+
 /* program tabs */
 .ptabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: 1080px; margin: 0 auto 18px; }
 .pt { appearance: none; cursor: pointer; text-align: left; padding: 20px 22px; border-radius: 22px; border: 1px solid rgba(143,243,232,.22); background: linear-gradient(170deg, rgba(10,44,50,.8), rgba(4,16,20,.92)); color: #fff; font: inherit; transition: transform .3s var(--ease), border-color .3s, background .3s, box-shadow .3s; }
