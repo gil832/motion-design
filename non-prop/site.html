@@ -960,6 +960,16 @@ body.hev .cmp-note { font-size: 15px; color: rgba(255,255,255,.7); }
 #ways .slot[data-r="0"] b { color: #fff; }
 body.hev #ways .sh h2 { line-height: 1.04; }
 
+/* Hero E: rules cut to the three a beginner needs, plus the cap */
+body.hev .rgrid > .rk:nth-child(4), body.hev .rgrid > .rk:nth-child(5), body.hev .rgrid > .rk:nth-child(6) { display: none; }
+body.hev .rk-v em { display: none; }
+body.hev .rk-max .rk-v em { display: inline; }
+body.hev .rk { padding: 30px 28px; align-items: center; text-align: center; }
+body.hev .rk-v { justify-content: center; }
+body.hev .rk.rk-max { align-items: flex-end; text-align: left; }
+body.hev .rk-max .rk-v { justify-content: flex-start; }
+@media (max-width: 600px) { body.hev .rk.rk-max { align-items: flex-start; } }
+
 /* program tabs */
 .ptabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: 1080px; margin: 0 auto 18px; }
 .pt { appearance: none; cursor: pointer; text-align: left; padding: 20px 22px; border-radius: 22px; border: 1px solid rgba(143,243,232,.22); background: linear-gradient(170deg, rgba(10,44,50,.8), rgba(4,16,20,.92)); color: #fff; font: inherit; transition: transform .3s var(--ease), border-color .3s, background .3s, box-shadow .3s; }
@@ -2243,7 +2253,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
       ["#rewards .sh p", "Each one is a real Reward, paid to a FundingRock trader as their share of a strong simulated performance."],
       ["#drop .sh p", "Trade the same size without putting your own money in."],
       ["#rules .sh h2", 'The rules. <span class="grad">Short and simple.</span>'],
-      ["#rules .sh p", ""],
+      ["#rules .sh p", "Two loss limits and no target. Break a limit, and the account closes."],
       ["#end h2", 'Start trading. <span class="grad">Today.</span>'],
       ["#endP", "Pick an account, pay once, and trade right away."]
     ];
