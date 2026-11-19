@@ -1061,6 +1061,10 @@ body.hev .cmp-ctl { margin-bottom: 30px; }
 .h3g em { font-style: normal; font-size: 15px; font-weight: 600; color: var(--lime); }
 .h3c .h3g + h3 { margin-top: 30px; }
 
+.h3n i { font-style: normal; opacity: .45; margin: 0 .04em; }
+.h3c { container-type: inline-size; }
+.h3c.c3 .h3n { font-size: min(76px, 19cqw); white-space: nowrap; }
+
 /* program tabs */
 .ptabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: 1080px; margin: 0 auto 18px; }
 .pt { appearance: none; cursor: pointer; text-align: left; padding: 20px 22px; border-radius: 22px; border: 1px solid rgba(143,243,232,.22); background: linear-gradient(170deg, rgba(10,44,50,.8), rgba(4,16,20,.92)); color: #fff; font: inherit; transition: transform .3s var(--ease), border-color .3s, background .3s, box-shadow .3s; }
@@ -1650,7 +1654,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
       <div class="hw3 rv" aria-label="How Instant works">
         <article class="h3c c1"><span class="h3k">Step 1</span><div class="h3g"><span><b>$5K</b><em>$70</em></span><span><b>$10K</b><em>$120</em></span><span><b>$25K</b><em>$200</em></span><span><b>$50K</b><em>$350</em></span><span><b>$100K</b><em>$600</em></span><span><b>$200K</b><em>$1,100</em></span></div><h3>Pick your account.</h3><p>Choose a simulated account size and pay a <b>one-time fee</b>. That's the only payment.</p></article>
         <article class="h3c c2"><span class="h3k">Step 2</span><b class="h3n">Day 1</b><h3>Start trading.</h3><p>Trade your simulated account right away. Just stay inside two loss limits: <b>4% a day</b> and <b>8% in total</b>.</p></article>
-        <article class="h3c c3"><span class="h3k">Step 3</span><b class="h3n">80%</b><h3>Qualify for Rewards.</h3><p>Meet the requirements and request a Reward: <b>80%</b> of your simulated profit, or <b>95%</b> with the add-on.</p></article>
+        <article class="h3c c3"><span class="h3k">Step 3</span><b class="h3n">80%<i>/</i>95%</b><h3>Qualify for Rewards.</h3><p>Meet the requirements and request a Reward: <b>80%</b> of your simulated profit, or <b>95%</b> with the add-on.</p></article>
       </div>
       <div class="hw three" id="hw">
         <article class="hs glass rv" data-spot="460,.14">
