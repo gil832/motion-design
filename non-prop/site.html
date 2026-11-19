@@ -1065,6 +1065,15 @@ body.hev .cmp-ctl { margin-bottom: 30px; }
 .h3c { container-type: inline-size; }
 .h3c.c3 .h3n { font-size: min(76px, 19cqw); white-space: nowrap; }
 
+/* Hero E: the closing card shows the real FundingRock team */
+.end-team { display: none; }
+body.hev .end-ph img:not(.end-team) { display: none; }
+body.hev .end-team { display: block; position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; max-width: none; -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 34%); mask-image: linear-gradient(90deg, transparent 0%, #000 34%); }
+body.hev .end { position: relative; }
+body.hev .end-ph { position: absolute; top: 0; right: 0; bottom: 0; width: 56%; min-height: 0; margin: 0; overflow: hidden; border-radius: 0 inherit inherit 0; }
+body.hev .end-team { transform: none !important; right: 0 !important; left: 0; top: 0; height: 100% !important; }
+@media (max-width: 860px) { body.hev .end-ph { position: relative; width: calc(100% - 40px); margin: 0 20px 20px; aspect-ratio: 16 / 10; border-radius: 18px; } body.hev .end-team { -webkit-mask-image: none; mask-image: none; } }
+
 /* program tabs */
 .ptabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: 1080px; margin: 0 auto 18px; }
 .pt { appearance: none; cursor: pointer; text-align: left; padding: 20px 22px; border-radius: 22px; border: 1px solid rgba(143,243,232,.22); background: linear-gradient(170deg, rgba(10,44,50,.8), rgba(4,16,20,.92)); color: #fff; font: inherit; transition: transform .3s var(--ease), border-color .3s, background .3s, box-shadow .3s; }
@@ -1881,6 +1890,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
         </div>
         <div class="end-ph">
           <img src="assets/trader-phone.webp" alt="" loading="lazy" width="624" height="900">
+          <img class="end-team" src="assets/team.jpg" alt="The FundingRock team" loading="lazy" width="1440" height="800">
           <div class="tag liquid tag-nd"><b>No Trading Deposit Required.</b></div>
         </div>
       </div>
@@ -2390,7 +2400,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
       ["#rules .sh h2", 'The rules. <span class="grad">Short and simple.</span>'],
       ["#rules .sh p", "Two loss limits and no target. Break a limit, and the account closes."],
       ["#end h2", 'Start trading. <span class="grad">Today.</span>'],
-      ["#endP", "Pick an account, pay once, and trade right away."]
+      ["#endP", "Pick an account, pay once, and trade right away. A real team in Nicosia is here to back you."]
     ];
     var orig = null;
     window.npSimple = function (on) {
