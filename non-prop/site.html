@@ -1385,6 +1385,9 @@ body.hfv #drop { padding-top: clamp(80px, 9vw, 140px) !important; }
 
 .ac-mid { display: none !important; }
 
+/* E/F: comparison shows the $10K example only; sizes live in pricing */
+body.hev #drop .cmp-ctl { display: none !important; }
+
 /* program tabs */
 .ptabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: 1080px; margin: 0 auto 18px; }
 .pt { appearance: none; cursor: pointer; text-align: left; padding: 20px 22px; border-radius: 22px; border: 1px solid rgba(143,243,232,.22); background: linear-gradient(170deg, rgba(10,44,50,.8), rgba(4,16,20,.92)); color: #fff; font: inherit; transition: transform .3s var(--ease), border-color .3s, background .3s, box-shadow .3s; }
@@ -2819,6 +2822,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
         }, 0);
       reels(on);
       if (window.npFeat) window.npFeat(on);
+      var szb = $$("#cSizes .ac"); if (szb[on ? 1 : 0]) szb[on ? 1 : 0].click();
       if (on) setTimeout(function () { if (window.npTitle) { window.npTitle(false); window.npTitle(true); } }, 60);
     };
     var waysHome = null, storyHome = null, spin = 0, cur = 0;
