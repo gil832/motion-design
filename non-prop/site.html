@@ -1241,6 +1241,7 @@ footer.ft .ft-g { grid-template-columns: 1fr !important; }
 /* Hero E: pain points (section 2) */
 .pain { display: none; }
 body.hev .pain { display: block; }
+body.hfv .pain { display: none !important; }
 .pn-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; max-width: 1180px; margin: 0 auto; }
 .pn { position: relative; display: flex; flex-direction: column; padding: clamp(28px, 3vw, 42px); border-radius: 28px; background: linear-gradient(170deg, rgba(255,90,110,.10), rgba(10,8,10,.92) 55%); border: 1px solid rgba(255,107,138,.22); min-width: 0; }
 .pn-x { position: absolute; top: 24px; right: 26px; width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; font-size: 22px; color: #ff7a8f; border: 1px solid rgba(255,107,138,.45); }
@@ -1379,6 +1380,8 @@ body.hev #traders .ug:hover .pl { transform: scale(1.18); }
 .hk .h3c h3 { order: 2; margin: 34px 0 0 !important; font-size: clamp(26px, 2.3vw, 34px) !important; }
 .hk .h3c p { order: 3; margin-top: auto; padding-top: 24px; }
 @media (max-width: 900px) { .hk .h3c { min-height: 0; } .hk .h3c .h3n { font-size: 72px !important; margin-top: 20px !important; } .hk .h3c h3 { margin-top: 20px !important; } }
+
+body.hfv #drop { padding-top: clamp(80px, 9vw, 140px) !important; }
 
 /* program tabs */
 .ptabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: 1080px; margin: 0 auto 18px; }
@@ -2311,18 +2314,22 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
 (function () {
   /* hero C also moves the certificates up to section 2, right after the hero */
   var certs = null, certsHome = null;
+  var npOrd = null;
   function setHero(v) {
     var b = document.body;
-    b.classList.toggle("hb", v === "b"); b.classList.toggle("hcv", v === "c" || v === "d" || v === "e"); b.classList.toggle("hdv", v === "d" || v === "e"); b.classList.toggle("hev", v === "e"); if (window.npSimple) window.npSimple(v === "e");
+    /* every switch starts from the page's original section order */
+    var hero0 = document.getElementById("top");
+    if (hero0) { var par = hero0.parentNode; if (!npOrd) npOrd = Array.prototype.slice.call(par.children); else npOrd.forEach(function (el) { par.appendChild(el); }); }
+    b.classList.toggle("hb", v === "b"); b.classList.toggle("hcv", v === "c" || v === "d" || v === "e" || v === "f"); b.classList.toggle("hdv", v === "d" || v === "e" || v === "f"); b.classList.toggle("hev", v === "e" || v === "f"); b.classList.toggle("hfv", v === "f"); if (window.npSimple) window.npSimple(v === "e" || v === "f");
     if (!certs) { certs = document.getElementById("rewards"); certsHome = certs && certs.nextElementSibling; }
     if (certs) {
-      if (v === "c" || v === "d" || v === "e") { var hero = document.getElementById("top"); hero.parentNode.insertBefore(certs, hero.nextElementSibling); certs.style.paddingTop = "clamp(40px, 6vw, 80px)"; }
+      if (v === "c" || v === "d" || v === "e" || v === "f") { var hero = document.getElementById("top"); hero.parentNode.insertBefore(certs, hero.nextElementSibling); certs.style.paddingTop = "clamp(40px, 6vw, 80px)"; }
       else if (certsHome) { certsHome.parentNode.insertBefore(certs, certsHome); certs.style.paddingTop = "0"; }
     }
     if (window.npHeroShow) window.npHeroShow();
     document.dispatchEvent(new CustomEvent("np-hero", { detail: v }));
   }
-  var hq = (location.search.match(/[?&]hero=([abcde])\b/) || [])[1];
+  var hq = (location.search.match(/[?&]hero=([abcdef])\b/) || [])[1];
   if (hq) document.addEventListener("DOMContentLoaded", function () { setHero(hq); });
   addEventListener("message", function (e) { var d = e.data; if (e.source === parent && d && d.fr === "np" && d.t === "hero") setHero(d.v); });
 })();
@@ -2806,7 +2813,8 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
       setTimeout(function () {
         if (on) { top.parentNode.insertBefore(story, top.nextElementSibling); story.parentNode.insertBefore(ways, story.nextElementSibling); var pn = $("#pain"); if (pn) { top.parentNode.insertBefore(pn, top.nextElementSibling); var rw = $("#rewards"); if (rw) { pn.parentNode.insertBefore(rw, pn.nextElementSibling); rw.parentNode.insertBefore(ways, rw.nextElementSibling); } } }
         else { if (waysHome) waysHome.parentNode.insertBefore(ways, waysHome); if (storyHome) storyHome.parentNode.insertBefore(story, storyHome); }
-      }, 0);
+      if (on && document.body.classList.contains("hfv")) { var dr = $("#drop"), rw2 = $("#rewards"); top.parentNode.insertBefore(dr, top.nextElementSibling); dr.parentNode.insertBefore(rw2, dr.nextElementSibling); rw2.parentNode.insertBefore(ways, rw2.nextElementSibling); ways.parentNode.insertBefore(story, ways.nextElementSibling); }
+        }, 0);
       reels(on);
       if (window.npFeat) window.npFeat(on);
       if (on) setTimeout(function () { if (window.npTitle) { window.npTitle(false); window.npTitle(true); } }, 60);
