@@ -1388,6 +1388,11 @@ body.hfv #drop { padding-top: clamp(80px, 9vw, 140px) !important; }
 /* E/F: comparison shows the $10K example only; sizes live in pricing */
 body.hev #drop .cmp-ctl { display: none !important; }
 
+/* E/F pricing: small label above the title; rules expander inside the card */
+body.hev #ways .sh .eyebrow { display: inline-block !important; font-size: 14px; letter-spacing: .16em; text-transform: uppercase; color: var(--lime); margin-bottom: 4px; }
+.pc1 .irules { margin: 0 !important; padding: 0 !important; background: none !important; border: 0 !important; box-shadow: none !important; border-top: 1px solid rgba(255,255,255,.1) !important; border-radius: 0 !important; padding-top: 22px !important; }
+.pc1 .irules > summary { font-size: 14px; }
+
 /* program tabs */
 .ptabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: 1080px; margin: 0 auto 18px; }
 .pt { appearance: none; cursor: pointer; text-align: left; padding: 20px 22px; border-radius: 22px; border: 1px solid rgba(143,243,232,.22); background: linear-gradient(170deg, rgba(10,44,50,.8), rgba(4,16,20,.92)); color: #fff; font: inherit; transition: transform .3s var(--ease), border-color .3s, background .3s, box-shadow .3s; }
@@ -2793,6 +2798,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
       [".mx-sub", "A whole new way to experience trading."],
       ["#stMx", '<span class="t">Big</span> <span class="h">opportunity.</span><br><span class="t">Small</span> <span class="h lime">price to start.</span>'],
       ["#ways .sh h2", '<span class="slot" data-r="0"><i><b>$10K</b><b>$25K</b><b>$50K</b><b>$10K</b><b>$25K</b><b>$50K</b><b>$10K</b><b>$25K</b><b>$50K</b><b>$10K</b><b>$25K</b><b>$50K</b><b>$10K</b><b>$25K</b><b>$50K</b><b>$10K</b><b>$25K</b><b>$50K</b></i></span> Simulated Trading Account.<br><span class="sl-p">For Just <span class="slot" data-r="1"><i><b>$120</b><b>$200</b><b>$350</b><b>$120</b><b>$200</b><b>$350</b><b>$120</b><b>$200</b><b>$350</b><b>$120</b><b>$200</b><b>$350</b><b>$120</b><b>$200</b><b>$350</b><b>$120</b><b>$200</b><b>$350</b></i></span>.</span>'],
+      ["#ways .sh .eyebrow", "Pricing"],
       ["#ways .sh p", "Or pick any size from $5K to $200K. Pay once. No test to pass first."],
       ["#hwH", '3 Steps. <span class="grad">That\'s it.</span>'],
       ["#how .sh p", "No test to pass, no deposit, no complicated setup. Pick an account, start trading, and go for your Rewards."],
@@ -2821,6 +2827,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
       if (on && document.body.classList.contains("hfv")) { var dr = $("#drop"), rw2 = $("#rewards"); top.parentNode.insertBefore(dr, top.nextElementSibling); dr.parentNode.insertBefore(rw2, dr.nextElementSibling); rw2.parentNode.insertBefore(ways, rw2.nextElementSibling); ways.parentNode.insertBefore(story, ways.nextElementSibling); }
         }, 0);
       reels(on);
+      var ir = $("#ways .irules"), pc = $("#pc1"), ic = $("#icards"); if (ir && pc && ic) { if (on) pc.appendChild(ir); else ic.parentNode.insertBefore(ir, ic.nextElementSibling.nextElementSibling); }
       if (window.npFeat) window.npFeat(on);
       var szb = $$("#cSizes .ac"); if (szb[on ? 1 : 0]) szb[on ? 1 : 0].click();
       if (on) setTimeout(function () { if (window.npTitle) { window.npTitle(false); window.npTitle(true); } }, 60);
