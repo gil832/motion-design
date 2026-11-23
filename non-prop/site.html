@@ -1466,6 +1466,10 @@ body.hfv .hst { display: block; max-width: 1080px; margin: 0 auto; padding-botto
   .pv.fr .pv-chart { border-color: rgba(217,255,0,.35) !important; background: linear-gradient(170deg, rgba(217,255,0,.10), rgba(6,14,12,.92) 55%) !important; }
 }
 
+/* E/F hero stats: solid panel so the page grid doesn't show through */
+body.hev .hc-stats { background: linear-gradient(180deg, #142726, #0a1312) !important; -webkit-backdrop-filter: none; backdrop-filter: none; border-color: rgba(143,243,232,.16) !important; }
+body.hev .hc-stats > div + div::before { background: linear-gradient(180deg, transparent, rgba(143,243,232,.22), transparent) !important; }
+
 /* program tabs */
 .ptabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: 1080px; margin: 0 auto 18px; }
 .pt { appearance: none; cursor: pointer; text-align: left; padding: 20px 22px; border-radius: 22px; border: 1px solid rgba(143,243,232,.22); background: linear-gradient(170deg, rgba(10,44,50,.8), rgba(4,16,20,.92)); color: #fff; font: inherit; transition: transform .3s var(--ease), border-color .3s, background .3s, box-shadow .3s; }
