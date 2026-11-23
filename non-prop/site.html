@@ -1259,6 +1259,41 @@ body.hev .pain { display: block; }
 .pn-n { order: 0; }
 .pn p { order: 1; margin-top: 14px; }
 
+/* pain section v2: animated "bad week" chart + three points */
+.pv { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 22px; max-width: 1180px; margin: 0 auto; align-items: stretch; }
+.pv-chart { position: relative; padding: clamp(24px, 3vw, 38px); border-radius: 28px; background: linear-gradient(170deg, rgba(255,90,110,.10), rgba(10,8,10,.92) 55%); border: 1px solid rgba(255,107,138,.25); min-width: 0; }
+.pv-top { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; }
+.pv-top span { width: 100%; font-size: clamp(16px, 1.3vw, 19px); color: rgba(255,255,255,.7); }
+.pv-top b { font-size: clamp(48px, 5vw, 76px); font-weight: 600; letter-spacing: -.05em; line-height: 1; color: #fff; }
+.pv-top em { font-style: normal; font-size: clamp(20px, 1.8vw, 26px); font-weight: 600; color: #ff7a8f; }
+.pv-svg { display: block; width: 100%; height: clamp(180px, 18vw, 260px); margin-top: 18px; overflow: visible; }
+.pv-grid line { stroke: rgba(255,255,255,.07); stroke-width: 1; vector-effect: non-scaling-stroke; }
+.pv-line { fill: none; stroke: #ff6b8a; stroke-width: 3; stroke-linejoin: round; vector-effect: non-scaling-stroke; stroke-dasharray: 1; stroke-dashoffset: 1; filter: drop-shadow(0 0 8px rgba(255,107,138,.6)); }
+.pv-area { opacity: 0; transition: opacity 1s .9s; }
+.pv-dots circle { fill: #ff6b8a; stroke: #0a0a0a; stroke-width: 3; vector-effect: non-scaling-stroke; opacity: 0; transition: opacity .4s; }
+.pv.in .pv-line { animation: pvDraw 2.2s cubic-bezier(.45,0,.55,1) forwards; }
+.pv.in .pv-area { opacity: 1; }
+.pv.in .pv-dots circle:nth-child(1) { opacity: 1; transition-delay: .8s; } .pv.in .pv-dots circle:nth-child(2) { opacity: 1; transition-delay: 1.5s; } .pv.in .pv-dots circle:nth-child(3) { opacity: 1; transition-delay: 2.2s; }
+@keyframes pvDraw { to { stroke-dashoffset: 0; } }
+.pv-days { display: flex; justify-content: space-between; margin-top: 10px; font-size: 14px; color: rgba(255,255,255,.5); }
+.pv-tags i { position: absolute; font-style: normal; font-size: clamp(14px, 1.2vw, 17px); font-weight: 600; color: #fff; background: rgba(255,90,110,.9); padding: 5px 10px; border-radius: 999px; transform: translate(-50%, -150%) scale(.8); opacity: 0; transition: opacity .4s, transform .5s cubic-bezier(.34,1.56,.64,1); white-space: nowrap; }
+.pv.in .pv-tags i:nth-child(1) { opacity: 1; transform: translate(-50%, -150%); transition-delay: .9s; }
+.pv.in .pv-tags i:nth-child(2) { opacity: 1; transform: translate(-50%, -150%); transition-delay: 1.6s; }
+.pv.in .pv-tags i:nth-child(3) { opacity: 1; transform: translate(-50%, -150%); transition-delay: 2.3s; }
+.pv-note { position: absolute; right: 24px; bottom: 16px; font-size: 13px; color: rgba(255,255,255,.45); }
+.pv-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
+.pv-list li { display: flex; gap: 18px; align-items: flex-start; padding: clamp(22px, 2.2vw, 30px); border-radius: 24px; background: rgba(255,255,255,.035); border: 1px solid rgba(255,255,255,.09); }
+.pv-list .pn-x { position: static; flex: none; }
+.pv-list b { display: block; font-size: clamp(20px, 1.8vw, 25px); font-weight: 600; letter-spacing: -.02em; color: #fff; }
+.pv-list p { margin: 6px 0 0; font-size: clamp(16px, 1.25vw, 18px); color: rgba(255,255,255,.7); line-height: 1.45; }
+@media (max-width: 900px) { .pv { grid-template-columns: 1fr; gap: 12px; } .pv-svg { height: 180px; } .pv-list li { padding: 18px; } }
+@media (prefers-reduced-motion: reduce) { .pv .pv-line { stroke-dashoffset: 0; animation: none; } .pv-area, .pv-dots circle, .pv-tags i { opacity: 1 !important; transform: translate(-50%, -150%) !important; transition: none !important; } }
+
+.pv-plot { position: relative; }
+.pv-note { position: static !important; display: block; margin-top: 10px; text-align: right; }
+
+.gm-upto { display: inline-block; font-size: .34em; letter-spacing: -.01em; vertical-align: .9em; margin-right: .08em; color: rgba(217,255,0,.85); }
+
 /* program tabs */
 .ptabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: 1080px; margin: 0 auto 18px; }
 .pt { appearance: none; cursor: pointer; text-align: left; padding: 20px 22px; border-radius: 22px; border: 1px solid rgba(143,243,232,.22); background: linear-gradient(170deg, rgba(10,44,50,.8), rgba(4,16,20,.92)); color: #fff; font: inherit; transition: transform .3s var(--ease), border-color .3s, background .3s, box-shadow .3s; }
@@ -1785,11 +1820,28 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
   <!-- pinned scroll story: the screen holds, scenes swap as you scroll -->
   <section class="sec pain" id="pain" aria-label="Why trading feels out of reach">
     <div class="wrap">
-      <div class="sh rv"><h2>Trading Shouldn't <span class="grad">Cost You Your Savings.</span></h2><p>The usual way to trade asks a lot before you even start.</p></div>
-      <div class="pn-grid rv">
-        <article class="pn"><span class="pn-x" aria-hidden="true">×</span><b class="pn-n">$10K</b><h3>To Trade $10K, You Need $10K.</h3><p>With a broker, the account size is your own money.</p></article>
-        <article class="pn"><span class="pn-x" aria-hidden="true">×</span><b class="pn-n">100%</b><h3>Every Loss Is Yours.</h3><p>Losses come straight out of your savings.</p></article>
-        <article class="pn"><span class="pn-x" aria-hidden="true">×</span><b class="pn-n">Small</b><h3>Small Savings, Small Trades.</h3><p>Without capital, it's hard to trade at a size that matters.</p></article>
+      <div class="sh rv"><h2>One Bad Week Shouldn't <span class="grad">Wipe Out Your Savings.</span></h2><p>With a broker, every trade is paid for with your own money.</p></div>
+      <div class="pv rv" id="pv">
+        <div class="pv-chart">
+          <div class="pv-top"><span>Your savings account</span><b class="tnum" id="pvBal">$10,000</b><em class="tnum" id="pvChg">0.0%</em></div>
+          <div class="pv-plot">
+          <svg class="pv-svg" viewBox="0 0 600 260" preserveAspectRatio="none" aria-hidden="true">
+            <defs><linearGradient id="pvG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff6b8a" stop-opacity=".35"/><stop offset="1" stop-color="#ff6b8a" stop-opacity="0"/></linearGradient></defs>
+            <g class="pv-grid"><line x1="0" x2="600" y1="40" y2="40"/><line x1="0" x2="600" y1="110" y2="110"/><line x1="0" x2="600" y1="180" y2="180"/><line x1="0" x2="600" y1="250" y2="250"/></g>
+            <path class="pv-area" d="M0 40 L100 52 L200 96 L300 88 L400 150 L500 176 L600 214 L600 260 L0 260 Z" fill="url(#pvG)"/>
+            <path class="pv-line" pathLength="1" d="M0 40 L100 52 L200 96 L300 88 L400 150 L500 176 L600 214"/>
+            <g class="pv-dots"><circle cx="200" cy="96" r="6"/><circle cx="400" cy="150" r="6"/><circle cx="600" cy="214" r="7"/></g>
+          </svg>
+          <div class="pv-tags"><i style="left:33%;top:37%">−$520</i><i style="left:66%;top:58%">−$710</i><i style="left:93%;top:82%">−$1,060</i></div>
+          </div>
+          <div class="pv-days"><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span></div>
+          <small class="pv-note">Example for illustration.</small>
+        </div>
+        <ul class="pv-list">
+          <li><span class="pn-x" aria-hidden="true">×</span><div><b>To Trade $10K, You Need $10K.</b><p>With a broker, the account size is your own money.</p></div></li>
+          <li><span class="pn-x" aria-hidden="true">×</span><div><b>Every Loss Is Yours.</b><p>Losses come straight out of your savings.</p></div></li>
+          <li><span class="pn-x" aria-hidden="true">×</span><div><b>Small Savings, Small Trades.</b><p>Without capital, it's hard to trade at a size that matters.</p></div></li>
+        </ul>
       </div>
       <a class="pn-next rv" href="#story"><span>FundingRock Instant changes that.</span><i aria-hidden="true">↓</i></a>
     </div>
@@ -1808,7 +1860,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
             <div class="gm-hud"><span class="gm-k">Level 2 · Your Game</span><b class="gm-big">+1.84%</b><span class="gm-l">Play the markets on a simulated account, right away</span><div class="gm-lives"><span>Lives</span><em><i></i><i></i><i></i><i></i></em><small>Daily limit 4% · Max 8%</small></div></div>
           </div>
           <div class="gm-s" data-i="2" style="--img:url(assets/hc/desk.jpg);--pos:50% 30%">
-            <div class="gm-hud"><span class="gm-k">Level 3 · Your Prize</span><b class="gm-big lime">80%<i>/</i>95%</b><span class="gm-l">Reward Share when you qualify, 95% with the add-on</span><div class="gm-chips"><i class="on">Reward unlocked</i><i>Paid in real money</i></div></div>
+            <div class="gm-hud"><span class="gm-k">Level 3 · Your Prize</span><b class="gm-big lime"><small class="gm-upto">Up to</small> 95%</b><span class="gm-l">Reward Share when you qualify. 80% standard, 95% with the add-on.</span><div class="gm-chips"><i class="on">Reward unlocked</i><i>Paid in real money</i></div></div>
           </div>
         </div>
         <div class="gm-tabs" role="tablist" aria-label="How the game works">
@@ -2706,7 +2758,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
 
   /* Hero E: Title Case on headings, subtitles, labels, buttons and short lines (originals restored when leaving E) */
   (function () {
-    var SEL = "h1, h2, h3, .sh p, .hc-sub, .mx-sub, .buy, .hc-btn, .nav-r a, .ow-k, .ow-s, .ow-c li, .h3k, .tp-txt h3, .pc1-k, .pc1-go p, .pc1-rules span, .pc1-rules em, .irules-k, .rk-k, .rk-note, .rk-v em, .hc-stats span, .faq summary, #endP, .cc header, .cc-k, .ic-f, .tpsum a, .ft-g h4, .ft-g a, .ac-t b, .ac-t em, .ac-lt b, .ac-lt em, .gm-l, .gm-chips i, .gm-t b, .gm-t em, .gm-lives small, .ac-mk, .vt-row > span, .vt-c b, .vt-c small, .pn-next span";
+    var SEL = "h1, h2, h3, .sh p, .hc-sub, .mx-sub, .buy, .hc-btn, .nav-r a, .ow-k, .ow-s, .ow-c li, .h3k, .tp-txt h3, .pc1-k, .pc1-go p, .pc1-rules span, .pc1-rules em, .irules-k, .rk-k, .rk-note, .rk-v em, .hc-stats span, .faq summary, #endP, .cc header, .cc-k, .ic-f, .tpsum a, .ft-g h4, .ft-g a, .ac-t b, .ac-t em, .ac-lt b, .ac-lt em, .gm-l, .gm-chips i, .gm-t b, .gm-t em, .gm-lives small, .ac-mk, .vt-row > span, .vt-c b, .vt-c small, .pn-next span, .pv-top span";
     var SMALL = /^(a|an|and|as|at|but|by|for|in|of|on|or|the|to|vs|via|per|from|with)$/i;
     var saved = [];
     function title(t, first) {
@@ -2746,6 +2798,18 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
     new IntersectionObserver(function (es) { vis = es[0].isIntersecting; }, { threshold: .35 }).observe(gm);
     if (!reduce) timer = setInterval(function () { if (vis && !touched && !document.hidden && document.body.classList.contains("hev")) set((cur + 1) % ss.length, true); }, 4600);
     set(0, !reduce);
+  })();
+
+  /* pain chart: draws the bad week and counts the balance down when it scrolls in */
+  (function () {
+    var pv = $("#pv"); if (!pv) return;
+    var bal = $("#pvBal"), chg = $("#pvChg"), done = false;
+    new IntersectionObserver(function (es) {
+      if (!es[0].isIntersecting || done) return; done = true; pv.classList.add("in");
+      if (reduce) { bal.textContent = "$7,710"; chg.textContent = "−22.9%"; return; }
+      var t0 = null; requestAnimationFrame(function st(now) { if (t0 === null) t0 = now; var k = Math.min((now - t0) / 2300, 1), e = k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2, v = 10000 - 2290 * e;
+        bal.textContent = "$" + Math.round(v).toLocaleString("en-US"); chg.textContent = "−" + ((10000 - v) / 100).toFixed(1) + "%"; if (k < 1) requestAnimationFrame(st); });
+    }, { threshold: .4 }).observe(pv);
   })();
 
   /* comparison details toggle (C/D) */
