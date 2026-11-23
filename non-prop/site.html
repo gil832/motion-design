@@ -1478,6 +1478,30 @@ body.hev .hc-stats > div + div::before { background: linear-gradient(180deg, tra
   .pc1-rules span { letter-spacing: .06em !important; white-space: nowrap; }
 }
 
+/* E/F comparison: starting prices, "From $5,000" vs "From $70" */
+body.hev #vt .vt-row:nth-child(2) .vt-c b::before { content: "From "; font-size: .62em; font-weight: 500; letter-spacing: 0; opacity: .75; margin-right: .25em; }
+
+/* F step 2: a small live trading terminal (simulated) */
+.stx { width: min(360px, 100%); padding: 16px; border-radius: 20px; background: linear-gradient(180deg, rgba(10,22,22,.95), rgba(4,10,10,.98)); border: 1px solid rgba(143,243,232,.14); box-shadow: inset 0 1px 0 rgba(255,255,255,.08), 0 30px 70px -30px rgba(0,0,0,.9), 0 0 0 6px rgba(0,216,195,.04); }
+.stx-h { display: flex; justify-content: space-between; align-items: flex-start; }
+.stx-h b { display: block; font-size: 15px; font-weight: 600; color: #fff; letter-spacing: -.01em; }
+.stx-h small { display: block; margin-top: 3px; font-size: 11.5px; color: rgba(255,255,255,.45); }
+.stx-p { text-align: right; }
+.stx-p small { color: #2fe0a6; }
+.stx-p small.dn { color: #ff6b8a; }
+.stx-ch { position: relative; margin: 14px 0; height: 128px; border-radius: 12px; background-image: linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px); background-size: 100% 32px; }
+.stx-ch svg { position: absolute; inset: 0; width: calc(100% - 64px); height: 100%; overflow: visible; }
+.stx-ch .w { stroke-width: 1.2; vector-effect: non-scaling-stroke; }
+.stx-ch .up { fill: #2fe0a6; stroke: #2fe0a6; }
+.stx-ch .dn { fill: #ff6b8a; stroke: #ff6b8a; }
+.stx-ch .pl { stroke: rgba(143,243,232,.5); stroke-width: 1; stroke-dasharray: 3 3; vector-effect: non-scaling-stroke; }
+.stx-tag { position: absolute; right: 0; transform: translateY(-50%); padding: 3px 7px; border-radius: 6px; font-size: 11px; font-weight: 600; color: #04110f; background: #8ff3e8; transition: top .5s cubic-bezier(.16,1,.3,1); }
+.stx-b { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.stx-b span { padding: 10px 12px; border-radius: 11px; font-size: 12px; font-weight: 500; text-align: center; }
+.stx-b b { display: block; margin-top: 2px; font-size: 14px; font-weight: 600; }
+.stx-sell { background: rgba(255,107,138,.1); color: #ff8fa6; border: 1px solid rgba(255,107,138,.25); }
+.stx-buy { background: var(--lime); color: #0a0c02; box-shadow: 0 10px 30px -10px rgba(217,255,0,.6); }
+
 /* program tabs */
 .ptabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: 1080px; margin: 0 auto 18px; }
 .pt { appearance: none; cursor: pointer; text-align: left; padding: 20px 22px; border-radius: 22px; border: 1px solid rgba(143,243,232,.22); background: linear-gradient(170deg, rgba(10,44,50,.8), rgba(4,16,20,.92)); color: #fff; font: inherit; transition: transform .3s var(--ease), border-color .3s, background .3s, box-shadow .3s; }
@@ -2131,7 +2155,11 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
         </article>
         <article class="stc s2" style="--i:1">
           <div class="stc-t"><span class="stc-k">Step 02</span><h3>Start Trading.</h3><p>Trade from day one. Just stay inside two loss limits: 4% a day and 8% in total.</p></div>
-          <div class="stc-v"><div class="stc-tk" aria-hidden="true"><div class="stc-tkh"><b>XAU/USD</b><em>Simulated</em></div><svg viewBox="0 0 240 70" preserveAspectRatio="none"><path class="stc-ln" d="M0 52 L20 48 L38 55 L58 40 L78 44 L98 30 L118 36 L138 24 L160 30 L180 18 L200 22 L220 10 L240 14"/></svg><div class="stc-lim"><span>Daily limit <b>4%</b></span><span>Max loss <b>8%</b></span></div></div></div>
+          <div class="stc-v"><div class="stx" id="stx" aria-hidden="true">
+            <div class="stx-h"><div><b>XAU/USD</b><small>Gold · Simulated</small></div><div class="stx-p"><b class="tnum" id="stxP">2,384.20</b><small class="tnum" id="stxC">+0.42%</small></div></div>
+            <div class="stx-ch"><svg id="stxSv" viewBox="0 0 300 120" preserveAspectRatio="none"></svg><span class="stx-tag tnum" id="stxT">2,384.20</span></div>
+            <div class="stx-b"><span class="stx-sell">Sell <b class="tnum" id="stxS">2,384.10</b></span><span class="stx-buy">Buy <b class="tnum" id="stxB">2,384.30</b></span></div>
+          </div></div>
         </article>
         <article class="stc s3" style="--i:2">
           <div class="stc-t"><span class="stc-k">Step 03</span><h3>Qualify for Rewards.</h3><p>Meet the requirements and request a Reward: up to 95% of your simulated profit.</p></div>
@@ -2930,7 +2958,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
       reels(on);
       var ir = $("#ways .irules"), pc = $("#pc1"), ic = $("#icards"); if (ir && pc && ic) { if (on) pc.appendChild(ir); else ic.parentNode.insertBefore(ir, ic.nextElementSibling.nextElementSibling); }
       if (window.npFeat) window.npFeat(on);
-      var szb = $$("#cSizes .ac"); if (szb[on ? 1 : 0]) szb[on ? 1 : 0].click();
+      var szb = $$("#cSizes .ac"); if (szb[0]) szb[0].click();
       if (on) setTimeout(function () { if (window.npTitle) { window.npTitle(false); window.npTitle(true); } }, 60);
     };
     var waysHome = null, storyHome = null, spin = 0, cur = 0;
@@ -3075,6 +3103,31 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
     function pick(n) { j = n; P.forEach(function (x, m) { x.classList.toggle("on", m === n); }); $("#stSz").textContent = P[n].textContent; $("#stFee").textContent = F[n]; }
     P.forEach(function (x, m) { x.addEventListener("mouseenter", function () { pick(m); }); });
     if (!reduce) setInterval(function () { if (vis && !document.hidden && !$("#stPills").matches(":hover")) pick((j + 1) % P.length); }, 1800);
+  })();
+
+  /* F step 2 terminal: candles drift and tick while visible (illustrative, simulated) */
+  (function () {
+    var sv = $("#stxSv"); if (!sv) return;
+    var N = 22, C = [], p = 2371, vis = false, base = 2371;
+    for (var i = 0; i < N; i++) { var o = p, c = o + (Math.random() - .38) * 3.2; C.push({ o: o, c: c, h: Math.max(o, c) + Math.random() * 1.4, l: Math.min(o, c) - Math.random() * 1.4 }); p = c; }
+    function f(v) { return v.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
+    function draw() {
+      var hi = -1e9, lo = 1e9; C.forEach(function (k) { hi = Math.max(hi, k.h); lo = Math.min(lo, k.l); }); var pad = (hi - lo) * .12; hi += pad; lo -= pad;
+      var W = 300, H = 120, cw = W / N, y = function (v) { return H - (v - lo) / (hi - lo) * H; }, out = "";
+      C.forEach(function (k, i) { var x = i * cw + cw / 2, up = k.c >= k.o, t = y(Math.max(k.o, k.c)), b = y(Math.min(k.o, k.c));
+        out += '<g class="' + (up ? "up" : "dn") + '"><line class="w" x1="' + x + '" x2="' + x + '" y1="' + y(k.h) + '" y2="' + y(k.l) + '"/><rect x="' + (x - cw * .32) + '" y="' + t + '" width="' + cw * .64 + '" height="' + Math.max(1.2, b - t) + '" rx="1"/></g>'; });
+      var last = C[N - 1].c, ly = y(last); out += '<line class="pl" x1="0" x2="' + (W + 58 * W / (sv.getBoundingClientRect().width || 260)) + '" y1="' + ly + '" y2="' + ly + '"/>';
+      sv.innerHTML = out;
+      $("#stxT").style.top = (ly / H * 100) + "%"; $("#stxT").textContent = f(last + 13);
+      $("#stxP").textContent = f(last + 13); $("#stxS").textContent = f(last + 12.9); $("#stxB").textContent = f(last + 13.1);
+      var ch = (last - base) / base * 100, el = $("#stxC"); el.textContent = (ch >= 0 ? "+" : "−") + Math.abs(ch).toFixed(2) + "%"; el.classList.toggle("dn", ch < 0);
+    }
+    draw();
+    new IntersectionObserver(function (es) { vis = es[0].isIntersecting; }).observe(sv);
+    if (!reduce) { var n = 0; setInterval(function () { if (!vis || document.hidden) return; var k = C[N - 1];
+      k.c += (Math.random() - .42) * 1.1; k.h = Math.max(k.h, k.c); k.l = Math.min(k.l, k.c);
+      if (++n % 4 === 0) { var o = k.c; C.shift(); C.push({ o: o, c: o, h: o, l: o }); }
+      draw(); }, 700); }
   })();
 
   /* comparison details toggle (C/D) */
