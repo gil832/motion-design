@@ -2767,7 +2767,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
       var ways = $("#ways"), top = $("#top"), story = $("#story");
       if (!waysHome) { waysHome = ways.nextElementSibling; storyHome = story.nextElementSibling; }
       setTimeout(function () {
-        if (on) { top.parentNode.insertBefore(story, top.nextElementSibling); story.parentNode.insertBefore(ways, story.nextElementSibling); var pn = $("#pain"); if (pn) { top.parentNode.insertBefore(pn, top.nextElementSibling); var rw = $("#rewards"); if (rw) pn.parentNode.insertBefore(rw, pn.nextElementSibling); } }
+        if (on) { top.parentNode.insertBefore(story, top.nextElementSibling); story.parentNode.insertBefore(ways, story.nextElementSibling); var pn = $("#pain"); if (pn) { top.parentNode.insertBefore(pn, top.nextElementSibling); var rw = $("#rewards"); if (rw) { pn.parentNode.insertBefore(rw, pn.nextElementSibling); rw.parentNode.insertBefore(ways, rw.nextElementSibling); } } }
         else { if (waysHome) waysHome.parentNode.insertBefore(ways, waysHome); if (storyHome) storyHome.parentNode.insertBefore(story, storyHome); }
       }, 0);
       reels(on);
