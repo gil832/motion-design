@@ -1343,6 +1343,12 @@ body.hev .pain { display: block; }
 .pv.in .pv-tags .pv-frt.pv-rw, .pv .pv-tags .pv-frt.pv-rw { left: 84% !important; transform: translate(-50%, 45%) !important; }
 @media (max-width: 600px) { .pv .pv-tags .pv-frt:not(.pv-rw) { display: none; } }
 
+/* 3 steps: the step name is the main title, details under it */
+.h3c .h3k { order: -2; }
+.h3c h3 { order: -1; margin: 14px 0 0 !important; font-size: clamp(32px, 3vw, 46px) !important; line-height: 1.05; }
+.h3c .h3g, .h3c .h3n { order: 0; margin-top: 26px; }
+.h3c p { order: 1; }
+
 /* program tabs */
 .ptabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: 1080px; margin: 0 auto 18px; }
 .pt { appearance: none; cursor: pointer; text-align: left; padding: 20px 22px; border-radius: 22px; border: 1px solid rgba(143,243,232,.22); background: linear-gradient(170deg, rgba(10,44,50,.8), rgba(4,16,20,.92)); color: #fff; font: inherit; transition: transform .3s var(--ease), border-color .3s, background .3s, box-shadow .3s; }
