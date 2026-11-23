@@ -2536,16 +2536,16 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
       if (intro) {
         var k = Math.min(Math.max((now - intro - 500) / 1700, 0), 1), e = 1 - Math.pow(1 - k, 4);
         x = tx = .03 + (.62 - .03) * e; set(x);
-        if (k >= 1) { intro = 0; t0 = now - Math.asin((.62 - .5) / .26) * 2600; }
+        if (k >= 1) { intro = 0; t0 = now - Math.asin((.62 - .5) / .26) * 1900; }
         if (on) requestAnimationFrame(frame); return;
       }
-      if (!user && !reduce) tx = .5 + Math.sin((now - t0) / 2600) * .26;
-      x += (tx - x) * (user ? .12 : .05); set(x);
+      if (!user && !reduce) tx = .5 + Math.sin((now - t0) / 1900) * .26;
+      x += (tx - x) * (user ? .12 : .07); set(x);
       if (on) requestAnimationFrame(frame);
     }
     function pos(cx) { var r = sp.getBoundingClientRect(); return Math.max(.04, Math.min(.96, (cx - r.left) / r.width)); }
     sp.addEventListener("pointermove", function (e) { user = true; vis.classList.add("tried"); tx = pos(e.clientX); }, { passive: true });
-    sp.addEventListener("pointerleave", function () { user = false; t0 = performance.now() - Math.asin(Math.max(-1, Math.min(1, (x - .5) / .26))) * 2600; });
+    sp.addEventListener("pointerleave", function () { user = false; t0 = performance.now() - Math.asin(Math.max(-1, Math.min(1, (x - .5) / .26))) * 1900; });
     sp.addEventListener("touchmove", function (e) { user = true; vis.classList.add("tried"); tx = pos(e.touches[0].clientX); }, { passive: true });
     new IntersectionObserver(function (es) { var v = es[0].isIntersecting; if (v && !on) { on = true; requestAnimationFrame(frame); } on = v; }).observe(sp);
     set(x); if (reduce) set(.5); else requestAnimationFrame(frame);
