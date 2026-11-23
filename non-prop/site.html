@@ -1502,6 +1502,84 @@ body.hev #vt .vt-row:nth-child(2) .vt-c b::before { content: "From "; font-size:
 .stx-sell { background: rgba(255,107,138,.1); color: #ff8fa6; border: 1px solid rgba(255,107,138,.25); }
 .stx-buy { background: var(--lime); color: #0a0c02; box-shadow: 0 10px 30px -10px rgba(217,255,0,.6); }
 
+/* academy: support, community, academy and YouTube as one bento (all versions); no links off the page */
+.ac-grid, .ac-mid, .ac-links { display: none !important; }
+.acb { display: grid; grid-template-columns: 1.15fr 1fr 1fr; grid-template-rows: auto auto; gap: 18px; max-width: 1180px; margin: 0 auto; }
+.acb-t { position: relative; display: flex; flex-direction: column; gap: 22px; padding: clamp(24px, 2.6vw, 34px); border-radius: 26px; border: 1px solid rgba(255,255,255,.1); background: linear-gradient(165deg, rgba(255,255,255,.06), rgba(8,12,12,.9) 55%); overflow: hidden; min-width: 0; }
+.acb-sup { grid-column: 1 / 3; flex-direction: row; align-items: center; background: linear-gradient(140deg, rgba(0,216,195,.16), rgba(6,14,14,.92) 60%); border-color: rgba(0,216,195,.28); }
+.acb-sup .acb-tx { flex: 1 1 46%; }
+.acb-com { grid-column: 3; grid-row: 1 / 3; background: linear-gradient(170deg, rgba(88,101,242,.22), rgba(8,10,18,.92) 60%); border-color: rgba(120,132,255,.3); }
+.acb-aca { background: linear-gradient(170deg, rgba(217,255,0,.12), rgba(8,12,6,.92) 60%); border-color: rgba(217,255,0,.25); }
+.acb-yt { background: linear-gradient(170deg, rgba(255,40,60,.16), rgba(14,8,8,.92) 60%); border-color: rgba(255,80,90,.28); }
+.acb-k { font-size: 12.5px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: #8ff3e8; }
+.acb-com .acb-k { color: #a9b2ff; } .acb-aca .acb-k { color: var(--lime); } .acb-yt .acb-k { color: #ff8a95; }
+.acb-tx h3 { margin: 10px 0 0; font-size: clamp(22px, 2vw, 28px); font-weight: 600; letter-spacing: -.03em; line-height: 1.12; color: #fff; }
+.acb-tx p { margin: 10px 0 0; font-size: 15.5px; line-height: 1.5; color: rgba(255,255,255,.66); }
+/* support chat */
+.acb-chat { flex: 1 1 54%; display: flex; flex-direction: column; gap: 8px; padding: 16px; border-radius: 18px; background: rgba(3,10,10,.7); border: 1px solid rgba(255,255,255,.07); }
+.cb { max-width: 86%; font-size: 13.5px; line-height: 1.4; opacity: 0; transform: translateY(8px); transition: opacity .5s, transform .5s cubic-bezier(.16,1,.3,1); }
+.cb.me { align-self: flex-end; padding: 9px 13px; border-radius: 14px 14px 4px 14px; background: rgba(255,255,255,.1); color: #fff; }
+.cb.fr { display: flex; gap: 8px; align-items: flex-end; }
+.cb.fr i { flex: none; display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: var(--lime); color: #0a0c02; font-size: 10px; font-weight: 800; font-style: normal; }
+.cb.fr span { padding: 9px 13px; border-radius: 14px 14px 14px 4px; background: rgba(0,216,195,.16); border: 1px solid rgba(0,216,195,.25); color: #e6fffb; }
+.cb.ty span { display: flex; gap: 4px; padding: 12px 14px; }
+.cb.ty b { width: 6px; height: 6px; border-radius: 50%; background: #8ff3e8; animation: tyB 1.2s infinite; }
+.cb.ty b:nth-child(2) { animation-delay: .15s; } .cb.ty b:nth-child(3) { animation-delay: .3s; }
+@keyframes tyB { 0%, 60%, 100% { opacity: .3; transform: none; } 30% { opacity: 1; transform: translateY(-3px); } }
+.acb.in .cb { opacity: 1; transform: none; }
+.acb.in .cb:nth-child(2) { transition-delay: .5s; } .acb.in .cb:nth-child(3) { transition-delay: 1.1s; } .acb.in .cb:nth-child(4) { transition-delay: 1.6s; }
+/* community */
+.acb-av { display: flex; align-items: center; }
+.acb-av img { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; border: 3px solid #12142a; margin-left: -10px; }
+.acb-av img:first-child { margin-left: 0; }
+.acb-av span { margin-left: 12px; font-size: 13px; color: rgba(255,255,255,.7); }
+.acb-ch { list-style: none; margin: auto 0 0; padding: 8px; display: grid; gap: 4px; border-radius: 16px; background: rgba(6,8,18,.6); border: 1px solid rgba(255,255,255,.07); }
+.acb-ch li { position: relative; display: flex; align-items: center; gap: 8px; padding: 10px 12px; border-radius: 10px; font-size: 14px; color: rgba(255,255,255,.62); }
+.acb-ch li em { font-style: normal; opacity: .5; }
+.acb-ch li.on { background: rgba(120,132,255,.18); color: #fff; }
+.acb-ch li i { margin-left: auto; width: 8px; height: 8px; border-radius: 50%; background: #2fe0a6; box-shadow: 0 0 0 0 rgba(47,224,166,.6); animation: acbP 2s infinite; }
+@keyframes acbP { 70% { box-shadow: 0 0 0 8px rgba(47,224,166,0); } 100% { box-shadow: 0 0 0 0 rgba(47,224,166,0); } }
+/* academy lessons */
+.acb-ls { display: grid; gap: 8px; margin-top: auto; }
+.acb-ls button { appearance: none; display: flex; align-items: center; gap: 12px; width: 100%; padding: 10px 12px; border-radius: 12px; border: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.04); color: #fff; font: inherit; font-size: 14px; text-align: left; cursor: pointer; transition: background .3s, border-color .3s; }
+.acb-ls button:hover, .acb-ls button:focus-visible { background: rgba(217,255,0,.08); border-color: rgba(217,255,0,.35); outline: none; }
+.acb-ls b { flex: none; display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; font-size: 12px; background: rgba(255,255,255,.1); }
+.acb-ls b.ok { background: var(--lime); color: #0a0c02; }
+.acb-ls span { flex: 1; min-width: 0; }
+.acb-ls u { display: block; height: 3px; margin-top: 6px; border-radius: 2px; background: rgba(255,255,255,.1); text-decoration: none; overflow: hidden; }
+.acb-ls u i { display: block; height: 100%; width: 0; background: var(--lime); transition: width 1.6s 1s cubic-bezier(.16,1,.3,1); }
+.acb.in .acb-ls u i { width: 60%; }
+.acb-ls em { font-style: normal; font-size: 12px; color: var(--lime); opacity: 0; transition: opacity .3s; }
+.acb-ls button:hover em, .acb-ls button:focus-visible em { opacity: 1; }
+/* youtube */
+.acb-vid { appearance: none; position: relative; display: block; width: 100%; margin-top: auto; padding: 0; border: 0; border-radius: 16px; overflow: hidden; aspect-ratio: 16 / 9; background: #000; cursor: pointer; }
+.acb-vid img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s cubic-bezier(.16,1,.3,1); }
+.acb-vid:hover img { transform: scale(1.05); }
+.acb-vid i { position: absolute; left: 50%; top: 50%; display: grid; place-items: center; width: 56px; height: 56px; margin: -28px 0 0 -28px; border-radius: 50%; background: #ff2d3c; color: #fff; box-shadow: 0 10px 30px -8px rgba(255,45,60,.7); transition: transform .4s cubic-bezier(.34,1.56,.64,1); }
+.acb-vid:hover i { transform: scale(1.1); }
+.acb-vid i svg { width: 22px; height: 22px; margin-left: 3px; }
+.acb-vid:focus-visible { outline: 2px solid var(--lime); outline-offset: 3px; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+@media (max-width: 980px) {
+  .acb { grid-template-columns: 1fr 1fr; }
+  .acb-sup { grid-column: 1 / -1; }
+  .acb-com { grid-column: 1 / -1; grid-row: auto; }
+}
+@media (max-width: 640px) {
+  .acb { grid-template-columns: 1fr; gap: 14px; }
+  .acb-sup { flex-direction: column; align-items: stretch; }
+  .acb-com .acb-ch { margin-top: 0; }
+}
+@media (prefers-reduced-motion: reduce) { .cb { opacity: 1; transform: none; transition: none; } .cb.ty b, .acb-ch li i { animation: none; } }
+/* footer link columns hidden in every version: nothing leaves the page but checkout */
+.ft-g > div:not(:first-child) { display: none !important; }
+
+.acb-msg { display: flex; gap: 12px; padding: 14px; border-radius: 16px; background: rgba(6,8,18,.55); border: 1px solid rgba(255,255,255,.07); }
+.acb-msg > i { flex: none; display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: var(--lime); color: #0a0c02; font-size: 11px; font-weight: 800; font-style: normal; }
+.acb-msg b { display: block; font-size: 13.5px; color: #fff; }
+.acb-msg b em { font-style: normal; font-weight: 400; font-size: 12px; color: rgba(255,255,255,.4); margin-left: 6px; }
+.acb-msg p { margin: 4px 0 0; font-size: 13.5px; line-height: 1.45; color: rgba(255,255,255,.7); }
+
 /* program tabs */
 .ptabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: 1080px; margin: 0 auto 18px; }
 .pt { appearance: none; cursor: pointer; text-align: left; padding: 20px 22px; border-radius: 22px; border: 1px solid rgba(143,243,232,.22); background: linear-gradient(170deg, rgba(10,44,50,.8), rgba(4,16,20,.92)); color: #fff; font: inherit; transition: transform .3s var(--ease), border-color .3s, background .3s, box-shadow .3s; }
@@ -2378,6 +2456,35 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
   <section class="sec academy" id="academy" aria-label="FundingRock Academy">
     <div class="wrap">
       <div class="sh rv"><span class="eyebrow">FR Academy</span><h2>You won't start alone. <span class="grad">We'll show you how.</span></h2><p>From your first login to your first trade, we walk you through it step by step, with a team and a community behind you.</p></div>
+      <div class="acb rv" id="acb">
+        <article class="acb-t acb-sup">
+          <div class="acb-tx"><span class="acb-k">Support</span><h3>A real team, on your side.</h3><p>Stuck on a login, a platform setting or a rule? Message our support team and get a clear answer.</p></div>
+          <div class="acb-chat" aria-hidden="true">
+            <div class="cb me">How do I place my first trade?</div>
+            <div class="cb fr"><i>FR</i><span>Open the platform, pick a market and set your size. Want me to walk you through it?</span></div>
+            <div class="cb me sm">Yes please 🙌</div>
+            <div class="cb fr ty"><i>FR</i><span><b></b><b></b><b></b></span></div>
+          </div>
+        </article>
+        <article class="acb-t acb-com">
+          <div class="acb-tx"><span class="acb-k">Community</span><h3>Trade alongside other traders.</h3><p>Join our Discord to share ideas, ask questions and learn from traders and the FundingRock team.</p></div>
+          <div class="acb-av" aria-hidden="true"><img src="assets/traders/anthony.webp" alt=""><img src="assets/traders/andrea.webp" alt=""><img src="assets/traders/noam.webp" alt=""><img src="assets/traders/jem.webp" alt=""><img src="assets/traders/david.webp" alt=""><span>+ the team</span></div>
+          <div class="acb-msg" aria-hidden="true"><i>FR</i><div><b>FundingRock Team <em>today</em></b><p>New to the platform? Post your question in #ask-the-team and we'll walk you through it.</p></div></div>
+          <ul class="acb-ch" aria-hidden="true"><li class="on"><em>#</em>ask-the-team<i></i></li><li><em>#</em>trade-ideas</li><li><em>#</em>market-talk</li><li><em>#</em>rewards</li></ul>
+        </article>
+        <article class="acb-t acb-aca">
+          <div class="acb-tx"><span class="acb-k">FR Academy</span><h3>Learn step by step.</h3><p>Short lessons that take you from the basics to your first trade.</p></div>
+          <div class="acb-ls">
+            <button type="button" data-v="32PV7Zbm8U4" data-t="Into FundingRock"><b class="ok">✓</b><span>Into FundingRock</span><em>Play</em></button>
+            <button type="button" data-v="k3yqltLEgAM" data-t="Trading basics"><b class="ok">✓</b><span>Trading basics</span><em>Play</em></button>
+            <button type="button" data-v="VGK8PCvrb50" data-t="Your first trade order"><b>3</b><span>Your first trade order<u><i></i></u></span><em>Play</em></button>
+          </div>
+        </article>
+        <article class="acb-t acb-yt">
+          <div class="acb-tx"><span class="acb-k">YouTube</span><h3>Walkthroughs, anytime.</h3><p>Platform tours, market basics and trader stories, ready when you are.</p></div>
+          <button type="button" class="acb-vid" data-v="VGK8PCvrb50" data-t="Platform breakdown"><img src="assets/academy/a3.jpg" alt="" loading="lazy"><i aria-hidden="true"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M8 5.5v13l11-6.5z"/></svg></i><span class="sr">Play the platform walkthrough</span></button>
+        </article>
+      </div>
       <div class="ac-grid rv">
         <a class="ac-v" href="https://www.youtube.com/watch?v=32PV7Zbm8U4" target="_blank" rel="noopener"><span class="ac-im"><img src="assets/academy/a1.jpg" alt="" loading="lazy" width="420" height="237"><i class="ac-play" aria-hidden="true"></i></span><span class="ac-t"><i class="ac-n">1 · Start here</i><b>Into FundingRock</b><em>Our team shows you how everything works.</em></span></a>
         <a class="ac-v" href="https://www.youtube.com/watch?v=k3yqltLEgAM" target="_blank" rel="noopener"><span class="ac-im"><img src="assets/academy/a2.jpg" alt="" loading="lazy" width="420" height="237"><i class="ac-play" aria-hidden="true"></i></span><span class="ac-t"><i class="ac-n">2 · Learn the basics</i><b>Prop Trading Explained</b><em>The model in plain words, before you trade.</em></span></a>
@@ -3352,6 +3459,28 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
   $("#ugcTr").innerHTML = dup(TR.map(function (t, i) {
     return '<a class="ug" data-i="' + i + '" href="https://www.youtube.com/watch?v=' + t[3] + '" target="_blank" rel="noopener" aria-label="Watch ' + t[1] + ' on YouTube"><img src="assets/traders/' + t[0] + '.webp" alt="' + t[1] + '" loading="lazy" draggable="false"><span class="pl" aria-hidden="true"></span><span class="tx2"><b>' + t[1] + "</b><small>" + t[2] + "</small></span></a>";
   }).join(""));
+
+
+  /* stay on the page: videos open in the in-page player; every other outbound link (except checkout) becomes plain text */
+  (function () {
+    var lb = $(".ug-lb");
+    function play(id, title) {
+      if (!lb) return;
+      lb.querySelector(".ug-lb-v").innerHTML = '<iframe src="https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&rel=0" title="' + title + '" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>';
+      lb.querySelector(".ug-lb-t").innerHTML = "<b>" + title + "</b>"; lb.hidden = false; lb.querySelector(".ug-lb-x").focus();
+    }
+    window.npPlay = play;
+    $$('a[href^="http"]').forEach(function (a) {
+      var h = a.getAttribute("href");
+      if (/^https:\/\/checkout\.fundingrock\.com/.test(h) || a.classList.contains("ug")) return;
+      var m = h.match(/youtube\.com\/watch\?v=([\w-]+)/);
+      if (m) { a.addEventListener("click", function (e) { e.preventDefault(); play(m[1], (a.textContent || "Video").trim().slice(0, 80)); }); a.removeAttribute("target"); return; }
+      a.removeAttribute("href"); a.removeAttribute("target"); a.removeAttribute("rel"); a.style.cursor = "default";
+    });
+    var nl = $(".nav-l"); if (nl) nl.setAttribute("href", "#top");
+    $$("[data-v]").forEach(function (b) { b.addEventListener("click", function () { play(b.getAttribute("data-v"), b.getAttribute("data-t")); }); });
+    var acb = $("#acb"); if (acb) new IntersectionObserver(function (es, o) { if (es[0].isIntersecting) { acb.classList.add("in"); o.disconnect(); } }, { threshold: .25 }).observe(acb);
+  })();
 
   /* Reward certificates: the card from the certificates Figma file, two rows running opposite ways */
   var KC = window.KCERTS || [];
