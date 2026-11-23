@@ -1371,6 +1371,15 @@ body.hev #traders .ug:hover .pl { transform: scale(1.18); }
 @keyframes lbPop { from { opacity: 0; transform: scale(.92) translateY(14px); } }
 @media (prefers-reduced-motion: reduce) { body.hev #traders .ug, .ug-lb, .ug-lb-in { transition: none; animation: none; } }
 
+/* 3 steps, Kokuyo layout: label, big number, title, line at the bottom; equal square-ish cards */
+.hk.hw3 { align-items: stretch; }
+.hk .h3c { min-height: clamp(420px, 34vw, 500px); }
+.hk .h3c .h3k { order: 0; }
+.hk .h3c .h3n { order: 1; margin-top: 34px !important; font-size: clamp(64px, 6.4vw, 100px) !important; white-space: nowrap; }
+.hk .h3c h3 { order: 2; margin: 34px 0 0 !important; font-size: clamp(26px, 2.3vw, 34px) !important; }
+.hk .h3c p { order: 3; margin-top: auto; padding-top: 24px; }
+@media (max-width: 900px) { .hk .h3c { min-height: 0; } .hk .h3c .h3n { font-size: 72px !important; margin-top: 20px !important; } .hk .h3c h3 { margin-top: 20px !important; } }
+
 /* program tabs */
 .ptabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: 1080px; margin: 0 auto 18px; }
 .pt { appearance: none; cursor: pointer; text-align: left; padding: 20px 22px; border-radius: 22px; border: 1px solid rgba(143,243,232,.22); background: linear-gradient(170deg, rgba(10,44,50,.8), rgba(4,16,20,.92)); color: #fff; font: inherit; transition: transform .3s var(--ease), border-color .3s, background .3s, box-shadow .3s; }
@@ -2011,10 +2020,10 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
   <section class="sec" id="how" style="padding-top:0">
     <div class="wrap">
       <div class="sh rv"><span class="eyebrow">How it works</span><h2 id="hwH">Pick. Trade. <span class="grad">Get rewarded.</span></h2><p>Choose your account, pay once, start trading, and become eligible for Rewards.</p></div>
-      <div class="hw3 rv" aria-label="How Instant works">
-        <article class="h3c c1"><span class="h3k">Step 1</span><div class="h3g"><span><b>$5K</b><em>$70</em></span><span><b>$10K</b><em>$120</em></span><span><b>$25K</b><em>$200</em></span><span><b>$50K</b><em>$350</em></span><span><b>$100K</b><em>$600</em></span><span><b>$200K</b><em>$1,100</em></span></div><h3>Pick your account.</h3><p>Choose a simulated account size and pay a <b>one-time fee</b>. That's the only payment.</p></article>
-        <article class="h3c c2"><span class="h3k">Step 2</span><b class="h3n">Day 1</b><h3>Start trading.</h3><p>Trade your simulated account right away. Just stay inside two loss limits: <b>4% a day</b> and <b>8% in total</b>.</p></article>
-        <article class="h3c c3"><span class="h3k">Step 3</span><b class="h3n">80%<i>/</i>95%</b><h3>Qualify for Rewards.</h3><p>Meet the requirements and request a Reward: <b>80%</b> of your simulated profit, or <b>95%</b> with the add-on.</p></article>
+      <div class="hw3 hk rv" aria-label="How Instant works">
+        <article class="h3c c1"><span class="h3k">Step 1</span><b class="h3n">$10K</b><h3>Pick Your Account.</h3><p>A <b>$10,000</b> simulated account for a <b>one-time $120</b>. Sizes from $5K to $200K.</p></article>
+        <article class="h3c c2"><span class="h3k">Step 2</span><b class="h3n">Day 1</b><h3>Start Trading.</h3><p>Trade <b>right away</b>. Just stay inside two loss limits: <b>4% a day</b> and <b>8% in total</b>.</p></article>
+        <article class="h3c c3"><span class="h3k">Step 3</span><b class="h3n">95%</b><h3>Qualify for Rewards.</h3><p>Meet the requirements and request a Reward: <b>up to 95%</b> of your simulated profit.</p></article>
       </div>
       <div class="hw three" id="hw">
         <article class="hs glass rv" data-spot="460,.14">
