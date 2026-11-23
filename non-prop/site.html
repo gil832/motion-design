@@ -1331,6 +1331,18 @@ body.hev .pain { display: block; }
 @media (max-width: 600px) { .pv.in .pv-tags .pv-frt, .pv .pv-tags .pv-frt { transform: translate(-50%, -140%) !important; } }
 .pv-line-fr-label { }
 
+/* lime line: Reward step */
+.pv-frd { fill: var(--lime); stroke: #0a0a0a; stroke-width: 3; vector-effect: non-scaling-stroke; opacity: 0; transition: opacity .4s 1.9s; }
+.pv.in .pv-frd { opacity: 1; }
+.pv .pv-tags .pv-rw { transform: translate(-50%, -150%) !important; transition-delay: 1.9s !important; }
+.pv.in .pv-tags .pv-rw { box-shadow: 0 0 24px -4px rgba(217,255,0,.8); }
+@media (max-width: 600px) { .pv .pv-tags .pv-frt:not(.pv-rw) { transform: translate(-50%, 40%) !important; } .pv .pv-tags .pv-rw { left: 74% !important; } }
+
+/* chart tags: fee above the line, Reward below it; phones skip the fee tag */
+.pv.in .pv-tags .pv-frt:not(.pv-rw), .pv .pv-tags .pv-frt:not(.pv-rw) { transform: translate(-50%, -150%) !important; }
+.pv.in .pv-tags .pv-frt.pv-rw, .pv .pv-tags .pv-frt.pv-rw { left: 84% !important; transform: translate(-50%, 45%) !important; }
+@media (max-width: 600px) { .pv .pv-tags .pv-frt:not(.pv-rw) { display: none; } }
+
 /* program tabs */
 .ptabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: 1080px; margin: 0 auto 18px; }
 .pt { appearance: none; cursor: pointer; text-align: left; padding: 20px 22px; border-radius: 22px; border: 1px solid rgba(143,243,232,.22); background: linear-gradient(170deg, rgba(10,44,50,.8), rgba(4,16,20,.92)); color: #fff; font: inherit; transition: transform .3s var(--ease), border-color .3s, background .3s, box-shadow .3s; }
@@ -1857,7 +1869,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
   <!-- pinned scroll story: the screen holds, scenes swap as you scroll -->
   <section class="sec pain" id="pain" aria-label="Why trading feels out of reach">
     <div class="wrap">
-      <div class="sh rv"><h2>Ever Felt Trading Was <span class="grad">Out of Reach?</span></h2><p>Here's the same week of trading, on your own savings and with FundingRock Instant.</p></div>
+      <div class="sh rv"><h2>Ever Felt Trading Entries <span class="grad">Were Out of Reach?</span></h2><p>Here's the same week of trading, on your own savings and with FundingRock Instant.</p></div>
       <div class="pv-sw rv" role="tablist" aria-label="Compare"><button type="button" class="on" data-m="own" role="tab" aria-selected="true">On Your Own</button><button type="button" data-m="fr" role="tab" aria-selected="false">With FundingRock Instant</button></div>
       <div class="pv rv" id="pv">
         <div class="pv-chart">
@@ -1868,13 +1880,13 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
             <g class="pv-grid"><line x1="0" x2="600" y1="40" y2="40"/><line x1="0" x2="600" y1="110" y2="110"/><line x1="0" x2="600" y1="180" y2="180"/><line x1="0" x2="600" y1="250" y2="250"/></g>
             <path class="pv-area" d="M0 40 L100 52 L200 96 L300 88 L400 150 L500 176 L600 214 L600 260 L0 260 Z" fill="url(#pvG)"/>
             <path class="pv-line" pathLength="1" d="M0 40 L100 52 L200 96 L300 88 L400 150 L500 176 L600 214"/>
-            <path class="pv-fr" pathLength="1" d="M0 40 L100 44 L200 44 L300 44 L400 44 L500 44 L600 44"/>
+            <path class="pv-fr" pathLength="1" d="M0 40 L60 49 L420 49 L470 19 L600 19"/><circle class="pv-frd" cx="470" cy="19" r="7"/>
             <g class="pv-dots"><circle cx="200" cy="96" r="6"/><circle cx="400" cy="150" r="6"/><circle cx="600" cy="214" r="7"/></g>
           </svg>
-          <div class="pv-tags"><i style="left:33%;top:37%">−$520</i><i style="left:66%;top:58%">−$710</i><i style="left:93%;top:82%">−$1,060</i><i class="pv-frt" style="left:80%;top:17%">$120 Fee, Once</i></div>
+          <div class="pv-tags"><i style="left:33%;top:37%">−$520</i><i style="left:66%;top:58%">−$710</i><i style="left:93%;top:82%">−$1,060</i><i class="pv-frt" style="left:16%;top:19%">$120 Fee, Once</i><i class="pv-frt pv-rw" style="left:78%;top:7%">+$400 Reward</i></div>
           </div>
           <div class="pv-days"><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span></div>
-          <small class="pv-note">Example for illustration.</small>
+          <small class="pv-note">Example for illustration. Rewards are not guaranteed.</small>
         </div>
         <ul class="pv-list pv-own">
           <li><span class="pn-x" aria-hidden="true">×</span><div><b>To Trade $10K, You Need $10K.</b><p>With a broker, the account size is your own money.</p></div></li>
@@ -2861,7 +2873,10 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
     btns.forEach(function (b) { b.addEventListener("click", function () { touched = true; mode(b.getAttribute("data-m")); }); });
     new IntersectionObserver(function (es) {
       if (!es[0].isIntersecting || done) return; done = true; pv.classList.add("in"); count(7710, 2300);
-      if (reduce) { bal2.textContent = "$9,880"; chg2.textContent = "−1.2%"; } else { var t1 = null; requestAnimationFrame(function st2(now) { if (t1 === null) t1 = now; var k = Math.min((now - t1) / 900, 1), v = 10000 - 120 * k; bal2.textContent = "$" + Math.round(v).toLocaleString("en-US"); chg2.textContent = "−" + ((10000 - v) / 100).toFixed(1) + "%"; if (k < 1) requestAnimationFrame(st2); }); }
+      function show2(v) { bal2.textContent = "$" + Math.round(v).toLocaleString("en-US"); var d = (v - 10000) / 100; chg2.textContent = (d >= 0 ? "+" : "−") + Math.abs(d).toFixed(1) + "%"; }
+      if (reduce) show2(10280); else { var t1 = null; requestAnimationFrame(function st2(now) { if (t1 === null) t1 = now; var t = now - t1, v;
+        if (t < 500) v = 10000 - 120 * (t / 500); else if (t < 1500) v = 9880; else v = 9880 + 400 * Math.min((t - 1500) / 700, 1);
+        show2(v); if (t < 2200) requestAnimationFrame(st2); else show2(10280); }); }
       if (!reduce) setTimeout(function () { if (!touched) mode("fr"); }, 5200);
     }, { threshold: .4 }).observe(pv);
   })();
