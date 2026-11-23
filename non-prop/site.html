@@ -1442,6 +1442,15 @@ body.hfv .hst { display: block; max-width: 1080px; margin: 0 auto; padding-botto
 }
 @media (prefers-reduced-motion: reduce) { .stc { position: relative; top: 0; margin-bottom: 16px; } .stc-ln { transition: none; stroke-dashoffset: 0; } }
 
+/* E/F hero stats on phones: even columns, numbers fit, labels on two short lines */
+@media (max-width: 600px) {
+  body.hev .hc-stats { border-radius: 22px; }
+  body.hev .hc-stats > div { padding: 20px 6px 18px !important; }
+  body.hev .hc-stats b { font-size: clamp(22px, 7.2vw, 30px) !important; letter-spacing: -.04em; white-space: nowrap; }
+  body.hev .hc-stats span { font-size: 12.5px !important; line-height: 1.35; max-width: 10ch !important; margin-top: 8px; }
+  body.hev .hc-stats > div + div::before { top: 18%; bottom: 18%; }
+}
+
 /* program tabs */
 .ptabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: 1080px; margin: 0 auto 18px; }
 .pt { appearance: none; cursor: pointer; text-align: left; padding: 20px 22px; border-radius: 22px; border: 1px solid rgba(143,243,232,.22); background: linear-gradient(170deg, rgba(10,44,50,.8), rgba(4,16,20,.92)); color: #fff; font: inherit; transition: transform .3s var(--ease), border-color .3s, background .3s, box-shadow .3s; }
@@ -1766,7 +1775,8 @@ footer.ft .ft-word.in img { transform: translateY(8%); }
 .mbar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 55; display: none; align-items: center; justify-content: space-between; gap: 12px; padding: 12px max(16px, env(safe-area-inset-left, 0px)) calc(12px + env(safe-area-inset-bottom, 0px)); background: rgba(3,10,14,.88); -webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px); border-top: 1px solid var(--line); transform: translateY(110%); transition: transform .45s var(--ease); }
 .mbar.on { transform: none; }
 .mbar b { display: block; font-size: 15px; } .mbar small { color: var(--mute); font-size: 12.5px; }
-@media (max-width: 760px) { .mbar { display: flex; } }
+/* mobile sticky buy bar removed on request */
+.mbar { display: none !important; }
 
 /* cursor spotlight */
 .spot { position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity .5s; z-index: 0; border-radius: inherit; background: radial-gradient(var(--sz) circle at var(--x, 50%) var(--y, 50%), rgba(0,216,195,var(--st)), transparent 62%); }
@@ -2864,6 +2874,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
       ["#ways .sh .eyebrow", "Pricing"],
       ["#ways .sh p", "Or pick any size from $5K to $200K. Pay once. No test to pass first."],
       ["#hwH", '3 Steps. <span class="grad">That\'s it.</span>'],
+      [".hc-stats > div:nth-child(4) span", "Reward processing"],
       ["#how .sh p", "No test to pass, no deposit, no complicated setup. Pick an account, start trading, and go for your Rewards."],
       ["#traders .sh h2", 'Traders like you. <span class="grad">Trusted results.</span>'],
       ["#rewards .sh h2", 'They played it well. <span class="grad">They got rewarded.</span>'],
