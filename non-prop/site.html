@@ -1393,6 +1393,12 @@ body.hev #ways .sh .eyebrow { display: inline-block !important; font-size: 14px;
 .pc1 .irules { margin: 0 !important; padding: 0 !important; background: none !important; border: 0 !important; box-shadow: none !important; border-top: 1px solid rgba(255,255,255,.1) !important; border-radius: 0 !important; padding-top: 22px !important; }
 .pc1 .irules > summary { font-size: 14px; }
 
+.h3sz { color: #e6fffb; -webkit-text-fill-color: #e6fffb; text-shadow: 0 0 40px rgba(143,243,232,.25); display: inline-block; transition: opacity .45s ease, transform .55s cubic-bezier(.16,1,.3,1), filter .45s; }
+.h3sz.out { opacity: 0; transform: translateY(-14px); filter: blur(4px); }
+.h3sz.pre { opacity: 0; transform: translateY(14px); filter: blur(4px); transition: none; }
+.hk .h3c .h3n { font-size: min(92px, 23.5cqw) !important; }
+.hk .h3c.c1 .h3n { background: none !important; -webkit-text-fill-color: currentColor; color: #e6fffb; }
+
 /* program tabs */
 .ptabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: 1080px; margin: 0 auto 18px; }
 .pt { appearance: none; cursor: pointer; text-align: left; padding: 20px 22px; border-radius: 22px; border: 1px solid rgba(143,243,232,.22); background: linear-gradient(170deg, rgba(10,44,50,.8), rgba(4,16,20,.92)); color: #fff; font: inherit; transition: transform .3s var(--ease), border-color .3s, background .3s, box-shadow .3s; }
@@ -2034,7 +2040,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
     <div class="wrap">
       <div class="sh rv"><span class="eyebrow">How it works</span><h2 id="hwH">Pick. Trade. <span class="grad">Get rewarded.</span></h2><p>Choose your account, pay once, start trading, and become eligible for Rewards.</p></div>
       <div class="hw3 hk rv" aria-label="How Instant works">
-        <article class="h3c c1"><span class="h3k">Step 1</span><b class="h3n">$10K</b><h3>Pick Your Account.</h3><p>A <b>$10,000</b> simulated account for a <b>one-time $120</b>. Sizes from $5K to $200K.</p></article>
+        <article class="h3c c1"><span class="h3k">Step 1</span><b class="h3n"><span id="h3Sz" class="h3sz">$10K</span></b><h3>Pick Your Account.</h3><p>Choose a simulated account from <b>$10K to $200K</b> and pay a <b>one-time fee</b>.</p></article>
         <article class="h3c c2"><span class="h3k">Step 2</span><b class="h3n">Day 1</b><h3>Start Trading.</h3><p>Trade <b>right away</b>. Just stay inside two loss limits: <b>4% a day</b> and <b>8% in total</b>.</p></article>
         <article class="h3c c3"><span class="h3k">Step 3</span><b class="h3n">95%</b><h3>Qualify for Rewards.</h3><p>Meet the requirements and request a Reward: <b>up to 95%</b> of your simulated profit.</p></article>
       </div>
@@ -2937,6 +2943,21 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
         show2(v); if (t < 2200) requestAnimationFrame(st2); else show2(10280); }); }
       if (!reduce) setTimeout(function () { if (!touched) mode("fr"); }, 5200);
     }, { threshold: .4 }).observe(pv);
+  })();
+
+  /* step 1: the account size softly cycles $10K > $200K */
+  (function () {
+    var el = $("#h3Sz"); if (!el || reduce) return;
+    var V = ["$10K", "$25K", "$50K", "$100K", "$200K"], i = 0, vis = false;
+    new IntersectionObserver(function (es) { vis = es[0].isIntersecting; }).observe(el);
+    setInterval(function () {
+      if (!vis || document.hidden) return;
+      el.classList.add("out");
+      setTimeout(function () {
+        i = (i + 1) % V.length; el.textContent = V[i];
+        el.classList.remove("out"); el.classList.add("pre"); void el.offsetWidth; el.classList.remove("pre");
+      }, 450);
+    }, 2200);
   })();
 
   /* comparison details toggle (C/D) */
