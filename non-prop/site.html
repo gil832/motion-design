@@ -1294,6 +1294,26 @@ body.hev .pain { display: block; }
 
 .gm-upto { display: inline-block; font-size: .34em; letter-spacing: -.01em; vertical-align: .9em; margin-right: .08em; color: rgba(217,255,0,.85); }
 
+/* pain section v3: switch between "on your own" and "with Instant" */
+.pv-sw { display: flex; width: fit-content; margin: -8px auto 26px; padding: 5px; border-radius: 999px; border: 1px solid rgba(255,255,255,.14); background: rgba(255,255,255,.04); }
+.pv-sw button { appearance: none; border: 0; background: none; color: rgba(255,255,255,.75); font: inherit; font-size: clamp(15px, 1.3vw, 18px); font-weight: 500; padding: 12px 22px; border-radius: 999px; cursor: pointer; transition: background .35s, color .35s; }
+.pv-sw button.on[data-m="own"] { background: #ff6b8a; color: #fff; }
+.pv-sw button.on[data-m="fr"] { background: var(--lime); color: #0a0a0a; }
+.pv-sw button:focus-visible { outline: 2px solid var(--lime); outline-offset: 2px; }
+.pv-fr { fill: none; stroke: var(--lime); stroke-width: 3; vector-effect: non-scaling-stroke; stroke-dasharray: 1; stroke-dashoffset: 1; filter: drop-shadow(0 0 8px rgba(217,255,0,.6)); opacity: 0; }
+.pv-tags .pv-frt { background: var(--lime) !important; color: #0a0a0a !important; opacity: 0 !important; }
+.pv-good { display: none; }
+.pn-ok { flex: none; width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; font-size: 18px; color: #0a0a0a; background: var(--lime); }
+.pv.fr .pv-chart { background: linear-gradient(170deg, rgba(217,255,0,.10), rgba(6,14,12,.92) 55%); border-color: rgba(217,255,0,.35); }
+.pv.fr .pv-line, .pv.fr .pv-area, .pv.fr .pv-dots, .pv.fr .pv-tags i:not(.pv-frt) { opacity: 0 !important; transition: opacity .3s; }
+.pv.fr .pv-fr { opacity: 1; animation: pvDraw 1.4s cubic-bezier(.45,0,.55,1) forwards; }
+.pv.fr .pv-tags .pv-frt { opacity: 1 !important; transform: translate(-50%, -150%) !important; transition: opacity .4s .3s, transform .5s .3s cubic-bezier(.34,1.56,.64,1) !important; }
+.pv.fr .pv-top em { color: var(--lime); }
+.pv.fr .pv-own { display: none; }
+.pv.fr .pv-good { display: grid; }
+.pv.fr .pv-good li { border-color: rgba(217,255,0,.25); background: rgba(217,255,0,.05); }
+@media (max-width: 600px) { .pv-sw button { padding: 10px 14px; font-size: 14px; } }
+
 /* program tabs */
 .ptabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: 1080px; margin: 0 auto 18px; }
 .pt { appearance: none; cursor: pointer; text-align: left; padding: 20px 22px; border-radius: 22px; border: 1px solid rgba(143,243,232,.22); background: linear-gradient(170deg, rgba(10,44,50,.8), rgba(4,16,20,.92)); color: #fff; font: inherit; transition: transform .3s var(--ease), border-color .3s, background .3s, box-shadow .3s; }
@@ -1820,27 +1840,34 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
   <!-- pinned scroll story: the screen holds, scenes swap as you scroll -->
   <section class="sec pain" id="pain" aria-label="Why trading feels out of reach">
     <div class="wrap">
-      <div class="sh rv"><h2>One Bad Week Shouldn't <span class="grad">Wipe Out Your Savings.</span></h2><p>With a broker, every trade is paid for with your own money.</p></div>
+      <div class="sh rv"><h2>Always Wanted to Trade, <span class="grad">but the Entry Felt Out of Reach?</span></h2><p>Here's what a week of trading on your own can look like, and how Instant changes it.</p></div>
+      <div class="pv-sw rv" role="tablist" aria-label="Compare"><button type="button" class="on" data-m="own" role="tab" aria-selected="true">On Your Own</button><button type="button" data-m="fr" role="tab" aria-selected="false">With FundingRock Instant</button></div>
       <div class="pv rv" id="pv">
         <div class="pv-chart">
-          <div class="pv-top"><span>Your savings account</span><b class="tnum" id="pvBal">$10,000</b><em class="tnum" id="pvChg">0.0%</em></div>
+          <div class="pv-top"><span id="pvLab">Your savings account</span><b class="tnum" id="pvBal">$10,000</b><em class="tnum" id="pvChg">0.0%</em></div>
           <div class="pv-plot">
           <svg class="pv-svg" viewBox="0 0 600 260" preserveAspectRatio="none" aria-hidden="true">
             <defs><linearGradient id="pvG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff6b8a" stop-opacity=".35"/><stop offset="1" stop-color="#ff6b8a" stop-opacity="0"/></linearGradient></defs>
             <g class="pv-grid"><line x1="0" x2="600" y1="40" y2="40"/><line x1="0" x2="600" y1="110" y2="110"/><line x1="0" x2="600" y1="180" y2="180"/><line x1="0" x2="600" y1="250" y2="250"/></g>
             <path class="pv-area" d="M0 40 L100 52 L200 96 L300 88 L400 150 L500 176 L600 214 L600 260 L0 260 Z" fill="url(#pvG)"/>
             <path class="pv-line" pathLength="1" d="M0 40 L100 52 L200 96 L300 88 L400 150 L500 176 L600 214"/>
+            <path class="pv-fr" pathLength="1" d="M0 40 L100 44 L200 44 L300 44 L400 44 L500 44 L600 44"/>
             <g class="pv-dots"><circle cx="200" cy="96" r="6"/><circle cx="400" cy="150" r="6"/><circle cx="600" cy="214" r="7"/></g>
           </svg>
-          <div class="pv-tags"><i style="left:33%;top:37%">−$520</i><i style="left:66%;top:58%">−$710</i><i style="left:93%;top:82%">−$1,060</i></div>
+          <div class="pv-tags"><i style="left:33%;top:37%">−$520</i><i style="left:66%;top:58%">−$710</i><i style="left:93%;top:82%">−$1,060</i><i class="pv-frt" style="left:22%;top:10%">$120 Fee, Once</i></div>
           </div>
           <div class="pv-days"><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span></div>
           <small class="pv-note">Example for illustration.</small>
         </div>
-        <ul class="pv-list">
+        <ul class="pv-list pv-own">
           <li><span class="pn-x" aria-hidden="true">×</span><div><b>To Trade $10K, You Need $10K.</b><p>With a broker, the account size is your own money.</p></div></li>
           <li><span class="pn-x" aria-hidden="true">×</span><div><b>Every Loss Is Yours.</b><p>Losses come straight out of your savings.</p></div></li>
-          <li><span class="pn-x" aria-hidden="true">×</span><div><b>Small Savings, Small Trades.</b><p>Without capital, it's hard to trade at a size that matters.</p></div></li>
+          <li><span class="pn-x" aria-hidden="true">×</span><div><b>Small Savings, Small Trades.</b><p>Without a big balance, it's hard to trade at a size that matters.</p></div></li>
+        </ul>
+        <ul class="pv-list pv-good">
+          <li><span class="pn-ok" aria-hidden="true">✓</span><div><b>Trade a $10K Account for $120.</b><p>A simulated account, from a one-time fee.</p></div></li>
+          <li><span class="pn-ok" aria-hidden="true">✓</span><div><b>Your Savings Stay Out of It.</b><p>The fee is the most you can lose.</p></div></li>
+          <li><span class="pn-ok" aria-hidden="true">✓</span><div><b>Trade Well, Qualify for Rewards.</b><p>Up to 95% Reward Share when you meet the requirements.</p></div></li>
         </ul>
       </div>
       <a class="pn-next rv" href="#story"><span>FundingRock Instant changes that.</span><i aria-hidden="true">↓</i></a>
@@ -2758,7 +2785,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
 
   /* Hero E: Title Case on headings, subtitles, labels, buttons and short lines (originals restored when leaving E) */
   (function () {
-    var SEL = "h1, h2, h3, .sh p, .hc-sub, .mx-sub, .buy, .hc-btn, .nav-r a, .ow-k, .ow-s, .ow-c li, .h3k, .tp-txt h3, .pc1-k, .pc1-go p, .pc1-rules span, .pc1-rules em, .irules-k, .rk-k, .rk-note, .rk-v em, .hc-stats span, .faq summary, #endP, .cc header, .cc-k, .ic-f, .tpsum a, .ft-g h4, .ft-g a, .ac-t b, .ac-t em, .ac-lt b, .ac-lt em, .gm-l, .gm-chips i, .gm-t b, .gm-t em, .gm-lives small, .ac-mk, .vt-row > span, .vt-c b, .vt-c small, .pn-next span, .pv-top span";
+    var SEL = "h1, h2, h3, .sh p, .hc-sub, .mx-sub, .buy, .hc-btn, .nav-r a, .ow-k, .ow-s, .ow-c li, .h3k, .tp-txt h3, .pc1-k, .pc1-go p, .pc1-rules span, .pc1-rules em, .irules-k, .rk-k, .rk-note, .rk-v em, .hc-stats span, .faq summary, #endP, .cc header, .cc-k, .ic-f, .tpsum a, .ft-g h4, .ft-g a, .ac-t b, .ac-t em, .ac-lt b, .ac-lt em, .gm-l, .gm-chips i, .gm-t b, .gm-t em, .gm-lives small, .ac-mk, .vt-row > span, .vt-c b, .vt-c small, .pn-next span, .pv-top span, .pv-sw button";
     var SMALL = /^(a|an|and|as|at|but|by|for|in|of|on|or|the|to|vs|via|per|from|with)$/i;
     var saved = [];
     function title(t, first) {
@@ -2800,15 +2827,27 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
     set(0, !reduce);
   })();
 
-  /* pain chart: draws the bad week and counts the balance down when it scrolls in */
+  /* pain chart: "on your own" draws the bad week; "with Instant" shows the same week with only the fee out of savings */
   (function () {
     var pv = $("#pv"); if (!pv) return;
-    var bal = $("#pvBal"), chg = $("#pvChg"), done = false;
-    new IntersectionObserver(function (es) {
-      if (!es[0].isIntersecting || done) return; done = true; pv.classList.add("in");
-      if (reduce) { bal.textContent = "$7,710"; chg.textContent = "−22.9%"; return; }
-      var t0 = null; requestAnimationFrame(function st(now) { if (t0 === null) t0 = now; var k = Math.min((now - t0) / 2300, 1), e = k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2, v = 10000 - 2290 * e;
+    var bal = $("#pvBal"), chg = $("#pvChg"), done = false, run = 0, touched = false, btns = $$(".pv-sw button");
+    function count(to, ms) {
+      var id = ++run, from = parseInt(bal.textContent.replace(/\D/g, ""), 10) || 10000, t0 = null;
+      if (reduce) ms = 1;
+      requestAnimationFrame(function st(now) { if (id !== run) return; if (t0 === null) t0 = now; var k = Math.min((now - t0) / ms, 1), e = k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2, v = from + (to - from) * e;
         bal.textContent = "$" + Math.round(v).toLocaleString("en-US"); chg.textContent = "−" + ((10000 - v) / 100).toFixed(1) + "%"; if (k < 1) requestAnimationFrame(st); });
+    }
+    function mode(m) {
+      var fr = m === "fr"; pv.classList.toggle("fr", fr);
+      btns.forEach(function (b) { var on = b.getAttribute("data-m") === m; b.classList.toggle("on", on); b.setAttribute("aria-selected", on); });
+      if (!done) return;
+      if (fr) { var f = pv.querySelector(".pv-fr"); f.style.animation = "none"; void f.offsetWidth; f.style.animation = ""; }
+      count(fr ? 9880 : 7710, fr ? 900 : 2300);
+    }
+    btns.forEach(function (b) { b.addEventListener("click", function () { touched = true; mode(b.getAttribute("data-m")); }); });
+    new IntersectionObserver(function (es) {
+      if (!es[0].isIntersecting || done) return; done = true; pv.classList.add("in"); count(7710, 2300);
+      if (!reduce) setTimeout(function () { if (!touched) mode("fr"); }, 5200);
     }, { threshold: .4 }).observe(pv);
   })();
 
