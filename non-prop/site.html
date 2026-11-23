@@ -1305,14 +1305,31 @@ body.hev .pain { display: block; }
 .pv-good { display: none; }
 .pn-ok { flex: none; width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; font-size: 18px; color: #0a0a0a; background: var(--lime); }
 .pv.fr .pv-chart { background: linear-gradient(170deg, rgba(217,255,0,.10), rgba(6,14,12,.92) 55%); border-color: rgba(217,255,0,.35); }
-.pv.fr .pv-line, .pv.fr .pv-area, .pv.fr .pv-dots, .pv.fr .pv-tags i:not(.pv-frt) { opacity: 0 !important; transition: opacity .3s; }
-.pv.fr .pv-fr { opacity: 1; animation: pvDraw 1.4s cubic-bezier(.45,0,.55,1) forwards; }
 .pv.fr .pv-tags .pv-frt { opacity: 1 !important; transform: translate(-50%, -150%) !important; transition: opacity .4s .3s, transform .5s .3s cubic-bezier(.34,1.56,.64,1) !important; }
 .pv.fr .pv-top em { color: var(--lime); }
 .pv.fr .pv-own { display: none; }
 .pv.fr .pv-good { display: grid; }
 .pv.fr .pv-good li { border-color: rgba(217,255,0,.25); background: rgba(217,255,0,.05); }
 @media (max-width: 600px) { .pv-sw button { padding: 10px 14px; font-size: 14px; } }
+
+/* pain chart v4: both lines on one chart */
+.pv-two { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.pv-s span { display: flex; align-items: center; gap: 8px; font-size: clamp(14px, 1.15vw, 17px); color: rgba(255,255,255,.75); }
+.pv-s span i { width: 22px; height: 4px; border-radius: 2px; background: #ff6b8a; box-shadow: 0 0 8px rgba(255,107,138,.7); }
+.pv-s.fr span i { background: var(--lime); box-shadow: 0 0 8px rgba(217,255,0,.7); }
+.pv-s b { display: block; margin-top: 6px; font-size: clamp(36px, 3.6vw, 56px); font-weight: 600; letter-spacing: -.05em; line-height: 1; color: #fff; }
+.pv-s em { font-style: normal; font-size: clamp(16px, 1.4vw, 20px); font-weight: 600; color: #ff7a8f; }
+.pv-s.fr em { color: var(--lime); }
+.pv-chart { background: linear-gradient(170deg, rgba(255,255,255,.05), rgba(8,10,10,.92) 55%) !important; border-color: rgba(255,255,255,.14) !important; }
+.pv .pv-fr { opacity: 1 !important; }
+.pv.in .pv-fr { animation: pvDraw 1.6s cubic-bezier(.45,0,.55,1) .3s forwards; }
+.pv.in .pv-tags .pv-frt { opacity: 1 !important; transform: translate(-50%, -150%) !important; transition: opacity .4s 1.6s, transform .5s 1.6s cubic-bezier(.34,1.56,.64,1) !important; }
+.pv-s { transition: opacity .4s; }
+@media (max-width: 600px) { .pv-two { gap: 10px; } .pv-s b { font-size: 30px; } }
+
+.pv.in .pv-tags .pv-frt, .pv .pv-tags .pv-frt { transform: translate(-50%, 40%) !important; }
+@media (max-width: 600px) { .pv.in .pv-tags .pv-frt, .pv .pv-tags .pv-frt { transform: translate(-50%, -140%) !important; } }
+.pv-line-fr-label { }
 
 /* program tabs */
 .ptabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: 1080px; margin: 0 auto 18px; }
@@ -1844,7 +1861,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
       <div class="pv-sw rv" role="tablist" aria-label="Compare"><button type="button" class="on" data-m="own" role="tab" aria-selected="true">On Your Own</button><button type="button" data-m="fr" role="tab" aria-selected="false">With FundingRock Instant</button></div>
       <div class="pv rv" id="pv">
         <div class="pv-chart">
-          <div class="pv-top"><span id="pvLab">Your savings account</span><b class="tnum" id="pvBal">$10,000</b><em class="tnum" id="pvChg">0.0%</em></div>
+          <div class="pv-two"><div class="pv-s own"><span><i></i>Savings, On Your Own</span><b class="tnum" id="pvBal">$10,000</b><em class="tnum" id="pvChg">0.0%</em></div><div class="pv-s fr"><span><i></i>Savings, With FundingRock</span><b class="tnum" id="pvBal2">$10,000</b><em class="tnum" id="pvChg2">0.0%</em></div></div>
           <div class="pv-plot">
           <svg class="pv-svg" viewBox="0 0 600 260" preserveAspectRatio="none" aria-hidden="true">
             <defs><linearGradient id="pvG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff6b8a" stop-opacity=".35"/><stop offset="1" stop-color="#ff6b8a" stop-opacity="0"/></linearGradient></defs>
@@ -1854,7 +1871,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
             <path class="pv-fr" pathLength="1" d="M0 40 L100 44 L200 44 L300 44 L400 44 L500 44 L600 44"/>
             <g class="pv-dots"><circle cx="200" cy="96" r="6"/><circle cx="400" cy="150" r="6"/><circle cx="600" cy="214" r="7"/></g>
           </svg>
-          <div class="pv-tags"><i style="left:33%;top:37%">−$520</i><i style="left:66%;top:58%">−$710</i><i style="left:93%;top:82%">−$1,060</i><i class="pv-frt" style="left:22%;top:10%">$120 Fee, Once</i></div>
+          <div class="pv-tags"><i style="left:33%;top:37%">−$520</i><i style="left:66%;top:58%">−$710</i><i style="left:93%;top:82%">−$1,060</i><i class="pv-frt" style="left:80%;top:17%">$120 Fee, Once</i></div>
           </div>
           <div class="pv-days"><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span></div>
           <small class="pv-note">Example for illustration.</small>
@@ -2785,7 +2802,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
 
   /* Hero E: Title Case on headings, subtitles, labels, buttons and short lines (originals restored when leaving E) */
   (function () {
-    var SEL = "h1, h2, h3, .sh p, .hc-sub, .mx-sub, .buy, .hc-btn, .nav-r a, .ow-k, .ow-s, .ow-c li, .h3k, .tp-txt h3, .pc1-k, .pc1-go p, .pc1-rules span, .pc1-rules em, .irules-k, .rk-k, .rk-note, .rk-v em, .hc-stats span, .faq summary, #endP, .cc header, .cc-k, .ic-f, .tpsum a, .ft-g h4, .ft-g a, .ac-t b, .ac-t em, .ac-lt b, .ac-lt em, .gm-l, .gm-chips i, .gm-t b, .gm-t em, .gm-lives small, .ac-mk, .vt-row > span, .vt-c b, .vt-c small, .pn-next span, .pv-top span, .pv-sw button";
+    var SEL = "h1, h2, h3, .sh p, .hc-sub, .mx-sub, .buy, .hc-btn, .nav-r a, .ow-k, .ow-s, .ow-c li, .h3k, .tp-txt h3, .pc1-k, .pc1-go p, .pc1-rules span, .pc1-rules em, .irules-k, .rk-k, .rk-note, .rk-v em, .hc-stats span, .faq summary, #endP, .cc header, .cc-k, .ic-f, .tpsum a, .ft-g h4, .ft-g a, .ac-t b, .ac-t em, .ac-lt b, .ac-lt em, .gm-l, .gm-chips i, .gm-t b, .gm-t em, .gm-lives small, .ac-mk, .vt-row > span, .vt-c b, .vt-c small, .pn-next span, .pv-top span, .pv-sw button, .pv-s span";
     var SMALL = /^(a|an|and|as|at|but|by|for|in|of|on|or|the|to|vs|via|per|from|with)$/i;
     var saved = [];
     function title(t, first) {
@@ -2830,7 +2847,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
   /* pain chart: "on your own" draws the bad week; "with Instant" shows the same week with only the fee out of savings */
   (function () {
     var pv = $("#pv"); if (!pv) return;
-    var bal = $("#pvBal"), chg = $("#pvChg"), done = false, run = 0, touched = false, btns = $$(".pv-sw button");
+    var bal = $("#pvBal"), chg = $("#pvChg"), bal2 = $("#pvBal2"), chg2 = $("#pvChg2"), done = false, run = 0, touched = false, btns = $$(".pv-sw button");
     function count(to, ms) {
       var id = ++run, from = parseInt(bal.textContent.replace(/\D/g, ""), 10) || 10000, t0 = null;
       if (reduce) ms = 1;
@@ -2840,13 +2857,11 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
     function mode(m) {
       var fr = m === "fr"; pv.classList.toggle("fr", fr);
       btns.forEach(function (b) { var on = b.getAttribute("data-m") === m; b.classList.toggle("on", on); b.setAttribute("aria-selected", on); });
-      if (!done) return;
-      if (fr) { var f = pv.querySelector(".pv-fr"); f.style.animation = "none"; void f.offsetWidth; f.style.animation = ""; }
-      count(fr ? 9880 : 7710, fr ? 900 : 2300);
     }
     btns.forEach(function (b) { b.addEventListener("click", function () { touched = true; mode(b.getAttribute("data-m")); }); });
     new IntersectionObserver(function (es) {
       if (!es[0].isIntersecting || done) return; done = true; pv.classList.add("in"); count(7710, 2300);
+      if (reduce) { bal2.textContent = "$9,880"; chg2.textContent = "−1.2%"; } else { var t1 = null; requestAnimationFrame(function st2(now) { if (t1 === null) t1 = now; var k = Math.min((now - t1) / 900, 1), v = 10000 - 120 * k; bal2.textContent = "$" + Math.round(v).toLocaleString("en-US"); chg2.textContent = "−" + ((10000 - v) / 100).toFixed(1) + "%"; if (k < 1) requestAnimationFrame(st2); }); }
       if (!reduce) setTimeout(function () { if (!touched) mode("fr"); }, 5200);
     }, { threshold: .4 }).observe(pv);
   })();
