@@ -1935,6 +1935,25 @@ body.hgv .sbn { display: block; max-width: 1240px; margin: 0 auto; }
 }
 @media (prefers-reduced-motion: reduce) { .sbn-s, .sbn-big, .sbn-img { transition: none; } .sbn-t.on .sbn-bar.run { animation: none; } }
 
+/* F/G pricing: a plain two-line title; a taller, airier card */
+.ways2, .ways2p { display: none; }
+body.hfv #ways .sh h2:not(.ways2), body.hfv #ways .sh p:not(.ways2p) { display: none !important; }
+body.hfv #ways .sh h2.ways2 { display: block; line-height: 1.04; }
+body.hfv #ways .ways2 .lime { color: var(--lime); }
+body.hfv #ways .sh p.ways2p { display: block; }
+body.hfv .pc1 { gap: 0 !important; padding: clamp(32px, 4.6vw, 64px) !important; border-radius: 34px; }
+body.hfv .pc1-top { align-items: center !important; padding-bottom: clamp(32px, 4vw, 52px); border-bottom: 1px solid rgba(255,255,255,.08); }
+body.hfv .pc1-k { display: block; margin-bottom: 14px; }
+body.hfv .pc1-v b { margin-top: 0; }
+body.hfv .pc1-go .buy { min-height: 64px; padding: 0 34px; }
+body.hfv .pc1-go p { margin-top: 14px; }
+body.hfv .pc1-sz { padding-top: clamp(28px, 3.4vw, 44px); }
+body.hfv .pc1-sz .chip, body.hfv .pc1-ar { min-height: 56px; }
+@media (max-width: 900px) {
+  body.hfv .pc1-top { row-gap: 28px; }
+  body.hfv .pc1-go p { margin-top: 12px; }
+}
+
 /* program tabs */
 .ptabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: 1080px; margin: 0 auto 18px; }
 .pt { appearance: none; cursor: pointer; text-align: left; padding: 20px 22px; border-radius: 22px; border: 1px solid rgba(143,243,232,.22); background: linear-gradient(170deg, rgba(10,44,50,.8), rgba(4,16,20,.92)); color: #fff; font: inherit; transition: transform .3s var(--ease), border-color .3s, background .3s, box-shadow .3s; }
@@ -2584,7 +2603,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
   <!-- pick your way in -->
   <section class="sec" id="ways">
     <div class="wrap">
-      <div class="sh rv"><span class="eyebrow">FundingRock Instant</span><h2>$10K Simulated Trading Account. <span class="grad">For Just $120.</span></h2><p>Or pick any size from $5K to $200K and pay once. No challenge to pass first: you start trading right away.</p></div>
+      <div class="sh rv"><span class="eyebrow">FundingRock Instant</span><h2>$10K Simulated Trading Account. <span class="grad">For Just $120.</span></h2><h2 class="ways2">Pick your account.<br><span class="lime">From just $70.</span></h2><p class="ways2p">Simulated accounts from $5K to $200K. Pay once, no test to pass.</p><p>Or pick any size from $5K to $200K and pay once. No challenge to pass first: you start trading right away.</p></div>
       <div class="icards rv" id="icards"></div>
       <div class="pc1 glass rv" id="pc1">
         <div class="pc1-top">
@@ -3456,9 +3475,9 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
       [".hc-sub", "<span>Pay a one-time fee to trade in a simulated environment, with the opportunity to qualify for real performance-based Rewards.</span>"],
       [".mx-sub", "A whole new way to experience trading."],
       ["#stMx", '<span class="t">Big</span> <span class="h">opportunity.</span> <span class="t">Small</span> <span class="h lime">price.</span>'],
-      ["#ways .sh h2", '<span class="slot" data-r="0"><i><b>$10K</b><b>$25K</b><b>$50K</b><b>$10K</b><b>$25K</b><b>$50K</b><b>$10K</b><b>$25K</b><b>$50K</b><b>$10K</b><b>$25K</b><b>$50K</b><b>$10K</b><b>$25K</b><b>$50K</b><b>$10K</b><b>$25K</b><b>$50K</b></i></span> Simulated Trading Account.<br><span class="sl-p">For Just <span class="slot" data-r="1"><i><b>$120</b><b>$200</b><b>$350</b><b>$120</b><b>$200</b><b>$350</b><b>$120</b><b>$200</b><b>$350</b><b>$120</b><b>$200</b><b>$350</b><b>$120</b><b>$200</b><b>$350</b><b>$120</b><b>$200</b><b>$350</b></i></span>.</span>'],
+      ["#ways .sh h2:not(.ways2)", '<span class="slot" data-r="0"><i><b>$10K</b><b>$25K</b><b>$50K</b><b>$10K</b><b>$25K</b><b>$50K</b><b>$10K</b><b>$25K</b><b>$50K</b><b>$10K</b><b>$25K</b><b>$50K</b><b>$10K</b><b>$25K</b><b>$50K</b><b>$10K</b><b>$25K</b><b>$50K</b></i></span> Simulated Trading Account.<br><span class="sl-p">For Just <span class="slot" data-r="1"><i><b>$120</b><b>$200</b><b>$350</b><b>$120</b><b>$200</b><b>$350</b><b>$120</b><b>$200</b><b>$350</b><b>$120</b><b>$200</b><b>$350</b><b>$120</b><b>$200</b><b>$350</b><b>$120</b><b>$200</b><b>$350</b></i></span>.</span>'],
       ["#ways .sh .eyebrow", "Pricing"],
-      ["#ways .sh p", "Or pick any size from $5K to $200K. Pay once. No test to pass first."],
+      ["#ways .sh p:not(.ways2p)", "Or pick any size from $5K to $200K. Pay once. No test to pass first."],
       ["#hwH", '3 Steps. <span class="grad">That\'s it.</span>'],
       [".hc-stats > div:nth-child(4) span", "Reward processing"],
       ["#how .sh p", "No test to pass, no deposit, no complicated setup. Pick an account, start trading, and go for your Rewards."],
