@@ -1968,6 +1968,30 @@ body.hfv .pc1-sz .chip, body.hfv .pc1-ar { min-height: 56px; }
   body.hev #vt .vt-row:nth-child(2) .vt-c b::before { display: block; margin: 0 0 2px; }
 }
 
+/* F/G pricing: main rules inside the card (Kokuyō style), more on demand */
+.pc1-kr { display: none; }
+body.hfv .pc1-kr { display: block; padding-top: clamp(28px, 3.4vw, 44px); margin-top: clamp(28px, 3.4vw, 44px); border-top: 1px solid rgba(255,255,255,.08); }
+body.hfv .pc1-after { display: none !important; }
+.kr-g { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); }
+.kr-g > div { display: grid; align-content: start; gap: 10px; padding: 4px 18px 22px; border-left: 1px solid rgba(255,255,255,.08); min-width: 0; }
+.kr-g > div:first-child { padding-left: 0; border-left: 0; }
+.kr-g span { font-size: 12.5px; letter-spacing: .14em; text-transform: uppercase; color: rgba(255,255,255,.6); }
+.kr-g b { white-space: nowrap; font-size: clamp(22px, 2vw, 30px); font-weight: 600; letter-spacing: -.03em; line-height: 1.05; color: #fff; }
+.kr-g em { font-style: normal; font-size: 14px; line-height: 1.35; color: rgba(255,255,255,.6); }
+.kr-x { margin-top: 8px; padding-top: 22px; border-top: 1px solid rgba(255,255,255,.06); }
+.kr-x[hidden] { display: none !important; }
+.kr-more { appearance: none; display: flex; align-items: center; justify-content: center; gap: 12px; width: 100%; margin-top: 12px; padding: 18px; border-radius: 18px; border: 1px solid rgba(255,255,255,.14); background: rgba(255,255,255,.03); color: #fff; font: inherit; font-size: 16px; cursor: pointer; transition: border-color .3s, box-shadow .3s, background .3s; }
+.kr-more:hover, .kr-more:focus-visible { outline: none; border-color: var(--lime); box-shadow: 0 0 0 3px rgba(217,255,0,.25); background: rgba(217,255,0,.04); }
+.kr-more b { font-size: 22px; font-weight: 400; line-height: 1; color: var(--lime); transition: transform .35s cubic-bezier(.16,1,.3,1); }
+.kr-more[aria-expanded="true"] b { transform: rotate(45deg); }
+@media (max-width: 900px) {
+  .kr-g { grid-template-columns: 1fr 1fr; row-gap: 6px; }
+  .kr-g > div { padding: 14px 14px 16px; border-left: 0; border-top: 1px solid rgba(255,255,255,.06); }
+  .kr-g > div:nth-child(-n+2) { border-top: 0; }
+  .kr-g > div:nth-child(odd) { padding-left: 0; } .kr-g > div:nth-child(even) { border-left: 1px solid rgba(255,255,255,.06); }
+  .kr-g b { font-size: 21px; } .kr-g span { font-size: 11px; letter-spacing: .1em; } .kr-g em { font-size: 12.5px; }
+}
+
 /* program tabs */
 .ptabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: 1080px; margin: 0 auto 18px; }
 .pt { appearance: none; cursor: pointer; text-align: left; padding: 20px 22px; border-radius: 22px; border: 1px solid rgba(143,243,232,.22); background: linear-gradient(170deg, rgba(10,44,50,.8), rgba(4,16,20,.92)); color: #fff; font: inherit; transition: transform .3s var(--ease), border-color .3s, background .3s, box-shadow .3s; }
@@ -2635,6 +2659,11 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
           <div><span>Daily loss limit</span><b class="tnum" id="pcD">4% · $400</b></div>
           <div><span>Max loss</span><b class="tnum" id="pcM">8% · $800</b><em>Trailing</em></div>
           <div><span>Your Reward Share</span><b>80%</b><em>95% with add-on</em></div>
+        </div>
+        <div class="pc1-kr" id="pcKr">
+          <div class="kr-g"><div><span>Profit target</span><b class="tnum">None</b></div><div><span>Daily loss</span><b class="tnum" id="kD">4%</b><em>$400 on $10K</em></div><div><span>Maximum loss</span><b class="tnum" id="kM">8%</b><em>Trailing · $800 on $10K</em></div><div><span>News trading</span><b class="tnum">Allowed</b></div><div><span>Rewards</span><b class="tnum">Instant</b><em>Requests, when eligible</em></div><div><span>Reward Share</span><b class="tnum">95%</b><em>80% standard, 95% add-on</em></div></div>
+          <div class="kr-g kr-x" id="krX" hidden><div><span>Weekend holding</span><b class="tnum">Add-on</b></div><div><span>Consistency</span><b class="tnum">15%</b><em>Per day, at Reward request</em></div><div><span>Platforms</span><b class="tnum">2</b><em>TradeLocker · cTrader</em></div><div><span>Automation</span><b class="tnum">Own EAs</b><em>With source code</em></div><div><span>Min. Reward</span><b class="tnum">$100</b></div><div><span>Markets</span><b class="tnum">5</b><em>Forex to crypto</em></div></div>
+          <button type="button" class="kr-more" id="krMore" aria-expanded="false" aria-controls="krX"><span>Show more rules</span><b aria-hidden="true">+</b></button>
         </div>
         <div class="pc1-list" id="pcList">
           <div class="pl-h"><i></i>Every rule</div>
@@ -3894,12 +3923,14 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
       tween(sA, a, 500, function (v) { $("#pcA").textContent = fmt(v); }); sA = a;
       tween(sF, f, 500, function (v) { $("#pcF").textContent = fmt(v); }); sF = f;
       $("#pcD").textContent = "4% · " + fmt(a * .04); $("#pcM").textContent = "8% · " + fmt(a * .08);
+      if ($("#kD")) { $("#kD").nextElementSibling.textContent = fmt(a * .04) + " on " + K(a); $("#kM").nextElementSibling.textContent = "Trailing · " + fmt(a * .08) + " on " + K(a); }
       if ($("#pcD2")) { $("#pcD2").textContent = "4% · " + fmt(a * .04); $("#pcM2").textContent = "8% · " + fmt(a * .08); }
       $("#pcBuy").innerHTML = (document.body.classList.contains("hev") ? "Get the " + K(a) + " Account" : "Get the " + K(a) + " account") + ' <span class="ar" aria-hidden="true">→</span>';
       var c = chips[i]; if (c && c.scrollIntoView && innerWidth < 700) c.parentNode.scrollTo({ left: c.offsetLeft - c.parentNode.clientWidth / 2 + c.clientWidth / 2, behavior: "smooth" });
     }
     chips.forEach(function (c, k) { c.addEventListener("click", function () { set(k); }); });
     $("#pcPrev").addEventListener("click", function () { set(i - 1); });
+    var km = $("#krMore"); if (km) km.addEventListener("click", function () { var x = $("#krX"), o = x.hidden; x.hidden = !o; km.setAttribute("aria-expanded", o); km.querySelector("span").textContent = o ? "Show fewer rules" : "Show more rules"; });
     var pm = $("#pcMore"); if (pm) pm.addEventListener("click", function () { var l = $("#pcList"), o = !l.classList.contains("open"); l.classList.toggle("open", o); pm.setAttribute("aria-expanded", o); pm.querySelector("span").textContent = o ? "Show fewer rules" : "Show more rules"; });
     $("#pcNext").addEventListener("click", function () { set(i + 1); });
     var x0 = null;
