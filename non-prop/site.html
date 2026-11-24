@@ -1864,6 +1864,21 @@ body.hev #end h2 { font-size: clamp(34px, 3.6vw, 52px) !important; }
 
 .gm-note { display: block; margin-top: 4px; font-size: 13px; color: rgba(255,255,255,.55); }
 
+/* end marquee: two big bands sliding opposite ways (E/F) */
+.mq { display: none; }
+body.hev .mq { display: block; margin: clamp(48px, 6vw, 90px) 0 clamp(-60px, -3vw, -20px); overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent); mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent); }
+.mq-r { display: flex; width: max-content; }
+.mq-t { display: flex; align-items: center; flex: none; white-space: nowrap; font-size: clamp(40px, 6vw, 92px); font-weight: 600; letter-spacing: -.04em; line-height: 1.12; }
+.mq-t i { font-style: normal; margin: 0 .45em; font-size: .62em; color: var(--lime); text-shadow: 0 0 24px rgba(217,255,0,.55); }
+.mq-r.a .mq-t { color: #fff; }
+.mq-r.b .mq-t { color: rgba(255,255,255,.18); }
+.mq-r.b .mq-t i { color: rgba(217,255,0,.35); text-shadow: none; }
+.mq-r.a { animation: mqL 38s linear infinite; }
+.mq-r.b { animation: mqR 44s linear infinite; }
+@keyframes mqL { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@keyframes mqR { from { transform: translateX(-50%); } to { transform: translateX(0); } }
+@media (prefers-reduced-motion: reduce) { .mq-r.a, .mq-r.b { animation: none; } }
+
 /* program tabs */
 .ptabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: 1080px; margin: 0 auto 18px; }
 .pt { appearance: none; cursor: pointer; text-align: left; padding: 20px 22px; border-radius: 22px; border: 1px solid rgba(143,243,232,.22); background: linear-gradient(170deg, rgba(10,44,50,.8), rgba(4,16,20,.92)); color: #fff; font: inherit; transition: transform .3s var(--ease), border-color .3s, background .3s, box-shadow .3s; }
@@ -2834,6 +2849,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
         </div>
       </div>
     </div>
+    <div class="mq" role="note" aria-label="No test to pass. From $70. Up to 95% Reward Share. No profit target. Instant Reward requests. News trading allowed."><div class="mq-r a" aria-hidden="true"><div class="mq-t"><span>No test to pass</span><i aria-hidden="true">✦</i><span>From $70</span><i aria-hidden="true">✦</i><span>Up to 95% Reward Share</span><i aria-hidden="true">✦</i><span>No profit target</span><i aria-hidden="true">✦</i><span>No test to pass</span><i aria-hidden="true">✦</i><span>From $70</span><i aria-hidden="true">✦</i><span>Up to 95% Reward Share</span><i aria-hidden="true">✦</i><span>No profit target</span><i aria-hidden="true">✦</i></div><div class="mq-t"><span>No test to pass</span><i aria-hidden="true">✦</i><span>From $70</span><i aria-hidden="true">✦</i><span>Up to 95% Reward Share</span><i aria-hidden="true">✦</i><span>No profit target</span><i aria-hidden="true">✦</i><span>No test to pass</span><i aria-hidden="true">✦</i><span>From $70</span><i aria-hidden="true">✦</i><span>Up to 95% Reward Share</span><i aria-hidden="true">✦</i><span>No profit target</span><i aria-hidden="true">✦</i></div></div><div class="mq-r b" aria-hidden="true"><div class="mq-t"><span>Instant Reward requests</span><i aria-hidden="true">✦</i><span>News trading allowed</span><i aria-hidden="true">✦</i><span>5 markets</span><i aria-hidden="true">✦</i><span>Pay once</span><i aria-hidden="true">✦</i><span>Instant Reward requests</span><i aria-hidden="true">✦</i><span>News trading allowed</span><i aria-hidden="true">✦</i><span>5 markets</span><i aria-hidden="true">✦</i><span>Pay once</span><i aria-hidden="true">✦</i></div><div class="mq-t"><span>Instant Reward requests</span><i aria-hidden="true">✦</i><span>News trading allowed</span><i aria-hidden="true">✦</i><span>5 markets</span><i aria-hidden="true">✦</i><span>Pay once</span><i aria-hidden="true">✦</i><span>Instant Reward requests</span><i aria-hidden="true">✦</i><span>News trading allowed</span><i aria-hidden="true">✦</i><span>5 markets</span><i aria-hidden="true">✦</i><span>Pay once</span><i aria-hidden="true">✦</i></div></div></div>
   </section>
 </main>
 
