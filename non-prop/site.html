@@ -2014,6 +2014,12 @@ body.hfv .pc1-after { display: none !important; }
 body.hev .hc-cta .hc-btn, body.hev .hc-cta .hc-btn2 { box-sizing: border-box; height: 60px; min-height: 0; min-width: 190px; padding: 0 30px !important; font-size: 17px !important; border-radius: 14px; display: inline-flex; align-items: center; justify-content: center; }
 @media (max-width: 760px) { body.hev .hc-cta .hc-btn, body.hev .hc-cta .hc-btn2 { flex: 1 1 0 !important; width: auto !important; min-width: 0; height: 54px; padding: 0 12px !important; font-size: 16px !important; } }
 
+/* Hero G: no CTA inside the stages on any screen, one "Start now" under the banner */
+.sbn-s .sbn-a { display: none !important; }
+body.hgv .sbn-one { display: flex; flex-direction: column; align-items: center; gap: 10px; margin-top: 26px; text-align: center; }
+.sbn-one .buy { justify-content: center; border-radius: 14px !important; min-width: 240px; }
+.sbn-one span { font-size: 14px; color: rgba(255,255,255,.65); }
+
 /* program tabs */
 .ptabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: 1080px; margin: 0 auto 18px; }
 .pt { appearance: none; cursor: pointer; text-align: left; padding: 20px 22px; border-radius: 22px; border: 1px solid rgba(143,243,232,.22); background: linear-gradient(170deg, rgba(10,44,50,.8), rgba(4,16,20,.92)); color: #fff; font: inherit; transition: transform .3s var(--ease), border-color .3s, background .3s, box-shadow .3s; }
@@ -2622,7 +2628,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
         </div>
         <div class="sbn-tabs" role="tablist" aria-label="Stages"><button type="button" class="sbn-t on" data-i="0"><span>01</span><b>Choose your account</b><i class="sbn-bar"></i></button><button type="button" class="sbn-t" data-i="1"><span>02</span><b>Trade your markets</b><i class="sbn-bar"></i></button><button type="button" class="sbn-t" data-i="2"><span>03</span><b>Qualify for Rewards</b><i class="sbn-bar"></i></button></div>
         <div class="hst-dots sbn-dots" aria-hidden="true"><i class="on"></i><i></i><i></i></div>
-        <div class="sbn-one"><a class="buy lg" href="#ways">Choose your account <span class="ar" aria-hidden="true">→</span></a><span>From $70, one-time fee</span></div>
+        <div class="sbn-one"><a class="buy lg" href="#ways">Start now <span class="ar" aria-hidden="true">→</span></a><span>From $70, one-time fee</span></div>
       </div>
       <div class="gm rv" id="gm">
         <div class="gm-stage">
