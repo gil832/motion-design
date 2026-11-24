@@ -1613,6 +1613,16 @@ body.hev #vt .vt-row:nth-child(2) .vt-c b::before { content: "From "; font-size:
 .stx-sell { background: rgba(255,107,138,.08); border-color: rgba(255,107,138,.2); }
 @media (max-width: 760px) { body.hfv .stc-v { align-self: stretch; } body.hfv .stx { padding: 0 !important; max-width: none; } body.hfv .stx-ch { height: 100px; margin: 12px 0 14px; } }
 
+/* E 3 steps on phones: the same swipe carousel as F */
+.hw3-dots { display: none !important; }
+@media (max-width: 760px) {
+  body.hev:not(.hfv) .hw3 { display: flex !important; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; scrollbar-width: none; margin: 0 -20px; padding: 4px 20px 8px; scroll-padding: 0 20px; }
+  body.hev:not(.hfv) .hw3::-webkit-scrollbar { display: none; }
+  body.hev:not(.hfv) .hw3 .h3c { flex: 0 0 84%; aspect-ratio: 4 / 5; min-height: 0 !important; scroll-snap-align: start; transform: none !important; }
+  body.hev:not(.hfv) .hw3 .h3c .h3n { font-size: 84px !important; margin-top: 26px !important; }
+  body.hev:not(.hfv) .hw3-dots { display: flex !important; justify-content: center; gap: 6px; margin-top: 18px; }
+}
+
 /* program tabs */
 .ptabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: 1080px; margin: 0 auto 18px; }
 .pt { appearance: none; cursor: pointer; text-align: left; padding: 20px 22px; border-radius: 22px; border: 1px solid rgba(143,243,232,.22); background: linear-gradient(170deg, rgba(10,44,50,.8), rgba(4,16,20,.92)); color: #fff; font: inherit; transition: transform .3s var(--ease), border-color .3s, background .3s, box-shadow .3s; }
@@ -2259,6 +2269,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
         <article class="h3c c2"><span class="h3k">Step 2</span><b class="h3n">Day 1</b><h3>Start Trading.</h3><p>Trade <b>right away</b>. Just stay inside two loss limits: <b>4% a day</b> and <b>8% in total</b>.</p></article>
         <article class="h3c c3"><span class="h3k">Step 3</span><b class="h3n">95%</b><h3>Qualify for Rewards.</h3><p>Meet the requirements and request a Reward: <b>up to 95%</b> of your simulated profit.</p></article>
       </div>
+      <div class="hst-dots hw3-dots" id="hw3Dots" aria-hidden="true"><i class="on"></i><i></i><i></i></div>
       <div class="hst" id="hst" aria-label="How Instant works">
         <article class="stc s1" style="--i:0">
           <div class="stc-t"><span class="stc-k">Step 01</span><h3>Pick Your Account.</h3><p>Choose a simulated account from $10K to $200K and pay a one-time fee.</p></div>
@@ -3271,6 +3282,12 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
       k.c += (Math.random() - .42) * 1.1; k.h = Math.max(k.h, k.c); k.l = Math.min(k.l, k.c);
       if (++n % 4 === 0) { var o = k.c; C.shift(); C.push({ o: o, c: o, h: o, l: o }); }
       draw(); }, 700); }
+  })();
+
+  /* E 3 steps carousel dots (phones) */
+  (function () {
+    var h = $(".hw3"), d = $$("#hw3Dots i"); if (!h || !d.length) return;
+    h.addEventListener("scroll", function () { var c = h.querySelector(".h3c"); if (!c) return; var k = Math.min(d.length - 1, Math.round(h.scrollLeft / (c.getBoundingClientRect().width + 12))); d.forEach(function (x, m) { x.classList.toggle("on", m === k); }); }, { passive: true });
   })();
 
   /* comparison details toggle (C/D) */
