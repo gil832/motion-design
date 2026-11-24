@@ -1800,6 +1800,9 @@ body.hfv .stc.s3 .stc-ic { border-color: rgba(217,255,0,.35); }
 .gm-mk i { font-variant-numeric: tabular-nums; letter-spacing: .02em; }
 .gm-mk i::before { content: ""; display: inline-block; width: 6px; height: 6px; margin-right: 8px; border-radius: 50%; background: #2fe0a6; box-shadow: 0 0 8px rgba(47,224,166,.8); vertical-align: middle; }
 
+/* "most you can lose" banner: From $70 */
+.rk-from { font-size: .32em; font-weight: 600; letter-spacing: -.01em; vertical-align: .95em; margin-right: .12em; }
+
 /* program tabs */
 .ptabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: 1080px; margin: 0 auto 18px; }
 .pt { appearance: none; cursor: pointer; text-align: left; padding: 20px 22px; border-radius: 22px; border: 1px solid rgba(143,243,232,.22); background: linear-gradient(170deg, rgba(10,44,50,.8), rgba(4,16,20,.92)); color: #fff; font: inherit; transition: transform .3s var(--ease), border-color .3s, background .3s, box-shadow .3s; }
@@ -2678,7 +2681,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
         <article class="rk"><span class="rk-k">Consistency</span><div class="rk-v"><b class="tnum">15%</b></div><p>When you request a Reward, no single day can be more than 15% of your total profit.</p><div class="rk-b"><span>Your broker</span><i>None</i></div></article>
         <article class="rk"><span class="rk-k">Weekend holding</span><div class="rk-v"><b class="tnum">+$53</b><em class="tnum">add-on</em></div><p>15% of the fee, if you want to hold over the weekend.</p><div class="rk-b"><span>Your broker</span><i>Yes</i></div></article>
         <article class="rk"><span class="rk-k">Your share</span><div class="rk-v"><b class="tnum">80%</b><em class="tnum">Reward Share</em></div><p>95% with the add-on.</p><div class="rk-b"><span>Your broker</span><i>100%, of your own money</i></div></article>
-        <article class="rk rk-max"><div><span class="rk-k">Most you can lose</span><div class="rk-v"><b class="tnum">$350</b><em>one-time fee, $50K Instant</em></div><p class="rk-note">Each account size has its own fee. Loss limits scale with the account.</p></div><div class="rk-b"><span>Your broker</span><i>Everything you deposit</i></div></article>
+        <article class="rk rk-max"><div><span class="rk-k">Most you can lose</span><div class="rk-v"><b class="tnum"><small class="rk-from">From</small> $70</b><em>one-time fee, Instant</em></div><p class="rk-note">Your fee is the most you can lose. Each account size has its own fee.</p></div><div class="rk-b"><span>Your broker</span><i>Everything you deposit</i></div></article>
       </div>
     </div>
   </section>
@@ -3280,8 +3283,8 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
       ["#drop .sh h2", 'Your broker wants your savings. <span class="grad">We don\'t.</span>'],
       ["#drop .sh p", "Compare the cost of trading the same account size with a traditional broker vs. FundingRock Instant."],
       ["#rules .sh h2", 'The rules. <span class="grad">Short and simple.</span>'],
-      ["#rules .rk-max .rk-v", '<b class="tnum">$120</b><em>one-time fee, $10K Instant</em>'],
-      ["#rules .rk-max .rk-note", "Your fee is the most you can lose. Each account size has its own fee, from $70."],
+      ["#rules .rk-max .rk-v", '<b class="tnum"><small class="rk-from">From</small> $70</b><em>one-time fee, Instant</em>'],
+      ["#rules .rk-max .rk-note", "Your fee is the most you can lose. Each account size has its own fee."],
       ["#rules .sh p", "Two loss limits and no target. Break a limit, and the account closes."],
       ["#end h2", 'Start trading. <span class="grad">Today.</span>'],
       ["#endP", "Pick an account, pay once, and trade right away. A real team in Nicosia is here to back you."]
