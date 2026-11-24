@@ -1725,6 +1725,13 @@ body.hev .hc-proof { flex-basis: 100%; justify-content: center; margin-top: 10px
   body.hfv .s3 .stc-rwb { display: none; }
 }
 
+/* academy + YouTube merged into one tile */
+.acb-aca { grid-column: 1 / 3; flex-direction: row; align-items: center; }
+.acb-aca .acb-tx { flex: 1 1 42%; }
+.acb-aca .acb-vid { flex: 1 1 58%; margin-top: 0; }
+@media (max-width: 980px) { .acb-aca { grid-column: 1 / -1; } }
+@media (max-width: 640px) { .acb-aca { flex-direction: column; align-items: stretch; } .acb-aca .acb-vid { flex: none; } }
+
 /* program tabs */
 .ptabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: 1080px; margin: 0 auto 18px; }
 .pt { appearance: none; cursor: pointer; text-align: left; padding: 20px 22px; border-radius: 22px; border: 1px solid rgba(143,243,232,.22); background: linear-gradient(170deg, rgba(10,44,50,.8), rgba(4,16,20,.92)); color: #fff; font: inherit; transition: transform .3s var(--ease), border-color .3s, background .3s, box-shadow .3s; }
@@ -2623,15 +2630,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
           <ul class="acb-ch" aria-hidden="true"><li class="on"><em>#</em>ask-the-team<i></i></li><li><em>#</em>trade-ideas</li><li><em>#</em>market-talk</li><li><em>#</em>rewards</li></ul>
         </article>
         <article class="acb-t acb-aca">
-          <div class="acb-tx"><span class="acb-k">FR Academy</span><h3>Learn step by step.</h3><p>Short lessons that take you from the basics to your first trade.</p></div>
-          <div class="acb-ls">
-            <button type="button" data-v="32PV7Zbm8U4" data-t="Into FundingRock"><b class="ok">✓</b><span>Into FundingRock</span><em>Play</em></button>
-            <button type="button" data-v="k3yqltLEgAM" data-t="Trading basics"><b class="ok">✓</b><span>Trading basics</span><em>Play</em></button>
-            <button type="button" data-v="VGK8PCvrb50" data-t="Your first trade order"><b>3</b><span>Your first trade order<u><i></i></u></span><em>Play</em></button>
-          </div>
-        </article>
-        <article class="acb-t acb-yt">
-          <div class="acb-tx"><span class="acb-k">YouTube</span><h3>Walkthroughs, anytime.</h3><p>Platform tours, market basics and trader stories, ready when you are.</p></div>
+          <div class="acb-tx"><span class="acb-k">FR Academy</span><h3>Walkthroughs, anytime.</h3><p>Platform tours, market basics and trader stories, ready when you are.</p></div>
           <button type="button" class="acb-vid" data-v="VGK8PCvrb50" data-t="Platform breakdown"><img src="assets/academy/a3.jpg" alt="" loading="lazy"><i aria-hidden="true"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M8 5.5v13l11-6.5z"/></svg></i><span class="sr">Play the platform walkthrough</span></button>
         </article>
       </div>
