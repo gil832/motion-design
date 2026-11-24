@@ -1708,6 +1708,23 @@ body.hev .hc-proof { flex-basis: 100%; justify-content: center; margin-top: 10px
   body.hfv .s3 .stc-v { transform: scale(.7); transform-origin: 100% 100%; right: -40px; bottom: -10px; }
 }
 
+/* F steps on phones v2: no visual on step 1; small, uncropped visuals in the top-right corner for steps 2 and 3 */
+@media (max-width: 760px) {
+  body.hfv .stc { min-height: 0 !important; }
+  body.hfv .stc-t { max-width: none; }
+  body.hfv .stc-v { -webkit-mask-image: none; mask-image: none; bottom: auto !important; transform: none !important; opacity: 1; }
+  body.hfv .s1 .stc-v { display: none !important; }
+  body.hfv .s2 .stc-v { top: 18px; right: 18px !important; width: 50% !important; }
+  body.hfv .s2 .stx-ch { height: 70px !important; margin: 0 !important; background: none; -webkit-mask-image: linear-gradient(90deg, transparent, #000 30%); mask-image: linear-gradient(90deg, transparent, #000 30%); }
+  body.hfv .s2 .stx-tag { font-size: 10px; padding: 2px 6px; }
+  body.hfv .s3 .stc-v { top: 16px; right: 22px !important; width: auto !important; }
+  body.hfv .s3 .stc-rw { width: 104px; padding: 10px 11px; border-radius: 10px; transform: rotate(6deg); }
+  body.hfv .s3 .stc-rwk { font-size: 6.5px; }
+  body.hfv .s3 .stc-rw b { margin-top: 6px; font-size: 28px !important; }
+  body.hfv .s3 .stc-rws { font-size: 8.5px; margin-top: 3px; }
+  body.hfv .s3 .stc-rwb { display: none; }
+}
+
 /* program tabs */
 .ptabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: 1080px; margin: 0 auto 18px; }
 .pt { appearance: none; cursor: pointer; text-align: left; padding: 20px 22px; border-radius: 22px; border: 1px solid rgba(143,243,232,.22); background: linear-gradient(170deg, rgba(10,44,50,.8), rgba(4,16,20,.92)); color: #fff; font: inherit; transition: transform .3s var(--ease), border-color .3s, background .3s, box-shadow .3s; }
