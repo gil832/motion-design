@@ -1778,6 +1778,14 @@ body.hfv .pc1-rl:hover { border-bottom-color: var(--lime); }
 body.hfv #rules .pc1-list { display: block; max-width: 1120px; margin: 18px auto 0; }
 body.hfv #rules .pc1-list .pl-more { display: none; }
 
+/* F: rules CTA sits under the pricing card */
+.pc1-after { display: none; }
+body.hfv .pc1-after { display: flex; justify-content: center; margin-top: 22px; }
+body.hfv .pc1-after .pc1-rl { display: inline-flex; align-items: center; gap: 10px; margin: 0; padding: 16px 28px; border-radius: 999px; border: 1px solid rgba(255,255,255,.22); background: rgba(255,255,255,.04); color: #fff; font-size: 16px; font-weight: 600; text-decoration: none; transition: background .3s, border-color .3s; }
+body.hfv .pc1-after .pc1-rl:hover { background: rgba(255,255,255,.08); border-color: rgba(217,255,0,.5); }
+body.hfv .pc1-after .pc1-rl span { color: var(--lime); }
+@media (max-width: 600px) { body.hfv .pc1-after .pc1-rl { width: 100%; justify-content: center; } }
+
 /* program tabs */
 .ptabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: 1080px; margin: 0 auto 18px; }
 .pt { appearance: none; cursor: pointer; text-align: left; padding: 20px 22px; border-radius: 22px; border: 1px solid rgba(143,243,232,.22); background: linear-gradient(170deg, rgba(10,44,50,.8), rgba(4,16,20,.92)); color: #fff; font: inherit; transition: transform .3s var(--ease), border-color .3s, background .3s, box-shadow .3s; }
@@ -2391,7 +2399,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
         <div class="pc1-top">
           <div class="pc1-v"><span class="pc1-k">Simulated account</span><b class="tnum" id="pcA">$10,000</b></div>
           <div class="pc1-v"><span class="pc1-k">One-time fee</span><b class="tnum lime" id="pcF">$120</b></div>
-          <div class="pc1-go"><a class="buy lg" id="pcBuy" href="https://checkout.fundingrock.com/onboarding" target="_blank" rel="noopener">Get the $10K account <span class="ar" aria-hidden="true">→</span></a><p>Pay once. No test to pass.</p><a class="pc1-rl" href="#rules">See all the rules <span aria-hidden="true">↓</span></a></div>
+          <div class="pc1-go"><a class="buy lg" id="pcBuy" href="https://checkout.fundingrock.com/onboarding" target="_blank" rel="noopener">Get the $10K account <span class="ar" aria-hidden="true">→</span></a><p>Pay once. No test to pass.</p></div>
         </div>
         <div class="pc1-sz">
           <button type="button" class="pc1-ar" id="pcPrev" aria-label="Smaller account">‹</button>
@@ -2425,6 +2433,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
           <button type="button" class="pl-more" id="pcMore" aria-expanded="false"><span>Show more rules</span><b aria-hidden="true">+</b></button>
         </div>
       </div>
+      <div class="pc1-after"><a class="pc1-rl" href="#rules">See all the rules <span aria-hidden="true">↓</span></a></div>
       <details class="irules glass rv">
         <summary class="irules-k"><span>See all the rules<span class="irules-s"> Same simple rules on every account size</span></span><i aria-hidden="true"></i></summary>
         <ul class="irules-l">
