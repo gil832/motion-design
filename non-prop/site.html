@@ -1638,6 +1638,33 @@ body.hev #vt .vt-row:nth-child(2) .vt-c b::before { content: "From "; font-size:
   body.hev .gm-dots { display: flex !important; justify-content: center; gap: 6px; margin-top: 16px; }
 }
 
+/* F 3 steps on desktop: three tall cards side by side, copy on top, visual below, round arrows between */
+.stc-ic { display: none; }
+@media (min-width: 761px) {
+  body.hfv .hst { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; max-width: 1180px; padding-bottom: 0; }
+  body.hfv .stc { position: relative; top: auto; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 0; min-height: 600px; margin: 0; padding: 40px 30px 34px; overflow: visible; transform: none !important; filter: none !important; box-shadow: 0 40px 90px -50px rgba(0,0,0,.9); }
+  body.hfv .stc.s1 { background: linear-gradient(180deg, #1d5a55 0%, #0d2624 45%, #071110 100%); border-color: rgba(143,243,232,.3); }
+  body.hfv .stc.s2 { background: linear-gradient(180deg, #058f83 0%, #06322e 48%, #061211 100%); border-color: rgba(0,216,195,.45); }
+  body.hfv .stc.s3 { background: linear-gradient(180deg, #414d07 0%, #171c05 50%, #0b0e05 100%); border-color: rgba(217,255,0,.45); z-index: 1; }
+  body.hfv .stc.s1 { z-index: 3; } body.hfv .stc.s2 { z-index: 2; }
+  body.hfv .stc-t { align-self: stretch; align-items: center; }
+  body.hfv .stc-ic { display: grid; place-items: center; width: 50px; height: 50px; margin-bottom: 18px; border-radius: 50%; background: #fff; color: #062421; box-shadow: 0 10px 30px -10px rgba(0,0,0,.6); }
+  body.hfv .stc.s3 .stc-ic { background: var(--lime); color: #0a0c02; }
+  body.hfv .stc-ic svg { width: 24px; height: 24px; }
+  body.hfv .stc-k { font-size: 14px; letter-spacing: .14em; text-transform: uppercase; color: rgba(255,255,255,.75); }
+  body.hfv .stc h3 { margin: 10px 0 0; padding-top: 0; font-size: clamp(30px, 2.8vw, 40px); }
+  body.hfv .stc p { margin: 14px auto 0; max-width: 30ch; font-size: 17px; color: rgba(255,255,255,.75); }
+  body.hfv .stc-v { margin-top: auto; padding-top: 34px; align-self: stretch; align-items: center; }
+  body.hfv .stc.s1::after, body.hfv .stc.s2::after { content: ""; position: absolute; z-index: 3; right: -39px; top: 34%; width: 56px; height: 56px; border-radius: 50%; background: #071312 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23d9ff00' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14M13 6l6 6-6 6'/%3E%3C/svg%3E") center / 24px no-repeat; border: 1px solid rgba(217,255,0,.35); box-shadow: 0 0 0 6px #050c0c; }
+}
+@media (min-width: 761px) and (max-width: 1100px) {
+  body.hfv .hst { gap: 16px; }
+  body.hfv .stc { padding: 32px 20px 26px; min-height: 560px; }
+  body.hfv .stc.s1::after, body.hfv .stc.s2::after { right: -34px; width: 50px; height: 50px; }
+  body.hfv .stc-pills span { padding: 8px 12px; font-size: 13.5px; }
+  body.hfv .stc-rw { width: 200px; }
+}
+
 /* program tabs */
 .ptabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: 1080px; margin: 0 auto 18px; }
 .pt { appearance: none; cursor: pointer; text-align: left; padding: 20px 22px; border-radius: 22px; border: 1px solid rgba(143,243,232,.22); background: linear-gradient(170deg, rgba(10,44,50,.8), rgba(4,16,20,.92)); color: #fff; font: inherit; transition: transform .3s var(--ease), border-color .3s, background .3s, box-shadow .3s; }
@@ -2288,11 +2315,11 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
       <div class="hst-dots hw3-dots" id="hw3Dots" aria-hidden="true"><i class="on"></i><i></i><i></i></div>
       <div class="hst" id="hst" aria-label="How Instant works">
         <article class="stc s1" style="--i:0">
-          <div class="stc-t"><span class="stc-k">Step 01</span><h3>Pick Your Account.</h3><p>Choose a simulated account from $10K to $200K and pay a one-time fee.</p></div>
+          <div class="stc-t"><i class="stc-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="13" rx="3"/><path d="M3 10h18M7 15h4"/></svg></i><span class="stc-k">Step 01</span><h3>Pick Your Account.</h3><p>Choose a simulated account from $10K to $200K and pay a one-time fee.</p></div>
           <div class="stc-v"><div class="stc-pills" id="stPills"><span class="on">$10K</span><span>$25K</span><span>$50K</span><span>$100K</span><span>$200K</span></div><div class="stc-fee"><span id="stSz">$10K</span> simulated <i>·</i> <b id="stFee">$120</b> one-time</div></div>
         </article>
         <article class="stc s2" style="--i:1">
-          <div class="stc-t"><span class="stc-k">Step 02</span><h3>Start Trading.</h3><p>Trade from day one. Just stay inside two loss limits: 4% a day and 8% in total.</p></div>
+          <div class="stc-t"><i class="stc-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5M4 19h16"/><path d="M8 15l3-4 3 2 5-6"/></svg></i><span class="stc-k">Step 02</span><h3>Start Trading.</h3><p>Trade from day one. Just stay inside two loss limits: 4% a day and 8% in total.</p></div>
           <div class="stc-v"><div class="stx" id="stx" aria-hidden="true">
             <div class="stx-h"><div><b>XAU/USD</b><small>Gold · Simulated</small></div><div class="stx-p"><b class="tnum" id="stxP">2,384.20</b><small class="tnum" id="stxC">+0.42%</small></div></div>
             <div class="stx-ch"><svg id="stxSv" viewBox="0 0 300 120" preserveAspectRatio="none"></svg><span class="stx-tag tnum" id="stxT">2,384.20</span></div>
@@ -2300,7 +2327,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
           </div></div>
         </article>
         <article class="stc s3" style="--i:2">
-          <div class="stc-t"><span class="stc-k">Step 03</span><h3>Qualify for Rewards.</h3><p>Meet the requirements and request a Reward: up to 95% of your simulated profit.</p></div>
+          <div class="stc-t"><i class="stc-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4h8v5a4 4 0 0 1-8 0V4z"/><path d="M8 6H5a3 3 0 0 0 3 4M16 6h3a3 3 0 0 1-3 4M12 13v4M8 20h8"/></svg></i><span class="stc-k">Step 03</span><h3>Qualify for Rewards.</h3><p>Meet the requirements and request a Reward: up to 95% of your simulated profit.</p></div>
           <div class="stc-v"><div class="stc-rw" aria-hidden="true"><span class="stc-rwk">FundingRock · Reward</span><b>95%</b><span class="stc-rws">Your share, at most</span><span class="stc-rwb">Approved within 48h</span></div></div>
         </article>
       </div>
@@ -3258,7 +3285,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
     var cs = $$(".stc"); if (!cs.length) return;
     var q = false;
     function upd() {
-      q = false; if (!document.body.classList.contains("hfv") || reduce || innerWidth <= 760) return;
+      q = false; if (!document.body.classList.contains("hfv") || reduce || true) return;
       cs.forEach(function (c, i) {
         var nx = cs[i + 1], k = 0;
         if (nx) { var a = c.getBoundingClientRect(), b = nx.getBoundingClientRect(); k = Math.max(0, Math.min(1, 1 - (b.top - a.top) / a.height)); }
