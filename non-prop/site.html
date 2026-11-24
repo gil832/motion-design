@@ -1992,6 +1992,13 @@ body.hfv .pc1-after { display: none !important; }
   .kr-g b { font-size: 21px; } .kr-g span { font-size: 11px; letter-spacing: .1em; } .kr-g em { font-size: 12.5px; }
 }
 
+/* size buttons on phones: all six visible in a 3 x 2 grid, nothing cut off */
+@media (max-width: 760px) {
+  body.hev .pc1-chips { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; overflow: visible; }
+  body.hev .pc1-chips .chip { min-width: 0; padding: 12px 6px; text-align: center; justify-content: center; }
+  body.hfv .pc1-sz .chip { min-height: 50px; }
+}
+
 /* program tabs */
 .ptabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: 1080px; margin: 0 auto 18px; }
 .pt { appearance: none; cursor: pointer; text-align: left; padding: 20px 22px; border-radius: 22px; border: 1px solid rgba(143,243,232,.22); background: linear-gradient(170deg, rgba(10,44,50,.8), rgba(4,16,20,.92)); color: #fff; font: inherit; transition: transform .3s var(--ease), border-color .3s, background .3s, box-shadow .3s; }
