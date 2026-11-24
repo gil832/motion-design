@@ -1623,6 +1623,21 @@ body.hev #vt .vt-row:nth-child(2) .vt-c b::before { content: "From "; font-size:
   body.hev:not(.hfv) .hw3-dots { display: flex !important; justify-content: center; gap: 6px; margin-top: 18px; }
 }
 
+/* game component on phones: a swipe carousel of the three levels */
+.gm-dots { display: none !important; }
+@media (max-width: 760px) {
+  body.hev .gm-stage { display: flex; gap: 12px; height: auto; overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; scrollbar-width: none; margin: 0 -20px; padding: 4px 20px 8px; scroll-padding: 0 20px; border: 0; border-radius: 0; box-shadow: none; background: none; }
+  body.hev .gm-stage::-webkit-scrollbar { display: none; }
+  body.hev .gm-s { position: relative; inset: auto; flex: 0 0 84%; aspect-ratio: 4 / 5.4; opacity: 1; scroll-snap-align: start; border-radius: 26px; overflow: hidden; border: 1px solid rgba(217,255,0,.28); background: #04100f; }
+  body.hev .gm-s::before { transform: none; }
+  body.hev .gm-s .gm-hud { opacity: 1; transform: none; left: 20px; right: 20px; bottom: 22px; gap: 10px; }
+  body.hev .gm-big { font-size: min(58px, 15vw) !important; }
+  body.hev .gm-l { font-size: 17px; }
+  body.hev .gm-chips i { font-size: 13.5px; padding: 7px 12px; }
+  body.hev .gm-tabs { display: none; }
+  body.hev .gm-dots { display: flex !important; justify-content: center; gap: 6px; margin-top: 16px; }
+}
+
 /* program tabs */
 .ptabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: 1080px; margin: 0 auto 18px; }
 .pt { appearance: none; cursor: pointer; text-align: left; padding: 20px 22px; border-radius: 22px; border: 1px solid rgba(143,243,232,.22); background: linear-gradient(170deg, rgba(10,44,50,.8), rgba(4,16,20,.92)); color: #fff; font: inherit; transition: transform .3s var(--ease), border-color .3s, background .3s, box-shadow .3s; }
@@ -2191,7 +2206,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
       <div class="gm rv" id="gm">
         <div class="gm-stage">
           <div class="gm-s on" data-i="0" style="--img:url(assets/hc/side.jpg);--pos:46% 40%">
-            <div class="gm-hud"><span class="gm-k">Level 1 · Your Ticket</span><b class="gm-big lime">$120</b><span class="gm-l">gets you a <b>$10K simulated account</b></span><div class="gm-chips"><i>One-time fee</i><i>No trading deposit</i></div></div>
+            <div class="gm-hud"><span class="gm-k">Level 1 · Your Ticket</span><b class="gm-big lime tnum">$10,000</b><span class="gm-l">Get a <b>$10K simulated account</b> for <b>$120</b>.</span><div class="gm-chips"><i>One-time fee</i><i>No test to pass</i></div></div>
           </div>
           <div class="gm-s" data-i="1" style="--img:url(assets/hc/desk3.jpg);--pos:30% 35%">
             <div class="gm-hud"><span class="gm-k">Level 2 · Your Game</span><b class="gm-big">$0</b><span class="gm-l">Of your own money in the market. Trade a simulated account, right away.</span><div class="gm-lives"><span>Loss limits</span><em><i></i><i></i><i></i><i></i></em><small>4% a day · 8% in total</small></div></div>
@@ -2200,6 +2215,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
             <div class="gm-hud"><span class="gm-k">Level 3 · Your Prize</span><b class="gm-big lime"><small class="gm-upto">Up to</small> 95%</b><span class="gm-l">Reward Share when you qualify. 80% standard, 95% with the add-on.</span><div class="gm-chips"><i class="on">Reward unlocked</i><i>Paid in real money</i></div></div>
           </div>
         </div>
+        <div class="hst-dots gm-dots" id="gmDots" aria-hidden="true"><i class="on"></i><i></i><i></i></div>
         <div class="gm-tabs" role="tablist" aria-label="How the game works">
           <button type="button" class="gm-t on" role="tab" aria-selected="true"><span>01</span><b>Get your ticket</b><em>Pay once, from $70</em><i class="gm-bar"></i></button>
           <button type="button" class="gm-t" role="tab" aria-selected="false"><span>02</span><b>Play the markets</b><em>Simulated, $0 of your money in the market</em><i class="gm-bar"></i></button>
@@ -3193,6 +3209,8 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
     new IntersectionObserver(function (es) { vis = es[0].isIntersecting; }, { threshold: .35 }).observe(gm);
     if (!reduce) timer = setInterval(function () { if (vis && !touched && !document.hidden && document.body.classList.contains("hev")) set((cur + 1) % ss.length, true); }, 4600);
     set(0, !reduce);
+    var st = $(".gm-stage", gm), gd = $$("#gmDots i");
+    st.addEventListener("scroll", function () { var w = ss[0].getBoundingClientRect().width + 12, k = Math.min(gd.length - 1, Math.round(st.scrollLeft / w)); gd.forEach(function (x, m) { x.classList.toggle("on", m === k); }); }, { passive: true });
   })();
 
   /* pain chart: "on your own" draws the bad week; "with Instant" shows the same week with only the fee out of savings */
