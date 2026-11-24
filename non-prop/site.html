@@ -1879,6 +1879,39 @@ body.hev .mq { display: block; margin: clamp(48px, 6vw, 90px) 0 clamp(-60px, -3v
 @keyframes mqR { from { transform: translateX(-50%); } to { transform: translateX(0); } }
 @media (prefers-reduced-motion: reduce) { .mq-r.a, .mq-r.b { animation: none; } }
 
+/* Hero G: the story section as one wide promo banner */
+.sbn { display: none; }
+body.hgv #story .sh, body.hgv #story .gm, body.hgv #story .gm-dots, body.hgv #story .tri3-cta, body.hgv #stTrk { display: none !important; }
+body.hgv .sbn { position: relative; display: grid; grid-template-columns: 1fr 1fr; max-width: 1240px; min-height: 440px; margin: 0 auto; border-radius: 30px; overflow: hidden; border: 1px solid rgba(255,255,255,.12); background: radial-gradient(70% 90% at 0% 0%, rgba(217,255,0,.16), transparent 60%), linear-gradient(180deg, #0c1414, #070b0b); box-shadow: 0 50px 120px -60px rgba(0,0,0,.95); }
+.sbn-l { position: relative; z-index: 2; display: flex; flex-direction: column; justify-content: center; padding: clamp(32px, 5vw, 70px); }
+.sbn-h { margin: 0; font-size: clamp(38px, 4.4vw, 64px) !important; font-weight: 600; letter-spacing: -.04em; line-height: 1.02; color: #fff; text-transform: none !important; }
+.sbn-h span { color: var(--lime); }
+.sbn-p { margin: 18px 0 0; max-width: 34ch; font-size: clamp(17px, 1.5vw, 21px); line-height: 1.45; color: rgba(255,255,255,.72); }
+.sbn-a { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; margin-top: 34px; }
+.sbn-chip { display: inline-flex; align-items: center; gap: 10px; padding: 16px 20px; border-radius: 14px; border: 1.5px dashed rgba(217,255,0,.55); background: rgba(217,255,0,.05); font-size: 16px; }
+.sbn-chip i { font-style: normal; color: rgba(255,255,255,.65); }
+.sbn-chip b { color: var(--lime); font-weight: 700; letter-spacing: .02em; }
+.sbn-chip em { font-style: normal; color: var(--lime); opacity: .7; }
+.sbn-go { border-radius: 14px !important; margin: 0 !important; width: auto !important; flex: none; }
+@media (min-width: 901px) { .sbn-a { flex-wrap: nowrap; } .sbn-chip { flex: none; } }
+.sbn-r { position: relative; min-height: 100%; }
+.sbn-img { position: absolute; inset: 0; left: -30%; background: url(assets/hc/side.jpg) 60% 35% / cover no-repeat; -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 45%); mask-image: linear-gradient(90deg, transparent 0%, #000 45%); }
+.sbn-img::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(7,11,11,.2), rgba(7,11,11,.55)); }
+.sbn-big { position: absolute; z-index: 2; right: clamp(24px, 5vw, 70px); top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; align-items: flex-start; line-height: .86; }
+.sbn-big small { font-size: clamp(16px, 1.6vw, 24px); font-weight: 600; letter-spacing: .3em; text-transform: uppercase; color: var(--lime); margin: 0 0 10px 6px; }
+.sbn-big b { font-size: clamp(96px, 12vw, 190px); font-weight: 700; letter-spacing: -.06em; color: #fff; text-shadow: 0 20px 60px rgba(0,0,0,.6); }
+.sbn-big span { font-size: clamp(44px, 5.6vw, 88px); font-weight: 700; letter-spacing: -.04em; text-transform: uppercase; color: #fff; }
+@media (max-width: 900px) {
+  body.hgv .sbn { grid-template-columns: 1fr; min-height: 0; }
+  .sbn-r { order: -1; height: 300px; }
+  .sbn-img { left: 0; -webkit-mask-image: linear-gradient(180deg, #000 55%, transparent); mask-image: linear-gradient(180deg, #000 55%, transparent); }
+  .sbn-big { right: auto; left: 24px; top: auto; bottom: 10px; transform: none; }
+  .sbn-big b { font-size: 104px; } .sbn-big span { font-size: 46px; }
+  .sbn-l { padding: 18px 22px 28px; }
+  .sbn-a { flex-direction: column; align-items: stretch; }
+  .sbn-chip, .sbn-go { justify-content: center; }
+}
+
 /* program tabs */
 .ptabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: 1080px; margin: 0 auto 18px; }
 .pt { appearance: none; cursor: pointer; text-align: left; padding: 20px 22px; border-radius: 22px; border: 1px solid rgba(143,243,232,.22); background: linear-gradient(170deg, rgba(10,44,50,.8), rgba(4,16,20,.92)); color: #fff; font: inherit; transition: transform .3s var(--ease), border-color .3s, background .3s, box-shadow .3s; }
@@ -2446,6 +2479,20 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
     <svg class="trk" id="stTrk" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true"></svg>
     <div class="wrap">
       <div class="sh rv"><span class="eyebrow">Same race. Simulated.</span><h2 class="mx" id="stMx"><span class="t">Play</span> <span class="h">the markets.</span><br><span class="t">Keep</span> <span class="h lime">your money out.</span></h2><p class="mx-sub">A safe, simulated trading platform with clear rules. Your own money never enters the market, and strong performance can earn real Rewards.</p></div>
+      <div class="sbn rv" id="sbn">
+        <div class="sbn-l">
+          <h2 class="sbn-h">Big opportunity.<br><span>Small price.</span></h2>
+          <p class="sbn-p">Trade simulated accounts up to $200K. One-time fee, no test to pass.</p>
+          <div class="sbn-a">
+            <span class="sbn-chip"><i>Instant</i><b>From $70</b><em aria-hidden="true">✦</em></span>
+            <a class="buy lg sbn-go" href="#ways">Choose your account <span class="ar" aria-hidden="true">→</span></a>
+          </div>
+        </div>
+        <div class="sbn-r" aria-hidden="true">
+          <div class="sbn-img"></div>
+          <div class="sbn-big"><small>From</small><b>$70</b><span>One-time</span></div>
+        </div>
+      </div>
       <div class="gm rv" id="gm">
         <div class="gm-stage">
           <div class="gm-s on" data-i="0" style="--img:url(assets/hc/side.jpg);--pos:46% 40%">
@@ -2880,16 +2927,16 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
     /* every switch starts from the page's original section order */
     var hero0 = document.getElementById("top");
     if (hero0) { var par = hero0.parentNode; if (!npOrd) npOrd = Array.prototype.slice.call(par.children); else npOrd.forEach(function (el) { par.appendChild(el); }); }
-    b.classList.toggle("hb", v === "b"); b.classList.toggle("hcv", v === "c" || v === "d" || v === "e" || v === "f"); b.classList.toggle("hdv", v === "d" || v === "e" || v === "f"); b.classList.toggle("hev", v === "e" || v === "f"); b.classList.toggle("hfv", v === "f"); if (window.npSimple) window.npSimple(v === "e" || v === "f");
+    b.classList.toggle("hb", v === "b"); b.classList.toggle("hcv", v === "c" || v === "d" || v === "e" || v === "f" || v === "g"); b.classList.toggle("hdv", v === "d" || v === "e" || v === "f" || v === "g"); b.classList.toggle("hev", v === "e" || v === "f" || v === "g"); b.classList.toggle("hfv", v === "f" || v === "g"); b.classList.toggle("hgv", v === "g"); if (window.npSimple) window.npSimple(v === "e" || v === "f" || v === "g");
     if (!certs) { certs = document.getElementById("rewards"); certsHome = certs && certs.nextElementSibling; }
     if (certs) {
-      if (v === "c" || v === "d" || v === "e" || v === "f") { var hero = document.getElementById("top"); hero.parentNode.insertBefore(certs, hero.nextElementSibling); certs.style.paddingTop = "clamp(40px, 6vw, 80px)"; }
+      if (v === "c" || v === "d" || v === "e" || v === "f" || v === "g") { var hero = document.getElementById("top"); hero.parentNode.insertBefore(certs, hero.nextElementSibling); certs.style.paddingTop = "clamp(40px, 6vw, 80px)"; }
       else if (certsHome) { certsHome.parentNode.insertBefore(certs, certsHome); certs.style.paddingTop = "0"; }
     }
     if (window.npHeroShow) window.npHeroShow();
     document.dispatchEvent(new CustomEvent("np-hero", { detail: v }));
   }
-  var hq = (location.search.match(/[?&]hero=([abcdef])\b/) || [])[1];
+  var hq = (location.search.match(/[?&]hero=([abcdefg])\b/) || [])[1];
   if (hq) document.addEventListener("DOMContentLoaded", function () { setHero(hq); });
   var inShell = false;
   addEventListener("message", function (e) { var d = e.data; if (e.source === parent && d && d.fr === "np") { inShell = true; var sw0 = document.getElementById("npSw"); if (sw0) sw0.remove(); if (d.t === "hero") setHero(d.v); } });
@@ -2897,7 +2944,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
   setTimeout(function () {
     if (inShell || document.getElementById("npSw")) return;
     var cur = hq || "a", sw = document.createElement("div"); sw.id = "npSw"; sw.setAttribute("role", "group"); sw.setAttribute("aria-label", "Hero version");
-    sw.innerHTML = ["a", "d", "e", "f"].map(function (v) { return '<button type="button" data-v="' + v + '" aria-pressed="' + (v === cur) + '">Hero ' + v.toUpperCase() + "</button>"; }).join("");
+    sw.innerHTML = ["a", "d", "e", "f", "g"].map(function (v) { return '<button type="button" data-v="' + v + '" aria-pressed="' + (v === cur) + '">Hero ' + v.toUpperCase() + "</button>"; }).join("");
     sw.addEventListener("click", function (e) { var b = e.target.closest("button"); if (!b) return; var v = b.getAttribute("data-v"); setHero(v); scrollTo(0, 0);
       [].forEach.call(sw.children, function (x) { x.setAttribute("aria-pressed", x === b); });
       try { history.replaceState(null, "", location.pathname + "?hero=" + v); } catch (er) {} });
