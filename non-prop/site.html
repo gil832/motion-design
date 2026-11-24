@@ -1665,6 +1665,49 @@ body.hev #vt .vt-row:nth-child(2) .vt-c b::before { content: "From "; font-size:
   body.hfv .stc-rw { width: 200px; }
 }
 
+/* E/F hero: centred stack. Pill badge, title, short muted subtitle, two buttons, rating underneath */
+.hc-badge, .hc-btn2 { display: none; }
+body.hev .hc-copy { text-align: center; align-items: center; }
+body.hev .hc-badge { display: inline-flex; align-items: center; gap: 10px; align-self: center; margin: 0 auto 22px; padding: 9px 18px; border-radius: 999px; border: 1px solid rgba(255,255,255,.16); background: rgba(255,255,255,.04); font-size: 15px; color: rgba(255,255,255,.85); }
+body.hev .hc-badge i { width: 7px; height: 7px; border-radius: 50%; background: var(--lime); box-shadow: 0 0 10px rgba(217,255,0,.8); }
+body.hev .hc-sub { margin-left: auto !important; margin-right: auto !important; color: rgba(255,255,255,.62) !important; }
+body.hev .hc-cta { display: flex !important; flex-wrap: wrap; justify-content: center; align-items: center; gap: 12px; }
+body.hev .hc-btn2 { display: inline-flex; align-items: center; justify-content: center; padding: 0 26px; min-height: 56px; border-radius: 14px; border: 1px solid rgba(255,255,255,.22); background: rgba(255,255,255,.03); color: #fff; font-weight: 600; font-size: 16px; text-decoration: none; transition: background .3s, border-color .3s; }
+body.hev .hc-btn2:hover { background: rgba(255,255,255,.08); border-color: rgba(255,255,255,.4); }
+body.hev .hc-cta .hc-btn { border-radius: 14px; min-height: 56px; }
+body.hev .hc-proof { flex-basis: 100%; justify-content: center; margin-top: 10px; }
+@media (max-width: 760px) {
+  body.hev .hc-badge { font-size: 13px; padding: 8px 14px; margin-bottom: 18px; }
+  body.hev .hero h1.hc-h { text-align: center; font-size: 40px !important; }
+  body.hev .hc-sub { font-size: 16px !important; max-width: 32ch; }
+  body.hev .hc-cta .hc-btn { width: auto !important; flex: 1 1 0; padding: 0 18px !important; font-size: 16px !important; min-height: 54px; }
+  body.hev .hc-btn2 { flex: 1 1 0; min-height: 54px; padding: 0 14px; font-size: 16px; }
+}
+
+/* F 3 steps on phones: a vertical list of cards; copy on the left, the visual peeking in bottom-right */
+@media (max-width: 760px) {
+  body.hfv .hst { display: grid !important; grid-template-columns: minmax(0, 1fr) !important; gap: 14px; overflow: visible; margin: 0; padding: 0; scroll-snap-type: none; }
+  body.hfv .hst-dots { display: none !important; }
+  body.hfv .stc { display: block; aspect-ratio: auto; min-height: 250px; padding: 22px 20px 24px; overflow: hidden; text-align: left; }
+  body.hfv .stc.s1 { background: linear-gradient(180deg, #1d5a55 0%, #0d2624 55%, #071110 100%); }
+  body.hfv .stc.s2 { background: linear-gradient(180deg, #058f83 0%, #06322e 55%, #061211 100%); }
+  body.hfv .stc.s3 { background: linear-gradient(180deg, #414d07 0%, #171c05 55%, #0b0e05 100%); }
+  body.hfv .stc-t { display: block; position: relative; z-index: 2; max-width: 64%; }
+  body.hfv .stc-ic { display: grid; place-items: center; width: 34px; height: 34px; margin-bottom: 14px; border-radius: 50%; background: #fff; color: #062421; }
+  body.hfv .stc.s3 .stc-ic { background: var(--lime); color: #0a0c02; }
+  body.hfv .stc-ic svg { width: 18px; height: 18px; }
+  body.hfv .stc-k { display: block; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.7); }
+  body.hfv .stc h3 { margin: 6px 0 0; font-size: 24px; }
+  body.hfv .stc p { margin-top: 10px; font-size: 14.5px; line-height: 1.5; color: rgba(255,255,255,.72); }
+  body.hfv .stc-v { position: absolute; z-index: 1; right: -18px; bottom: -14px; width: 54%; margin: 0; padding: 0; pointer-events: none; -webkit-mask-image: linear-gradient(90deg, transparent, #000 35%); mask-image: linear-gradient(90deg, transparent, #000 35%); opacity: .95; }
+  body.hfv .s1 .stc-v { transform: scale(.62); transform-origin: 100% 100%; width: 80%; right: -16px; bottom: -4px; }
+  body.hfv .stc.s1 { min-height: 270px; }
+  body.hfv .s1 .stc-fee { display: none; }
+  body.hfv .s2 .stc-v { transform: scale(.82); transform-origin: 100% 100%; width: 64%; }
+  body.hfv .s2 .stx-h, body.hfv .s2 .stx-b { display: none; }
+  body.hfv .s3 .stc-v { transform: scale(.7); transform-origin: 100% 100%; right: -40px; bottom: -10px; }
+}
+
 /* program tabs */
 .ptabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: 1080px; margin: 0 auto 18px; }
 .pt { appearance: none; cursor: pointer; text-align: left; padding: 20px 22px; border-radius: 22px; border: 1px solid rgba(143,243,232,.22); background: linear-gradient(170deg, rgba(10,44,50,.8), rgba(4,16,20,.92)); color: #fff; font: inherit; transition: transform .3s var(--ease), border-color .3s, background .3s, box-shadow .3s; }
@@ -2107,10 +2150,12 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
         <div class="hc-grid">
           <div class="hc-copy">
             <p class="hc-type" aria-label="Take your gold, indices, forex or crypto trading to a bigger account"><span aria-hidden="true">Take your <b id="hcType">gold</b><i class="hc-caret"></i> trading to a bigger account.</span></p>
+            <span class="hc-badge"><i></i>FundingRock Instant · From $70</span>
             <h1 class="hc-h"><span class="hc-l1">$10K Simulated Trading Account.</span><span class="hc-l2 grad">For Just $120.</span></h1>
             <p class="hc-sub"><span>Trade in a simulated environment, without putting your savings on the line. Meet the program requirements and qualify for performance-based Rewards.</span></p>
             <div class="hc-cta">
               <a class="hc-btn" href="#ways">Get Access</a>
+              <a class="hc-btn2" href="#how">How It Works</a>
               <div class="hc-proof" aria-label="Rated 4.9 out of 5 on Google">
                 <svg class="hc-g" viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.6-.4-3.9z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-7.9l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.6-.4-3.9z"/></svg><span class="hc-r">Rated 4.9</span><span class="hc-st"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.9 6.9L22 9.6l-5.5 4.7L18.2 22 12 18.1 5.8 22l1.7-7.7L2 9.6l7.1-.7z" fill="#fff"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.9 6.9L22 9.6l-5.5 4.7L18.2 22 12 18.1 5.8 22l1.7-7.7L2 9.6l7.1-.7z" fill="#fff"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.9 6.9L22 9.6l-5.5 4.7L18.2 22 12 18.1 5.8 22l1.7-7.7L2 9.6l7.1-.7z" fill="#fff"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.9 6.9L22 9.6l-5.5 4.7L18.2 22 12 18.1 5.8 22l1.7-7.7L2 9.6l7.1-.7z" fill="#fff"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><defs><linearGradient id="hcHalf"><stop offset=".55" stop-color="#fff"/><stop offset=".55" stop-color="rgba(255,255,255,.28)"/></linearGradient></defs><path d="M12 2l2.9 6.9L22 9.6l-5.5 4.7L18.2 22 12 18.1 5.8 22l1.7-7.7L2 9.6l7.1-.7z" fill="url(#hcHalf)"/></svg></span>
                 <span class="hc-av"><img src="assets/traders/ben.webp" alt=""><img src="assets/traders/andrea.webp" alt=""><img src="assets/traders/noam.webp" alt=""><img src="assets/traders/brian.webp" alt=""></span>
