@@ -1732,6 +1732,17 @@ body.hev .hc-proof { flex-basis: 100%; justify-content: center; margin-top: 10px
 @media (max-width: 980px) { .acb-aca { grid-column: 1 / -1; } }
 @media (max-width: 640px) { .acb-aca { flex-direction: column; align-items: stretch; } .acb-aca .acb-vid { flex: none; } }
 
+/* pain chart, high-end palette: "on your own" in quiet silver/graphite; lime stays the only accent */
+.pv .pv-line { stroke: #b9c4c3 !important; stroke-width: 2.5; filter: none !important; }
+.pv .pv-dots circle { fill: #0b1111 !important; stroke: #d6dfde !important; stroke-width: 2 !important; }
+.pv .pv-tags i:not(.pv-frt) { background: rgba(14,20,20,.82) !important; color: #e9efee !important; border: 1px solid rgba(255,255,255,.16); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); font-weight: 500; box-shadow: 0 8px 24px -12px rgba(0,0,0,.8); }
+.pv .pv-s.own span i { background: #b9c4c3 !important; box-shadow: none !important; }
+.pv .pv-s.own em, .pv .pv-top em { color: rgba(255,255,255,.5) !important; }
+.pv-sw button.on[data-m="own"] { background: #e9efee !important; color: #0a0f0f !important; }
+.pv .pn-x { color: rgba(255,255,255,.55) !important; border-color: rgba(255,255,255,.2) !important; background: rgba(255,255,255,.04) !important; }
+.pv .pv-own li { border-color: rgba(255,255,255,.1) !important; background: rgba(255,255,255,.03) !important; }
+.pv:not(.fr) .pv-chart { border-color: rgba(255,255,255,.14) !important; background: linear-gradient(170deg, rgba(255,255,255,.05), rgba(8,10,10,.92) 55%) !important; }
+
 /* program tabs */
 .ptabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: 1080px; margin: 0 auto 18px; }
 .pt { appearance: none; cursor: pointer; text-align: left; padding: 20px 22px; border-radius: 22px; border: 1px solid rgba(143,243,232,.22); background: linear-gradient(170deg, rgba(10,44,50,.8), rgba(4,16,20,.92)); color: #fff; font: inherit; transition: transform .3s var(--ease), border-color .3s, background .3s, box-shadow .3s; }
@@ -2268,7 +2279,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
           <div class="pv-two"><div class="pv-s own"><span><i></i>Savings, On Your Own</span><b class="tnum" id="pvBal">$10,000</b><em class="tnum" id="pvChg">0.0%</em></div><div class="pv-s fr"><span><i></i>Savings, With FundingRock</span><b class="tnum" id="pvBal2">$10,000</b><em class="tnum" id="pvChg2">0.0%</em></div></div>
           <div class="pv-plot">
           <svg class="pv-svg" viewBox="0 0 600 260" preserveAspectRatio="none" aria-hidden="true">
-            <defs><linearGradient id="pvG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff6b8a" stop-opacity=".35"/><stop offset="1" stop-color="#ff6b8a" stop-opacity="0"/></linearGradient></defs>
+            <defs><linearGradient id="pvG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c9d3d2" stop-opacity=".16"/><stop offset="1" stop-color="#c9d3d2" stop-opacity="0"/></linearGradient></defs>
             <g class="pv-grid"><line x1="0" x2="600" y1="40" y2="40"/><line x1="0" x2="600" y1="110" y2="110"/><line x1="0" x2="600" y1="180" y2="180"/><line x1="0" x2="600" y1="250" y2="250"/></g>
             <path class="pv-area" d="M0 40 L100 52 L200 96 L300 88 L400 150 L500 176 L600 214 L600 260 L0 260 Z" fill="url(#pvG)"/>
             <path class="pv-line" pathLength="1" d="M0 40 L100 52 L200 96 L300 88 L400 150 L500 176 L600 214"/>
