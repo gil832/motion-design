@@ -1795,6 +1795,11 @@ body.hfv .stc.s3 .stc-ic { border-color: rgba(217,255,0,.35); }
   body.hfv .stc .stc-ic svg { width: 20px; height: 20px; }
 }
 
+/* story 02: markets */
+.gm-unit { font-size: .3em; font-weight: 500; letter-spacing: -.01em; color: rgba(255,255,255,.75); margin-left: .1em; }
+.gm-mk i { font-variant-numeric: tabular-nums; letter-spacing: .02em; }
+.gm-mk i::before { content: ""; display: inline-block; width: 6px; height: 6px; margin-right: 8px; border-radius: 50%; background: #2fe0a6; box-shadow: 0 0 8px rgba(47,224,166,.8); vertical-align: middle; }
+
 /* program tabs */
 .ptabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: 1080px; margin: 0 auto 18px; }
 .pt { appearance: none; cursor: pointer; text-align: left; padding: 20px 22px; border-radius: 22px; border: 1px solid rgba(143,243,232,.22); background: linear-gradient(170deg, rgba(10,44,50,.8), rgba(4,16,20,.92)); color: #fff; font: inherit; transition: transform .3s var(--ease), border-color .3s, background .3s, box-shadow .3s; }
@@ -2368,7 +2373,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
             <div class="gm-hud"><span class="gm-k">01 · Your account</span><b class="gm-big lime tnum">$10,000</b><span class="gm-l">A <b>simulated account</b> for a one-time <b>$120</b>. No test to pass.</span></div>
           </div>
           <div class="gm-s" data-i="1" style="--img:url(assets/hc/desk3.jpg);--pos:30% 35%">
-            <div class="gm-hud"><span class="gm-k">02 · Your trading</span><b class="gm-big">$0</b><span class="gm-l">Of your savings on the line. Trade from day one.</span><div class="gm-lives"><span>Loss limits</span><em><i></i><i></i><i></i><i></i></em><small>4% a day · 8% in total</small></div></div>
+            <div class="gm-hud"><span class="gm-k">02 · Your markets</span><b class="gm-big">4 <small class="gm-unit">markets</small></b><span class="gm-l">Forex, gold, indices and crypto, on <b>TradeLocker</b> or <b>cTrader</b>.</span><div class="gm-chips gm-mk"><i>EUR/USD</i><i>XAU/USD</i><i>NAS100</i><i>BTC/USD</i></div></div>
           </div>
           <div class="gm-s" data-i="2" style="--img:url(assets/hc/desk.jpg);--pos:50% 30%">
             <div class="gm-hud"><span class="gm-k">03 · Your Rewards</span><b class="gm-big lime"><small class="gm-upto">Up to</small> 95%</b><span class="gm-l">Reward Share when you qualify.</span><div class="gm-chips"><i class="on">Approved within 48h</i><i>80% standard</i></div></div>
@@ -2377,7 +2382,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
         <div class="hst-dots gm-dots" id="gmDots" aria-hidden="true"><i class="on"></i><i></i><i></i></div>
         <div class="gm-tabs" role="tablist" aria-label="How it works">
           <button type="button" class="gm-t on" role="tab" aria-selected="true"><span>01</span><b>Choose your account</b><em>One-time fee, from $70</em><i class="gm-bar"></i></button>
-          <button type="button" class="gm-t" role="tab" aria-selected="false"><span>02</span><b>Trade on your terms</b><em>Simulated, from day one</em><i class="gm-bar"></i></button>
+          <button type="button" class="gm-t" role="tab" aria-selected="false"><span>02</span><b>Trade what you know</b><em>Forex, gold, indices, crypto</em><i class="gm-bar"></i></button>
           <button type="button" class="gm-t" role="tab" aria-selected="false"><span>03</span><b>Qualify for Rewards</b><em>Up to 95% Reward Share</em><i class="gm-bar"></i></button>
         </div>
       </div>
@@ -3357,7 +3362,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
         var w = document.createTreeWalker(el, NodeFilter.SHOW_TEXT), n, first = true;
         while ((n = w.nextNode())) {
           if (!/[A-Za-z]/.test(n.nodeValue)) { if (/[.!?:]\s*$/.test(n.nodeValue)) first = true; continue; }
-          var v = title(n.nodeValue, first); first = /[.!?:]\s*$/.test(n.nodeValue);
+          var v = title(n.nodeValue, first).replace(/CTrader/g, "cTrader"); first = /[.!?:]\s*$/.test(n.nodeValue);
           if (v !== n.nodeValue) { saved.push([n, n.nodeValue]); n.nodeValue = v; }
         }
       });
