@@ -1879,38 +1879,61 @@ body.hev .mq { display: block; margin: clamp(48px, 6vw, 90px) 0 clamp(-60px, -3v
 @keyframes mqR { from { transform: translateX(-50%); } to { transform: translateX(0); } }
 @media (prefers-reduced-motion: reduce) { .mq-r.a, .mq-r.b { animation: none; } }
 
-/* Hero G: the story section as one wide promo banner */
+/* Hero G: the story section as a wide promo banner with three stages */
 .sbn { display: none; }
 body.hgv #story .sh, body.hgv #story .gm, body.hgv #story .gm-dots, body.hgv #story .tri3-cta, body.hgv #stTrk { display: none !important; }
-body.hgv .sbn { position: relative; display: grid; grid-template-columns: 1fr 1fr; max-width: 1240px; min-height: 440px; margin: 0 auto; border-radius: 30px; overflow: hidden; border: 1px solid rgba(255,255,255,.12); background: radial-gradient(70% 90% at 0% 0%, rgba(217,255,0,.16), transparent 60%), linear-gradient(180deg, #0c1414, #070b0b); box-shadow: 0 50px 120px -60px rgba(0,0,0,.95); }
+body.hgv .sbn { display: block; max-width: 1240px; margin: 0 auto; }
+.sbn-st { position: relative; min-height: 460px; border-radius: 30px; overflow: hidden; border: 1px solid rgba(255,255,255,.12); background: radial-gradient(70% 90% at 0% 0%, rgba(217,255,0,.16), transparent 60%), linear-gradient(180deg, #0c1414, #070b0b); box-shadow: 0 50px 120px -60px rgba(0,0,0,.95); }
+.sbn-s { position: absolute; inset: 0; display: grid; grid-template-columns: 1fr 1fr; opacity: 0; visibility: hidden; transition: opacity .7s cubic-bezier(.16,1,.3,1), visibility 0s .7s; }
+.sbn-s.on { opacity: 1; visibility: visible; transition: opacity .7s cubic-bezier(.16,1,.3,1); }
 .sbn-l { position: relative; z-index: 2; display: flex; flex-direction: column; justify-content: center; padding: clamp(32px, 5vw, 70px); }
+.sbn-k { font-size: 13px; font-weight: 600; letter-spacing: .16em; color: rgba(255,255,255,.5); margin-bottom: 14px; }
 .sbn-h { margin: 0; font-size: clamp(38px, 4.4vw, 64px) !important; font-weight: 600; letter-spacing: -.04em; line-height: 1.02; color: #fff; text-transform: none !important; }
 .sbn-h span { color: var(--lime); }
-.sbn-p { margin: 18px 0 0; max-width: 34ch; font-size: clamp(17px, 1.5vw, 21px); line-height: 1.45; color: rgba(255,255,255,.72); }
-.sbn-a { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; margin-top: 34px; }
-.sbn-chip { display: inline-flex; align-items: center; gap: 10px; padding: 16px 20px; border-radius: 14px; border: 1.5px dashed rgba(217,255,0,.55); background: rgba(217,255,0,.05); font-size: 16px; }
+.sbn-p { margin: 18px 0 0; max-width: 36ch; font-size: clamp(17px, 1.5vw, 20px); line-height: 1.45; color: rgba(255,255,255,.72); }
+.sbn-a { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; margin-top: 32px; }
+.sbn-chip { display: inline-flex; align-items: center; gap: 10px; padding: 16px 20px; border-radius: 14px; border: 1.5px dashed rgba(217,255,0,.55); background: rgba(217,255,0,.05); font-size: 16px; white-space: nowrap; }
 .sbn-chip i { font-style: normal; color: rgba(255,255,255,.65); }
 .sbn-chip b { color: var(--lime); font-weight: 700; letter-spacing: .02em; }
 .sbn-chip em { font-style: normal; color: var(--lime); opacity: .7; }
 .sbn-go { border-radius: 14px !important; margin: 0 !important; width: auto !important; flex: none; }
 @media (min-width: 901px) { .sbn-a { flex-wrap: nowrap; } .sbn-chip { flex: none; } }
 .sbn-r { position: relative; min-height: 100%; }
-.sbn-img { position: absolute; inset: 0; left: -30%; background: url(assets/hc/side.jpg) 60% 35% / cover no-repeat; -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 45%); mask-image: linear-gradient(90deg, transparent 0%, #000 45%); }
-.sbn-img::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(7,11,11,.2), rgba(7,11,11,.55)); }
-.sbn-big { position: absolute; z-index: 2; right: clamp(24px, 5vw, 70px); top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; align-items: flex-start; line-height: .86; }
+.sbn-img { position: absolute; inset: 0; left: -30%; background-size: cover; background-repeat: no-repeat; transform: scale(1.06); transition: transform 6s linear; -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 45%); mask-image: linear-gradient(90deg, transparent 0%, #000 45%); }
+.sbn-s.on .sbn-img { transform: scale(1); }
+.sbn-img::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(7,11,11,.2), rgba(7,11,11,.6)); }
+.sbn-big { position: absolute; z-index: 2; right: clamp(24px, 5vw, 70px); top: 50%; transform: translateY(-46%); display: flex; flex-direction: column; align-items: flex-start; line-height: .86; opacity: 0; transition: opacity .6s .2s, transform .8s .2s cubic-bezier(.16,1,.3,1); }
+.sbn-s.on .sbn-big { opacity: 1; transform: translateY(-50%); }
 .sbn-big small { font-size: clamp(16px, 1.6vw, 24px); font-weight: 600; letter-spacing: .3em; text-transform: uppercase; color: var(--lime); margin: 0 0 10px 6px; }
 .sbn-big b { font-size: clamp(96px, 12vw, 190px); font-weight: 700; letter-spacing: -.06em; color: #fff; text-shadow: 0 20px 60px rgba(0,0,0,.6); }
-.sbn-big span { font-size: clamp(44px, 5.6vw, 88px); font-weight: 700; letter-spacing: -.04em; text-transform: uppercase; color: #fff; }
+.sbn-big span { white-space: nowrap; font-size: clamp(32px, 4vw, 62px); font-weight: 700; letter-spacing: -.04em; text-transform: uppercase; color: #fff; }
+.sbn-tabs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 14px; }
+.sbn-t { position: relative; overflow: hidden; display: flex; align-items: baseline; gap: 14px; padding: 20px 22px; border-radius: 18px; border: 1px solid rgba(255,255,255,.1); background: rgba(255,255,255,.03); color: #fff; font: inherit; text-align: left; cursor: pointer; transition: border-color .3s, background .3s; }
+.sbn-t span { font-size: 13px; font-weight: 600; letter-spacing: .1em; color: rgba(255,255,255,.45); }
+.sbn-t b { font-size: clamp(17px, 1.5vw, 21px); font-weight: 600; letter-spacing: -.02em; }
+.sbn-t.on { border-color: rgba(217,255,0,.5); background: rgba(217,255,0,.06); }
+.sbn-t.on span { color: var(--lime); }
+.sbn-t:focus-visible { outline: 2px solid var(--lime); outline-offset: 3px; }
+.sbn-bar { position: absolute; left: 0; bottom: 0; height: 3px; width: 0; background: var(--lime); }
+.sbn-t.on .sbn-bar.run { animation: gmBar 5s linear forwards; }
+.sbn-dots { display: none !important; }
 @media (max-width: 900px) {
-  body.hgv .sbn { grid-template-columns: 1fr; min-height: 0; }
-  .sbn-r { order: -1; height: 300px; }
-  .sbn-img { left: 0; -webkit-mask-image: linear-gradient(180deg, #000 55%, transparent); mask-image: linear-gradient(180deg, #000 55%, transparent); }
-  .sbn-big { right: auto; left: 24px; top: auto; bottom: 10px; transform: none; }
-  .sbn-big b { font-size: 104px; } .sbn-big span { font-size: 46px; }
-  .sbn-l { padding: 18px 22px 28px; }
-  .sbn-a { flex-direction: column; align-items: stretch; }
+  .sbn-st { display: flex; gap: 12px; min-height: 0; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; margin: 0 -20px; padding: 0 20px; border: 0; border-radius: 0; background: none; box-shadow: none; }
+  .sbn-st::-webkit-scrollbar { display: none; }
+  .sbn-s { position: relative; inset: auto; flex: 0 0 88%; grid-template-columns: 1fr; opacity: 1; visibility: visible; scroll-snap-align: start; border-radius: 26px; overflow: hidden; border: 1px solid rgba(255,255,255,.12); background: radial-gradient(90% 60% at 0% 100%, rgba(217,255,0,.12), transparent 60%), linear-gradient(180deg, #0c1414, #070b0b); }
+  .sbn-r { order: -1; height: 260px; }
+  .sbn-img { left: 0; transform: none !important; -webkit-mask-image: linear-gradient(180deg, #000 55%, transparent); mask-image: linear-gradient(180deg, #000 55%, transparent); }
+  .sbn-big { right: auto; left: 22px; top: auto; bottom: 8px; opacity: 1; transform: none !important; }
+  .sbn-big b { font-size: 92px; } .sbn-big span { font-size: 34px; }
+  .sbn-l { justify-content: flex-start; padding: 16px 20px 24px; }
+  .sbn-h { font-size: 32px !important; }
+  .sbn-p { font-size: 15.5px; }
+  .sbn-a { flex-direction: column; align-items: stretch; margin-top: 22px; }
   .sbn-chip, .sbn-go { justify-content: center; }
+  .sbn-tabs { display: none; }
+  .sbn-dots { display: flex !important; justify-content: center; gap: 6px; margin-top: 16px; }
 }
+@media (prefers-reduced-motion: reduce) { .sbn-s, .sbn-big, .sbn-img { transition: none; } .sbn-t.on .sbn-bar.run { animation: none; } }
 
 /* program tabs */
 .ptabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: 1080px; margin: 0 auto 18px; }
@@ -2480,18 +2503,46 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
     <div class="wrap">
       <div class="sh rv"><span class="eyebrow">Same race. Simulated.</span><h2 class="mx" id="stMx"><span class="t">Play</span> <span class="h">the markets.</span><br><span class="t">Keep</span> <span class="h lime">your money out.</span></h2><p class="mx-sub">A safe, simulated trading platform with clear rules. Your own money never enters the market, and strong performance can earn real Rewards.</p></div>
       <div class="sbn rv" id="sbn">
-        <div class="sbn-l">
-          <h2 class="sbn-h">Big opportunity.<br><span>Small price.</span></h2>
-          <p class="sbn-p">Trade simulated accounts up to $200K. One-time fee, no test to pass.</p>
-          <div class="sbn-a">
-            <span class="sbn-chip"><i>Instant</i><b>From $70</b><em aria-hidden="true">✦</em></span>
-            <a class="buy lg sbn-go" href="#ways">Choose your account <span class="ar" aria-hidden="true">→</span></a>
+        <div class="sbn-st">
+          <div class="sbn-s on" data-i="0">
+            <div class="sbn-l">
+              <span class="sbn-k">01 / 03</span>
+              <h2 class="sbn-h">Big opportunity.<br><span>Small price.</span></h2>
+              <p class="sbn-p">Trade simulated accounts up to $200K. One-time fee, no test to pass.</p>
+              <div class="sbn-a">
+                <span class="sbn-chip"><i>Instant</i><b>From $70</b><em aria-hidden="true">✦</em></span>
+                <a class="buy lg sbn-go" href="#ways">Choose your account <span class="ar" aria-hidden="true">→</span></a>
+              </div>
+            </div>
+            <div class="sbn-r" aria-hidden="true"><div class="sbn-img" style="background-image:url(assets/hc/side.jpg);background-position:60% 35%"></div><div class="sbn-big"><small>From</small><b>$70</b><span>One-time</span></div></div>
+          </div>
+          <div class="sbn-s" data-i="1">
+            <div class="sbn-l">
+              <span class="sbn-k">02 / 03</span>
+              <h2 class="sbn-h">Your markets.<br><span>Your platform.</span></h2>
+              <p class="sbn-p">Forex, metals, indices, energy and crypto, on TradeLocker or cTrader. Availability varies by region.</p>
+              <div class="sbn-a">
+                <span class="sbn-chip"><i>Simulated</i><b>From day one</b><em aria-hidden="true">✦</em></span>
+                <a class="buy lg sbn-go" href="#how">See how it works <span class="ar" aria-hidden="true">→</span></a>
+              </div>
+            </div>
+            <div class="sbn-r" aria-hidden="true"><div class="sbn-img" style="background-image:url(assets/hc/desk3.jpg);background-position:30% 35%"></div><div class="sbn-big"><b>5</b><span>Markets</span></div></div>
+          </div>
+          <div class="sbn-s" data-i="2">
+            <div class="sbn-l">
+              <span class="sbn-k">03 / 03</span>
+              <h2 class="sbn-h">Trade well.<br><span>Get rewarded.</span></h2>
+              <p class="sbn-p">Meet the requirements and request a Reward: 80% standard, 95% with the add-on.</p>
+              <div class="sbn-a">
+                <span class="sbn-chip"><i>Rewards</i><b>Instant requests</b><em aria-hidden="true">✦</em></span>
+                <a class="buy lg sbn-go" href="#ways">Choose your account <span class="ar" aria-hidden="true">→</span></a>
+              </div>
+            </div>
+            <div class="sbn-r" aria-hidden="true"><div class="sbn-img" style="background-image:url(assets/hc/desk.jpg);background-position:50% 30%"></div><div class="sbn-big"><small>Up to</small><b>95%</b><span>Reward Share</span></div></div>
           </div>
         </div>
-        <div class="sbn-r" aria-hidden="true">
-          <div class="sbn-img"></div>
-          <div class="sbn-big"><small>From</small><b>$70</b><span>One-time</span></div>
-        </div>
+        <div class="sbn-tabs" role="tablist" aria-label="Stages"><button type="button" class="sbn-t on" data-i="0"><span>01</span><b>Choose your account</b><i class="sbn-bar"></i></button><button type="button" class="sbn-t" data-i="1"><span>02</span><b>Trade your markets</b><i class="sbn-bar"></i></button><button type="button" class="sbn-t" data-i="2"><span>03</span><b>Qualify for Rewards</b><i class="sbn-bar"></i></button></div>
+        <div class="hst-dots sbn-dots" aria-hidden="true"><i class="on"></i><i></i><i></i></div>
       </div>
       <div class="gm rv" id="gm">
         <div class="gm-stage">
@@ -3523,6 +3574,22 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
     set(0, !reduce);
     var st = $(".gm-stage", gm), gd = $$("#gmDots i");
     st.addEventListener("scroll", function () { var w = ss[0].getBoundingClientRect().width + 12, k = Math.min(gd.length - 1, Math.round(st.scrollLeft / w)); gd.forEach(function (x, m) { x.classList.toggle("on", m === k); }); }, { passive: true });
+  })();
+
+  /* Hero G banner: tabs switch the stage, cycles until touched; phones swipe with dots */
+  (function () {
+    var root = $("#sbn"); if (!root) return;
+    var ss = $$(".sbn-s", root), ts = $$(".sbn-t", root), ds = $$(".sbn-dots i", root), st = $(".sbn-st", root), cur = 0, touched = false, vis = false;
+    function set(i, auto) {
+      cur = i;
+      ss.forEach(function (x, j) { x.classList.toggle("on", j === i); });
+      ts.forEach(function (x, j) { x.classList.toggle("on", j === i); x.setAttribute("aria-selected", j === i); var b = x.querySelector(".sbn-bar"); b.classList.remove("run"); void b.offsetWidth; if (auto && j === i) b.classList.add("run"); });
+    }
+    ts.forEach(function (t, i) { ["mouseenter", "focus", "click"].forEach(function (ev) { t.addEventListener(ev, function () { touched = true; set(i, false); }); }); });
+    new IntersectionObserver(function (es) { vis = es[0].isIntersecting; }, { threshold: .35 }).observe(root);
+    if (!reduce) setInterval(function () { if (vis && !touched && !document.hidden && document.body.classList.contains("hgv") && innerWidth > 900) set((cur + 1) % ss.length, true); }, 5000);
+    st.addEventListener("scroll", function () { var w = ss[0].getBoundingClientRect().width + 12, k = Math.min(ds.length - 1, Math.round(st.scrollLeft / w)); ds.forEach(function (x, m) { x.classList.toggle("on", m === k); }); }, { passive: true });
+    set(0, !reduce);
   })();
 
   /* pain chart: "on your own" draws the bad week; "with Instant" shows the same week with only the fee out of savings */
