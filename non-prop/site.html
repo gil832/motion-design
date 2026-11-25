@@ -2067,6 +2067,26 @@ body.hhv .hh-ph::after { content: ""; position: absolute; inset: 0; background: 
 }
 @media (prefers-reduced-motion: reduce) { body.hhv .hh-ph img { animation: none; } }
 
+/* academy section: videos removed; community + support take the space */
+.acx-cs { display: grid; grid-template-columns: 1.15fr 1fr; gap: 18px; }
+.acx-dc, .acx-sup { position: relative; padding: clamp(26px, 3vw, 40px); border-radius: 26px; border: 1px solid rgba(255,255,255,.1); overflow: hidden; }
+.acx-dc { background: radial-gradient(90% 90% at 100% 0%, rgba(88,101,242,.30), transparent 60%), linear-gradient(160deg, rgba(88,101,242,.12), rgba(8,10,18,.92) 60%); border-color: rgba(120,132,255,.3); }
+.acx-sup { background: radial-gradient(90% 90% at 0% 100%, rgba(0,216,195,.14), transparent 60%), linear-gradient(160deg, rgba(255,255,255,.05), rgba(6,12,12,.92) 60%); }
+.acx-dc-ic { position: absolute; right: clamp(22px, 3vw, 40px); top: clamp(22px, 3vw, 36px); width: 54px; height: auto; filter: drop-shadow(0 10px 30px rgba(88,101,242,.6)); }
+.acx-dc .acb-k { color: #a9b2ff; }
+.acx-dc h3, .acx-sup h3 { margin: 12px 0 0; font-size: clamp(26px, 2.4vw, 34px); font-weight: 600; letter-spacing: -.03em; line-height: 1.08; color: #fff; }
+.acx-dc p { margin: 12px 0 0; max-width: 40ch; font-size: 16.5px; line-height: 1.5; color: rgba(255,255,255,.7); }
+.acx-tags { list-style: none; margin: 24px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.acx-tags li { padding: 8px 14px; border-radius: 999px; font-size: 14px; color: rgba(255,255,255,.85); background: rgba(120,132,255,.14); border: 1px solid rgba(120,132,255,.28); }
+.acx-sl { list-style: none; margin: 22px 0 0; padding: 0; display: grid; gap: 4px; }
+.acx-sl li { display: flex; align-items: flex-start; gap: 14px; padding: 14px 0; border-top: 1px solid rgba(255,255,255,.07); }
+.acx-sl li:first-child { border-top: 0; }
+.acx-sl i { flex: none; display: grid; place-items: center; width: 40px; height: 40px; border-radius: 12px; background: rgba(0,216,195,.12); border: 1px solid rgba(0,216,195,.3); color: #8ff3e8; }
+.acx-sl i svg { width: 20px; height: 20px; }
+.acx-sl b { display: block; font-size: 17px; font-weight: 600; color: #fff; }
+.acx-sl span { display: block; margin-top: 3px; font-size: 14.5px; line-height: 1.4; color: rgba(255,255,255,.65); }
+@media (max-width: 900px) { .acx-cs { grid-template-columns: 1fr; gap: 14px; } .acx-dc-ic { width: 42px; } .acx-dc h3 { padding-right: 52px; } }
+
 /* program tabs */
 .ptabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: 1080px; margin: 0 auto 18px; }
 .pt { appearance: none; cursor: pointer; text-align: left; padding: 20px 22px; border-radius: 22px; border: 1px solid rgba(143,243,232,.22); background: linear-gradient(170deg, rgba(10,44,50,.8), rgba(4,16,20,.92)); color: #fff; font: inherit; transition: transform .3s var(--ease), border-color .3s, background .3s, box-shadow .3s; }
@@ -3029,16 +3049,30 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
           <div class="acx-tx">
             <span class="acb-k">FR Academy</span>
             <h3>Learn live, with our team.</h3>
-            <p>Build your edge with the support and tools you need to grow, plus live chat with our team when you need it.</p>
+            <p>Build your edge with live sessions and walkthroughs from our team, and the support and tools you need to grow.</p>
             <ul class="acx-f"><li><img src="assets/comm/img_live_1.svg" alt="" aria-hidden="true">Live sessions</li><li><img src="assets/comm/img_candlestickschartup_1.svg" alt="" aria-hidden="true">Trading walkthroughs</li><li><img src="assets/comm/img_groupjunior_1.svg" alt="" aria-hidden="true">Group Q&amp;As</li><li><img src="assets/comm/img_linechartdownwithborder_1.svg" alt="" aria-hidden="true">Trading workshops</li></ul>
           </div>
         </div>
-        <div class="acx-vids">
-          <span class="acx-lbl">Top 3 from our Academy</span>
-          <div class="acx-vg"><button type="button" class="acx-v" data-v="32PV7Zbm8U4" data-t="Into FundingRock"><span class="acx-im"><img src="assets/academy/a1.jpg" alt="" loading="lazy"><i aria-hidden="true"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M8 5.5v13l11-6.5z"/></svg></i></span><b>Into FundingRock</b></button><button type="button" class="acx-v" data-v="k3yqltLEgAM" data-t="Trading basics"><span class="acx-im"><img src="assets/academy/a2.jpg" alt="" loading="lazy"><i aria-hidden="true"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M8 5.5v13l11-6.5z"/></svg></i></span><b>Trading basics</b></button><button type="button" class="acx-v" data-v="VGK8PCvrb50" data-t="Platform breakdown"><span class="acx-im"><img src="assets/academy/a3.jpg" alt="" loading="lazy"><i aria-hidden="true"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M8 5.5v13l11-6.5z"/></svg></i></span><b>Platform breakdown</b></button></div>
+        <div class="acx-cs">
+          <div class="acx-dc">
+            <img class="acx-dc-ic" src="assets/comm/img_icon_discord.svg" alt="" aria-hidden="true">
+            <span class="acb-k">Community</span>
+            <h3>Trade alongside other traders.</h3>
+            <p>Join our Discord to ask questions, share ideas and learn with FundingRock traders and our team.</p>
+            <ul class="acx-tags" aria-label="Discord channels"><li># ask-the-team</li><li># trade-ideas</li><li># market-talk</li><li># rewards</li></ul>
+          </div>
+          <div class="acx-sup">
+            <span class="acb-k">Support</span>
+            <h3>Real people, here to help.</h3>
+            <ul class="acx-sl">
+              <li><i aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/><path d="M8.5 11h.01M12 11h.01M15.5 11h.01"/></svg></i><div><b>Live chat</b><span>Talk to our team from the site or your dashboard.</span></div></li>
+              <li><i aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M3.5 6.5 12 13l8.5-6.5"/></svg></i><div><b>Email</b><span>support@fundingrock.com</span></div></li>
+              <li><i aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.3 2.4c-.5.2-.8.6-.8 1.1v.5M12 16.5h.01"/></svg></i><div><b>Help center</b><span>Clear answers on rules, Rewards and your account.</span></div></li>
+            </ul>
+          </div>
         </div>
         <div class="acx-soc">
-          <div class="acx-st"><span class="acb-k">Community</span><b>Join the community.</b></div>
+          <div class="acx-st"><span class="acb-k">Follow us</span><b>Join the community.</b></div>
           <ul class="acx-ic"><li><span><img src="assets/comm/img_icon_discord.svg" alt="" aria-hidden="true"></span>Discord</li><li><span><img src="assets/comm/img_icon_youtube.svg" alt="" aria-hidden="true"></span>YouTube</li><li><span><img src="assets/comm/img_icon_instagram.svg" alt="" aria-hidden="true"></span>Instagram</li><li><span><img src="assets/comm/img_icon_x.svg" alt="" aria-hidden="true"></span>X</li><li><span><img src="assets/comm/img_icon_tiktok.svg" alt="" aria-hidden="true"></span>TikTok</li><li><span><img src="assets/comm/img_icon_tg.svg" alt="" aria-hidden="true"></span>Telegram</li><li><span><img src="assets/comm/img_icon_facebook.svg" alt="" aria-hidden="true"></span>Facebook</li></ul>
         </div>
       </div>
