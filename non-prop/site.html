@@ -2042,7 +2042,7 @@ body.hev .hc-key b span.grad { display: inline !important; margin: 0 !important;
 body.hhv .hc-vis, body.hhv .hc-stats.hc-key + .hh-x { display: none !important; }
 body.hhv .hc-vis { display: none !important; }
 body.hhv #top .hc { position: relative; }
-body.hhv .hh-ph { display: block; position: absolute; z-index: 0; top: -40px; right: calc(50% - 50vw); width: min(1180px, 74vw); aspect-ratio: 1344 / 752; pointer-events: none;
+body.hhv .hh-ph { display: block; position: absolute; z-index: 0; top: 10px; right: calc(50% - 50vw); width: min(1180px, 74vw); aspect-ratio: 1344 / 752; pointer-events: none;
   -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 34%), linear-gradient(180deg, #000 70%, transparent); -webkit-mask-composite: source-in; mask-image: linear-gradient(90deg, transparent 0%, #000 34%), linear-gradient(180deg, #000 70%, transparent); mask-composite: intersect; }
 body.hhv .hh-ph img { width: 100%; height: 100%; object-fit: cover; display: block; animation: hhPush 26s ease-in-out infinite alternate; }
 body.hhv .hh-ph::after { content: ""; position: absolute; inset: 0; background: radial-gradient(70% 60% at 0% 50%, var(--bg) 10%, transparent 60%); }
@@ -2089,6 +2089,25 @@ body.hhv .hh-ph::after { content: ""; position: absolute; inset: 0; background: 
 
 /* E-H comparison: small label above the title */
 body.hev #drop .sh .eyebrow { display: inline-block !important; font-size: 14px; letter-spacing: .16em; text-transform: uppercase; color: var(--lime); margin-bottom: 4px; }
+
+/* E-H desktop: a calmer scale so the hero and big type fit a laptop screen at 100% zoom */
+@media (min-width: 901px) {
+  body.hev:not(.hhv) .hero h1.hc-h { font-size: clamp(44px, 4.6vw, 68px) !important; }
+  body.hhv .hero h1.hc-h { font-size: clamp(42px, 4vw, 60px) !important; }
+  body.hev .hc-sub { font-size: 17px !important; }
+  body.hev .hc-badge { margin-bottom: 18px !important; }
+  body.hev .hc-vis { width: min(920px, 100%) !important; height: clamp(360px, 34vw, 500px) !important; margin-top: clamp(20px, 3vw, 40px) !important; }
+  body.hev .hc-cta .hc-btn, body.hev .hc-cta .hc-btn2 { height: 54px; font-size: 16px !important; min-width: 170px; }
+  body.hev .hc-key b { font-size: clamp(32px, 3.2vw, 48px) !important; }
+  body.hev .sh h2 { font-size: clamp(32px, 3.8vw, 54px) !important; }
+  body.hev .sh h2.mx { font-size: clamp(26px, 3.3vw, 48px) !important; }
+  body.hev .sh p { font-size: 17px !important; }
+  body.hev #end h2 { font-size: clamp(32px, 3.2vw, 46px) !important; }
+  body.hev .pc1-v b { font-size: clamp(44px, 5vw, 72px) !important; }
+  body.hev .mq-t { font-size: clamp(36px, 4.8vw, 72px) !important; }
+  body.hev .sbn-big b { font-size: clamp(84px, 10vw, 150px) !important; }
+  body.hev .gm-big { font-size: clamp(56px, 6.4vw, 96px) !important; }
+}
 
 /* program tabs */
 .ptabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: 1080px; margin: 0 auto 18px; }
