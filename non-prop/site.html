@@ -2020,18 +2020,23 @@ body.hgv .sbn-one { display: flex; flex-direction: column; align-items: center; 
 .sbn-one .buy { justify-content: center; border-radius: 14px !important; min-width: 240px; }
 .sbn-one span { font-size: 14px; color: rgba(255,255,255,.65); }
 
-/* end band: wavy text ribbons with a lime bar in the middle that flips fill and outline */
+/* end band: 3D rotating ribbon over a lime bar */
 body.hev .mqw ~ .mq-r { display: none; }
-.mqw { position: relative; width: 100%; }
-.mqw svg { display: block; width: 100%; height: clamp(220px, 26vw, 380px); overflow: visible; }
-.mqw text { font-family: "Host Grotesk", sans-serif; font-weight: 700; letter-spacing: -.03em; }
-.mqw .f { fill: #fff; }
-.mqw .o { fill: none; stroke: rgba(255,255,255,.7); stroke-width: 1.4; }
-.mqw .fi { fill: #0a0c02; }
-.mqw .oi { fill: none; stroke: #0a0c02; stroke-width: 1.6; }
-.mqw .st { fill: var(--lime); }
-.mqw .bar { fill: var(--lime); }
-body.hev .mq:has(.mqw svg) { -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+body.hev .mq:has(.mqw .tw-l) { -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+.mqw { position: relative; display: grid; align-items: center; height: clamp(200px, 22vw, 330px); overflow: hidden; perspective: 900px; }
+.tw-bar { position: absolute; left: 50%; top: 0; bottom: 0; width: clamp(110px, 13vw, 210px); transform: translateX(-50%); background: var(--lime); box-shadow: 0 0 80px -10px rgba(217,255,0,.45); }
+.tw-l { grid-area: 1 / 1; position: relative; display: flex; width: max-content; white-space: nowrap; font-size: clamp(52px, 8vw, 120px); font-weight: 800; letter-spacing: -.02em; line-height: 1; text-transform: uppercase; transform-style: preserve-3d; will-change: transform; }
+.tw-c { position: relative; display: inline-block; transform-style: preserve-3d; will-change: transform; }
+.tw-c b, .tw-c em { display: block; font-style: normal; font-weight: inherit; -webkit-backface-visibility: hidden; backface-visibility: hidden; }
+.tw-c b { color: #fff; }
+.tw-c em { position: absolute; inset: 0; transform: rotateX(180deg); color: transparent; -webkit-text-stroke: 1.4px rgba(255,255,255,.8); }
+.tw-c.st b { color: var(--lime); } .tw-c.st em { -webkit-text-stroke-color: var(--lime); }
+.tw-clip { grid-area: 1 / 1; position: absolute; inset: 0; display: grid; align-items: center; perspective: 900px; clip-path: inset(0 calc(50% - clamp(55px, 6.5vw, 105px))); }
+.tw-clip .tw-l { grid-area: auto; }
+.mqw { --bx: 0; }
+.tw-b .tw-c b, .tw-b .tw-c.st b { color: #0a0c02; }
+.tw-b .tw-c em, .tw-b .tw-c.st em { -webkit-text-stroke-color: #0a0c02; }
+@media (prefers-reduced-motion: reduce) { .tw-l, .tw-c { will-change: auto; } }
 
 /* program tabs */
 .ptabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: 1080px; margin: 0 auto 18px; }
@@ -3696,49 +3701,45 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
     set(0, !reduce);
   })();
 
-  /* end band: two wavy text ribbons (SVG textPath) sliding opposite ways; a lime bar in the centre swaps fill for outline */
+  /* end band: every phrase on one ribbon that slides sideways and rotates in 3D as it passes.
+     Front face solid, back face outlined; over the lime bar the same ribbon is drawn dark. */
   (function () {
     var box = $("#mqw"); if (!box) return;
-    var NS = "http://www.w3.org/2000/svg", W = 1600, H = 340;
-    var A = ["No test to pass", "From $70", "Up to 95% Reward Share", "No profit target"], B = ["Instant Reward requests", "News trading allowed", "5 markets", "Pay once"];
-    function wave(y, amp, len, ph) { var d = "M" + (-W) + " " + y; for (var x = -W; x < W * 3; x += len / 2) { var k = Math.round((x + W) / (len / 2)) % 2 ? -1 : 1; d += " Q" + (x + len / 4) + " " + (y + amp * k * (ph ? -1 : 1)) + " " + (x + len / 2) + " " + y; } return d; }
-    function el(n, a) { var e = document.createElementNS(NS, n); for (var k in a) e.setAttribute(k, a[k]); return e; }
-    var svg = el("svg", { viewBox: "0 0 " + W + " " + H, preserveAspectRatio: "xMidYMid slice" });
-    var defs = el("defs", {}); svg.appendChild(defs);
-    var bx = W / 2 - 120, bw = 240;
-    defs.appendChild(el("path", { id: "mqP1", d: wave(120, 34, 900, 0) }));
-    defs.appendChild(el("path", { id: "mqP2", d: wave(250, 34, 900, 1) }));
-    var cIn = el("clipPath", { id: "mqIn" }); cIn.appendChild(el("rect", { x: bx, y: -50, width: bw, height: H + 100 })); defs.appendChild(cIn);
-    var cOut = el("clipPath", { id: "mqOut" }); cOut.appendChild(el("path", { d: "M-2000 -50H" + bx + "V" + (H + 50) + "H-2000Z M" + (bx + bw) + " -50H4000V" + (H + 50) + "H" + (bx + bw) + "Z" })); defs.appendChild(cOut);
-    function seq(arr) { return arr.map(function (t) { return t; }).join("  ✦  ") + "  ✦  "; }
-    var rows = [];
-    function row(path, arr, outCls, inCls) {
-      var g = { tps: [] };
-      [["mqOut", outCls], ["mqIn", inCls]].forEach(function (c) {
-        var t = el("text", { "font-size": 92, "clip-path": "url(#" + c[0] + ")", "class": c[1] });
-        var tp = el("textPath", { href: "#" + path, startOffset: 0 });
-        var txt = seq(arr); tp.textContent = txt + txt + txt + txt;
-        t.appendChild(tp); svg.appendChild(t); g.tps.push(tp);
+    var P = ["No test to pass", "From $70", "Up to 95% Reward Share", "No profit target", "Instant Reward requests", "News trading allowed", "5 markets", "Pay once"];
+    var TXT = P.join(" ✦ ") + " ✦ ";
+    var bar = document.createElement("i"); bar.className = "tw-bar"; box.appendChild(bar);
+    var layers = [];
+    ["tw-a", "tw-b"].forEach(function (cls) {
+      var line = document.createElement("div"); line.className = "tw-l " + cls;
+      var cs = [];
+      (TXT + TXT).split("").forEach(function (ch) {
+        var c = document.createElement("span"); c.className = "tw-c" + (ch === "✦" ? " st" : "");
+        var f = document.createElement("b"), o = document.createElement("em");
+        f.textContent = o.textContent = ch === " " ? " " : ch;
+        c.appendChild(f); c.appendChild(o); line.appendChild(c); cs.push(c);
       });
-      rows.push(g); return g;
-    }
-    svg.appendChild(el("rect", { "class": "bar", x: bx, y: -50, width: bw, height: H + 100 }));
-    var r1 = row("mqP1", A, "f", "oi"), r2 = row("mqP2", B, "o", "fi");
-    box.appendChild(svg);
-    var len1 = 0, len2 = 0, o1 = 0, o2 = 0, vis = false, last = 0;
-    function measure() { try { len1 = r1.tps[0].getComputedTextLength() / 4; len2 = r2.tps[0].getComputedTextLength() / 4; } catch (e) {} }
-    new IntersectionObserver(function (es) { vis = es[0].isIntersecting; if (vis && !len1) measure(); }).observe(box);
+      if (cls === "tw-b") { var clip = document.createElement("div"); clip.className = "tw-clip"; clip.appendChild(line); box.appendChild(clip); } else box.appendChild(line);
+      layers.push({ line: line, cs: cs });
+    });
+    var xs = [], half = 0, off = 0, vis = false, last = 0;
+    function measure() { var cs = layers[0].cs; xs = cs.map(function (c) { return c.offsetLeft + c.offsetWidth / 2; }); half = cs[cs.length / 2].offsetLeft; }
+    new IntersectionObserver(function (es) { vis = es[0].isIntersecting; if (vis && !half) measure(); }).observe(box);
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(measure);
-    function tick(now) {
-      var dt = last ? Math.min(64, now - last) : 16; last = now;
-      if (vis && len1 && !document.hidden) {
-        o1 = (o1 + dt * .09) % len1; o2 = (o2 + dt * .07) % len2;
-        r1.tps.forEach(function (t) { t.setAttribute("startOffset", (W - o1 - len1).toFixed(1)); });
-        r2.tps.forEach(function (t) { t.setAttribute("startOffset", (W + o2 - len2 * 2).toFixed(1)); });
-      }
-      requestAnimationFrame(tick);
+    addEventListener("resize", function () { half = 0; measure(); });
+    function draw(now) {
+      var W = box.clientWidth, dt = last ? Math.min(64, now - last) : 16; last = now;
+      if (!reduce) off = (off + dt * .06) % half;
+      layers.forEach(function (L) {
+        L.line.style.transform = "translateX(" + (-off).toFixed(1) + "px)";
+        L.cs.forEach(function (c, i) {
+          var x = xs[i] - off;                       /* the letter's position on screen */
+          var ang = (x / W) * 540 + now * .03;       /* the twist is fixed in space; text flows through it */
+          c.style.transform = "rotateX(" + (ang % 360).toFixed(1) + "deg)";
+        });
+      });
     }
-    if (reduce) { measure(); r1.tps.concat(r2.tps).forEach(function (t) { t.setAttribute("startOffset", W - 400); }); } else requestAnimationFrame(tick);
+    function tick(now) { if (vis && half && !document.hidden) draw(now); requestAnimationFrame(tick); }
+    if (reduce) { measure(); draw(0); } else requestAnimationFrame(tick);
   })();
 
   /* pain chart: "on your own" draws the bad week; "with Instant" shows the same week with only the fee out of savings */
