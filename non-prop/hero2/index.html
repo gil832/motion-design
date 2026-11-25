@@ -1,0 +1,297 @@
+<meta charset="utf-8">
+<title>FundingRock Hero Concepts</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Host+Grotesk:wght@300..800&display=swap">
+<style>
+/* Layout: two full heroes stacked, each = the live hero copy on top, one cinematic plate below that bleeds into the page black.
+   Single dark look on purpose (brand is dark-first). */
+:root {
+  --bg: #030707; --ink: #ffffff; --mute: rgba(255,255,255,.64); --dim: rgba(255,255,255,.4);
+  --line: rgba(255,255,255,.12); --lime: #d9ff00; --cyan: #8ff3e8; --teal: #00d8c3;
+  --display: "Host Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --ease: cubic-bezier(.16,1,.3,1);
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html, body { background: var(--bg); color: var(--ink); }
+body { font-family: var(--display); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+a { color: inherit; }
+
+/* ---------- page chrome ---------- */
+.nav { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 50; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 16px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); background: rgba(3,7,7,.72); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); border-bottom: 1px solid rgba(255,255,255,.06); }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 60; background: var(--bg); }
+.nav-in { width: min(1240px, 100%); margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.nav img { height: 20px; width: auto; display: block; }
+.jump { display: flex; gap: 4px; padding: 4px; border-radius: 999px; border: 1px solid var(--line); }
+.jump a { text-decoration: none; font-size: 13px; font-weight: 600; padding: 8px 14px; border-radius: 999px; color: var(--mute); transition: background .3s, color .3s; }
+.jump a:hover, .jump a:focus-visible { color: #0a0c02; background: var(--lime); outline: none; }
+
+.label { display: flex; align-items: center; justify-content: space-between; gap: 16px; width: min(1240px, 100%); margin: 0 auto; padding-top: 28px; font-size: 12px; letter-spacing: .18em; text-transform: uppercase; color: var(--dim); }
+.label b { color: var(--ink); font-weight: 600; }
+.label span:last-child { text-align: right; }
+.wrap-x { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+
+/* ---------- shared hero copy (matches the live E/F/G hero) ---------- */
+.hero { position: relative; overflow: hidden; padding-block: 24px 0; }
+.copy { position: relative; z-index: 3; display: flex; flex-direction: column; align-items: center; text-align: center; width: min(980px, 100%); margin: 0 auto; padding-top: clamp(36px, 6vw, 72px); }
+.badge { display: inline-flex; align-items: center; gap: 10px; padding: 9px 18px; border-radius: 999px; border: 1px solid rgba(255,255,255,.16); background: rgba(255,255,255,.04); font-size: 15px; color: rgba(255,255,255,.85); }
+.badge i { width: 7px; height: 7px; border-radius: 50%; background: var(--lime); box-shadow: 0 0 10px rgba(217,255,0,.8); }
+h1 { margin: 22px 0 0; font-size: clamp(42px, 6.6vw, 96px); font-weight: 600; letter-spacing: -.045em; line-height: .98; text-wrap: balance; }
+h1 .l2 { display: block; background: linear-gradient(90deg, #c9fff8, var(--teal) 45%, var(--lime)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.sub { margin: 22px 0 0; max-width: 52ch; font-size: clamp(16px, 1.4vw, 19px); line-height: 1.5; color: var(--mute); }
+.cta { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 30px; }
+.btn { display: inline-flex; align-items: center; justify-content: center; height: 60px; min-width: 190px; padding: 0 30px; border-radius: 14px; font-size: 17px; font-weight: 600; text-decoration: none; transition: transform .4s var(--ease), box-shadow .4s, background .3s, border-color .3s; }
+.btn.go { background: var(--lime); color: #0a0c02; box-shadow: 0 16px 40px -18px rgba(217,255,0,.7); }
+.btn.go:hover { transform: translateY(-2px); }
+.btn.alt { border: 1px solid rgba(255,255,255,.22); color: #fff; background: rgba(255,255,255,.03); }
+.btn.alt:hover { background: rgba(255,255,255,.08); border-color: rgba(255,255,255,.4); }
+.btn:focus-visible { outline: 2px solid var(--lime); outline-offset: 3px; }
+.proof { display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 22px; }
+.proof .g { width: 24px; height: 24px; }
+.proof b { font-size: 18px; font-weight: 500; }
+.proof .st { display: inline-flex; gap: 3px; }
+.proof .st svg { width: 19px; height: 19px; }
+
+/* ---------- the cinematic stage both heroes share ---------- */
+.stage { position: relative; z-index: 1; width: min(1440px, 100% + 32px); margin: clamp(-40px, -3vw, -10px) auto 0; aspect-ratio: 1344 / 752; max-height: 860px; overflow: hidden; touch-action: pan-y; user-select: none; -webkit-user-select: none;
+  -webkit-mask-image: radial-gradient(120% 92% at 50% 58%, #000 52%, transparent 84%); mask-image: radial-gradient(120% 92% at 50% 58%, #000 52%, transparent 84%); }
+.stage .cam { position: absolute; inset: 0; transform-origin: 50% 55%; will-change: transform; }
+.stage img.plate, .stage canvas { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+.grain { position: absolute; inset: -50%; z-index: 6; pointer-events: none; opacity: .07; mix-blend-mode: overlay; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); animation: grain 1.2s steps(6) infinite; }
+@keyframes grain { 0% { transform: translate(0,0); } 20% { transform: translate(-3%,2%); } 40% { transform: translate(2%,-3%); } 60% { transform: translate(-2%,-1%); } 80% { transform: translate(3%,3%); } 100% { transform: translate(0,0); } }
+.cap { position: absolute; z-index: 7; bottom: 9%; font-size: 12px; letter-spacing: .2em; text-transform: uppercase; color: var(--dim); transition: color .5s, opacity .5s; pointer-events: none; }
+.cap b { display: block; margin-top: 6px; font-size: 15px; letter-spacing: 0; text-transform: none; font-weight: 500; color: var(--mute); }
+
+/* ---------- HERO 01: From Everyday to Trader ---------- */
+#h1 .trader { -webkit-mask-image: linear-gradient(90deg, transparent calc(var(--x) * 100% - 7%), #000 calc(var(--x) * 100% + 7%)); mask-image: linear-gradient(90deg, transparent calc(var(--x) * 100% - 7%), #000 calc(var(--x) * 100% + 7%)); }
+#h1 .stage { --x: 1; --k: 0; cursor: ew-resize; }
+/* the everyday side keeps a faint warm cast, the trader side a cool one, so the light itself changes as you cross */
+#h1 .home { filter: sepia(.18) brightness(calc(1 - var(--k) * .12)); }
+#h1 .trader { filter: brightness(calc(.9 + var(--k) * .14)) contrast(1.04); }
+/* the seam: a fine vertical light, brightest at eye height, plus a soft lime spill on the trader side */
+.seam { position: absolute; z-index: 5; top: 0; bottom: 0; left: calc(var(--x) * 100%); width: 0; pointer-events: none; transition: opacity .6s; }
+.seam::before { content: ""; position: absolute; top: 6%; bottom: 6%; left: -.5px; width: 1px; background: linear-gradient(180deg, transparent, rgba(217,255,0,.95) 48%, transparent); }
+.seam::after { content: ""; position: absolute; top: 20%; bottom: 20%; left: 0; width: 22vw; max-width: 300px; background: radial-gradient(60% 50% at 0% 50%, rgba(217,255,0,.18), transparent 70%); mix-blend-mode: screen; }
+.knob { position: absolute; z-index: 6; top: 50%; left: calc(var(--x) * 100%); width: 46px; height: 46px; margin: -23px 0 0 -23px; border-radius: 50%; display: grid; place-items: center; border: 1px solid rgba(217,255,0,.6); background: rgba(3,7,7,.55); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); color: var(--lime); transition: transform .5s var(--ease), opacity .6s; }
+.knob svg { width: 20px; height: 20px; }
+#h1 .stage:hover .knob { transform: scale(1.08); }
+/* the monitors come alive: a slow scan light across the screen row, only on the trader plate */
+.scan { position: absolute; z-index: 2; left: 10%; right: 6%; top: 47%; height: 26%; pointer-events: none; mix-blend-mode: screen; opacity: calc(.35 + var(--k) * .65);
+  background: linear-gradient(90deg, transparent 0%, rgba(143,243,232,0) 40%, rgba(143,243,232,.16) 50%, rgba(143,243,232,0) 60%, transparent 100%); background-size: 260% 100%; animation: scan 7s linear infinite;
+  -webkit-mask-image: linear-gradient(90deg, transparent calc(var(--x) * 100% - 7%), #000 calc(var(--x) * 100% + 7%)); mask-image: linear-gradient(90deg, transparent calc(var(--x) * 100% - 7%), #000 calc(var(--x) * 100% + 7%)); }
+@keyframes scan { from { background-position: 130% 0; } to { background-position: -130% 0; } }
+/* the lime band over the eyes breathes, like light from a live screen */
+.eyes { position: absolute; z-index: 3; left: 42%; top: 54.5%; width: 16%; height: 7%; pointer-events: none; border-radius: 50%; background: radial-gradient(closest-side, rgba(217,255,0,.32), transparent); mix-blend-mode: screen; animation: breathe 3.6s ease-in-out infinite;
+  -webkit-mask-image: linear-gradient(90deg, transparent calc((var(--x) - .42) / .16 * 100% - 20%), #000 calc((var(--x) - .42) / .16 * 100% + 20%)); mask-image: linear-gradient(90deg, transparent calc((var(--x) - .42) / .16 * 100% - 20%), #000 calc((var(--x) - .42) / .16 * 100% + 20%)); }
+@keyframes breathe { 0%, 100% { opacity: .45; } 50% { opacity: 1; } }
+#h1 .cap.l { left: 8%; } #h1 .cap.r { right: 8%; text-align: right; }
+#h1 .cap.r { color: rgba(217,255,0,.55); }
+.hint { position: absolute; z-index: 7; left: 50%; bottom: 3.5%; transform: translateX(-50%); font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--dim); transition: opacity .6s; pointer-events: none; white-space: nowrap; }
+.tried .hint { opacity: 0; }
+
+/* ---------- HERO 02: The Reflection ---------- */
+#h2 .stage { cursor: crosshair; }
+#h2 .sheen { position: absolute; z-index: 4; left: 47.6%; right: 0; top: 0; bottom: 0; pointer-events: none; mix-blend-mode: screen; background: linear-gradient(105deg, transparent 30%, rgba(255,255,255,.05) 45%, rgba(217,255,0,.06) 50%, transparent 62%); background-size: 300% 100%; animation: sheen 9s var(--ease) infinite; }
+@keyframes sheen { 0% { background-position: 120% 0; } 55%, 100% { background-position: -40% 0; } }
+#h2 .frame { position: absolute; z-index: 4; left: 47.4%; top: 0; bottom: 0; width: 1px; background: linear-gradient(180deg, transparent, rgba(255,255,255,.18) 40%, rgba(255,255,255,.18) 70%, transparent); pointer-events: none; }
+#h2 .cap.l { left: 8%; } #h2 .cap.r { right: 8%; text-align: right; color: rgba(217,255,0,.55); }
+
+.sep { height: 1px; width: min(1240px, 100%); margin: clamp(30px, 5vw, 60px) auto 0; background: var(--line); }
+.foot { width: min(1240px, 100%); margin: 0 auto; padding-block: 28px 48px; font-size: 13px; line-height: 1.6; color: var(--dim); }
+
+@media (max-width: 760px) {
+  .label { font-size: 11px; letter-spacing: .12em; }
+  .jump a { padding: 7px 10px; font-size: 12px; }
+  .cta { width: 100%; }
+  .btn { flex: 1 1 0; min-width: 0; height: 54px; padding: 0 12px; font-size: 16px; }
+  .proof b { font-size: 16px; } .proof .st svg { width: 16px; height: 16px; }
+  .stage { aspect-ratio: 4 / 4.4; width: calc(100% + 32px); margin-left: -16px; margin-top: 6px; -webkit-mask-image: linear-gradient(180deg, transparent, #000 14%, #000 80%, transparent); mask-image: linear-gradient(180deg, transparent, #000 14%, #000 80%, transparent); }
+  #h1 .stage img.plate { object-position: 50% 50%; }
+  .scan { left: 0; right: 0; }
+  .cap { bottom: 12%; font-size: 10px; } .cap b { font-size: 13px; }
+  #h1 .cap.l { left: 20px; } #h1 .cap.r { right: 20px; }
+  #h2 .cap.l { left: 20px; } #h2 .cap.r { right: 20px; }
+}
+@media (prefers-reduced-motion: reduce) { .grain, .scan, .eyes, #h2 .sheen { animation: none; } }
+</style>
+
+<header class="nav">
+  <div class="nav-in">
+    <img src="img/logo.svg" alt="FundingRock" width="182" height="24">
+    <nav class="jump" aria-label="Hero concepts"><a href="#h1">01 Everyday to Trader</a><a href="#h2">02 The Reflection</a></nav>
+  </div>
+</header>
+
+<!-- ================= HERO 01 ================= -->
+<section class="hero wrap-x" id="h1" aria-label="Hero 01, From Everyday to Trader">
+  <div class="label"><span><b>Hero 01</b> · From Everyday to Trader</span><span>Drag across the scene</span></div>
+  <div class="copy">
+    <span class="badge"><i></i>FundingRock Instant · From $70</span>
+    <h1>You Don't Need A Fortune <span class="l2">To Start Trading.</span></h1>
+    <p class="sub">Pay a One-Time Fee to Trade in a Simulated Environment, with the Opportunity to Qualify for Real Performance-Based Rewards.</p>
+    <div class="cta"><a class="btn go" href="https://checkout.fundingrock.com/onboarding" target="_blank" rel="noopener">Get Access</a><a class="btn alt" href="#h2">How It Works</a></div>
+    <div class="proof" aria-label="Rated 4.9 out of 5 on Google">
+      <svg class="g" viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.6-.4-3.9z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-7.9l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.6-.4-3.9z"/></svg>
+      <b>Rated 4.9</b>
+      <span class="st" aria-hidden="true"></span>
+    </div>
+  </div>
+  <div class="stage" id="s1" role="img" aria-label="The same man, at home at his kitchen table with a laptop, and at a trading desk with simulated charts. Drag across to move between the two.">
+    <div class="cam" id="cam1">
+      <img class="plate home" src="img/home.jpg" alt="" width="1344" height="752">
+      <img class="plate trader" src="img/trader.jpg" alt="" width="1344" height="752">
+      <i class="scan"></i><i class="eyes"></i>
+    </div>
+    <i class="seam"></i>
+    <span class="knob" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l-6 6 6 6M15 6l6 6-6 6"/></svg></span>
+    <span class="cap l">Tonight<b>A laptop, a kitchen table</b></span>
+    <span class="cap r">Same person<b>A simulated account</b></span>
+    <span class="hint">Drag to cross over</span>
+    <i class="grain"></i>
+  </div>
+</section>
+
+<div class="sep" role="presentation"></div>
+
+<!-- ================= HERO 02 ================= -->
+<section class="hero wrap-x" id="h2" aria-label="Hero 02, The Reflection">
+  <div class="label"><span><b>Hero 02</b> · The Reflection</span><span>Move over the glass</span></div>
+  <div class="copy">
+    <span class="badge"><i></i>FundingRock Instant · From $70</span>
+    <h1>You Don't Need A Fortune <span class="l2">To Start Trading.</span></h1>
+    <p class="sub">Pay a One-Time Fee to Trade in a Simulated Environment, with the Opportunity to Qualify for Real Performance-Based Rewards.</p>
+    <div class="cta"><a class="btn go" href="https://checkout.fundingrock.com/onboarding" target="_blank" rel="noopener">Get Access</a><a class="btn alt" href="#h1">How It Works</a></div>
+    <div class="proof" aria-label="Rated 4.9 out of 5 on Google">
+      <svg class="g" viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.6-.4-3.9z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-7.9l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.6-.4-3.9z"/></svg>
+      <b>Rated 4.9</b>
+      <span class="st" aria-hidden="true"></span>
+    </div>
+  </div>
+  <div class="stage" id="s2" role="img" aria-label="A man looks into dark glass. In the reflection, the same man is lit by simulated trading screens. Move over the glass to clear it.">
+    <div class="cam" id="cam2"><canvas id="cv2"></canvas></div>
+    <i class="frame"></i><i class="sheen"></i>
+    <span class="cap l">In the room<b>An ordinary evening</b></span>
+    <span class="cap r">In the glass<b>A simulated trading desk</b></span>
+    <span class="hint">Move over the glass</span>
+    <i class="grain"></i>
+  </div>
+</section>
+
+<p class="foot wrap-x">Concept page with two alternative heroes for the Non-Prop Traders landing page. The live landing page is unchanged. Simulated trading; Rewards are not guaranteed.</p>
+
+<script>
+(function () {
+  var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var STAR = '<svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.9L22 9.6l-5.5 4.7L18.2 22 12 18.1 5.8 22l1.7-7.7L2 9.6l7.1-.7z" fill="#fff"/></svg>';
+  var HALF = '<svg viewBox="0 0 24 24"><defs><linearGradient id="hf%"><stop offset=".55" stop-color="#fff"/><stop offset=".55" stop-color="rgba(255,255,255,.28)"/></linearGradient></defs><path d="M12 2l2.9 6.9L22 9.6l-5.5 4.7L18.2 22 12 18.1 5.8 22l1.7-7.7L2 9.6l7.1-.7z" fill="url(#hf%)"/></svg>';
+  [].forEach.call(document.querySelectorAll(".st"), function (s, i) { s.innerHTML = STAR + STAR + STAR + STAR + HALF.replace(/%/g, i); });
+
+  function onView(el, cb) { var v = false; new IntersectionObserver(function (es) { v = es[0].isIntersecting; cb && cb(v); }, { threshold: .15 }).observe(el); return function () { return v; }; }
+
+  /* ===== HERO 01: a seam of light you drag across; the room's light changes with it ===== */
+  (function () {
+    var st = document.getElementById("s1"), cam = document.getElementById("cam1");
+    var x = 1, tx = 1, user = false, intro = 0, played = false, t0 = performance.now(), px = 0, py = 0, cx = 0, cy = 0;
+    var seen = onView(st, function (v) { if (v && !played && !reduce) { played = true; intro = performance.now(); } });
+    function setX(v) { st.style.setProperty("--x", v.toFixed(4)); st.style.setProperty("--k", Math.max(0, Math.min(1, 1 - v)).toFixed(3)); }
+    function pos(clientX) { var r = st.getBoundingClientRect(); return Math.max(.02, Math.min(.98, (clientX - r.left) / r.width)); }
+    st.addEventListener("pointermove", function (e) {
+      var r = st.getBoundingClientRect(); px = (e.clientX - r.left) / r.width - .5; py = (e.clientY - r.top) / r.height - .5;
+      if (e.pointerType === "mouse" || e.buttons) { user = true; st.classList.add("tried"); tx = pos(e.clientX); }
+    });
+    st.addEventListener("pointerdown", function (e) { user = true; st.classList.add("tried"); tx = pos(e.clientX); });
+    st.addEventListener("pointerleave", function () { user = false; t0 = performance.now(); px = py = 0; });
+    st.addEventListener("touchmove", function (e) { user = true; st.classList.add("tried"); tx = pos(e.touches[0].clientX); }, { passive: true });
+    /* keyboard: the stage is focusable and arrow keys move the seam */
+    st.tabIndex = 0; st.addEventListener("keydown", function (e) { if (e.key === "ArrowLeft" || e.key === "ArrowRight") { e.preventDefault(); user = true; tx = Math.max(.02, Math.min(.98, tx + (e.key === "ArrowLeft" ? -.05 : .05))); } });
+    function frame(now) {
+      if (seen() || intro) {
+        if (intro) {
+          /* opener: start fully "everyday", hold a beat, then the light sweeps across to reveal the trader and settles at centre */
+          var k = Math.min(Math.max((now - intro - 700) / 2600, 0), 1), e = k < .5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
+          tx = x = 1 - .5 * e - (k < 1 ? 0 : 0) - Math.sin(k * Math.PI) * .32;
+          if (k >= 1) { intro = 0; t0 = now; }
+        } else if (!user && !reduce) {
+          tx = .5 + Math.sin((now - t0) / 4200) * .16;   /* idle: a slow, breathing drift so the scene never feels frozen */
+        }
+        x += (tx - x) * (user ? .14 : .06); setX(x);
+        cx += (px - cx) * .05; cy += (py - cy) * .05;
+        if (!reduce) cam.style.transform = "scale(1.045) translate3d(" + (-cx * 14).toFixed(2) + "px," + (-cy * 10).toFixed(2) + "px,0)";
+      }
+      requestAnimationFrame(frame);
+    }
+    setX(reduce ? .5 : 1); if (reduce) { x = tx = .5; } requestAnimationFrame(frame);
+  })();
+
+  /* ===== HERO 02: the glass is fogged with the ordinary room; your movement clears it and the lime-lit reflection comes through,
+           then it slowly fogs over again. The reflection sits a few pixels deeper than the room, so it shifts with you. ===== */
+  (function () {
+    var st = document.getElementById("s2"), cv = document.getElementById("cv2"), cam = document.getElementById("cam2"), ctx = cv.getContext("2d");
+    var mono = new Image(), col = new Image(), ready = 0, W = 0, H = 0, dpr = Math.min(devicePixelRatio || 1, 2);
+    var mask = document.createElement("canvas"), mx = mask.getContext("2d"), tmp = document.createElement("canvas"), tx = tmp.getContext("2d");
+    var GLASS = .476, FACE = { x: .66, y: .57 }, pts = [], last = null, played = false, intro = 0, px = 0, py = 0, cx = 0, cy = 0;
+    var seen = onView(st, function (v) { if (v && !played && ready === 2) { played = true; intro = performance.now(); } });
+    mono.onload = col.onload = function () { if (++ready === 2) { size(); draw(performance.now()); if (seen() && !played) { played = true; intro = performance.now(); } } };
+    mono.src = "img/mirror-mono.jpg"; col.src = "img/mirror.jpg";
+    /* object-fit: cover, done by hand; on phones keep the reflected face in frame */
+    var fit = { s: 1, ox: 0, oy: 0 };
+    function size() {
+      var r = st.getBoundingClientRect(); W = Math.round(r.width * dpr); H = Math.round(r.height * dpr);
+      cv.width = mask.width = tmp.width = W; cv.height = mask.height = tmp.height = H;
+      var iw = 1344, ih = 752, s = Math.max(W / iw, H / ih), fx = innerWidth < 760 ? .6 : .5;
+      fit.s = s; fit.ox = Math.min(0, Math.max(W - iw * s, W / 2 - iw * s * fx)); fit.oy = (H - ih * s) / 2;
+      var gxp = (fit.ox + GLASS * iw * s) / dpr; st.querySelector(".frame").style.left = gxp + "px"; st.querySelector(".sheen").style.left = gxp + "px";
+    }
+    addEventListener("resize", function () { if (ready === 2) size(); });
+    function img2c(u, v) { return [fit.ox + u * 1344 * fit.s, fit.oy + v * 752 * fit.s]; }
+    function brush(x, y, rad, a) {
+      var g = mx.createRadialGradient(x, y, 0, x, y, rad);
+      g.addColorStop(0, "rgba(0,0,0," + a + ")"); g.addColorStop(1, "rgba(0,0,0,0)");
+      mx.fillStyle = g; mx.beginPath(); mx.arc(x, y, rad, 0, 6.3); mx.fill();
+    }
+    function local(e) { var r = st.getBoundingClientRect(); return [(e.clientX - r.left) * dpr, (e.clientY - r.top) * dpr, (e.clientX - r.left) / r.width - .5, (e.clientY - r.top) / r.height - .5]; }
+    function wipe(p) {
+      var gx = img2c(GLASS, 0)[0]; if (p[0] < gx - 40 * dpr) return;   /* only the glass clears, not the room */
+      if (last) { var dx = p[0] - last[0], dy = p[1] - last[1], n = Math.max(1, Math.hypot(dx, dy) / (10 * dpr)); for (var i = 1; i <= n; i++) brush(last[0] + dx * i / n, last[1] + dy * i / n, 95 * dpr, .14); }
+      else brush(p[0], p[1], 90 * dpr, .2);
+      last = p;
+    }
+    st.addEventListener("pointermove", function (e) { var p = local(e); px = p[2]; py = p[3]; st.classList.add("tried"); wipe(p); });
+    st.addEventListener("pointerleave", function () { last = null; px = py = 0; });
+    st.addEventListener("touchmove", function (e) { var t = e.touches[0]; var p = local(t); st.classList.add("tried"); wipe(p); }, { passive: true });
+    function draw(now) {
+      if (!W) return;
+      /* the fog returns slowly: fade the mask toward a faint floor around the reflected face */
+      mx.globalCompositeOperation = "destination-out"; mx.fillStyle = "rgba(0,0,0,.006)"; mx.fillRect(0, 0, W, H); mx.globalCompositeOperation = "source-over";
+      var f = img2c(FACE.x, FACE.y);
+      if (intro) {
+        /* opener: a slow breath clears the glass in an arc that ends on the reflected face */
+        var k = Math.min(Math.max((now - intro - 600) / 2800, 0), 1), a = -2.2 + k * 2.6, r = (1 - k) * 220 * fit.s * 1.6;
+        if (k > 0 && k < 1) brush(f[0] + Math.cos(a) * r, f[1] + Math.sin(a) * r * .55, (80 + 90 * k) * dpr, .2);
+        if (k >= 1) intro = 0;
+      }
+      /* the reflection breathes on its own too, a little, so it is never fully gone */
+      brush(f[0] + Math.sin(now / 1900) * 30 * dpr, f[1] + Math.cos(now / 2300) * 18 * dpr, 150 * dpr, .012);
+      ctx.clearRect(0, 0, W, H);
+      ctx.drawImage(mono, fit.ox, fit.oy, 1344 * fit.s, 752 * fit.s);
+      /* coloured, lit reflection, offset with the pointer so the glass feels deeper than the room */
+      cx += (px - cx) * .05; cy += (py - cy) * .05;
+      tx.clearRect(0, 0, W, H); tx.globalCompositeOperation = "source-over";
+      tx.filter = "brightness(1.55) saturate(1.5) contrast(1.08)"; tx.drawImage(col, fit.ox - cx * 16 * dpr, fit.oy - cy * 8 * dpr, 1344 * fit.s, 752 * fit.s); tx.filter = "none";
+      tx.globalCompositeOperation = "destination-in"; tx.drawImage(mask, 0, 0);
+      /* never colour the real person: clip to the glass */
+      tx.globalCompositeOperation = "destination-out"; var gx = img2c(GLASS, 0)[0]; var lg = tx.createLinearGradient(gx - 30 * dpr, 0, gx + 30 * dpr, 0); lg.addColorStop(0, "#000"); lg.addColorStop(1, "rgba(0,0,0,0)"); tx.fillStyle = lg; tx.fillRect(0, 0, gx + 30 * dpr, H);
+      ctx.drawImage(tmp, 0, 0);
+      /* real-world element in front of the glass keeps the original (slightly brighter) tone */
+      ctx.save(); ctx.beginPath(); ctx.rect(0, 0, gx, H); ctx.clip(); ctx.globalAlpha = .55; ctx.drawImage(col, fit.ox, fit.oy, 1344 * fit.s, 752 * fit.s); ctx.restore();
+      if (!reduce) cam.style.transform = "scale(1.04) translate3d(" + (-cx * 10).toFixed(2) + "px," + (-cy * 6).toFixed(2) + "px,0)";
+    }
+    var vis2 = false;
+    function loop(now) { if (ready === 2 && (seen() || intro)) draw(now); requestAnimationFrame(loop); }
+    if (reduce) { mono.onload = col.onload = function () { if (++ready === 2) { size(); mx.fillStyle = "#000"; mx.fillRect(0, 0, W, H); draw(0); } }; }
+    else requestAnimationFrame(loop);
+  })();
+})();
+</script>
