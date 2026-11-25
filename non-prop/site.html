@@ -3599,6 +3599,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
         if (on) { top.parentNode.insertBefore(story, top.nextElementSibling); story.parentNode.insertBefore(ways, story.nextElementSibling); var pn = $("#pain"); if (pn) { top.parentNode.insertBefore(pn, top.nextElementSibling); var rw = $("#rewards"); if (rw) { pn.parentNode.insertBefore(rw, pn.nextElementSibling); rw.parentNode.insertBefore(ways, rw.nextElementSibling); } } }
         else { if (waysHome) waysHome.parentNode.insertBefore(ways, waysHome); if (storyHome) storyHome.parentNode.insertBefore(story, storyHome); }
       if (on && document.body.classList.contains("hfv")) { var dr = $("#drop"), rw2 = $("#rewards"); top.parentNode.insertBefore(dr, top.nextElementSibling); dr.parentNode.insertBefore(rw2, dr.nextElementSibling); rw2.parentNode.insertBefore(ways, rw2.nextElementSibling); ways.parentNode.insertBefore(story, ways.nextElementSibling); }
+      if (on) { var rv = $("#reviews"), ru = $("#rules"); if (rv && ru) ru.parentNode.insertBefore(rv, ru.nextElementSibling); }
         }, 0);
       reels(on);
       var ir = $("#ways .irules"), pc = $("#pc1"), ic = $("#icards"); if (ir && pc && ic) { if (on) pc.appendChild(ir); else ic.parentNode.insertBefore(ir, ic.nextElementSibling.nextElementSibling); }
