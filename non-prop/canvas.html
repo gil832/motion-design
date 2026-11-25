@@ -68,8 +68,9 @@ body { margin: 0; background: radial-gradient(1200px 600px at 50% -10%, rgba(0,2
   function fit() {
     var W = mode === "d" ? 1440 : 390;
     frames.forEach(function (f) {
-      var box = f.parentNode, s = Math.min(mode === "m" ? 1 : 9, box.clientWidth / W);
-      f.style.width = W + "px"; f.style.height = Math.ceil(box.clientHeight / s) + "px"; f.style.transform = "scale(" + s + ")"; f.style.left = Math.max(0, (box.clientWidth - W * s) / 2) + "px";
+      /* never zoom past 100%: wider boxes get a wider (real) page, narrower ones a scaled-down 1440 page */
+      var box = f.parentNode, Wd = mode === "d" ? Math.max(W, box.clientWidth) : W, s = Math.min(1, box.clientWidth / Wd);
+      f.style.width = Wd + "px"; f.style.height = Math.ceil(box.clientHeight / s) + "px"; f.style.transform = "scale(" + s + ")"; f.style.left = Math.max(0, (box.clientWidth - Wd * s) / 2) + "px";
     });
   }
   /* tell each page it is inside a preview, so it hides its own floating version switcher, and pin its hero */
