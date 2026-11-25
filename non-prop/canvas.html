@@ -1,3 +1,4 @@
+<meta charset="utf-8">
 <title>Hero Canvas E · G · H</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Host+Grotesk:wght@400..700&display=swap">
@@ -27,17 +28,33 @@ body { margin: 0; background: radial-gradient(1200px 600px at 50% -10%, rgba(0,2
   .board { grid-template-columns: 1fr; }
   .frame { height: 78vh; flex: none; border-radius: 16px; border-bottom: 1px solid var(--line); }
 }
+.col h2 { align-items: center; }
+.fz { margin-left: auto; display: inline-flex; align-items: center; gap: 6px; appearance: none; border: 1px solid var(--line); background: var(--panel); color: var(--mute); font: inherit; font-size: 12.5px; font-weight: 600; padding: 6px 12px; border-radius: 999px; cursor: pointer; transition: color .25s, border-color .25s; }
+.fz svg { width: 14px; height: 14px; }
+.fz:hover, .fz:focus-visible { color: #0a0c02; background: var(--lime); border-color: var(--lime); outline: none; }
+.all { appearance: none; border: 1px solid var(--line); background: var(--panel); color: var(--ink); font: inherit; font-size: 13px; font-weight: 600; padding: 8px 16px; border-radius: 999px; cursor: pointer; margin-left: auto; }
+.all:hover, .all:focus-visible { border-color: var(--lime); outline: none; }
+.board.focus { grid-template-columns: minmax(0, 1fr); }
+.board.focus .col:not(.on) { display: none; }
+.board.focus .fz { display: none; }
+.hit { position: absolute; inset: 0; z-index: 2; appearance: none; border: 0; padding: 0; background: transparent; cursor: zoom-in; }
+.hit:focus-visible { outline: 2px solid var(--lime); outline-offset: -2px; }
+.board.focus .hit { display: none; }
+.frame { cursor: zoom-in; }
+.board.focus .frame { cursor: auto; }
+.col h2 { transition: opacity .3s; }
 </style>
 
 <div class="app">
   <header class="bar">
     <b>Non-Prop Traders<span>Hero comparison</span></b>
+    <button type="button" class="all" id="bAll" hidden>← All three</button>
     <div class="seg" role="group" aria-label="Preview size"><button type="button" id="bD" aria-pressed="true">Desktop</button><button type="button" id="bM" aria-pressed="false">Mobile</button></div>
   </header>
   <main class="board">
-    <section class="col"><h2><i>E</i>Hero E <small>Current reveal hero</small></h2><div class="frame"><iframe title="Hero E" data-h="e" src="site.html?hero=e"></iframe></div></section>
-    <section class="col"><h2><i>G</i>Hero G <small>Current, with promo banner</small></h2><div class="frame"><iframe title="Hero G" data-h="g" src="site.html?hero=g"></iframe></div></section>
-    <section class="col new"><h2><i>H</i>Hero H <small>G with The Trading Identity</small></h2><div class="frame"><iframe title="Hero H" data-h="h" src="site.html?hero=h"></iframe></div></section>
+    <section class="col"><h2><i>E</i>Hero E <small>Current reveal hero</small><button type="button" class="fz" data-k="1" aria-label="Focus this version"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg><span>Focus</span></button></h2><div class="frame"><iframe title="Hero E" data-h="e" src="site.html?hero=e"></iframe></div></section>
+    <section class="col"><h2><i>G</i>Hero G <small>Current, with promo banner</small><button type="button" class="fz" data-k="2" aria-label="Focus this version"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg><span>Focus</span></button></h2><div class="frame"><iframe title="Hero G" data-h="g" src="site.html?hero=g"></iframe></div></section>
+    <section class="col new"><h2><i>H</i>Hero H <small>G with The Trading Identity</small><button type="button" class="fz" data-k="3" aria-label="Focus this version"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg><span>Focus</span></button></h2><div class="frame"><iframe title="Hero H" data-h="h" src="site.html?hero=h"></iframe></div></section>
   </main>
 </div>
 
@@ -55,6 +72,18 @@ body { margin: 0; background: radial-gradient(1200px 600px at 50% -10%, rgba(0,2
   addEventListener("message", function (e) { var d = e.data; if (!d || d.fr !== "np" || d.t !== "ready") return;
     frames.forEach(function (f) { if (f.contentWindow === e.source) f.contentWindow.postMessage({ fr: "np", t: "hero", v: f.getAttribute("data-h") }, "*"); }); });
   frames.forEach(function (f) { f.addEventListener("load", function () { try { f.contentWindow.postMessage({ fr: "np", t: "hero", v: f.getAttribute("data-h") }, "*"); } catch (er) {} }); });
+  var board = document.querySelector(".board"), cols = [].slice.call(document.querySelectorAll(".col")), all = document.getElementById("bAll");
+  function focus(i) {
+    cols.forEach(function (c, j) { c.classList.toggle("on", j === i); });
+    board.classList.toggle("focus", i >= 0); all.hidden = i < 0; fit();
+    try { location.hash = i >= 0 ? ["e", "g", "h"][i] : ""; } catch (er) {}
+  }
+  [].forEach.call(document.querySelectorAll(".fz"), function (b) { b.addEventListener("click", function () { focus(+b.getAttribute("data-k") - 1); }); });
+  all.addEventListener("click", function () { focus(-1); });
+  addEventListener("keydown", function (e) { if (e.key === "Escape") focus(-1); if (e.key === "1" || e.key === "2" || e.key === "3") focus(+e.key - 1); });
+  /* the iframes swallow clicks, so a thin overlay on each frame catches "click to focus" while all three are showing */
+  cols.forEach(function (c, i) { var o = document.createElement("button"); o.type = "button"; o.className = "hit"; o.setAttribute("aria-label", "Focus " + c.querySelector("h2").firstChild.nextSibling.textContent.trim()); o.addEventListener("click", function () { focus(i); }); c.querySelector(".frame").appendChild(o); });
+  var h0 = (location.hash || "").replace("#", ""), k0 = ["e", "g", "h"].indexOf(h0); if (k0 >= 0) setTimeout(function () { focus(k0); }, 0);
   function set(m) { mode = m; document.getElementById("bD").setAttribute("aria-pressed", m === "d"); document.getElementById("bM").setAttribute("aria-pressed", m === "m"); fit(); }
   document.getElementById("bD").addEventListener("click", function () { set("d"); });
   document.getElementById("bM").addEventListener("click", function () { set("m"); });
