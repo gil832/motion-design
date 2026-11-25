@@ -2020,6 +2020,19 @@ body.hgv .sbn-one { display: flex; flex-direction: column; align-items: center; 
 .sbn-one .buy { justify-content: center; border-radius: 14px !important; min-width: 240px; }
 .sbn-one span { font-size: 14px; color: rgba(255,255,255,.65); }
 
+/* end band: wavy text ribbons with a lime bar in the middle that flips fill and outline */
+body.hev .mqw ~ .mq-r { display: none; }
+.mqw { position: relative; width: 100%; }
+.mqw svg { display: block; width: 100%; height: clamp(220px, 26vw, 380px); overflow: visible; }
+.mqw text { font-family: "Host Grotesk", sans-serif; font-weight: 700; letter-spacing: -.03em; }
+.mqw .f { fill: #fff; }
+.mqw .o { fill: none; stroke: rgba(255,255,255,.7); stroke-width: 1.4; }
+.mqw .fi { fill: #0a0c02; }
+.mqw .oi { fill: none; stroke: #0a0c02; stroke-width: 1.6; }
+.mqw .st { fill: var(--lime); }
+.mqw .bar { fill: var(--lime); }
+body.hev .mq:has(.mqw svg) { -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+
 /* program tabs */
 .ptabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: 1080px; margin: 0 auto 18px; }
 .pt { appearance: none; cursor: pointer; text-align: left; padding: 20px 22px; border-radius: 22px; border: 1px solid rgba(143,243,232,.22); background: linear-gradient(170deg, rgba(10,44,50,.8), rgba(4,16,20,.92)); color: #fff; font: inherit; transition: transform .3s var(--ease), border-color .3s, background .3s, box-shadow .3s; }
@@ -3037,7 +3050,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
         </div>
       </div>
     </div>
-    <div class="mq" role="note" aria-label="No test to pass. From $70. Up to 95% Reward Share. No profit target. Instant Reward requests. News trading allowed."><div class="mq-r a" aria-hidden="true"><div class="mq-t"><span>No test to pass</span><i aria-hidden="true">✦</i><span>From $70</span><i aria-hidden="true">✦</i><span>Up to 95% Reward Share</span><i aria-hidden="true">✦</i><span>No profit target</span><i aria-hidden="true">✦</i><span>No test to pass</span><i aria-hidden="true">✦</i><span>From $70</span><i aria-hidden="true">✦</i><span>Up to 95% Reward Share</span><i aria-hidden="true">✦</i><span>No profit target</span><i aria-hidden="true">✦</i></div><div class="mq-t"><span>No test to pass</span><i aria-hidden="true">✦</i><span>From $70</span><i aria-hidden="true">✦</i><span>Up to 95% Reward Share</span><i aria-hidden="true">✦</i><span>No profit target</span><i aria-hidden="true">✦</i><span>No test to pass</span><i aria-hidden="true">✦</i><span>From $70</span><i aria-hidden="true">✦</i><span>Up to 95% Reward Share</span><i aria-hidden="true">✦</i><span>No profit target</span><i aria-hidden="true">✦</i></div></div><div class="mq-r b" aria-hidden="true"><div class="mq-t"><span>Instant Reward requests</span><i aria-hidden="true">✦</i><span>News trading allowed</span><i aria-hidden="true">✦</i><span>5 markets</span><i aria-hidden="true">✦</i><span>Pay once</span><i aria-hidden="true">✦</i><span>Instant Reward requests</span><i aria-hidden="true">✦</i><span>News trading allowed</span><i aria-hidden="true">✦</i><span>5 markets</span><i aria-hidden="true">✦</i><span>Pay once</span><i aria-hidden="true">✦</i></div><div class="mq-t"><span>Instant Reward requests</span><i aria-hidden="true">✦</i><span>News trading allowed</span><i aria-hidden="true">✦</i><span>5 markets</span><i aria-hidden="true">✦</i><span>Pay once</span><i aria-hidden="true">✦</i><span>Instant Reward requests</span><i aria-hidden="true">✦</i><span>News trading allowed</span><i aria-hidden="true">✦</i><span>5 markets</span><i aria-hidden="true">✦</i><span>Pay once</span><i aria-hidden="true">✦</i></div></div></div>
+    <div class="mq" role="note" aria-label="No test to pass. From $70. Up to 95% Reward Share. No profit target. Instant Reward requests. News trading allowed."><div class="mqw" id="mqw" aria-hidden="true"></div><div class="mq-r a" aria-hidden="true"><div class="mq-t"><span>No test to pass</span><i aria-hidden="true">✦</i><span>From $70</span><i aria-hidden="true">✦</i><span>Up to 95% Reward Share</span><i aria-hidden="true">✦</i><span>No profit target</span><i aria-hidden="true">✦</i><span>No test to pass</span><i aria-hidden="true">✦</i><span>From $70</span><i aria-hidden="true">✦</i><span>Up to 95% Reward Share</span><i aria-hidden="true">✦</i><span>No profit target</span><i aria-hidden="true">✦</i></div><div class="mq-t"><span>No test to pass</span><i aria-hidden="true">✦</i><span>From $70</span><i aria-hidden="true">✦</i><span>Up to 95% Reward Share</span><i aria-hidden="true">✦</i><span>No profit target</span><i aria-hidden="true">✦</i><span>No test to pass</span><i aria-hidden="true">✦</i><span>From $70</span><i aria-hidden="true">✦</i><span>Up to 95% Reward Share</span><i aria-hidden="true">✦</i><span>No profit target</span><i aria-hidden="true">✦</i></div></div><div class="mq-r b" aria-hidden="true"><div class="mq-t"><span>Instant Reward requests</span><i aria-hidden="true">✦</i><span>News trading allowed</span><i aria-hidden="true">✦</i><span>5 markets</span><i aria-hidden="true">✦</i><span>Pay once</span><i aria-hidden="true">✦</i><span>Instant Reward requests</span><i aria-hidden="true">✦</i><span>News trading allowed</span><i aria-hidden="true">✦</i><span>5 markets</span><i aria-hidden="true">✦</i><span>Pay once</span><i aria-hidden="true">✦</i></div><div class="mq-t"><span>Instant Reward requests</span><i aria-hidden="true">✦</i><span>News trading allowed</span><i aria-hidden="true">✦</i><span>5 markets</span><i aria-hidden="true">✦</i><span>Pay once</span><i aria-hidden="true">✦</i><span>Instant Reward requests</span><i aria-hidden="true">✦</i><span>News trading allowed</span><i aria-hidden="true">✦</i><span>5 markets</span><i aria-hidden="true">✦</i><span>Pay once</span><i aria-hidden="true">✦</i></div></div></div>
   </section>
 </main>
 
@@ -3681,6 +3694,51 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
     if (!reduce) setInterval(function () { if (vis && !touched && !document.hidden && document.body.classList.contains("hgv") && innerWidth > 900) set((cur + 1) % ss.length, true); }, 5000);
     st.addEventListener("scroll", function () { var w = ss[0].getBoundingClientRect().width + 12, k = Math.min(ds.length - 1, Math.round(st.scrollLeft / w)); ds.forEach(function (x, m) { x.classList.toggle("on", m === k); }); }, { passive: true });
     set(0, !reduce);
+  })();
+
+  /* end band: two wavy text ribbons (SVG textPath) sliding opposite ways; a lime bar in the centre swaps fill for outline */
+  (function () {
+    var box = $("#mqw"); if (!box) return;
+    var NS = "http://www.w3.org/2000/svg", W = 1600, H = 340;
+    var A = ["No test to pass", "From $70", "Up to 95% Reward Share", "No profit target"], B = ["Instant Reward requests", "News trading allowed", "5 markets", "Pay once"];
+    function wave(y, amp, len, ph) { var d = "M" + (-W) + " " + y; for (var x = -W; x < W * 3; x += len / 2) { var k = Math.round((x + W) / (len / 2)) % 2 ? -1 : 1; d += " Q" + (x + len / 4) + " " + (y + amp * k * (ph ? -1 : 1)) + " " + (x + len / 2) + " " + y; } return d; }
+    function el(n, a) { var e = document.createElementNS(NS, n); for (var k in a) e.setAttribute(k, a[k]); return e; }
+    var svg = el("svg", { viewBox: "0 0 " + W + " " + H, preserveAspectRatio: "xMidYMid slice" });
+    var defs = el("defs", {}); svg.appendChild(defs);
+    var bx = W / 2 - 120, bw = 240;
+    defs.appendChild(el("path", { id: "mqP1", d: wave(120, 34, 900, 0) }));
+    defs.appendChild(el("path", { id: "mqP2", d: wave(250, 34, 900, 1) }));
+    var cIn = el("clipPath", { id: "mqIn" }); cIn.appendChild(el("rect", { x: bx, y: -50, width: bw, height: H + 100 })); defs.appendChild(cIn);
+    var cOut = el("clipPath", { id: "mqOut" }); cOut.appendChild(el("path", { d: "M-2000 -50H" + bx + "V" + (H + 50) + "H-2000Z M" + (bx + bw) + " -50H4000V" + (H + 50) + "H" + (bx + bw) + "Z" })); defs.appendChild(cOut);
+    function seq(arr) { return arr.map(function (t) { return t; }).join("  ✦  ") + "  ✦  "; }
+    var rows = [];
+    function row(path, arr, outCls, inCls) {
+      var g = { tps: [] };
+      [["mqOut", outCls], ["mqIn", inCls]].forEach(function (c) {
+        var t = el("text", { "font-size": 92, "clip-path": "url(#" + c[0] + ")", "class": c[1] });
+        var tp = el("textPath", { href: "#" + path, startOffset: 0 });
+        var txt = seq(arr); tp.textContent = txt + txt + txt + txt;
+        t.appendChild(tp); svg.appendChild(t); g.tps.push(tp);
+      });
+      rows.push(g); return g;
+    }
+    svg.appendChild(el("rect", { "class": "bar", x: bx, y: -50, width: bw, height: H + 100 }));
+    var r1 = row("mqP1", A, "f", "oi"), r2 = row("mqP2", B, "o", "fi");
+    box.appendChild(svg);
+    var len1 = 0, len2 = 0, o1 = 0, o2 = 0, vis = false, last = 0;
+    function measure() { try { len1 = r1.tps[0].getComputedTextLength() / 4; len2 = r2.tps[0].getComputedTextLength() / 4; } catch (e) {} }
+    new IntersectionObserver(function (es) { vis = es[0].isIntersecting; if (vis && !len1) measure(); }).observe(box);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(measure);
+    function tick(now) {
+      var dt = last ? Math.min(64, now - last) : 16; last = now;
+      if (vis && len1 && !document.hidden) {
+        o1 = (o1 + dt * .09) % len1; o2 = (o2 + dt * .07) % len2;
+        r1.tps.forEach(function (t) { t.setAttribute("startOffset", (W - o1 - len1).toFixed(1)); });
+        r2.tps.forEach(function (t) { t.setAttribute("startOffset", (W + o2 - len2 * 2).toFixed(1)); });
+      }
+      requestAnimationFrame(tick);
+    }
+    if (reduce) { measure(); r1.tps.concat(r2.tps).forEach(function (t) { t.setAttribute("startOffset", W - 400); }); } else requestAnimationFrame(tick);
   })();
 
   /* pain chart: "on your own" draws the bad week; "with Instant" shows the same week with only the fee out of savings */
