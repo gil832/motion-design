@@ -31,6 +31,10 @@ body { margin: 0; background: radial-gradient(1200px 600px at 50% -10%, rgba(0,2
 .col h2 { align-items: center; }
 .fz { margin-left: auto; display: inline-flex; align-items: center; gap: 6px; appearance: none; border: 1px solid var(--line); background: var(--panel); color: var(--mute); font: inherit; font-size: 12.5px; font-weight: 600; padding: 6px 12px; border-radius: 999px; cursor: pointer; transition: color .25s, border-color .25s; }
 .fz svg { width: 14px; height: 14px; }
+.op { margin-left: auto; font-size: 12.5px; font-weight: 600; color: var(--mute); text-decoration: none; padding: 6px 12px; border-radius: 999px; border: 1px solid var(--line); }
+.op:hover, .op:focus-visible { color: var(--ink); border-color: var(--lime); outline: none; }
+.op + .fz { margin-left: 8px; }
+.board.focus .op { margin-left: auto; }
 .fz:hover, .fz:focus-visible { color: #0a0c02; background: var(--lime); border-color: var(--lime); outline: none; }
 .all { appearance: none; border: 1px solid var(--line); background: var(--panel); color: var(--ink); font: inherit; font-size: 13px; font-weight: 600; padding: 8px 16px; border-radius: 999px; cursor: pointer; margin-left: auto; }
 .all:hover, .all:focus-visible { border-color: var(--lime); outline: none; }
