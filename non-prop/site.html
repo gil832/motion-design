@@ -2037,6 +2037,36 @@ body.hev .hc-key b span.grad { display: inline !important; margin: 0 !important;
   body.hev .hc-key span { max-width: none !important; }
 }
 
+/* Hero H: Hero G with the Trading Identity portrait. Copy left, portrait right, blended into the page colour */
+.hh-ph { display: none; }
+body.hhv .hc-vis, body.hhv .hc-stats.hc-key + .hh-x { display: none !important; }
+body.hhv .hc-vis { display: none !important; }
+body.hhv #top .hc { position: relative; }
+body.hhv .hh-ph { display: block; position: absolute; z-index: 0; top: -40px; right: calc(50% - 50vw); width: min(1180px, 74vw); aspect-ratio: 1344 / 752; pointer-events: none;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 34%), linear-gradient(180deg, #000 70%, transparent); -webkit-mask-composite: source-in; mask-image: linear-gradient(90deg, transparent 0%, #000 34%), linear-gradient(180deg, #000 70%, transparent); mask-composite: intersect; }
+body.hhv .hh-ph img { width: 100%; height: 100%; object-fit: cover; display: block; animation: hhPush 26s ease-in-out infinite alternate; }
+body.hhv .hh-ph::after { content: ""; position: absolute; inset: 0; background: radial-gradient(70% 60% at 0% 50%, var(--bg) 10%, transparent 60%); }
+@keyframes hhPush { from { transform: scale(1.02); } to { transform: scale(1.07) translate3d(-.8%, -.4%, 0); } }
+@media (min-width: 901px) {
+  body.hhv .hc-grid { position: relative; z-index: 2; min-height: clamp(520px, 44vw, 660px); display: flex !important; align-items: center; }
+  body.hhv .hc-copy { text-align: left !important; align-items: flex-start !important; max-width: 560px !important; margin: 0 !important; }
+  body.hhv .hc-badge { align-self: flex-start !important; margin-left: 0 !important; }
+  body.hhv .hero h1.hc-h { text-align: left !important; font-size: clamp(44px, 4.4vw, 68px) !important; max-width: 600px; }
+  body.hhv .hero h1.hc-h span { white-space: normal !important; display: block; }
+  body.hhv .hc-sub { margin-left: 0 !important; text-align: left !important; max-width: 38ch !important; }
+  body.hhv .hc-cta { justify-content: flex-start !important; }
+  body.hhv .hc-proof { justify-content: flex-start !important; }
+  body.hhv .hc-stats.hc-key { position: relative; z-index: 2; margin-top: 10px !important; }
+}
+@media (max-width: 900px) {
+  body.hhv .hh-ph { position: relative; top: auto; right: auto; width: calc(100% + 40px); margin: 0 -20px; order: 5; -webkit-mask-image: linear-gradient(180deg, transparent, #000 18%, #000 78%, transparent); mask-image: linear-gradient(180deg, transparent, #000 18%, #000 78%, transparent); }
+  body.hhv .hh-ph::after { display: none; }
+  body.hhv .hh-ph img { object-position: 66% 50%; }
+  body.hhv #top .hc { display: flex; flex-direction: column; }
+  body.hhv .hc-grid { order: 1; } body.hhv .hc-stats.hc-key { order: 6; }
+}
+@media (prefers-reduced-motion: reduce) { body.hhv .hh-ph img { animation: none; } }
+
 /* program tabs */
 .ptabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: 1080px; margin: 0 auto 18px; }
 .pt { appearance: none; cursor: pointer; text-align: left; padding: 20px 22px; border-radius: 22px; border: 1px solid rgba(143,243,232,.22); background: linear-gradient(170deg, rgba(10,44,50,.8), rgba(4,16,20,.92)); color: #fff; font: inherit; transition: transform .3s var(--ease), border-color .3s, background .3s, box-shadow .3s; }
@@ -2476,6 +2506,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
         </div>
       </div>
       <div class="hc">
+        <div class="hh-ph" aria-hidden="true"><img src="assets/hc/mask-shard.jpg" alt="" width="1344" height="752"></div>
         <div class="hc-grid">
           <div class="hc-copy">
             <p class="hc-type" aria-label="Take your gold, indices, forex or crypto trading to a bigger account"><span aria-hidden="true">Take your <b id="hcType">gold</b><i class="hc-caret"></i> trading to a bigger account.</span></p>
@@ -3092,16 +3123,16 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
     /* every switch starts from the page's original section order */
     var hero0 = document.getElementById("top");
     if (hero0) { var par = hero0.parentNode; if (!npOrd) npOrd = Array.prototype.slice.call(par.children); else npOrd.forEach(function (el) { par.appendChild(el); }); }
-    b.classList.toggle("hb", v === "b"); b.classList.toggle("hcv", v === "c" || v === "d" || v === "e" || v === "f" || v === "g"); b.classList.toggle("hdv", v === "d" || v === "e" || v === "f" || v === "g"); b.classList.toggle("hev", v === "e" || v === "f" || v === "g"); b.classList.toggle("hfv", v === "f" || v === "g"); b.classList.toggle("hgv", v === "g"); if (window.npSimple) window.npSimple(v === "e" || v === "f" || v === "g");
+    b.classList.toggle("hb", v === "b"); b.classList.toggle("hcv", v === "c" || v === "d" || v === "e" || v === "f" || v === "g" || v === "h"); b.classList.toggle("hdv", v === "d" || v === "e" || v === "f" || v === "g" || v === "h"); b.classList.toggle("hev", v === "e" || v === "f" || v === "g" || v === "h"); b.classList.toggle("hfv", v === "f" || v === "g" || v === "h"); b.classList.toggle("hgv", v === "g" || v === "h"); b.classList.toggle("hhv", v === "h"); if (window.npSimple) window.npSimple(v === "e" || v === "f" || v === "g" || v === "h");
     if (!certs) { certs = document.getElementById("rewards"); certsHome = certs && certs.nextElementSibling; }
     if (certs) {
-      if (v === "c" || v === "d" || v === "e" || v === "f" || v === "g") { var hero = document.getElementById("top"); hero.parentNode.insertBefore(certs, hero.nextElementSibling); certs.style.paddingTop = "clamp(40px, 6vw, 80px)"; }
+      if (v === "c" || v === "d" || v === "e" || v === "f" || v === "g" || v === "h") { var hero = document.getElementById("top"); hero.parentNode.insertBefore(certs, hero.nextElementSibling); certs.style.paddingTop = "clamp(40px, 6vw, 80px)"; }
       else if (certsHome) { certsHome.parentNode.insertBefore(certs, certsHome); certs.style.paddingTop = "0"; }
     }
     if (window.npHeroShow) window.npHeroShow();
     document.dispatchEvent(new CustomEvent("np-hero", { detail: v }));
   }
-  var hq = (location.search.match(/[?&]hero=([abcdefg])\b/) || [])[1];
+  var hq = (location.search.match(/[?&]hero=([abcdefgh])\b/) || [])[1];
   if (hq) document.addEventListener("DOMContentLoaded", function () { setHero(hq); });
   var inShell = false;
   addEventListener("message", function (e) { var d = e.data; if (e.source === parent && d && d.fr === "np") { inShell = true; var sw0 = document.getElementById("npSw"); if (sw0) sw0.remove(); if (d.t === "hero") setHero(d.v); } });
@@ -3109,7 +3140,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
   setTimeout(function () {
     if (inShell || document.getElementById("npSw")) return;
     var cur = hq || "a", sw = document.createElement("div"); sw.id = "npSw"; sw.setAttribute("role", "group"); sw.setAttribute("aria-label", "Hero version");
-    sw.innerHTML = ["a", "d", "e", "f", "g"].map(function (v) { return '<button type="button" data-v="' + v + '" aria-pressed="' + (v === cur) + '">Hero ' + v.toUpperCase() + "</button>"; }).join("");
+    sw.innerHTML = ["a", "d", "e", "f", "g", "h"].map(function (v) { return '<button type="button" data-v="' + v + '" aria-pressed="' + (v === cur) + '">Hero ' + v.toUpperCase() + "</button>"; }).join("");
     sw.addEventListener("click", function (e) { var b = e.target.closest("button"); if (!b) return; var v = b.getAttribute("data-v"); setHero(v); scrollTo(0, 0);
       [].forEach.call(sw.children, function (x) { x.setAttribute("aria-pressed", x === b); });
       try { history.replaceState(null, "", location.pathname + "?hero=" + v); } catch (er) {} });

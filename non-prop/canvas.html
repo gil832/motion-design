@@ -1,0 +1,63 @@
+<title>Hero Canvas E · G · H</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Host+Grotesk:wght@400..700&display=swap">
+<style>
+/* Layout: three live pages side by side on the page's own teal-black, each scaled to its column and scrollable on its own. Single dark look. */
+:root { --bg: #03090c; --panel: #071417; --line: rgba(255,255,255,.09); --ink: #fff; --mute: rgba(255,255,255,.6); --lime: #d9ff00; color-scheme: dark; }
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body { margin: 0; background: radial-gradient(1200px 600px at 50% -10%, rgba(0,216,195,.12), transparent 70%), var(--bg); color: var(--ink); font-family: "Host Grotesk", "Helvetica Neue", Arial, sans-serif; overflow: hidden; }
+.app { display: grid; grid-template-rows: auto 1fr; height: 100%; }
+.bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; padding-block: 14px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); border-bottom: 1px solid var(--line); }
+.bar b { font-size: 15px; font-weight: 600; } .bar b span { color: var(--mute); font-weight: 400; margin-left: 8px; }
+.seg { display: inline-flex; padding: 3px; border-radius: 999px; border: 1px solid var(--line); background: var(--panel); }
+.seg button { appearance: none; border: 0; background: none; color: var(--mute); font: inherit; font-size: 13px; font-weight: 600; padding: 7px 16px; border-radius: 999px; cursor: pointer; }
+.seg button[aria-pressed="true"] { background: var(--lime); color: #0a0c02; }
+.seg button:focus-visible { outline: 2px solid var(--lime); outline-offset: 2px; }
+.board { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(14px, 2vw, 28px); padding: 20px max(16px, env(safe-area-inset-right, 0px)) 0 max(16px, env(safe-area-inset-left, 0px)); min-height: 0; }
+.col { display: flex; flex-direction: column; min-width: 0; min-height: 0; }
+.col h2 { display: flex; align-items: baseline; gap: 10px; margin: 0 0 12px; font-size: 15px; font-weight: 600; }
+.col h2 i { font-style: normal; display: inline-grid; place-items: center; width: 28px; height: 28px; border-radius: 9px; background: var(--panel); border: 1px solid var(--line); font-size: 13px; }
+.col.new h2 i { background: var(--lime); color: #0a0c02; border-color: var(--lime); }
+.col h2 small { font-weight: 400; color: var(--mute); font-size: 13px; }
+.frame { position: relative; flex: 1; min-height: 0; border-radius: 16px 16px 0 0; overflow: hidden; border: 1px solid var(--line); border-bottom: 0; background: var(--bg); box-shadow: 0 30px 80px -40px rgba(0,0,0,.9); }
+.frame iframe { position: absolute; left: 0; top: 0; border: 0; transform-origin: 0 0; background: var(--bg); }
+@media (max-width: 760px) {
+  body { overflow: auto; } .app { height: auto; }
+  .board { grid-template-columns: 1fr; }
+  .frame { height: 78vh; flex: none; border-radius: 16px; border-bottom: 1px solid var(--line); }
+}
+</style>
+
+<div class="app">
+  <header class="bar">
+    <b>Non-Prop Traders<span>Hero comparison</span></b>
+    <div class="seg" role="group" aria-label="Preview size"><button type="button" id="bD" aria-pressed="true">Desktop</button><button type="button" id="bM" aria-pressed="false">Mobile</button></div>
+  </header>
+  <main class="board">
+    <section class="col"><h2><i>E</i>Hero E <small>Current reveal hero</small></h2><div class="frame"><iframe title="Hero E" data-h="e" src="site.html?hero=e"></iframe></div></section>
+    <section class="col"><h2><i>G</i>Hero G <small>Current, with promo banner</small></h2><div class="frame"><iframe title="Hero G" data-h="g" src="site.html?hero=g"></iframe></div></section>
+    <section class="col new"><h2><i>H</i>Hero H <small>G with The Trading Identity</small></h2><div class="frame"><iframe title="Hero H" data-h="h" src="site.html?hero=h"></iframe></div></section>
+  </main>
+</div>
+
+<script>
+(function () {
+  var frames = [].slice.call(document.querySelectorAll(".frame iframe")), mode = "d";
+  function fit() {
+    var W = mode === "d" ? 1440 : 390;
+    frames.forEach(function (f) {
+      var box = f.parentNode, s = Math.min(mode === "m" ? 1 : 9, box.clientWidth / W);
+      f.style.width = W + "px"; f.style.height = Math.ceil(box.clientHeight / s) + "px"; f.style.transform = "scale(" + s + ")"; f.style.left = Math.max(0, (box.clientWidth - W * s) / 2) + "px";
+    });
+  }
+  /* tell each page it is inside a preview, so it hides its own floating version switcher, and pin its hero */
+  addEventListener("message", function (e) { var d = e.data; if (!d || d.fr !== "np" || d.t !== "ready") return;
+    frames.forEach(function (f) { if (f.contentWindow === e.source) f.contentWindow.postMessage({ fr: "np", t: "hero", v: f.getAttribute("data-h") }, "*"); }); });
+  frames.forEach(function (f) { f.addEventListener("load", function () { try { f.contentWindow.postMessage({ fr: "np", t: "hero", v: f.getAttribute("data-h") }, "*"); } catch (er) {} }); });
+  function set(m) { mode = m; document.getElementById("bD").setAttribute("aria-pressed", m === "d"); document.getElementById("bM").setAttribute("aria-pressed", m === "m"); fit(); }
+  document.getElementById("bD").addEventListener("click", function () { set("d"); });
+  document.getElementById("bM").addEventListener("click", function () { set("m"); });
+  addEventListener("resize", fit); set(innerWidth < 760 ? "m" : "d");
+})();
+</script>
