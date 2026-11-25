@@ -115,71 +115,70 @@ h1 .l2 { display: block; background: linear-gradient(90deg, #c9fff8, var(--teal)
   #h2 .cap.l { left: 20px; } #h2 .cap.r { right: 20px; }
 }
 @media (prefers-reduced-motion: reduce) { .grain, .scan, .eyes, #h2 .sheen { animation: none; } }
+/* ---------- HERO 03 / 04: The Trading Identity ---------- */
+.id-stage { cursor: default; }
+.id-stage .cam { animation: push 26s ease-in-out infinite alternate; }
+@keyframes push { from { transform: scale(1.02); } to { transform: scale(1.075) translate3d(-.6%, -.4%, 0); } }
+.fog { position: absolute; inset: -10%; z-index: 4; pointer-events: none; opacity: .5; mix-blend-mode: screen;
+  background: radial-gradient(40% 30% at 30% 40%, rgba(150,175,180,.10), transparent 70%), radial-gradient(35% 28% at 55% 65%, rgba(143,243,232,.05), transparent 70%);
+  animation: fog 22s ease-in-out infinite alternate; }
+@keyframes fog { from { transform: translate3d(-3%, 1%, 0); } to { transform: translate3d(4%, -2%, 0); } }
+
+@media (prefers-reduced-motion: reduce) { .id-stage .cam, .fog { animation: none; } }
 </style>
 
 <header class="nav">
   <div class="nav-in">
     <img src="img/logo.svg" alt="FundingRock" width="182" height="24">
-    <nav class="jump" aria-label="Hero concepts"><a href="#h1">01 Everyday to Trader</a><a href="#h2">02 The Reflection</a></nav>
+    <nav class="jump" aria-label="Hero concepts"><a href="#h3">03 Dust</a><a href="#h4">04 Shard</a></nav>
   </div>
 </header>
 
-<!-- ================= HERO 01 ================= -->
-<section class="hero wrap-x" id="h1" aria-label="Hero 01, From Everyday to Trader">
-  <div class="label"><span><b>Hero 01</b> · From Everyday to Trader</span><span>Drag across the scene</span></div>
+<!-- ================= HERO 03 ================= -->
+<section class="hero wrap-x" id="h3" aria-label="Hero 03, The Trading Identity: Dust">
+  <div class="label"><span><b>Hero 03</b> · The Trading Identity: Dust</span><span>Slow disintegration</span></div>
   <div class="copy">
     <span class="badge"><i></i>FundingRock Instant · From $70</span>
     <h1>You Don't Need A Fortune <span class="l2">To Start Trading.</span></h1>
     <p class="sub">Pay a One-Time Fee to Trade in a Simulated Environment, with the Opportunity to Qualify for Real Performance-Based Rewards.</p>
-    <div class="cta"><a class="btn go" href="https://checkout.fundingrock.com/onboarding" target="_blank" rel="noopener">Get Access</a><a class="btn alt" href="#h2">How It Works</a></div>
+    <div class="cta"><a class="btn go" href="https://checkout.fundingrock.com/onboarding" target="_blank" rel="noopener">Get Access</a><a class="btn alt" href="#h4">How It Works</a></div>
     <div class="proof" aria-label="Rated 4.9 out of 5 on Google">
       <svg class="g" viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.6-.4-3.9z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-7.9l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.6-.4-3.9z"/></svg>
       <b>Rated 4.9</b>
       <span class="st" aria-hidden="true"></span>
     </div>
   </div>
-  <div class="stage" id="s1" role="img" aria-label="The same man, at home at his kitchen table with a laptop, and at a trading desk with simulated charts. Drag across to move between the two.">
-    <div class="cam" id="cam1">
-      <img class="plate home" src="img/home.jpg" alt="" width="1344" height="752">
-      <img class="plate trader" src="img/trader.jpg" alt="" width="1344" height="752">
-      <i class="scan"></i><i class="eyes"></i>
-    </div>
-    <i class="seam"></i>
-    <span class="knob" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l-6 6 6 6M15 6l6 6-6 6"/></svg></span>
-    <span class="cap l">Tonight<b>A laptop, a kitchen table</b></span>
-    <span class="cap r">Same person<b>A simulated account</b></span>
-    <span class="hint">Drag to cross over</span>
+  <div class="stage id-stage" id="s3" role="img" aria-label="A man whose left half of the face is a dark mask that breaks into dust and small candlestick fragments drifting away.">
+    <div class="cam"><canvas id="cv3" data-img="img/mask-dust.jpg"></canvas></div>
+    <i class="fog"></i>
     <i class="grain"></i>
   </div>
 </section>
 
 <div class="sep" role="presentation"></div>
 
-<!-- ================= HERO 02 ================= -->
-<section class="hero wrap-x" id="h2" aria-label="Hero 02, The Reflection">
-  <div class="label"><span><b>Hero 02</b> · The Reflection</span><span>Move over the glass</span></div>
+<!-- ================= HERO 04 ================= -->
+<section class="hero wrap-x" id="h4" aria-label="Hero 04, The Trading Identity: Shard">
+  <div class="label"><span><b>Hero 04</b> · The Trading Identity: Shard</span><span>Slow disintegration</span></div>
   <div class="copy">
     <span class="badge"><i></i>FundingRock Instant · From $70</span>
     <h1>You Don't Need A Fortune <span class="l2">To Start Trading.</span></h1>
     <p class="sub">Pay a One-Time Fee to Trade in a Simulated Environment, with the Opportunity to Qualify for Real Performance-Based Rewards.</p>
-    <div class="cta"><a class="btn go" href="https://checkout.fundingrock.com/onboarding" target="_blank" rel="noopener">Get Access</a><a class="btn alt" href="#h1">How It Works</a></div>
+    <div class="cta"><a class="btn go" href="https://checkout.fundingrock.com/onboarding" target="_blank" rel="noopener">Get Access</a><a class="btn alt" href="#h4">How It Works</a></div>
     <div class="proof" aria-label="Rated 4.9 out of 5 on Google">
       <svg class="g" viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.6-.4-3.9z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-7.9l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.6-.4-3.9z"/></svg>
       <b>Rated 4.9</b>
       <span class="st" aria-hidden="true"></span>
     </div>
   </div>
-  <div class="stage" id="s2" role="img" aria-label="A man looks into dark glass. In the reflection, the same man is lit by simulated trading screens. Move over the glass to clear it.">
-    <div class="cam" id="cam2"><canvas id="cv2"></canvas></div>
-    <i class="frame"></i><i class="sheen"></i>
-    <span class="cap l">In the room<b>An ordinary evening</b></span>
-    <span class="cap r">In the glass<b>A simulated trading desk</b></span>
-    <span class="hint">Move over the glass</span>
+  <div class="stage id-stage" id="s4" role="img" aria-label="A man with a thin black sculptural mask over half his face; its edge breaks into small candlestick and chart-line fragments.">
+    <div class="cam"><canvas id="cv4" data-img="img/mask-shard.jpg"></canvas></div>
+    <i class="fog"></i>
     <i class="grain"></i>
   </div>
 </section>
 
-<p class="foot wrap-x">Concept page with two alternative heroes for the Non-Prop Traders landing page. The live landing page is unchanged. Simulated trading; Rewards are not guaranteed.</p>
+<p class="foot wrap-x">Concept page with alternative heroes for the Non-Prop Traders landing page. The live landing page is unchanged. Simulated trading; Rewards are not guaranteed.</p>
 
 <script>
 (function () {
@@ -192,7 +191,7 @@ h1 .l2 { display: block; background: linear-gradient(90deg, #c9fff8, var(--teal)
 
   /* ===== HERO 01: a seam of light you drag across; the room's light changes with it ===== */
   (function () {
-    var st = document.getElementById("s1"), cam = document.getElementById("cam1");
+    var st = document.getElementById("s1"), cam = document.getElementById("cam1"); if (!st) return;
     var x = 1, tx = 1, user = false, intro = 0, played = false, t0 = performance.now(), px = 0, py = 0, cx = 0, cy = 0;
     var seen = onView(st, function (v) { if (v && !played && !reduce) { played = true; intro = performance.now(); } });
     function setX(v) { st.style.setProperty("--x", v.toFixed(4)); st.style.setProperty("--k", Math.max(0, Math.min(1, 1 - v)).toFixed(3)); }
@@ -228,7 +227,7 @@ h1 .l2 { display: block; background: linear-gradient(90deg, #c9fff8, var(--teal)
   /* ===== HERO 02: the glass is fogged with the ordinary room; your movement clears it and the lime-lit reflection comes through,
            then it slowly fogs over again. The reflection sits a few pixels deeper than the room, so it shifts with you. ===== */
   (function () {
-    var st = document.getElementById("s2"), cv = document.getElementById("cv2"), cam = document.getElementById("cam2"), ctx = cv.getContext("2d");
+    var st = document.getElementById("s2"), cv = document.getElementById("cv2"); if (!st) return; var cam = document.getElementById("cam2"), ctx = cv.getContext("2d");
     var mono = new Image(), col = new Image(), ready = 0, W = 0, H = 0, dpr = Math.min(devicePixelRatio || 1, 2);
     var mask = document.createElement("canvas"), mx = mask.getContext("2d"), tmp = document.createElement("canvas"), tx = tmp.getContext("2d");
     var GLASS = .476, FACE = { x: .66, y: .57 }, pts = [], last = null, played = false, intro = 0, px = 0, py = 0, cx = 0, cy = 0;
@@ -293,5 +292,84 @@ h1 .l2 { display: block; background: linear-gradient(90deg, #c9fff8, var(--teal)
     if (reduce) { mono.onload = col.onload = function () { if (++ready === 2) { size(); mx.fillStyle = "#000"; mx.fillRect(0, 0, W, H); draw(0); } }; }
     else requestAnimationFrame(loop);
   })();
+  /* ===== HERO 03 / 04: the mask keeps disintegrating. Fragments are cut from the photo's own mask material at its broken edge,
+           then drift away while turning into small candlesticks and chart segments before dissolving into the dark. ===== */
+  function identity(id, cfg) {
+    var cv = document.getElementById(id), st = cv.closest(".stage"), ctx = cv.getContext("2d"), img = new Image();
+    var W = 0, H = 0, dpr = Math.min(devicePixelRatio || 1, 2), fit = { s: 1, ox: 0, oy: 0 }, ok = false, P = [], last = 0, acc = 0;
+    var seen = onView(st);
+    img.onload = function () { ok = true; size(); };
+    img.src = cv.getAttribute("data-img");
+    function size() {
+      var r = st.getBoundingClientRect(); W = Math.round(r.width * dpr); H = Math.round(r.height * dpr); cv.width = W; cv.height = H;
+      var s = Math.max(W / 1344, H / 752), fx = innerWidth < 760 ? cfg.focusM : cfg.focus;
+      fit.s = s; fit.ox = Math.min(0, Math.max(W - 1344 * s, W / 2 - 1344 * s * fx)); fit.oy = (H - 752 * s) / 2;
+    }
+    addEventListener("resize", function () { if (ok) size(); });
+    function at(u, v) { return [fit.ox + u * 1344 * fit.s, fit.oy + v * 752 * fit.s]; }
+    function rnd(a, b) { return a + Math.random() * (b - a); }
+    function spawn() {
+      var e = cfg.edge[(Math.random() * cfg.edge.length) | 0], t = Math.random(), u = e[0] + (e[2] - e[0]) * t + rnd(-.01, .01), v = e[1] + (e[3] - e[1]) * t + rnd(-.012, .012);
+      var p = at(u, v), sz = rnd(5, 13) * fit.s * 1.4, r = Math.random();
+      P.push({ x: p[0], y: p[1], u: u, v: v, vx: cfg.dir * rnd(.18, .55) * dpr, vy: rnd(-.22, .05) * dpr, a: rnd(-.5, .5), va: rnd(-.004, .004),
+        s: sz, life: 0, max: rnd(5200, 9000), kind: r < .55 ? 0 : r < .8 ? 1 : 2, up: Math.random() < .6,
+        tint: Math.random() < .07 ? "lime" : Math.random() < .14 ? "cyan" : "", seed: Math.random() * 100 });
+    }
+    /* a fragment starts as a chip of the photo's own mask (sampled texture), then morphs into a dark candlestick / chart shape */
+    function drawP(p, now) {
+      var k = p.life / p.max, fadeIn = Math.min(1, p.life / 700), fade = k > .55 ? 1 - (k - .55) / .45 : 1, al = fadeIn * fade;
+      var morph = Math.min(1, Math.max(0, (k - .08) / .3)), sc = 1 - k * .55;
+      ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.a * (1 - morph * .8)); ctx.globalAlpha = al;
+      var s = p.s * sc;
+      if (morph < 1) {
+        /* chip of the mask: clip a small shard of the source photo from where it broke off */
+        ctx.save(); ctx.globalAlpha = al * (1 - morph);
+        ctx.beginPath(); ctx.moveTo(-s * .7, -s * .4); ctx.lineTo(s * .6, -s * .6); ctx.lineTo(s * .4, s * .7); ctx.closePath(); ctx.clip();
+        var src = [p.u * 1344, p.v * 752];
+        ctx.drawImage(img, src[0] - 10, src[1] - 10, 20, 20, -s, -s, s * 2, s * 2);
+        ctx.restore();
+      }
+      if (morph > 0) {
+        ctx.globalAlpha = al * morph;
+        var edge = p.tint === "lime" ? "rgba(217,255,0,.95)" : p.tint === "cyan" ? "rgba(143,243,232,.85)" : "rgba(150,160,162,.55)";
+        var body = p.tint === "lime" ? "rgba(217,255,0,.85)" : "rgba(22,26,27,.95)";
+        ctx.lineWidth = Math.max(1, dpr * .9); ctx.strokeStyle = edge; ctx.fillStyle = body;
+        if (p.kind === 0) {           /* candlestick: wick + body */
+          var bh = s * (p.up ? 1.5 : 1.1), bw = s * .42;
+          ctx.beginPath(); ctx.moveTo(0, -bh * .95); ctx.lineTo(0, bh * .95); ctx.stroke();
+          ctx.fillRect(-bw / 2, -bh / 2, bw, bh); ctx.strokeRect(-bw / 2, -bh / 2, bw, bh);
+        } else if (p.kind === 1) {    /* a short segment of a fine chart line */
+          ctx.beginPath(); ctx.moveTo(-s * 1.2, s * .3); ctx.lineTo(-s * .4, -s * .1); ctx.lineTo(s * .2, s * .25); ctx.lineTo(s * 1.1, -s * .5); ctx.stroke();
+        } else {                      /* small geometric chip */
+          ctx.beginPath(); ctx.moveTo(-s * .5, s * .35); ctx.lineTo(0, -s * .5); ctx.lineTo(s * .5, s * .35); ctx.closePath(); ctx.fill(); ctx.stroke();
+        }
+      }
+      ctx.restore();
+    }
+    function frame(now) {
+      if (ok && (seen() || !last)) {
+        var dt = last ? Math.min(50, now - last) : 16; last = now;
+        ctx.clearRect(0, 0, W, H);
+        ctx.drawImage(img, fit.ox, fit.oy, 1344 * fit.s, 752 * fit.s);
+        if (!reduce) {
+          acc += dt * cfg.rate; while (acc > 1 && P.length < cfg.max) { spawn(); acc -= 1; } if (acc > 1) acc = 0;
+          for (var i = P.length - 1; i >= 0; i--) {
+            var p = P[i]; p.life += dt;
+            /* a soft current: fragments drift, sway and slow down as they dissolve */
+            var sw = Math.sin(now / 1700 + p.seed) * .12 * dpr;
+            p.x += (p.vx * (1 - p.life / p.max * .4)) * dt / 16; p.y += (p.vy + sw * .3) * dt / 16; p.vy -= .0006 * dt; p.a += p.va * dt / 16;
+            if (p.life >= p.max) { P.splice(i, 1); continue; }
+            drawP(p, now);
+          }
+        }
+      } else if (!seen()) last = 0;
+      requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  }
+  /* edges are line segments (image u,v) along each mask's broken border; dir is the drift direction */
+  identity("cv3", { dir: -1, rate: .0042, max: 46, focus: .5, focusM: .7, edge: [[.50, .26, .56, .58], [.56, .58, .62, .70], [.47, .15, .52, .30]] });
+  identity("cv4", { dir: 1, rate: .0034, max: 38, focus: .5, focusM: .7, edge: [[.79, .12, .82, .38], [.80, .38, .83, .56], [.84, .16, .88, .30]] });
+
 })();
 </script>
