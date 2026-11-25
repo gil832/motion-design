@@ -2020,6 +2020,23 @@ body.hgv .sbn-one { display: flex; flex-direction: column; align-items: center; 
 .sbn-one .buy { justify-content: center; border-radius: 14px !important; min-width: 240px; }
 .sbn-one span { font-size: 14px; color: rgba(255,255,255,.65); }
 
+/* E/F/G hero: key offer facts instead of company statistics */
+.hc-key { display: none !important; }
+body.hev .hc-stats:not(.hc-key) { display: none !important; }
+body.hev .hc-key { display: grid !important; grid-template-columns: repeat(4, minmax(0, 1fr)) !important; }
+body.hev .hc-key > div:nth-child(3) { display: block !important; }
+body.hev .hc-key > div:nth-child(3)::before, body.hev .hc-key > div + div::before { display: block !important; }
+body.hev .hc-key b { white-space: nowrap; }
+body.hev .hc-key b small { display: inline !important; font-size: .36em !important; font-weight: 600; letter-spacing: 0; margin: 0 .15em 0 0 !important; vertical-align: .9em; color: inherit; }
+body.hev .hc-key b span.grad { display: inline !important; margin: 0 !important; font-size: inherit !important; max-width: none !important; line-height: inherit !important; background: linear-gradient(90deg, #8ff3e8, #00d8c3 55%, #d9ff00) !important; -webkit-background-clip: text !important; background-clip: text !important; -webkit-text-fill-color: transparent !important; color: transparent !important; }
+@media (max-width: 760px) {
+  body.hev .hc-key { grid-template-columns: 1fr 1fr !important; }
+  body.hev .hc-key > div:nth-child(3)::before { display: none !important; }
+  body.hev .hc-key > div:nth-child(n+3) { border-top: 1px solid rgba(255,255,255,.08); }
+  body.hev .hc-key > div { display: flex !important; }
+  body.hev .hc-key span { max-width: none !important; }
+}
+
 /* program tabs */
 .ptabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: 1080px; margin: 0 auto 18px; }
 .pt { appearance: none; cursor: pointer; text-align: left; padding: 20px 22px; border-radius: 22px; border: 1px solid rgba(143,243,232,.22); background: linear-gradient(170deg, rgba(10,44,50,.8), rgba(4,16,20,.92)); color: #fff; font: inherit; transition: transform .3s var(--ease), border-color .3s, background .3s, box-shadow .3s; }
@@ -2500,6 +2517,12 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
           <div><b class="tnum">42K+</b><span>Traders</span></div>
           <div><b class="tnum grad">120+</b><span>Countries</span></div>
           <div><b class="tnum">48h</b><span>Approved Rewards processed</span></div>
+        </div>
+        <div class="hc-stats hc-key">
+          <div><b class="tnum" style="color:var(--lime)"><small>From</small> $70</b><span>One-time fee</span></div>
+          <div><b class="tnum">0</b><span>Tests to pass</span></div>
+          <div><b class="tnum"><small>Up to</small> <span class="grad">95%</span></b><span>Reward Share</span></div>
+          <div><b>None</b><span>Profit target</span></div>
         </div>
       </div>
       <div class="hx" id="hx" aria-label="A one-time program fee opens a simulated account">
@@ -3489,7 +3512,7 @@ body.editing .rv.pre { opacity: 1 !important; transform: none !important; }
 
   /* Hero D opener: replay the whole sequence whenever Hero D is shown; count the stats up */
   (function () {
-    var stats = $$(".hc-stats b"); var orig = stats.map(function (b) { return b.textContent; });
+    var stats = $$(".hc-stats:not(.hc-key) b"); var orig = stats.map(function (b) { return b.textContent; });
     function count() {
       if (reduce) return;
       stats.forEach(function (b, i) {
